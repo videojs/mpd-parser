@@ -1,0 +1,17 @@
+{
+  "name": "mpd-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mpd-parser.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Joe Forbes <joseph.a.forbes@gmail.com> (https://github.com/forbesjo)",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  },
+  "files": [
+    "mpd-parser.js"
+  ]
+}
