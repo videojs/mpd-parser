@@ -1,5 +1,4 @@
 import { stringToMpdXml } from '../src/stringToMpdXml';
-import document from 'global/document';
 import QUnit from 'qunit';
 
 QUnit.module('stringToMpdXml');
