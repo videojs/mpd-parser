@@ -1,8 +1,10 @@
-import { shallowMerge, flatten, getAttributes, parseDuration, range } from '../src/fns';
+import { shallowMerge, getAttributes } from '../src/utils/object';
+import { parseDuration } from '../src/utils/time';
+import { flatten, range } from '../src/utils/list';
 import document from 'global/document';
 import QUnit from 'qunit';
 
-QUnit.module('fns');
+QUnit.module('utils');
 
 QUnit.module('shallowMerge');
 QUnit.test('append', function(assert) {

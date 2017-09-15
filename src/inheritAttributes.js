@@ -1,4 +1,6 @@
-import { shallowMerge, flatten, getAttributes, parseDuration } from './fns';
+import { flatten } from './utils/list';
+import { shallowMerge, getAttributes } from './utils/object';
+import { parseDuration } from './utils/time';
 
 export const inheritAttributes = mpd => {
   const BaseUrl = mpd.getElementsByTagName('BaseURL');

@@ -1,4 +1,5 @@
-import { range, getAttributes, shallowMerge } from './fns';
+import { range } from './utils/list';
+import { getAttributes, shallowMerge } from './utils/object';
 
 export const segmentsFromTemplate = (attributes) => {
   const startNumber = parseInt(attributes.startNumber, 10);
