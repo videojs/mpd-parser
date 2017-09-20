@@ -1,5 +1,6 @@
 import { range } from './utils/list';
 import { getAttributes, shallowMerge } from './utils/object';
+import resolveUrl from './resolveUrl';
 
 export const segmentsFromTemplate = (attributes) => {
   const startNumber = parseInt(attributes.startNumber, 10);
@@ -21,7 +22,8 @@ export const segmentsFromTemplate = (attributes) => {
       uri,
       timeline: attributes.periodIndex,
       duration: segmentDuration,
-      resolvedUri: attributes.baseUrl + uri };
+      resolvedUri: resolveUrl(attributes.baseUrl, uri)
+    };
   });
 };
 

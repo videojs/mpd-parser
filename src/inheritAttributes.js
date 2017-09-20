@@ -1,6 +1,7 @@
 import { flatten } from './utils/list';
 import { shallowMerge, getAttributes } from './utils/object';
 import { parseDuration } from './utils/time';
+import resolveUrl from './resolveUrl';
 
 export const rep = mpdAttributes => (period, periodIndex) => {
   const adaptationSets = Array.from(period.getElementsByTagName('AdaptationSet'));
@@ -41,7 +42,7 @@ export const representationsByPeriod = (periods, mpdAttributes) => {
   return periods.map(rep(mpdAttributes));
 };
 
-export const inheritAttributes = mpd => {
+export const inheritAttributes = (mpd, manifestUri = '') => {
   const periods = Array.from(mpd.getElementsByTagName('Period'));
 
   if (periods.length &&
@@ -53,7 +54,9 @@ export const inheritAttributes = mpd => {
   const mpdAttributes = getAttributes(mpd);
   const BaseUrl = mpd.getElementsByTagName('BaseURL');
 
-  mpdAttributes.baseUrl = BaseUrl && BaseUrl.length ? BaseUrl[0].innerHTML : '';
+  const baseUrl = BaseUrl && BaseUrl.length ? BaseUrl[0].innerHTML : '';
+
+  mpdAttributes.baseUrl = resolveUrl(manifestUri, baseUrl);
   mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration ?
     parseDuration(mpdAttributes.mediaPresentationDuration) : 0;
 

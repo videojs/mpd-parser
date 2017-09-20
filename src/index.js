@@ -6,9 +6,5 @@ import { stringToMpdXml } from './stringToMpdXml';
 
 export const VERSION = version;
 
-export const parse = s => [
-  stringToMpdXml,
-  inheritAttributes,
-  toPlaylists,
-  toM3u8
-].reduce((a, fn) => fn(a), s);
+export const parse = (manifestString, manifestUri) =>
+  toM3u8(toPlaylists(inheritAttributes(stringToMpdXml(manifestString), manifestUri)));

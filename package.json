@@ -94,5 +94,8 @@
   },
   "generator-videojs-plugin": {
     "version": "5.0.0"
+  },
+  "dependencies": {
+    "url-toolkit": "^2.1.1"
   }
 }

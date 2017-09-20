@@ -29,8 +29,15 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
 
 const organizeAudioPlaylists = playlists => {
   return playlists.reduce((a, playlist) => {
-    const roles = playlist.attributes.roles || '';
-    const label = playlist.attributes.lang + roles || 'main';
+    const role = playlist.attributes.role &&
+      playlist.attributes.role.value || 'main';
+    const language = playlist.attributes.lang || '';
+
+    let label = 'main';
+
+    if (language) {
+      label = `${playlist.attributes.lang}  (${role})`;
+    }
 
     // skip if we already have the highest quality audio for a language
     if (a[label] &&
@@ -40,9 +47,9 @@ const organizeAudioPlaylists = playlists => {
     }
 
     a[label] = {
-      language: playlist.attributes.lang || 'unknown',
+      language,
       autoselect: true,
-      default: !!playlist.role && playlist.role.value === 'main',
+      default: role === 'main',
       playlists: [formatAudioPlaylist(playlist)],
       uri: ''
     };
@@ -134,12 +141,12 @@ export const toM3u8 = dashPlaylists => {
     playlists: videoPlaylists
   };
 
-  if (audioPlaylists) {
-    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists)
+  if (audioPlaylists.length) {
+    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists);
   }
 
-  if (audioPlaylists) {
-    master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists)
+  if (vttPlaylists.length) {
+    master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists);
   }
 
   return master;
