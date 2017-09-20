@@ -1,7 +1,7 @@
 import { toPlaylists } from '../src/toPlaylists';
 import QUnit from 'qunit';
 
-QUnit.module('toM3u8');
+QUnit.module('toPlaylists');
 
 QUnit.test('no representations', function(assert) {
   assert.deepEqual(toPlaylists([]), []);

@@ -8,7 +8,13 @@ export const parseDuration = str => {
   // P10Y10M10DT10H10M10.1S
   const durationRegex =
     /P(?:(\d*)Y)?(?:(\d*)M)?(?:(\d*)D)?(?:T(?:(\d*)H)?(?:(\d*)M)?(?:([\d.]*)S)?)?/;
-  const [year, month, day, hour, minute, second] = durationRegex.exec(str).slice(1);
+  const match = durationRegex.exec(str);
+
+  if (!match) {
+    return 0;
+  }
+
+  const [year, month, day, hour, minute, second] = match.slice(1);
 
   return (parseFloat(year || 0) * SECONDS_IN_YEAR +
     parseFloat(month || 0) * SECONDS_IN_MONTH +
