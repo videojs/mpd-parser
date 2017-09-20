@@ -8,8 +8,8 @@ export const rep = mpdAttributes => (period, periodIndex) => {
   const representationsByAdaptationSet = adaptationSets.map(adaptationSet => {
     const adaptationSetAttributes = getAttributes(adaptationSet);
 
-    const role = adaptationSet.getElementsByTagName('Representation');
-    const roleAttributes = getAttributes(role);
+    const role = adaptationSet.getElementsByTagName('Role')[0];
+    const roleAttributes = { role: getAttributes(role) };
 
     const attrs = shallowMerge({ periodIndex }, mpdAttributes, adaptationSetAttributes, roleAttributes);
 
@@ -22,7 +22,11 @@ export const rep = mpdAttributes => (period, periodIndex) => {
     const representations = Array.from(adaptationSet.getElementsByTagName('Representation'));
 
     const inherit = representation => {
-      const attributes = shallowMerge(attrs, getAttributes(representation));
+      // vtt tracks may use single file in BaseURL
+      let baseUrl = representation.getElementsByTagName('BaseURL')[0];
+
+      baseUrl = baseUrl && baseUrl.innerHTML || '';
+      const attributes = shallowMerge(attrs, getAttributes(representation), { url: baseUrl });
 
       return { attributes, segmentType };
     };

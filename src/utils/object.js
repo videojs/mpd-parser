@@ -10,7 +10,7 @@ export const shallowMerge = (...objects) => {
 };
 
 export const getAttributes = el => {
-  if (!el.attributes) {
+  if (!(el && el.attributes)) {
     return {};
   }
 

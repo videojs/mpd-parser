@@ -18,19 +18,19 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
     attributes: {
       NAME: attributes.id,
       BANDWIDTH: parseInt(attributes.bandwidth, 10),
-      CODECS: attributes.codecs,
       ['PROGRAM-ID']: 1
     },
     uri: '',
     timeline: attributes.periodIndex,
-    resolvedUri: '',
+    resolvedUri: attributes.url || '',
     segments
   };
 };
 
 const organizeAudioPlaylists = playlists => {
   return playlists.reduce((a, playlist) => {
-    const label = playlist.attributes.lang || 'main';
+    const roles = playlist.attributes.roles || '';
+    const label = playlist.attributes.lang + roles || 'main';
 
     // skip if we already have the highest quality audio for a language
     if (a[label] &&
