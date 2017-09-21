@@ -68,7 +68,6 @@
     "conventional-changelog-videojs": "^3.0.0",
     "doctoc": "^0.15.0",
     "glob": "^6.0.3",
-    "global": "^4.3.0",
     "in-publish": "^2.0.0",
     "jsdoc": "^3.4.0",
     "karma": "^1.7.0",
@@ -96,6 +95,7 @@
     "version": "5.0.0"
   },
   "dependencies": {
+    "global": "^4.3.0",
     "url-toolkit": "^2.1.1"
   }
 }
