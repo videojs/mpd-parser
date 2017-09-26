@@ -7,6 +7,9 @@ export const segmentsFromTemplate = (attributes) => {
   const duration = parseInt(attributes.duration, 10);
   const timescale = parseInt(attributes.timescale, 10);
 
+  const initSegment = attributes.initialization
+    .replace(/\$RepresentationID\$/gi, attributes.id);
+
   const segmentDuration = (duration / timescale);
   const segmentCount = Math.round(attributes.sourceDuration / segmentDuration);
 
@@ -22,7 +25,10 @@ export const segmentsFromTemplate = (attributes) => {
       uri,
       timeline: attributes.periodIndex,
       duration: segmentDuration,
-      resolvedUri: resolveUrl(attributes.baseUrl, uri)
+      resolvedUri: resolveUrl(attributes.baseUrl, uri),
+      map: {
+        uri: initSegment
+      }
     };
   });
 };

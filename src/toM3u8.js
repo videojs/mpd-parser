@@ -7,6 +7,7 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
+    endList: true,
     timeline: attributes.periodIndex,
     resolvedUri: '',
     segments
@@ -21,6 +22,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
+    endList: true,
     timeline: attributes.periodIndex,
     resolvedUri: attributes.url || '',
     segments
@@ -93,6 +95,7 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
+    endList: true,
     timeline: attributes.periodIndex,
     resolvedUri: '',
     segments
@@ -130,6 +133,7 @@ export const toM3u8 = dashPlaylists => {
     allowCache: true,
     discontinuityStarts: [],
     segments: [],
+    endList: true,
     mediaGroups: {
       AUDIO: {},
       VIDEO: {},
