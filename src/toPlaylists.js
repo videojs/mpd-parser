@@ -27,7 +27,8 @@ export const segmentsFromTemplate = (attributes) => {
       duration: segmentDuration,
       resolvedUri: resolveUrl(attributes.baseUrl, uri),
       map: {
-        uri: initSegment
+        uri: initSegment,
+        resolvedUri: resolveUrl(attributes.baseUrl, initSegment)
       }
     };
   });
