@@ -7,13 +7,13 @@ export const segmentsFromTemplate = (attributes) => {
   const duration = parseInt(attributes.duration, 10);
   const timescale = parseInt(attributes.timescale, 10);
 
-  const initSegment = attributes.initialization
-    .replace(/\$RepresentationID\$/gi, attributes.id);
+  const initSegment = attributes.initialization ? attributes.initialization
+    .replace(/\$RepresentationID\$/gi, attributes.id) : '';
 
   const segmentDuration = (duration / timescale);
   const segmentCount = Math.round(attributes.sourceDuration / segmentDuration);
 
-  const indexes = range(segmentCount, startNumber);
+  const indexes = segmentCount ? range(segmentCount, startNumber) : [];
 
   return indexes.map(i => {
     // TODO: deal with padding control characters
