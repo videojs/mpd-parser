@@ -15,10 +15,14 @@ export const rep = mpdAttributes => (period, periodIndex) => {
 
     const attrs = shallowMerge({ periodIndex }, mpdAttributes, adaptationSetAttributes, roleAttributes);
 
+    const segmentTemplate = adaptationSet.getElementsByTagName('SegmentTemplate')[0];
+    const segmentList = adaptationSet.getElementsByTagName('SegmentList')[0];
+    const segmentBase = adaptationSet.getElementsByTagName('SegmentBase')[0];
+
     const segmentType = {
-      segmentTemplate: adaptationSet.getElementsByTagName('SegmentTemplate')[0],
-      segmentList: adaptationSet.getElementsByTagName('SegmentList')[0],
-      segmentBase: adaptationSet.getElementsByTagName('SegmentBase')[0]
+      segmentTemplate: segmentTemplate && getAttributes(segmentTemplate),
+      segmentList: segmentList && getAttributes(segmentList),
+      segmentBase: segmentBase && getAttributes(segmentBase)
     };
 
     const representations = Array.from(adaptationSet.getElementsByTagName('Representation'));

@@ -43,9 +43,7 @@ export const segmentsFromList = x => [{ uri: '' }];
 
 export const generateSegments = ({ segmentBase, segmentList, segmentTemplate }, attributes) => {
   if (segmentTemplate) {
-    const a = shallowMerge(getAttributes(segmentTemplate), attributes);
-
-    return segmentsFromTemplate(a);
+    return segmentsFromTemplate(shallowMerge(segmentTemplate, attributes));
   }
 
   // TODO

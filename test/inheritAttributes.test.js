@@ -50,7 +50,7 @@ QUnit.test('end to end', function(assert) {
     segmentType: {
       segmentBase: undefined,
       segmentList: undefined,
-      segmentTemplate: document.createElement('segmenttemplate')
+      segmentTemplate: {}
     }
   }, {
     attributes: {
@@ -73,5 +73,5 @@ QUnit.test('end to end', function(assert) {
   }];
 
   assert.equal(actual.length, 2);
-  assert.equal(actual, expected);
+  assert.deepEqual(actual, expected);
 });
