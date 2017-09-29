@@ -108,21 +108,13 @@ export const toM3u8 = dashPlaylists => {
   }
 
   // grab all master attributes
-  const {
-    sourceDuration: duration
-  } = dashPlaylists[0].attributes;
+  const { sourceDuration: duration } = dashPlaylists[0].attributes;
 
-  const videoOnly = ({
-      attributes
-    }) =>
+  const videoOnly = ({ attributes }) =>
     attributes.mimeType === 'video/mp4' || attributes.contentType === 'video';
-  const audioOnly = ({
-      attributes
-    }) =>
+  const audioOnly = ({ attributes }) =>
     attributes.mimeType === 'audio/mp4' || attributes.contentType === 'audio';
-  const vttOnly = ({
-      attributes
-    }) =>
+  const vttOnly = ({ attributes }) =>
     attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
 
   const videoPlaylists = dashPlaylists.filter(videoOnly).map(formatVideoPlaylist);

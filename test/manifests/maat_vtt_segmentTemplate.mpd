@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="static" mediaPresentationDuration="PT30S" minBufferTime="PT2.000S">
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="static" mediaPresentationDuration="PT6S" minBufferTime="PT2.000S">
   <BaseURL>https://www.example.com/base</BaseURL>
   <Period>
 
