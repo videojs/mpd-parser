@@ -2,6 +2,7 @@ import {
   toPlaylists,
   segmentsFromTemplate
 } from '../src/toPlaylists';
+import errors from '../src/errors';
 import QUnit from 'qunit';
 
 QUnit.module('toPlaylists');
@@ -69,4 +70,28 @@ QUnit.test('pretty simple', function(assert) {
   }];
 
   assert.deepEqual(toPlaylists(representations), playlists);
+});
+
+QUnit.test('segment base', function(assert) {
+  const representations = [{
+    attributes: {},
+    segmentType: {
+      segmentBase: true
+    }
+  }];
+
+  assert.throws(() => toPlaylists(representations),
+    new RegExp(errors.UNSUPPORTED_SEGMENTATION_TYPE));
+});
+
+QUnit.test('segment list', function(assert) {
+  const representations = [{
+    attributes: {},
+    segmentType: {
+      segmentList: true
+    }
+  }];
+
+  assert.throws(() => toPlaylists(representations),
+    new RegExp(errors.UNSUPPORTED_SEGMENTATION_TYPE));
 });

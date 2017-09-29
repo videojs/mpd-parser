@@ -23,8 +23,8 @@ QUnit.test('overwrite', function(assert) {
 
 QUnit.test('empty', function(assert) {
   assert.deepEqual(shallowMerge({}, {}), {});
-  assert.notOk(shallowMerge({}, 1));
-  assert.notOk(shallowMerge(1, {}));
+  assert.deepEqual(shallowMerge({}, 1), {});
+  assert.deepEqual(shallowMerge(1, {}), {});
 });
 
 QUnit.module('flatten');

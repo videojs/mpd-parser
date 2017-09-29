@@ -2,6 +2,7 @@ import { flatten } from './utils/list';
 import { shallowMerge, getAttributes } from './utils/object';
 import { parseDuration } from './utils/time';
 import resolveUrl from './resolveUrl';
+import errors from './errors';
 
 export const rep = mpdAttributes => (period, periodIndex) => {
   const adaptationSets = Array.from(period.getElementsByTagName('AdaptationSet'));
@@ -45,10 +46,11 @@ export const representationsByPeriod = (periods, mpdAttributes) => {
 export const inheritAttributes = (mpd, manifestUri = '') => {
   const periods = Array.from(mpd.getElementsByTagName('Period'));
 
-  if (periods.length &&
+  if (!periods.length ||
+      periods.length &&
       periods.length !== 1) {
     // TODO add support for multiperiod
-    throw new Error('INVALID_NUMBER_OF_PERIOD');
+    throw new Error(errors.INVALID_NUMBER_OF_PERIOD);
   }
 
   const mpdAttributes = getAttributes(mpd);

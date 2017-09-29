@@ -1,8 +1,9 @@
 import window from 'global/window';
+import errors from './errors';
 
 export const stringToMpdXml = (manifestString) => {
   if (manifestString === '') {
-    throw new Error('DASH_EMPTY_MANIFEST');
+    throw new Error(errors.DASH_EMPTY_MANIFEST);
   }
 
   const parser = new window.DOMParser();
@@ -12,7 +13,7 @@ export const stringToMpdXml = (manifestString) => {
 
   if (!mpd || mpd &&
       mpd.getElementsByTagName('parsererror').length > 0) {
-    throw new Error('DASH_INVALID_XML');
+    throw new Error(errors.DASH_INVALID_XML);
   }
 
   return mpd;

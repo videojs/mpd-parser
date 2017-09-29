@@ -1,6 +1,7 @@
 import { range } from './utils/list';
 import { getAttributes, shallowMerge } from './utils/object';
 import resolveUrl from './resolveUrl';
+import errors from './errors';
 
 export const segmentsFromTemplate = (attributes) => {
   const startNumber = parseInt(attributes.startNumber, 10);
@@ -49,14 +50,14 @@ export const generateSegments = ({ segmentBase, segmentList, segmentTemplate }, 
 
   // TODO
   if (segmentBase) {
-    throw new Error('UNSUPPORTED_SEGMENTATION_TYPE');
+    throw new Error(errors.UNSUPPORTED_SEGMENTATION_TYPE);
 
     // return segmentsFromBase(attributes);
   }
 
   // TODO
   if (segmentList) {
-    throw new Error('UNSUPPORTED_SEGMENTATION_TYPE');
+    throw new Error(errors.UNSUPPORTED_SEGMENTATION_TYPE);
 
     // return segmentsFromList(attributes);
   }
