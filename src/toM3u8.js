@@ -29,7 +29,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   };
 };
 
-const organizeAudioPlaylists = playlists => {
+export const organizeAudioPlaylists = playlists => {
   return playlists.reduce((a, playlist) => {
     const role = playlist.attributes.role &&
       playlist.attributes.role.value || 'main';
@@ -38,7 +38,7 @@ const organizeAudioPlaylists = playlists => {
     let label = 'main';
 
     if (language) {
-      label = `${playlist.attributes.lang}  (${role})`;
+      label = `${playlist.attributes.lang} (${role})`;
     }
 
     // skip if we already have the highest quality audio for a language
@@ -60,7 +60,7 @@ const organizeAudioPlaylists = playlists => {
   }, {});
 };
 
-const organizeVttPlaylists = playlists => {
+export const organizeVttPlaylists = playlists => {
   return playlists.reduce((a, playlist) => {
     const label = playlist.attributes.lang || 'text';
 
