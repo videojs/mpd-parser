@@ -4,7 +4,7 @@ import QUnit from 'qunit';
 QUnit.module('stringToMpdXml');
 
 QUnit.test('simple mpd', function(assert) {
-  assert.deepEqual(stringToMpdXml('<MPD></MPD>'), '__TODO__');
+  assert.deepEqual(stringToMpdXml('<MPD></MPD>').tagName, 'MPD');
 });
 
 QUnit.test('invalid xml', function(assert) {
