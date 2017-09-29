@@ -1,5 +1,5 @@
 import { range } from './utils/list';
-import { getAttributes, shallowMerge } from './utils/object';
+import { shallowMerge } from './utils/object';
 import resolveUrl from './resolveUrl';
 import errors from './errors';
 
