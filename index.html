@@ -14,7 +14,7 @@
   <form id=parse>
     <label>
       Video URL:
-      <input id=url type=url value="http://rdmedia.bbc.co.uk/dash/ondemand/testcard/1/client_manifest-events.mpd">
+      <input id=url type=url value="http://dash.edgesuite.net/akamai/bbb_30fps/bbb_30fps.mpd">
     </label>
     <button type=submit>Parse</button>
   </form>
@@ -28,17 +28,17 @@
       parseForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        var xhr = new XMLHttpRequest();
+        fetch(url.value)
+          .then(function(response) {
+            return response.text();
+          }).then(function(body) {
+            console.log('Original ->');
+            console.log(body);
 
-        xhr.addEventListener('readystatechange', function () {
-          if (this.readyState === 4) {
-            var parsedMpd = mpdParser.parse(this.responseText);
+            var parsedMpd = mpdParser.parse(body, url.value);
+            console.log('Parsed ->');
             console.log(parsedMpd);
-          }
-        });
-
-        xhr.open('GET', url.value);
-        xhr.send();
+          }).catch(error => console.error(error));
 
         return false;
       });
