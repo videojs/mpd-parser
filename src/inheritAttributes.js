@@ -1,11 +1,11 @@
-import { flatten } from './utils/list';
+import { flatten, from } from './utils/list';
 import { shallowMerge, getAttributes } from './utils/object';
 import { parseDuration } from './utils/time';
 import resolveUrl from './resolveUrl';
 import errors from './errors';
 
 export const rep = mpdAttributes => (period, periodIndex) => {
-  const adaptationSets = Array.from(period.getElementsByTagName('AdaptationSet'));
+  const adaptationSets = from(period.getElementsByTagName('AdaptationSet'));
 
   const representationsByAdaptationSet = adaptationSets.map(adaptationSet => {
     const adaptationSetAttributes = getAttributes(adaptationSet);
@@ -25,7 +25,7 @@ export const rep = mpdAttributes => (period, periodIndex) => {
       segmentBase: segmentBase && getAttributes(segmentBase)
     };
 
-    const representations = Array.from(adaptationSet.getElementsByTagName('Representation'));
+    const representations = from(adaptationSet.getElementsByTagName('Representation'));
 
     const inherit = representation => {
       // vtt tracks may use single file in BaseURL
@@ -48,7 +48,7 @@ export const representationsByPeriod = (periods, mpdAttributes) => {
 };
 
 export const inheritAttributes = (mpd, manifestUri = '') => {
-  const periods = Array.from(mpd.getElementsByTagName('Period'));
+  const periods = from(mpd.getElementsByTagName('Period'));
 
   if (!periods.length ||
       periods.length &&
