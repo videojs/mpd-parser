@@ -88,6 +88,9 @@ QUnit.test('playlists', function(assert) {
         }
       },
       ['CLOSED-CAPTIONS']: {},
+      // Subtitles feature is turned off
+      SUBTITLES: {},
+      /*
       SUBTITLES: {
         subs: {
           text: {
@@ -110,6 +113,7 @@ QUnit.test('playlists', function(assert) {
           }
         }
       },
+      */
       VIDEO: {}
     },
     playlists: [{

@@ -101,6 +101,9 @@ export const parsedManifest = {
       }
     },
     ['CLOSED-CAPTIONS']: {},
+    // Subtitles feature is turned off
+    SUBTITLES: {},
+    /*
     SUBTITLES: {
       subs: {
         en: {
@@ -141,6 +144,7 @@ export const parsedManifest = {
         }
       }
     },
+    */
     VIDEO: {}
   },
   playlists: [{
