@@ -141,7 +141,7 @@ export const toM3u8 = dashPlaylists => {
     master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists);
   }
 
-  // turn off vtt playlist support until issues with VHS are resolved
+  // TODO: turn off vtt playlist support until issues with VHS are resolved
   if (vttPlaylists.length && false) {
     master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists);
   }
