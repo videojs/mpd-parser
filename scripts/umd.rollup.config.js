@@ -10,10 +10,12 @@ import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
-  moduleName: 'mpd-parser',
-  entry: 'src/index.js',
-  dest: 'dist/mpd-parser.js',
-  format: 'umd',
+  name: 'mpdParser',
+  input: 'src/index.js',
+  output: {
+    file: 'dist/mpd-parser.js',
+    format: 'umd'
+  },
   legacy: true,
   plugins: [
     resolve({

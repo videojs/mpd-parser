@@ -121,7 +121,7 @@ This is the simplest case. Get the script in whatever way you prefer and include
 ```html
 <script src="//path/to/mpd-parser.min.js"></script>
 <script>
-  var mpdParser = window['mpd-parser'];
+  var mpdParser = window.mpdParser;
   var parsedManifest = mpdParser.parse(manifest);
 </script>
 ```

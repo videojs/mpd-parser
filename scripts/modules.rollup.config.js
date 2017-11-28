@@ -9,8 +9,8 @@ import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 
 export default {
-  moduleName: 'mpd-parser',
-  entry: 'src/index.js',
+  name: 'mpdParser',
+  input: 'src/index.js',
   legacy: true,
   plugins: [
     json(),
@@ -30,8 +30,8 @@ export default {
       ]
     })
   ],
-  targets: [
-    {dest: 'dist/mpd-parser.cjs.js', format: 'cjs'},
-    {dest: 'dist/mpd-parser.es.js', format: 'es'}
+  output: [
+    {file: 'dist/mpd-parser.cjs.js', format: 'cjs'},
+    {file: 'dist/mpd-parser.es.js', format: 'es'}
   ]
 };
