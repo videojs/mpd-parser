@@ -11,10 +11,12 @@ import resolve from 'rollup-plugin-node-resolve';
 import string from 'rollup-plugin-string';
 
 export default {
-  moduleName: 'mpd-parser-test',
-  entry: 'test/**/*.test.js',
-  dest: 'test/dist/bundle.js',
-  format: 'iife',
+  name: 'mpdParserTest',
+  input: 'test/**/*.test.js',
+  output: {
+    file: 'test/dist/bundle.js',
+    format: 'iife'
+  },
   external: [
     'qunit',
     'qunitjs',
