@@ -1,6 +1,6 @@
 import { shallowMerge, getAttributes } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
-import { flatten, range } from '../src/utils/list';
+import { flatten, range, from } from '../src/utils/list';
 import document from 'global/document';
 import QUnit from 'qunit';
 
@@ -100,4 +100,29 @@ QUnit.test('count of 0', function(assert) {
 
 QUnit.test('negative count', function(assert) {
   assert.deepEqual(range(-1), []);
+});
+
+QUnit.module('from');
+
+QUnit.test('simple array', function(assert) {
+  assert.deepEqual(from([1]), [1]);
+});
+
+QUnit.test('empty array', function(assert) {
+  assert.deepEqual(from([]), []);
+});
+
+QUnit.test('non-array', function(assert) {
+  assert.deepEqual(from(1), []);
+});
+
+QUnit.test('array-like', function(assert) {
+  const fixture = document.createElement('div');
+
+  fixture.innerHTML = '<div></div><div></div>';
+
+  const result = from(fixture.getElementsByTagName('div'));
+
+  assert.ok(result.map);
+  assert.deepEqual(result.length, 2);
 });
