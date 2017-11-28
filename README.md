@@ -38,7 +38,7 @@ var manifest = [
   '<>',
 ].join('\n');
 
-var parsedManifest = mpdParser.parse(manifest);
+var parsedManifest = mpdParser.parse(manifest, manfestUrl);
 ```
 
 ### Parsed Output
@@ -121,8 +121,8 @@ This is the simplest case. Get the script in whatever way you prefer and include
 ```html
 <script src="//path/to/mpd-parser.min.js"></script>
 <script>
-  var mpdParser = window.mpdParser;
-  var parsedManifest = mpdParser.parse(manifest);
+  var mpdParser = window['mpd-parser'];
+  var parsedManifest = mpdParser.parse(manifest, manifestUrl);
 </script>
 ```
 
@@ -133,7 +133,7 @@ When using with Browserify, install mpd-parser via npm and `require` the parser 
 ```js
 var mpdParser = require('mpd-parser');
 
-var parsedManifest = mpdParser.parse(manifest);
+var parsedManifest = mpdParser.parse(manifest, manifestUrl);
 ```
 
 ### RequireJS/AMD
@@ -142,7 +142,7 @@ When using with RequireJS (or another AMD library), get the script in whatever w
 
 ```js
 require(['mpd-parser'], function(mpdParser) {
-  var parsedManifest = mpdParser.parse(manifest);
+  var parsedManifest = mpdParser.parse(manifest, manifestUrl);
 });
 ```
 
