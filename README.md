@@ -38,7 +38,7 @@ var manifest = [
   '<>',
 ].join('\n');
 
-var parsedManifest = mpdParser.parse(manifest, manfestUrl);
+var parsedManifest = mpdParser.parse(manifest, manifestUrl);
 ```
 
 ### Parsed Output

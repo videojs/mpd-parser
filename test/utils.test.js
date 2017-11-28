@@ -103,6 +103,7 @@ QUnit.test('negative count', function(assert) {
 });
 
 QUnit.module('from');
+
 QUnit.test('simple array', function(assert) {
   assert.deepEqual(from([1]), [1]);
 });
@@ -116,8 +117,12 @@ QUnit.test('non-array', function(assert) {
 });
 
 QUnit.test('array-like', function(assert) {
-  var fixture = document.createElement('div');
+  const fixture = document.createElement('div');
+
   fixture.innerHTML = '<div></div><div></div>';
 
-  assert.ok(from(fixture.getElementsByTagName('div')).map);
+  const result = from(fixture.getElementsByTagName('div'));
+
+  assert.ok(result.map);
+  assert.deepEqual(result.length, 2);
 });
