@@ -1,0 +1,97 @@
+import babel from 'rollup-plugin-babel';
+import commonjs from 'rollup-plugin-commonjs';
+import json from 'rollup-plugin-json';
+import resolve from 'rollup-plugin-node-resolve';
+import uglify from 'rollup-plugin-uglify';
+import pkg from '../package.json';
+
+const date = new Date();
+
+const banner =
+`/**
+ * ${pkg.name}
+ * @version ${pkg.version}
+ * @copyright ${date.getFullYear()} ${pkg.author}
+ * @license ${pkg.license}
+ */`;
+
+export default [
+  /**
+   * Rollup configuration for packaging the plugin in a module that is consumable
+   * as the `src` of a `script` tag or via AMD or similar client-side loading.
+   *
+   * This module DOES include its dependencies.
+   */
+  {
+    name: 'mpdParser',
+    input: 'src/index.js',
+    output: {
+      file: 'dist/mpd-parser.js',
+      format: 'umd'
+    },
+    legacy: true,
+    banner,
+    plugins: [
+      resolve({ browser: true, main: true, jsnext: true }),
+      json(),
+      commonjs({ sourceMap: false }),
+      babel({
+        babelrc: false,
+        exclude: 'node_modules/**',
+        presets: [ 'es3', ['es2015', { loose: true, modules: false }] ],
+        plugins: [ 'external-helpers', 'transform-object-assign' ]
+      })
+    ]
+  }, {
+    name: 'mpdParser',
+    input: 'src/index.js',
+    output: {
+      file: 'dist/mpd-parser.min.js',
+      format: 'umd'
+    },
+    legacy: true,
+    banner,
+    plugins: [
+      resolve({ browser: true, main: true, jsnext: true }),
+      json(),
+      commonjs({ sourceMap: false }),
+      babel({
+        babelrc: false,
+        exclude: 'node_modules/**',
+        presets: [ 'es3', ['es2015', { loose: true, modules: false }] ],
+        plugins: [ 'external-helpers', 'transform-object-assign' ]
+      }),
+      uglify({ output: { comments: 'some' } })
+    ]
+  },
+
+  /**
+   * Rollup configuration for packaging the plugin in a module that is consumable
+   * by either CommonJS (e.g. Node or Browserify) or ECMAScript (e.g. Rollup).
+   *
+   * These modules DO NOT include their dependencies as we expect those to be
+   * handled by the module system.
+   */
+  {
+    name: 'mpdParser',
+    input: 'src/index.js',
+    legacy: true,
+    banner,
+    plugins: [
+      json(),
+      babel({
+        babelrc: false,
+        exclude: 'node_modules/**',
+        presets: [ 'es3', ['es2015', { loose: true, modules: false }] ],
+        plugins: [ 'external-helpers', 'transform-object-assign' ]
+      })
+    ],
+    output: [{
+      file: 'dist/mpd-parser.cjs.js',
+      format: 'cjs'
+    }, {
+      file: 'dist/mpd-parser.es.js',
+      format: 'es'
+    }]
+  }
+];
