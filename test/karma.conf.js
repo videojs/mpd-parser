@@ -48,12 +48,7 @@ module.exports = function(config) {
         resolve({ browser: true, main: true, jsnext: true }),
         json(),
         commonjs({ sourceMap: false }),
-        babel({
-          babelrc: false,
-          exclude: 'node_modules/**',
-          presets: ['es3', ['es2015', { loose: true, modules: false }]],
-          plugins: ['external-helpers', 'transform-object-assign']
-        })
+        babel({exclude: 'node_modules/**'})
       ]
     }
   });

@@ -15,6 +15,13 @@ const banner =
  * @license ${pkg.license}
  */`;
 
+const plugins = [
+  resolve({ browser: true, main: true, jsnext: true }),
+  json(),
+  commonjs({ sourceMap: false }),
+  babel()
+];
+
 export default [
   /**
    * Rollup configuration for packaging the plugin in a module that is consumable
@@ -31,17 +38,7 @@ export default [
     },
     legacy: true,
     banner,
-    plugins: [
-      resolve({ browser: true, main: true, jsnext: true }),
-      json(),
-      commonjs({ sourceMap: false }),
-      babel({
-        babelrc: false,
-        exclude: 'node_modules/**',
-        presets: [ 'es3', ['es2015', { loose: true, modules: false }] ],
-        plugins: [ 'external-helpers', 'transform-object-assign' ]
-      })
-    ]
+    plugins
   }, {
     name: 'mpdParser',
     input: 'src/index.js',
@@ -51,18 +48,8 @@ export default [
     },
     legacy: true,
     banner,
-    plugins: [
-      resolve({ browser: true, main: true, jsnext: true }),
-      json(),
-      commonjs({ sourceMap: false }),
-      babel({
-        babelrc: false,
-        exclude: 'node_modules/**',
-        presets: [ 'es3', ['es2015', { loose: true, modules: false }] ],
-        plugins: [ 'external-helpers', 'transform-object-assign' ]
-      }),
-      uglify({ output: { comments: 'some' } })
-    ]
+    plugins: plugins
+      .concat([uglify({output: {comments: 'some'}})])
   },
 
   /**
@@ -77,21 +64,10 @@ export default [
     input: 'src/index.js',
     legacy: true,
     banner,
-    plugins: [
-      json(),
-      babel({
-        babelrc: false,
-        exclude: 'node_modules/**',
-        presets: [ 'es3', ['es2015', { loose: true, modules: false }] ],
-        plugins: [ 'external-helpers', 'transform-object-assign' ]
-      })
-    ],
-    output: [{
-      file: 'dist/mpd-parser.cjs.js',
-      format: 'cjs'
-    }, {
-      file: 'dist/mpd-parser.es.js',
-      format: 'es'
-    }]
+    plugins: [ json(), babel({exclude: 'node_modules/**'}) ],
+    output: [
+      {file: 'dist/mpd-parser.cjs.js', format: 'cjs'},
+      {file: 'dist/mpd-parser.es.js', format: 'es'}
+    ]
   }
 ];
