@@ -7,8 +7,8 @@
 <body>
   <p>Open dev tools to try it out</p>
   <ul>
-    <li><a href="http://localhost:9876/debug.html">Run unit tests in browser.</a></li>
-    <li><a href="docs/api/">Read generated docs.</a></li>
+    <li><a id="test-page">Run unit tests in browser.</a></li>
+    <li><a id="docs" href="docs/api/">Read generated docs.</a></li>
   </ul>
 
   <form id=parse>
@@ -22,6 +22,10 @@
   <script src="dist/mpd-parser.js"></script>
   <script>
     (function(window, mpdParser) {
+      var testPage = document.getElementById('test-page');
+      testPage.href = window.location.protocol + '//' +
+        window.location.hostname + ':9876/debug.html';
+
       var parseForm = document.getElementById('parse');
       var url = document.getElementById('url');
 
