@@ -86,20 +86,16 @@ QUnit.test('invalid', function(assert) {
 });
 
 QUnit.module('range');
-QUnit.test('default start number of 0', function(assert) {
-  assert.deepEqual(range(3), [0, 1, 2]);
+QUnit.test('simple', function(assert) {
+  assert.deepEqual(range(1, 3), [1, 2, 3]);
 });
 
-QUnit.test('start number', function(assert) {
-  assert.deepEqual(range(3, 1), [1, 2, 3]);
+QUnit.test('single number range', function(assert) {
+  assert.deepEqual(range(1, 1), [1]);
 });
 
-QUnit.test('count of 0', function(assert) {
-  assert.deepEqual(range(0), []);
-});
-
-QUnit.test('negative count', function(assert) {
-  assert.deepEqual(range(-1), []);
+QUnit.test('negative', function(assert) {
+  assert.deepEqual(range(-1, 1), [-1, 0, 1]);
 });
 
 QUnit.module('from');

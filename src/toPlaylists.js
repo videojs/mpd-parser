@@ -14,7 +14,7 @@ export const segmentsFromTemplate = (attributes) => {
   const segmentDuration = (duration / timescale);
   const segmentCount = Math.round(attributes.sourceDuration / segmentDuration);
 
-  const indexes = segmentCount ? range(segmentCount, startNumber) : [];
+  const indexes = segmentCount ? range(startNumber, startNumber + segmentCount - 1) : [];
 
   return indexes.map(i => {
     // TODO: deal with padding control characters

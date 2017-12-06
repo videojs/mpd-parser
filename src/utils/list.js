@@ -1,9 +1,8 @@
-export const range = (count, start = 0) => {
+export const range = (start, end) => {
   const result = [];
 
-  for (let i = 0; i < count; i++) {
-    result.push(start);
-    start++;
+  for (let i = start; i <= end; i++) {
+    result.push(i);
   }
 
   return result;
