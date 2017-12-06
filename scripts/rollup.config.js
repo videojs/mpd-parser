@@ -3,6 +3,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 import uglify from 'rollup-plugin-uglify';
+import { minify } from 'uglify-es';
 import pkg from '../package.json';
 
 const date = new Date();
@@ -49,7 +50,7 @@ export default [
     legacy: true,
     banner,
     plugins: plugins
-      .concat([uglify({output: {comments: 'some'}})])
+      .concat([uglify({output: {comments: 'some'}}, minify)])
   },
 
   /**
