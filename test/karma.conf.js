@@ -23,6 +23,8 @@ module.exports = function(config) {
       watched: true
     }, {
       pattern: 'test/**/*.test.js',
+      // Make sure to disable Karma’s file watcher
+      // because the preprocessor will use its own.
       watched: false
     }],
     reporters: ['dots'],
