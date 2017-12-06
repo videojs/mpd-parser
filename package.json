@@ -14,7 +14,7 @@
     "build:rollup": "rollup -c scripts/rollup.config.js",
     "clean": "rimraf dist",
     "postclean": "mkdirp dist",
-    "docs": "run-s docs:*",
+    "docs": "run-p docs:*",
     "docs:api": "jsdoc src -r -d docs/api",
     "docs:toc": "doctoc README.md",
     "lint": "vjsstandard",
