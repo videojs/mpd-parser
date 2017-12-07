@@ -87,15 +87,15 @@ QUnit.test('invalid', function(assert) {
 
 QUnit.module('range');
 QUnit.test('simple', function(assert) {
-  assert.deepEqual(range(1, 3), [1, 2, 3]);
+  assert.deepEqual(range(1, 4), [1, 2, 3]);
 });
 
 QUnit.test('single number range', function(assert) {
-  assert.deepEqual(range(1, 1), [1]);
+  assert.deepEqual(range(1, 1), []);
 });
 
 QUnit.test('negative', function(assert) {
-  assert.deepEqual(range(-1, 1), [-1, 0, 1]);
+  assert.deepEqual(range(-1, 2), [-1, 0, 1]);
 });
 
 QUnit.module('from');
