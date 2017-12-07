@@ -1,4 +1,12 @@
-export const range = (count, start = 0) => count <= 0 ? [] : Array(count).fill().map((_, i) => i + start);
+export const range = (start, end) => {
+  const result = [];
+
+  for (let i = start; i < end; i++) {
+    result.push(i);
+  }
+
+  return result;
+};
 
 export const flatten = lists => lists.reduce((x, y) => x.concat(y), []);
 
