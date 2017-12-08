@@ -15,6 +15,14 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
 };
 
 export const formatVttPlaylist = ({ attributes, segments }) => {
+  if (segments === undefined) {
+    segments = [{
+      uri: attributes.url,
+      timeline: attributes.periodIndex,
+      resolvedUri: attributes.url || '',
+      duration: attributes.sourceDuration
+    }];
+  }
   return {
     attributes: {
       NAME: attributes.id,
@@ -86,6 +94,7 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
     attributes: {
       NAME: attributes.id,
       AUDIO: 'audio',
+      SUBTITLES: 'subs',
       RESOLUTION: {
         width: parseInt(attributes.width, 10),
         height: parseInt(attributes.height, 10)
@@ -142,7 +151,7 @@ export const toM3u8 = dashPlaylists => {
   }
 
   // TODO: vtt playlists not yet supported
-  if (vttPlaylists.length && false) {
+  if (vttPlaylists.length) {
     master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists);
   }
 
