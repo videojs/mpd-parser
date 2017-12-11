@@ -101,9 +101,6 @@ export const parsedManifest = {
       }
     },
     ['CLOSED-CAPTIONS']: {},
-    // Subtitles feature is turned off
-    SUBTITLES: {},
-    /*
     SUBTITLES: {
       subs: {
         en: {
@@ -118,7 +115,12 @@ export const parsedManifest = {
             },
             endList: true,
             resolvedUri: 'https://example.com/en.vtt',
-            segments: undefined,
+            segments: [{
+              duration: 6,
+              resolvedUri: 'https://example.com/en.vtt',
+              timeline: 0,
+              uri: 'https://example.com/en.vtt'
+            }],
             timeline: 0,
             uri: ''
           }],
@@ -136,7 +138,12 @@ export const parsedManifest = {
             },
             endList: true,
             resolvedUri: 'https://example.com/es.vtt',
-            segments: undefined,
+            segments: [{
+              duration: 6,
+              resolvedUri: 'https://example.com/es.vtt',
+              timeline: 0,
+              uri: 'https://example.com/es.vtt'
+            }],
             timeline: 0,
             uri: ''
           }],
@@ -144,12 +151,12 @@ export const parsedManifest = {
         }
       }
     },
-    */
     VIDEO: {}
   },
   playlists: [{
     attributes: {
       AUDIO: 'audio',
+      SUBTITLES: 'subs',
       BANDWIDTH: 449000,
       CODECS: 'avc1.420015',
       NAME: '482',
@@ -194,6 +201,7 @@ export const parsedManifest = {
   }, {
     attributes: {
       AUDIO: 'audio',
+      SUBTITLES: 'subs',
       BANDWIDTH: 3971000,
       CODECS: 'avc1.64001e',
       NAME: '720',
