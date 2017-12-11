@@ -150,7 +150,6 @@ export const toM3u8 = dashPlaylists => {
     master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists);
   }
 
-  // TODO: vtt playlists not yet supported
   if (vttPlaylists.length) {
     master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists);
   }

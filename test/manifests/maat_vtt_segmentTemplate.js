@@ -101,9 +101,7 @@ export const parsedManifest = {
       }
     },
     ['CLOSED-CAPTIONS']: {},
-    // Subtitles feature is turned off
     SUBTITLES: {},
-    /*
     SUBTITLES: {
       subs: {
         en: {
@@ -144,7 +142,6 @@ export const parsedManifest = {
         }
       }
     },
-    */
     VIDEO: {}
   },
   playlists: [{
@@ -194,6 +191,7 @@ export const parsedManifest = {
   }, {
     attributes: {
       AUDIO: 'audio',
+      SUBTITLES: 'subs'
       BANDWIDTH: 3971000,
       CODECS: 'avc1.64001e',
       NAME: '720',
