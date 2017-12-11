@@ -15,7 +15,7 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
 };
 
 export const formatVttPlaylist = ({ attributes, segments }) => {
-  if (segments === undefined) {
+  if (typeof segments === 'undefined') {
     segments = [{
       uri: attributes.url,
       timeline: attributes.periodIndex,
