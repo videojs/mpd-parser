@@ -88,7 +88,6 @@ QUnit.test('playlists', function(assert) {
         }
       },
       ['CLOSED-CAPTIONS']: {},
-      SUBTITLES: {},
       SUBTITLES: {
         subs: {
           text: {

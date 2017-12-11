@@ -101,7 +101,6 @@ export const parsedManifest = {
       }
     },
     ['CLOSED-CAPTIONS']: {},
-    SUBTITLES: {},
     SUBTITLES: {
       subs: {
         en: {
@@ -191,7 +190,7 @@ export const parsedManifest = {
   }, {
     attributes: {
       AUDIO: 'audio',
-      SUBTITLES: 'subs'
+      SUBTITLES: 'subs',
       BANDWIDTH: 3971000,
       CODECS: 'avc1.64001e',
       NAME: '720',
