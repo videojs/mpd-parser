@@ -115,7 +115,12 @@ export const parsedManifest = {
             },
             endList: true,
             resolvedUri: 'https://example.com/en.vtt',
-            segments: undefined,
+            segments: [{
+              duration: 6,
+              resolvedUri: 'https://example.com/en.vtt',
+              timeline: 0,
+              uri: 'https://example.com/en.vtt'
+            }],
             timeline: 0,
             uri: ''
           }],
@@ -133,7 +138,12 @@ export const parsedManifest = {
             },
             endList: true,
             resolvedUri: 'https://example.com/es.vtt',
-            segments: undefined,
+            segments: [{
+              duration: 6,
+              resolvedUri: 'https://example.com/es.vtt',
+              timeline: 0,
+              uri: 'https://example.com/es.vtt'
+            }],
             timeline: 0,
             uri: ''
           }],
@@ -146,6 +156,7 @@ export const parsedManifest = {
   playlists: [{
     attributes: {
       AUDIO: 'audio',
+      SUBTITLES: 'subs',
       BANDWIDTH: 449000,
       CODECS: 'avc1.420015',
       NAME: '482',
