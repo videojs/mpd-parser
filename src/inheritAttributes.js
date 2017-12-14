@@ -1,23 +1,24 @@
-import { flatten, from } from './utils/list';
+import { flatten } from './utils/list';
 import { shallowMerge, getAttributes } from './utils/object';
 import { parseDuration } from './utils/time';
+import { findChildren, getContent } from './utils/xml';
 import resolveUrl from './resolveUrl';
 import errors from './errors';
 
 export const rep = mpdAttributes => (period, periodIndex) => {
-  const adaptationSets = from(period.getElementsByTagName('AdaptationSet'));
+  const adaptationSets = findChildren(period, 'AdaptationSet');
 
   const representationsByAdaptationSet = adaptationSets.map(adaptationSet => {
     const adaptationSetAttributes = getAttributes(adaptationSet);
 
-    const role = adaptationSet.getElementsByTagName('Role')[0];
+    const role = findChildren(adaptationSet, 'Role')[0];
     const roleAttributes = { role: getAttributes(role) };
 
     const attrs = shallowMerge({ periodIndex }, mpdAttributes, adaptationSetAttributes, roleAttributes);
 
-    const segmentTemplate = adaptationSet.getElementsByTagName('SegmentTemplate')[0];
-    const segmentList = adaptationSet.getElementsByTagName('SegmentList')[0];
-    const segmentBase = adaptationSet.getElementsByTagName('SegmentBase')[0];
+    const segmentTemplate = findChildren(adaptationSet, 'SegmentTemplate')[0];
+    const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
+    const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
 
     const segmentType = {
       segmentTemplate: segmentTemplate && getAttributes(segmentTemplate),
@@ -25,13 +26,12 @@ export const rep = mpdAttributes => (period, periodIndex) => {
       segmentBase: segmentBase && getAttributes(segmentBase)
     };
 
-    const representations = from(adaptationSet.getElementsByTagName('Representation'));
+    const representations = findChildren(adaptationSet, 'Representation');
 
     const inherit = representation => {
       // vtt tracks may use single file in BaseURL
-      let baseUrl = representation.getElementsByTagName('BaseURL')[0];
-
-      baseUrl = baseUrl && baseUrl.innerHTML || '';
+      const BaseUrl = findChildren(representation, 'BaseURL')[0];
+      const baseUrl = BaseUrl ? getContent(BaseUrl) : '';
       const attributes = shallowMerge(attrs, getAttributes(representation), { url: baseUrl });
 
       return { attributes, segmentType };
@@ -48,7 +48,7 @@ export const representationsByPeriod = (periods, mpdAttributes) => {
 };
 
 export const inheritAttributes = (mpd, manifestUri = '') => {
-  const periods = from(mpd.getElementsByTagName('Period'));
+  const periods = findChildren(mpd, 'Period');
 
   if (!periods.length ||
       periods.length &&
@@ -58,9 +58,7 @@ export const inheritAttributes = (mpd, manifestUri = '') => {
   }
 
   const mpdAttributes = getAttributes(mpd);
-  const BaseUrl = mpd.getElementsByTagName('BaseURL');
-
-  const baseUrl = BaseUrl && BaseUrl.length ? BaseUrl[0].innerHTML : '';
+  const baseUrl = getContent(findChildren(mpd, 'BaseURL')[0]);
 
   mpdAttributes.baseUrl = resolveUrl(manifestUri, baseUrl);
   mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration ?

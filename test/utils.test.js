@@ -1,6 +1,7 @@
 import { shallowMerge, getAttributes } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
 import { flatten, range, from } from '../src/utils/list';
+import { findChildren, getContent } from '../src/utils/xml';
 import document from 'global/document';
 import QUnit from 'qunit';
 
@@ -121,4 +122,35 @@ QUnit.test('array-like', function(assert) {
 
   assert.ok(result.map);
   assert.deepEqual(result.length, 2);
+});
+
+QUnit.module('xml', {
+  beforeEach() {
+    this.fixture = document.createElement('div');
+
+    const foo = document.createElement('test');
+    const bar = document.createElement('div');
+    const baz = document.createElement('div');
+
+    foo.innerText = 'foo ';
+    bar.innerText = 'bar';
+    baz.innerText = 'baz';
+
+    this.fixture.appendChild(foo);
+    this.fixture.appendChild(bar);
+    this.fixture.appendChild(baz);
+  }
+});
+
+QUnit.test('findChildren', function(assert) {
+  // HTML tagName properties are always capitalized, xml are not
+  assert.deepEqual(findChildren(this.fixture, 'TEST').length, 1, 'single');
+  assert.deepEqual(findChildren(this.fixture, 'DIV').length, 2, 'multiple');
+  assert.deepEqual(findChildren(this.fixture, 'EL').length, 0, 'none');
+});
+
+QUnit.test('getContent', function(assert) {
+  const result = findChildren(this.fixture, 'TEST')[0];
+
+  assert.deepEqual(getContent(result), 'foo', 'gets text and trims');
 });
