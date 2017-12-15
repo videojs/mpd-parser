@@ -1,6 +1,8 @@
 import { shallowMerge, getAttributes } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
 import { flatten, range, from } from '../src/utils/list';
+import { findChildren, getContent } from '../src/utils/xml';
+import window from 'global/window';
 import document from 'global/document';
 import QUnit from 'qunit';
 
@@ -121,4 +123,30 @@ QUnit.test('array-like', function(assert) {
 
   assert.ok(result.map);
   assert.deepEqual(result.length, 2);
+});
+
+QUnit.module('xml', {
+  beforeEach() {
+    const parser = new window.DOMParser();
+    const xmlString = `
+    <fix>
+      <test>foo </test>
+      <div>bar</div>
+      <div>baz</div>
+    </fix>`;
+
+    this.fixture = parser.parseFromString(xmlString, 'text/xml').documentElement;
+  }
+});
+
+QUnit.test('findChildren', function(assert) {
+  assert.deepEqual(findChildren(this.fixture, 'test').length, 1, 'single');
+  assert.deepEqual(findChildren(this.fixture, 'div').length, 2, 'multiple');
+  assert.deepEqual(findChildren(this.fixture, 'el').length, 0, 'none');
+});
+
+QUnit.test('getContent', function(assert) {
+  const result = findChildren(this.fixture, 'test')[0];
+
+  assert.deepEqual(getContent(result), 'foo', 'gets text and trims');
 });
