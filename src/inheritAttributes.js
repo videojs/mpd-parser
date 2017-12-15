@@ -30,8 +30,8 @@ export const rep = mpdAttributes => (period, periodIndex) => {
 
     const inherit = representation => {
       // vtt tracks may use single file in BaseURL
-      const BaseUrl = findChildren(representation, 'BaseURL')[0];
-      const baseUrl = BaseUrl ? getContent(BaseUrl) : '';
+      const baseUrlElement = findChildren(representation, 'BaseURL')[0];
+      const baseUrl = baseUrlElement ? getContent(baseUrlElement) : '';
       const attributes = shallowMerge(attrs, getAttributes(representation), { url: baseUrl });
 
       return { attributes, segmentType };
@@ -58,7 +58,8 @@ export const inheritAttributes = (mpd, manifestUri = '') => {
   }
 
   const mpdAttributes = getAttributes(mpd);
-  const baseUrl = getContent(findChildren(mpd, 'BaseURL')[0]);
+  const baseUrlElement = findChildren(mpd, 'BaseURL')[0];
+  const baseUrl = baseUrlElement ? getContent(baseUrlElement) : '';
 
   mpdAttributes.baseUrl = resolveUrl(manifestUri, baseUrl);
   mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration ?
