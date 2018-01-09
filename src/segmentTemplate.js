@@ -4,6 +4,25 @@ import resolveUrl from './resolveUrl';
 const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
 
 /**
+ * Replaces template identifiers with corresponding values. To be used as the callback
+ * for String.prototype.replace
+ *
+ * @name replaceCallback
+ * @function
+ * @param {string} match
+ *        Entire match of identifier
+ * @param {string} identifier
+ *        Name of matched identifier
+ * @param {string} format
+ *        Format tag string. Its presence indicates that padding is expected
+ * @param {string} width
+ *        Desired length of the replaced value. Values less than this width shall be left
+ *        zero padded
+ * @return {string}
+ *         Replacement for the matched identifier
+ */
+
+/**
  * Returns a function to be used as a callback for String.prototype.replace to replace
  * template identifiers
  *
@@ -17,10 +36,7 @@ const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
  *        Value of the Representation@bandwidth attribute.
  * @param {number} values.Time
  *        Timestamp value of the corresponding segment
- * @return {function(match: string,
- *                   identifier: string,
- *                   format: string,
- *                   width: string): string}
+ * @return {replaceCallback}
  *         Callback to be used with String.prototype.replace to replace identifiers
  */
 export const identifierReplacement = (values) => (match, identifier, format, width) => {
