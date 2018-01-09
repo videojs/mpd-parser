@@ -3,6 +3,23 @@ import resolveUrl from './resolveUrl';
 
 const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
 
+/**
+ * Returns a function to be used as a callback for String.prototype.replace to replace
+ * template identifiers
+ *
+ * @param {Obect} values
+ *        Object containing values that shall be used to replace known identifiers
+ * @param {number} values.RepresentationID
+ *        Value of the Representation@id attribute
+ * @param {number} values.Number
+ *        Number of the corresponding segment
+ * @param {number} values.Bandwidth
+ *        Value of the Representation@bandwidth attribute.
+ * @param {number} values.Time
+ *        Timestamp value of the corresponding segment
+ * @return {(match: string, identifier: string, format: string, width: string) => string}
+ *         Callback to be used with String.prototype.replace to replace identifiers
+ */
 export const identifierReplacement = (values) => (match, identifier, format, width) => {
   if (match === '$$') {
     // escape sequence
@@ -33,9 +50,44 @@ export const identifierReplacement = (values) => (match, identifier, format, wid
   return `${(new Array(width - value.length + 1)).join('0')}${value}`;
 };
 
+/**
+ * Constructs a segment url from a template string
+ *
+ * @param {string} url
+ *        Template string to construct url from
+ * @param {Obect} values
+ *        Object containing values that shall be used to replace known identifiers
+ * @param {number} values.RepresentationID
+ *        Value of the Representation@id attribute
+ * @param {number} values.Number
+ *        Number of the corresponding segment
+ * @param {number} values.Bandwidth
+ *        Value of the Representation@bandwidth attribute.
+ * @param {number} values.Time
+ *        Timestamp value of the corresponding segment
+ * @return {string}
+ *         Segment url with identifiers replaced
+ */
 export const constructTemplateUrl = (url, values) =>
   url.replace(identifierPattern, identifierReplacement(values));
 
+/**
+ * Uses information provided by SegmentTemplate@duration attribute to determine segment
+ * timing and duration
+ *
+ * @param {number} start
+ *        The start number for the first segment of this period
+ * @param {number} timeline
+ *        The timeline (period index) for the first segment of this period
+ * @param {number} timescale
+ *        The timescale for the timestamps contained within the media content
+ * @param {number} duration
+ *        Duration of each segment
+ * @param {number} sourceDuration
+ *        Duration of the entire Media Presentation
+ * @return {{number: number, duration: number, time: number, timeline: number}[]}
+ *         List of Objects with segment timing and duration info
+ */
 export const parseByDuration = (start, timeline, timescale, duration, sourceDuration) => {
   const count = Math.ceil(sourceDuration / (duration / timescale));
 
@@ -53,6 +105,23 @@ export const parseByDuration = (start, timeline, timescale, duration, sourceDura
   });
 };
 
+/**
+ * Uses information provided by SegmentTemplate.SegmentTimeline to determine segment
+ * timing and duration
+ *
+ * @param {number} start
+ *        The start number for the first segment of this period
+ * @param {number} timeline
+ *        The timeline (period index) for the first segment of this period
+ * @param {number} timescale
+ *        The timescale for the timestamps contained within the media content
+ * @param {Object[]} segmentTimeline
+ *        List of objects representing the attributes of each S element contained within
+ * @param {number} sourceDuration
+ *        Duration of the entire Media Presentation
+ * @return {{number: number, duration: number, time: number, timeline: number}[]}
+ *         List of Objects with segment timing and duration info
+ */
 export const parseByTimeline =
 (start, timeline, timescale, segmentTimeline, sourceDuration) => {
   const segments = [];
@@ -124,6 +193,19 @@ export const parseByTimeline =
   return segments;
 };
 
+/**
+ * Generates a list of objects containing timing and duration information about each
+ * segment needed to generate segment uris and the complete segment object
+ *
+ * @param {Object} attributes
+ *        Object containing all inherited attributes from parent elements with attribute
+ *        names as keys
+ * @param {Object[]|undefined} segmentTimeline
+ *        List of objects representing the attributes of each S element contained within
+ *        the SegmentTimeline element
+ * @return {{number: number, duration: number, time: number, timeline: number}[]}
+ *         List of Objects with segment timing and duration info
+ */
 export const parseTemplateInfo = (attributes, segmentTimeline) => {
   const start = parseInt(attributes.startNumber || 1, 10);
   const timescale = parseInt(attributes.timescale || 1, 10);
@@ -155,6 +237,18 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
 
 };
 
+/**
+ * Generates a list of segments using information provided by the SegmentTemplate element
+ *
+ * @param {Object} attributes
+ *        Object containing all inherited attributes from parent elements with attribute
+ *        names as keys
+ * @param {Object[]|undefined} segmentTimeline
+ *        List of objects representing the attributes of each S element contained within
+ *        the SegmentTimeline element
+ * @return {Object[]}
+ *         List of segment objects
+ */
 export const segmentsFromTemplate = (attributes, segmentTimeline) => {
   const templateValues = {
     RepresentationID: attributes.id,
