@@ -17,7 +17,10 @@ const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
  *        Value of the Representation@bandwidth attribute.
  * @param {number} values.Time
  *        Timestamp value of the corresponding segment
- * @return {(match: string, identifier: string, format: string, width: string) => string}
+ * @return {function(match: string,
+ *                   identifier: string,
+ *                   format: string,
+ *                   width: string): string}
  *         Callback to be used with String.prototype.replace to replace identifiers
  */
 export const identifierReplacement = (values) => (match, identifier, format, width) => {
