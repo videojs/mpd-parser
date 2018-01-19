@@ -1,39 +1,6 @@
-import { range } from './utils/list';
 import { shallowMerge } from './utils/object';
-import resolveUrl from './resolveUrl';
 import errors from './errors';
-
-export const segmentsFromTemplate = (attributes) => {
-  const startNumber = parseInt(attributes.startNumber, 10);
-  const duration = parseInt(attributes.duration, 10);
-  const timescale = parseInt(attributes.timescale, 10);
-
-  const initSegment = attributes.initialization ? attributes.initialization
-    .replace(/\$RepresentationID\$/gi, attributes.id) : '';
-
-  const segmentDuration = (duration / timescale);
-  const segmentCount = Math.round(attributes.sourceDuration / segmentDuration);
-
-  const indexes = segmentCount ? range(startNumber, startNumber + segmentCount) : [];
-
-  return indexes.map(i => {
-    // TODO: deal with padding control characters
-    // $<token>...$
-    const uri = attributes.media.replace(/\$Number\$/gi, i)
-      .replace(/\$RepresentationID\$/gi, attributes.id);
-
-    return {
-      uri,
-      timeline: attributes.periodIndex,
-      duration: segmentDuration,
-      resolvedUri: resolveUrl(attributes.baseUrl, uri),
-      map: {
-        uri: initSegment,
-        resolvedUri: resolveUrl(attributes.baseUrl, initSegment)
-      }
-    };
-  });
-};
+import { segmentsFromTemplate } from './segmentTemplate';
 
 // TODO
 export const segmentsFromBase = x => [{ uri: '' }];
@@ -41,20 +8,23 @@ export const segmentsFromBase = x => [{ uri: '' }];
 // TODO
 export const segmentsFromList = x => [{ uri: '' }];
 
-export const generateSegments = ({ segmentBase, segmentList, segmentTemplate }, attributes) => {
-  if (segmentTemplate) {
-    return segmentsFromTemplate(shallowMerge(segmentTemplate, attributes));
+export const generateSegments = (segmentInfo, attributes) => {
+  if (segmentInfo.template) {
+    return segmentsFromTemplate(
+      shallowMerge(segmentInfo.template, attributes),
+      segmentInfo.timeline
+    );
   }
 
   // TODO
-  if (segmentBase) {
+  if (segmentInfo.base) {
     throw new Error(errors.UNSUPPORTED_SEGMENTATION_TYPE);
 
     // return segmentsFromBase(attributes);
   }
 
   // TODO
-  if (segmentList) {
+  if (segmentInfo.list) {
     throw new Error(errors.UNSUPPORTED_SEGMENTATION_TYPE);
 
     // return segmentsFromList(attributes);
@@ -62,8 +32,8 @@ export const generateSegments = ({ segmentBase, segmentList, segmentTemplate }, 
 };
 
 export const toPlaylists = representations => {
-  return representations.map(({ attributes, segmentType }) => {
-    const segments = generateSegments(segmentType, attributes);
+  return representations.map(({ attributes, segmentInfo }) => {
+    const segments = generateSegments(segmentInfo, attributes);
 
     return { attributes, segments };
   });

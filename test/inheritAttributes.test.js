@@ -6,7 +6,8 @@ import QUnit from 'qunit';
 QUnit.module('inheritAttributes');
 
 QUnit.test('needs at least one Period', function(assert) {
-  assert.throws(() => inheritAttributes(stringToMpdXml('<MPD></MPD>')), new RegExp(errors.INVALID_NUMBER_OF_PERIOD));
+  assert.throws(() => inheritAttributes(stringToMpdXml('<MPD></MPD>')),
+    new RegExp(errors.INVALID_NUMBER_OF_PERIOD));
 });
 
 QUnit.test('end to end', function(assert) {
@@ -18,7 +19,13 @@ QUnit.test('end to end', function(assert) {
       <AdaptationSet mimeType="video/mp4" >
           <Role value="main"></Role>
           <SegmentTemplate></SegmentTemplate>
-          <Representation bandwidth="5000000" codecs="avc1.64001e" height="404" id="test" width="720"></Representation>
+          <Representation
+            bandwidth="5000000"
+            codecs="avc1.64001e"
+            height="404"
+            id="test"
+            width="720">
+          </Representation>
         </AdaptationSet>
         <AdaptationSet mimeType="text/vtt" lang="en">
           <Representation bandwidth="256" id="en">
@@ -47,10 +54,11 @@ QUnit.test('end to end', function(assert) {
       url: '',
       width: '720'
     },
-    segmentType: {
-      segmentBase: undefined,
-      segmentList: undefined,
-      segmentTemplate: {}
+    segmentInfo: {
+      base: undefined,
+      list: undefined,
+      template: {},
+      timeline: undefined
     }
   }, {
     attributes: {
@@ -65,10 +73,11 @@ QUnit.test('end to end', function(assert) {
       sourceDuration: 30,
       url: 'https://example.com/en.vtt'
     },
-    segmentType: {
-      segmentBase: undefined,
-      segmentList: undefined,
-      segmentTemplate: undefined
+    segmentInfo: {
+      base: undefined,
+      list: undefined,
+      template: undefined,
+      timeline: undefined
     }
   }];
 

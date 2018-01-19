@@ -3,7 +3,9 @@ import QUnit from 'qunit';
 
 // manifests
 import maatVttSegmentTemplate from './manifests/maat_vtt_segmentTemplate.mpd';
-import { parsedManifest as maatVttSegmentTemplateManifest } from './manifests/maat_vtt_segmentTemplate.js';
+import {
+  parsedManifest as maatVttSegmentTemplateManifest
+} from './manifests/maat_vtt_segmentTemplate.js';
 
 QUnit.module('mpd-parser');
 

@@ -14,16 +14,23 @@ export const rep = mpdAttributes => (period, periodIndex) => {
     const role = findChildren(adaptationSet, 'Role')[0];
     const roleAttributes = { role: getAttributes(role) };
 
-    const attrs = shallowMerge({ periodIndex }, mpdAttributes, adaptationSetAttributes, roleAttributes);
+    const attrs = shallowMerge({ periodIndex },
+                              mpdAttributes,
+                              adaptationSetAttributes,
+                              roleAttributes);
 
     const segmentTemplate = findChildren(adaptationSet, 'SegmentTemplate')[0];
+    const segmentTimeline =
+      segmentTemplate && findChildren(segmentTemplate, 'SegmentTimeline')[0];
     const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
     const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
 
-    const segmentType = {
-      segmentTemplate: segmentTemplate && getAttributes(segmentTemplate),
-      segmentList: segmentList && getAttributes(segmentList),
-      segmentBase: segmentBase && getAttributes(segmentBase)
+    const segmentInfo = {
+      template: segmentTemplate && getAttributes(segmentTemplate),
+      timeline: segmentTimeline &&
+                       findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
+      list: segmentList && getAttributes(segmentList),
+      base: segmentBase && getAttributes(segmentBase)
     };
 
     const representations = findChildren(adaptationSet, 'Representation');
@@ -32,9 +39,11 @@ export const rep = mpdAttributes => (period, periodIndex) => {
       // vtt tracks may use single file in BaseURL
       const baseUrlElement = findChildren(representation, 'BaseURL')[0];
       const baseUrl = baseUrlElement ? getContent(baseUrlElement) : '';
-      const attributes = shallowMerge(attrs, getAttributes(representation), { url: baseUrl });
+      const attributes = shallowMerge(attrs,
+                                      getAttributes(representation),
+                                      { url: baseUrl });
 
-      return { attributes, segmentType };
+      return { attributes, segmentInfo };
     };
 
     return representations.map(inherit);
