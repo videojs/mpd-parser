@@ -21,9 +21,9 @@ export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
   }
 
   return flatten(
-    baseUrlElements.map(
-      baseUrlElement => referenceUrls.map(
-        reference => resolveUrl(reference, getContent(baseUrlElement)))));
+    referenceUrls.map(
+      reference => baseUrlElements.map(
+        baseUrlElement => resolveUrl(reference, getContent(baseUrlElement)))));
 };
 
 /**
@@ -103,13 +103,7 @@ export const inheritBaseUrls =
 (adaptationSetAttributes, adaptationSetBaseUrls, segmentInfo) => (representation) => {
   const repBaseUrlElements = findChildren(representation, 'BaseURL');
   const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
-
-  // vtt tracks may use single file in BaseURL
-  const url = repBaseUrlElements[0] ? getContent(repBaseUrlElements[0]) : '';
-
-  const attributes = shallowMerge(adaptationSetAttributes,
-                                  getAttributes(representation),
-                                  { url });
+  const attributes = shallowMerge(adaptationSetAttributes, getAttributes(representation));
 
   return repBaseUrls.map(baseUrl => {
     return {
@@ -144,7 +138,8 @@ export const inheritBaseUrls =
 export const toRepresentations =
 (periodAttributes, periodBaseUrls) => (adaptationSet) => {
   const adaptationSetAttributes = getAttributes(adaptationSet);
-  const adaptationSetBaseUrls = buildBaseUrls(periodBaseUrls);
+  const adaptationSetBaseUrls = buildBaseUrls(periodBaseUrls,
+                                              findChildren(adaptationSet, 'BaseURL'));
   const role = findChildren(adaptationSet, 'Role')[0];
   const roleAttributes = { role: getAttributes(role) };
   const attrs = shallowMerge(periodAttributes,

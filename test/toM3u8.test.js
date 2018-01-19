@@ -43,7 +43,7 @@ QUnit.test('playlists', function(assert) {
       bandwidth: '20000',
       periodIndex: 1,
       mimeType: 'text/vtt',
-      url: 'https://www.example.com/vtt'
+      baseUrl: 'https://www.example.com/vtt'
     }
   }, {
     attributes: {
@@ -52,7 +52,7 @@ QUnit.test('playlists', function(assert) {
       bandwidth: '10000',
       periodIndex: 1,
       mimeType: 'text/vtt',
-      url: 'https://www.example.com/vtt'
+      baseUrl: 'https://www.example.com/vtt'
     }
   }];
 
@@ -235,7 +235,7 @@ QUnit.test('playlists with segments', function(assert) {
       bandwidth: '20000',
       periodIndex: 1,
       mimeType: 'text/vtt',
-      url: 'https://www.example.com/vtt'
+      baseUrl: 'https://www.example.com/vtt'
     },
     segments: [{
       uri: '',
@@ -263,7 +263,7 @@ QUnit.test('playlists with segments', function(assert) {
       bandwidth: '10000',
       periodIndex: 1,
       mimeType: 'text/vtt',
-      url: 'https://www.example.com/vtt'
+      baseUrl: 'https://www.example.com/vtt'
     },
     segments: [{
       uri: '',

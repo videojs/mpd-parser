@@ -16,10 +16,11 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
 
 export const formatVttPlaylist = ({ attributes, segments }) => {
   if (typeof segments === 'undefined') {
+    // vtt tracks may use single file in BaseURL
     segments = [{
-      uri: attributes.url,
+      uri: attributes.baseUrl,
       timeline: attributes.periodIndex,
-      resolvedUri: attributes.url || '',
+      resolvedUri: attributes.baseUrl || '',
       duration: attributes.sourceDuration
     }];
   }
@@ -32,7 +33,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
     uri: '',
     endList: true,
     timeline: attributes.periodIndex,
-    resolvedUri: attributes.url || '',
+    resolvedUri: attributes.baseUrl || '',
     segments
   };
 };
