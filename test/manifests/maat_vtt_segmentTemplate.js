@@ -46,6 +46,15 @@ export const parsedManifest = {
               resolvedUri: 'https://www.example.com/125000/2.m4f',
               timeline: 0,
               uri: '125000/2.m4f'
+            }, {
+              duration: 0.04800000000000004,
+              map: {
+                resolvedUri: 'https://www.example.com/125000/init.m4f',
+                uri: '125000/init.m4f'
+              },
+              resolvedUri: 'https://www.example.com/125000/3.m4f',
+              timeline: 0,
+              uri: '125000/3.m4f'
             }],
             timeline: 0,
             uri: ''
@@ -92,6 +101,15 @@ export const parsedManifest = {
               resolvedUri: 'https://www.example.com/125000/es/2.m4f',
               timeline: 0,
               uri: '125000/es/2.m4f'
+            }, {
+              duration: 0.04800000000000004,
+              map: {
+                resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+                uri: '125000/es/init.m4f'
+              },
+              resolvedUri: 'https://www.example.com/125000/es/3.m4f',
+              timeline: 0,
+              uri: '125000/es/3.m4f'
             }],
             timeline: 0,
             uri: ''
@@ -195,6 +213,15 @@ export const parsedManifest = {
       resolvedUri: 'https://www.example.com/482/2.m4f',
       timeline: 0,
       uri: '482/2.m4f'
+    }, {
+      duration: 0.24425000000000008,
+      map: {
+        resolvedUri: 'https://www.example.com/482/init.m4f',
+        uri: '482/init.m4f'
+      },
+      resolvedUri: 'https://www.example.com/482/3.m4f',
+      timeline: 0,
+      uri: '482/3.m4f'
     }],
     timeline: 0,
     uri: ''
@@ -240,6 +267,15 @@ export const parsedManifest = {
       resolvedUri: 'https://www.example.com/720/2.m4f',
       timeline: 0,
       uri: '720/2.m4f'
+    }, {
+      duration: 0.24425000000000008,
+      map: {
+        resolvedUri: 'https://www.example.com/720/init.m4f',
+        uri: '720/init.m4f'
+      },
+      resolvedUri: 'https://www.example.com/720/3.m4f',
+      timeline: 0,
+      uri: '720/3.m4f'
     }],
     timeline: 0,
     uri: ''
