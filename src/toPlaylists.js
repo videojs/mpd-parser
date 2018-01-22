@@ -1,12 +1,12 @@
 import { shallowMerge } from './utils/object';
 import errors from './errors';
 import { segmentsFromTemplate } from './segmentTemplate';
+import { segmentsFromList } from './segmentList';
 
 // TODO
 export const segmentsFromBase = x => [{ uri: '' }];
 
 // TODO
-export const segmentsFromList = x => [{ uri: '' }];
 
 export const generateSegments = (segmentInfo, attributes) => {
   if (segmentInfo.template) {
@@ -23,11 +23,10 @@ export const generateSegments = (segmentInfo, attributes) => {
     // return segmentsFromBase(attributes);
   }
 
-  // TODO
   if (segmentInfo.list) {
-    throw new Error(errors.UNSUPPORTED_SEGMENTATION_TYPE);
-
-    // return segmentsFromList(attributes);
+    return segmentsFromList(
+      shallowMerge(segmentInfo.list, attributes)
+    );
   }
 };
 

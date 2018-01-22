@@ -25,11 +25,22 @@ export const rep = mpdAttributes => (period, periodIndex) => {
     const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
     const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
 
+    // OSHIN TODO: Handle this cleaner as this is used in both template and list
+    const segmentListTimeline =
+      segmentList && findChildren(segmentList, 'SegmentTimeline')[0];
+
+
     const segmentInfo = {
       template: segmentTemplate && getAttributes(segmentTemplate),
       timeline: segmentTimeline &&
                        findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
-      list: segmentList && getAttributes(segmentList),
+      list: segmentList &&
+                       shallowMerge(getAttributes(segmentList),
+                         {
+                           segmentUrls: findChildren(segmentList, 'SegmentURL').map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s))),
+                           segmentTimeline: segmentListTimeline &&
+                             findChildren(segmentListTimeline, 'S').map(s => getAttributes(s)),
+                         }),
       base: segmentBase && getAttributes(segmentBase)
     };
 
