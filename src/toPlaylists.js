@@ -2,11 +2,7 @@ import { shallowMerge } from './utils/object';
 import errors from './errors';
 import { segmentsFromTemplate } from './segmentTemplate';
 import { segmentsFromList } from './segmentList';
-
-// TODO
-export const segmentsFromBase = x => [{ uri: '' }];
-
-// TODO
+import { segmentsFromBase } from './segmentBase';
 
 export const generateSegments = (segmentInfo, attributes) => {
   if (segmentInfo.template) {
@@ -18,9 +14,7 @@ export const generateSegments = (segmentInfo, attributes) => {
 
   // TODO
   if (segmentInfo.base) {
-    throw new Error(errors.UNSUPPORTED_SEGMENTATION_TYPE);
-
-    // return segmentsFromBase(attributes);
+    return segmentsFromBase(shallowMerge(segmentInfo.base, attributes));
   }
 
   if (segmentInfo.list) {
