@@ -35,6 +35,7 @@ QUnit.test('pretty simple', function(assert) {
   assert.deepEqual(toPlaylists(representations), playlists);
 });
 
+/*
 QUnit.test('segment base', function(assert) {
   const representations = [{
     attributes: {},
@@ -58,3 +59,4 @@ QUnit.test('segment list', function(assert) {
   assert.throws(() => toPlaylists(representations),
     new RegExp(errors.UNSUPPORTED_SEGMENTATION_TYPE));
 });
+*/

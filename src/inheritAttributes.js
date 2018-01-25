@@ -2,7 +2,7 @@ import { flatten } from './utils/list';
 import { shallowMerge, getAttributes } from './utils/object';
 import { parseDuration } from './utils/time';
 import { findChildren, getContent } from './utils/xml';
-import resolveUrl from './resolveUrl';
+import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
 
 /**
@@ -59,8 +59,7 @@ export const getSegmentInformation = (adaptationSet) => {
   const segmentListTimeline =
     segmentList && findChildren(segmentList, 'SegmentTimeline')[0];
 
-  console.log(adaptationSet);
-  console.log(segmentBase);
+  const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL');
 
   return {
     template: segmentTemplate && getAttributes(segmentTemplate),
@@ -69,9 +68,10 @@ export const getSegmentInformation = (adaptationSet) => {
     list: segmentList &&
             shallowMerge(getAttributes(segmentList),
               {
-                segmentUrls: findChildren(segmentList, 'SegmentURL').map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s))),
+                segmentUrls: segmentUrls &&
+                  segmentUrls.map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s))),
                 segmentTimeline: segmentListTimeline &&
-                  findChildren(segmentListTimeline, 'S').map(s => getAttributes(s)),
+                  findChildren(segmentListTimeline, 'S').map(s => getAttributes(s))
               }),
     base: segmentBase && getAttributes(segmentBase)
   };
@@ -160,24 +160,6 @@ export const toRepresentations =
                              roleAttributes);
   let segmentInfo = getSegmentInformation(adaptationSet);
   const representations = findChildren(adaptationSet, 'Representation');
-
-  /**
-   * We need to go through each representation in the adapation in case there is segment
-   * information such as:
-   *
-   * <AdaptionSet>
-   *   <Representation>
-   *     <SegmentList>
-   *       <SegmentUrl>
-   *     </SegmentList>
-   *   <Representation>
-   * <AdaptionSet>
-   */
-  representations.forEach(representation => {
-    segmentInfo = shallowMerge(segmentInfo, getSegmentInformation(representation))
-  });
-
-  console.log(segmentInfo.base);
 
   return flatten(
     representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, segmentInfo)));

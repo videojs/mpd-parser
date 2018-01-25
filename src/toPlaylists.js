@@ -1,8 +1,7 @@
 import { shallowMerge } from './utils/object';
-import errors from './errors';
-import { segmentsFromTemplate } from './segmentTemplate';
-import { segmentsFromList } from './segmentList';
-import { segmentsFromBase } from './segmentBase';
+import { segmentsFromTemplate } from './segment/segmentTemplate';
+import { segmentsFromList } from './segment/segmentList';
+import { segmentsFromBase } from './segment/segmentBase';
 
 export const generateSegments = (segmentInfo, attributes) => {
   if (segmentInfo.template) {

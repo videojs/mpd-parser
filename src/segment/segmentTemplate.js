@@ -1,6 +1,6 @@
-import { range } from './utils/list';
-import resolveUrl from './resolveUrl';
-import { parseByDuration, parseSegmentTimeline } from './segmentTimeParser';
+import { range } from '../utils/list';
+import resolveUrl from '../utils/resolveUrl';
+import { parseByDuration, parseByTimeline } from './timeParser';
 
 const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
 

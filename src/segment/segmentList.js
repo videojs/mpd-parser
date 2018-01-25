@@ -1,6 +1,7 @@
-import { range } from './utils/list';
-import resolveUrl from './resolveUrl';
-import { parseByDuration, parseSegmentTimeline } from './segmentTimeParser';
+import { range } from '../utils/list';
+import resolveUrl from '../utils/resolveUrl';
+import { parseByDuration, parseByTimeline } from './timeParser';
+import errors from '../errors';
 
 const URLTypeToSegment = (attributes, segmentUrl) => {
   const initUri = attributes.initialization || '';
@@ -34,17 +35,24 @@ export const segmentsFromList = (attributes) => {
   const {
     timescale = 1,
     duration,
-    segmentUrls,
+    segmentUrls = [],
     segmentTimeline,
     periodIndex = 0,
     startNumber = 1
   } = attributes;
+
+  // Per spec (5.3.9.2.1) if there is more than one segment, but no way
+  // to determine segment duration OR if both SegmentTimeline and @duration
+  // are defined, it is outside of spec.
+  if ((segmentUrls.length > 1 && !duration && !segmentTimeline) ||
+      duration && segmentTimeline) {
+    throw new Error(errors.SEGMENT_TIME_UNSPECIFIED);
+  }
+
   const parsedTimescale = parseInt(timescale, 10);
   const start = parseInt(startNumber, 10);
-  let segmentTimeInfo;
-
   const segmentUrlMap = segmentUrls.map(segmentUrlObject => URLTypeToSegment(attributes, segmentUrlObject));
-
+  let segmentTimeInfo;
 
   if (duration) {
     const parsedDuration = parseInt(duration, 10);
@@ -56,7 +64,7 @@ export const segmentsFromList = (attributes) => {
       parsedDuration,
       attributes.sourceDuration);
   } else if (segmentTimeline) {
-    segmentTimeInfo = parseSegmentTimeline(start,
+    segmentTimeInfo = parseByTimeline(start,
       attributes.periodIndex,
       parsedTimescale,
       segmentTimeline,

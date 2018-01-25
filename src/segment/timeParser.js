@@ -1,5 +1,4 @@
-
-import { range } from './utils/list';
+import { range } from '../utils/list';
 /**
  * Uses information provided by SegmentTemplate.SegmentTimeline to determine segment
  * timing and duration
@@ -17,7 +16,7 @@ import { range } from './utils/list';
  * @return {{number: number, duration: number, time: number, timeline: number}[]}
  *         List of Objects with segment timing and duration info
  */
-export const parseSegmentTimeline =
+export const parseByTimeline =
 (start, timeline, timescale, segmentTimeline, sourceDuration) => {
   const segments = [];
   let time = -1;

@@ -3,7 +3,7 @@ import {
   constructTemplateUrl,
   parseTemplateInfo,
   segmentsFromTemplate
-} from '../src/segmentTemplate';
+} from '../src/segment/segmentTemplate';
 
 QUnit.module('segmentTemplate - constructTemplateUrl');
 
