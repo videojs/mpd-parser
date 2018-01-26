@@ -3,7 +3,17 @@ import resolveUrl from '../utils/resolveUrl';
 import { parseByDuration, parseByTimeline } from './timeParser';
 import errors from '../errors';
 
-const URLTypeToSegment = (attributes, segmentUrl) => {
+/**
+ * Converts a <SegmentUrl> (of type URLType from the DASH spec 5.3.9.2 Table 14)
+ * to an object that matches the output of a segment in videojs/mpd-parser
+ *
+ * @param {Object} attributes
+ *   Object containing all inherited attributes from parent elements with attribute
+ *   names as keys
+ * @param {Object} segmentUrl
+ *   <SegmentURL> node to translate into a segment object
+ */
+const SegmentURLToSegmentObject = (attributes, segmentUrl) => {
   const initUri = attributes.initialization || '';
 
   const segment = {
@@ -31,6 +41,15 @@ const URLTypeToSegment = (attributes, segmentUrl) => {
   return segment;
 };
 
+/**
+ * Generates a list of segments using information provided by the SegmentList element
+ * SegmentList (DASH SPEC Section 5.3.9.3.2) contains a set of <SegmentURL> nodes.  Each
+ * node should be translated into segment.
+ *
+ * @param {Object} attributes
+ *   Object containing all inherited attributes from parent elements with attribute
+ *   names as keys
+ */
 export const segmentsFromList = (attributes) => {
   const {
     timescale = 1,
@@ -41,17 +60,17 @@ export const segmentsFromList = (attributes) => {
     startNumber = 1
   } = attributes;
 
-  // Per spec (5.3.9.2.1) if there is more than one segment, but no way
-  // to determine segment duration OR if both SegmentTimeline and @duration
-  // are defined, it is outside of spec.
-  if ((segmentUrls.length > 1 && !duration && !segmentTimeline) ||
+  // Per spec (5.3.9.2.1) no way to determine segment duration OR
+  // if both SegmentTimeline and @duration are defined, it is outside of spec.
+  if ((!duration && !segmentTimeline) ||
       duration && segmentTimeline) {
     throw new Error(errors.SEGMENT_TIME_UNSPECIFIED);
   }
 
   const parsedTimescale = parseInt(timescale, 10);
   const start = parseInt(startNumber, 10);
-  const segmentUrlMap = segmentUrls.map(segmentUrlObject => URLTypeToSegment(attributes, segmentUrlObject));
+  const segmentUrlMap = segmentUrls.map(segmentUrlObject =>
+    SegmentURLToSegmentObject(attributes, segmentUrlObject));
   let segmentTimeInfo;
 
   if (duration) {
@@ -59,13 +78,15 @@ export const segmentsFromList = (attributes) => {
     const segmentDuration = (parsedDuration / parsedTimescale);
 
     segmentTimeInfo = parseByDuration(start,
-      attributes.periodIndex,
+      periodIndex,
       parsedTimescale,
       parsedDuration,
       attributes.sourceDuration);
-  } else if (segmentTimeline) {
+  }
+
+  if (segmentTimeline) {
     segmentTimeInfo = parseByTimeline(start,
-      attributes.periodIndex,
+      periodIndex,
       parsedTimescale,
       segmentTimeline,
       attributes.sourceDuration);
@@ -78,9 +99,10 @@ export const segmentsFromList = (attributes) => {
       segment.duration = segmentTime.duration;
       return segment;
     }
-
-    return {};
-  });
+  // Since we're mapping we should get rid of any blank segments (in case
+  // the given SegmentTimeline is handling for more elements than we have
+  // SegmentURLs for).
+  }).filter(segment => segment);
 
   return segments;
 };

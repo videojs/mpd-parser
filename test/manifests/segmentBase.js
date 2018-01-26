@@ -28,6 +28,7 @@ export const parsedManifest = {
       segments: [
         {
           duration: 6,
+          timeline: 0,
           map: {
             uri: '',
             resolvedUri: 'https://www.example.com/1080p.ts'
