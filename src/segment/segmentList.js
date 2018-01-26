@@ -66,7 +66,7 @@ export const segmentsFromList = (attributes, segmentTimeline) => {
   // Per spec (5.3.9.2.1) no way to determine segment duration OR
   // if both SegmentTimeline and @duration are defined, it is outside of spec.
   if ((!duration && !segmentTimeline) ||
-      duration && segmentTimeline) {
+      (duration && segmentTimeline)) {
     throw new Error(errors.SEGMENT_TIME_UNSPECIFIED);
   }
 
