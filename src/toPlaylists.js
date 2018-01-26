@@ -18,7 +18,7 @@ export const generateSegments = (segmentInfo, attributes) => {
 
   if (segmentInfo.list) {
     return segmentsFromList(
-      shallowMerge(segmentInfo.list, attributes)
+      shallowMerge(segmentInfo.list, attributes), segmentInfo.timeline
     );
   }
 };

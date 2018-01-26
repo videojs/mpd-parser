@@ -1,7 +1,6 @@
 import {
   toPlaylists
 } from '../src/toPlaylists';
-import errors from '../src/errors';
 import QUnit from 'qunit';
 
 QUnit.module('toPlaylists');
@@ -35,28 +34,73 @@ QUnit.test('pretty simple', function(assert) {
   assert.deepEqual(toPlaylists(representations), playlists);
 });
 
-/*
 QUnit.test('segment base', function(assert) {
   const representations = [{
-    attributes: {},
+    attributes: { baseUrl: 'http://example.com/' },
     segmentInfo: {
       base: true
     }
   }];
 
-  assert.throws(() => toPlaylists(representations),
-    new RegExp(errors.UNSUPPORTED_SEGMENTATION_TYPE));
+  const playlists = [{
+    attributes: { baseUrl: 'http://example.com/' },
+    segments: [{
+      map: {
+        resolvedUri: 'http://example.com/',
+        uri: ''
+      },
+      resolvedUri: 'http://example.com/',
+      uri: 'http://example.com/'
+    }]
+  }];
+
+  assert.deepEqual(toPlaylists(representations), playlists);
 });
 
 QUnit.test('segment list', function(assert) {
   const representations = [{
-    attributes: {},
+    attributes: {
+      baseUrl: 'http://example.com/',
+      duration: 10,
+      sourceDuration: 11
+    },
     segmentInfo: {
-      list: true
+      list: {
+        segmentUrls: [{
+          media: '1.fmp4'
+        }, {
+          media: '2.fmp4'
+        }]
+      }
     }
   }];
 
-  assert.throws(() => toPlaylists(representations),
-    new RegExp(errors.UNSUPPORTED_SEGMENTATION_TYPE));
+  const playlists = [{
+    attributes: {
+      baseUrl: 'http://example.com/',
+      duration: 10,
+      sourceDuration: 11
+    },
+    segments: [{
+      duration: 10,
+      map: {
+        resolvedUri: 'http://example.com/',
+        uri: ''
+      },
+      resolvedUri: 'http://example.com/1.fmp4',
+      timeline: 0,
+      uri: '1.fmp4'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://example.com/',
+        uri: ''
+      },
+      resolvedUri: 'http://example.com/2.fmp4',
+      timeline: 0,
+      uri: '2.fmp4'
+    }]
+  }];
+
+  assert.deepEqual(toPlaylists(representations), playlists);
 });
-*/

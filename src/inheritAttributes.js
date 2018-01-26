@@ -50,16 +50,12 @@ export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
  */
 export const getSegmentInformation = (adaptationSet) => {
   const segmentTemplate = findChildren(adaptationSet, 'SegmentTemplate')[0];
-  const segmentTimeline =
-    segmentTemplate && findChildren(segmentTemplate, 'SegmentTimeline')[0];
   const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
-  const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
-
-  // OSHIN TODO: Handle this cleaner as this is used in both template and list
-  const segmentListTimeline =
-    segmentList && findChildren(segmentList, 'SegmentTimeline')[0];
-
   const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL');
+  const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
+  const segmentTimelineNode = segmentList ? segmentList : segmentTemplate;
+  const segmentTimeline =
+    segmentTimelineNode && findChildren(segmentTimelineNode, 'SegmentTimeline')[0];
 
   return {
     template: segmentTemplate && getAttributes(segmentTemplate),
@@ -69,9 +65,8 @@ export const getSegmentInformation = (adaptationSet) => {
             shallowMerge(getAttributes(segmentList),
               {
                 segmentUrls: segmentUrls &&
-                  segmentUrls.map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s))),
-                segmentTimeline: segmentListTimeline &&
-                  findChildren(segmentListTimeline, 'S').map(s => getAttributes(s))
+                  segmentUrls.map(s =>
+                    shallowMerge({ tag: 'SegmentURL' }, getAttributes(s)))
               }),
     base: segmentBase && getAttributes(segmentBase)
   };
@@ -158,7 +153,7 @@ export const toRepresentations =
   const attrs = shallowMerge(periodAttributes,
                              adaptationSetAttributes,
                              roleAttributes);
-  let segmentInfo = getSegmentInformation(adaptationSet);
+  const segmentInfo = getSegmentInformation(adaptationSet);
   const representations = findChildren(adaptationSet, 'Representation');
 
   return flatten(

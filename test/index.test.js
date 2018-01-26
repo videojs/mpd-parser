@@ -28,11 +28,11 @@ QUnit.test('has parse', function(assert) {
   name: 'maat_vtt_segmentTemplate',
   input: maatVttSegmentTemplate,
   expected: maatVttSegmentTemplateManifest
-},{
+}, {
   name: 'segmentBase',
   input: segmentBaseTemplate,
   expected: segmentBaseManifest
-},{
+}, {
   name: 'segmentList',
   input: segmentListTemplate,
   expected: segmentListManifest

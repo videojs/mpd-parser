@@ -115,10 +115,9 @@ QUnit.test('gets SegmentList attributes', function(assert) {
     timeline: void 0,
     list: {
       duration: '10',
-      segmentTimeline: void 0,
       segmentUrls: []
     },
-    base: void 0,
+    base: void 0
   };
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,
