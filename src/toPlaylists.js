@@ -11,7 +11,6 @@ export const generateSegments = (segmentInfo, attributes) => {
     );
   }
 
-  // TODO
   if (segmentInfo.base) {
     return segmentsFromBase(shallowMerge(segmentInfo.base, attributes));
   }
