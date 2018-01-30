@@ -61,18 +61,20 @@ export const getSegmentInformation = (adaptationSet) => {
   const segmentInitialization = segmentInitializationNode &&
     findChildren(segmentInitializationNode, 'Initialization')[0];
 
-  // SegmentTemplate is handled slightly differently, since it can have both @initialization
-  // and an <Initialization> node.  @initialization can be templated, while the node can have a
-  // url and range specified.  If the <SegmentTemplate> has both @initialization and
-  // an <Initialization> subelement we opt to override with the node,
-  // as this interaction is not defined in the spec.
+  // SegmentTemplate is handled slightly differently, since it can have both
+  // @initialization and an <Initialization> node.  @initialization can be templated,
+  // while the node can have a url and range specified.  If the <SegmentTemplate> has
+  // both @initialization and an <Initialization> subelement we opt to override with
+  // the node, as this interaction is not defined in the spec.
   const template = segmentTemplate && getAttributes(segmentTemplate);
 
   if (template && segmentInitialization) {
-    template.initialization = (segmentInitialization && getAttributes(segmentInitialization));
+    template.initialization =
+      (segmentInitialization && getAttributes(segmentInitialization));
   } else if (template && template.initialization) {
-    // If it is @initialization we convert it to an object since this is the format that later functions
-    // will rely on for the initialization segment.  This is only valid for <SegmentTemplate>
+    // If it is @initialization we convert it to an object since this is the format that
+    // later functions will rely on for the initialization segment.  This is only valid
+    // for <SegmentTemplate>
     template.initialization = { sourceURL: template.initialization };
   }
 

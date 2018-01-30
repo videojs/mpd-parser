@@ -1,6 +1,5 @@
 import QUnit from 'qunit';
-import urlTypeConverter from '../../src/segment/urlType'
-
+import urlTypeConverter from '../../src/segment/urlType';
 
 QUnit.module('urlType - urlTypeConverter');
 
