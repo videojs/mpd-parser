@@ -69,7 +69,11 @@ export const getSegmentInformation = (adaptationSet) => {
   const template = segmentTemplate && getAttributes(segmentTemplate);
 
   if (template && segmentInitialization) {
-    template.initialization = getAttributes(segmentInitialization);
+    template.initialization = (segmentInitialization && getAttributes(segmentInitialization));
+  } else if (template && template.initialization) {
+    // If it is @initialization we convert it to an object since this is the format that later functions
+    // will rely on for the initialization segment.  This is only valid for <SegmentTemplate>
+    template.initialization = { sourceURL: template.initialization };
   }
 
   return {

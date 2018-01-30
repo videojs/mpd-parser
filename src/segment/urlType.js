@@ -30,7 +30,7 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '' }) => {
     resolvedUri: resolveUrl(baseUrl || '', source)
   };
 
-  if (source && range) {
+  if (range) {
     const ranges = range.split('-');
     const startRange = parseInt(ranges[0], 10);
     const endRange = parseInt(ranges[1], 10);

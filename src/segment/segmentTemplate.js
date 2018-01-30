@@ -153,24 +153,13 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
     Bandwidth: parseInt(attributes.bandwidth || 0, 10)
   };
 
-  let mapSegment = { uri: '', resolvedUri: resolveUrl(attributes.baseUrl || '', '') };
+  const { initialization = { sourceURL: '', range: '' } } = attributes;
 
-  if (attributes.initialization && typeof attributes.initialization === 'string') {
-    const mapUri = constructTemplateUrl(attributes.initialization || '', templateValues);
-
-    mapSegment = {
-      uri: mapUri,
-      resolvedUri: resolveUrl(attributes.baseUrl || '', mapUri)
-    };
-  }
-
-  if (attributes.initialization && typeof attributes.initialization === 'object') {
-    mapSegment = urlTypeToSegment({
-      baseUrl: attributes.baseUrl,
-      source: attributes.initialization.sourceURL,
-      range: attributes.initialization.range
-    });
-  }
+  const mapSegment = urlTypeToSegment({
+    baseUrl: attributes.baseUrl,
+    source: constructTemplateUrl(initialization.sourceURL, templateValues),
+    range: initialization.range
+  });
 
   const segments = parseTemplateInfo(attributes, segmentTimeline);
 

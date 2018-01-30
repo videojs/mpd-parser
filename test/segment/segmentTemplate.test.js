@@ -698,7 +698,9 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
     timescale: '1000',
     bandwidth: '100',
     id: 'Rep1',
-    initialization: '$RepresentationID$/$Bandwidth$/init.mp4',
+    initialization: {
+      sourceURL: '$RepresentationID$/$Bandwidth$/init.mp4'
+    },
     media: '$RepresentationID$/$Bandwidth$/$Number%03d$-$Time%05d$.mp4',
     periodIndex: 1,
     baseUrl: 'https://example.com/'
