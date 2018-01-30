@@ -51,24 +51,41 @@ export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
 export const getSegmentInformation = (adaptationSet) => {
   const segmentTemplate = findChildren(adaptationSet, 'SegmentTemplate')[0];
   const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
-  const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL');
+  const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL')
+    .map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s)));
   const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
-  const segmentTimelineNode = segmentList ? segmentList : segmentTemplate;
+  const segmentTimelineNode = segmentList || segmentTemplate;
   const segmentTimeline =
     segmentTimelineNode && findChildren(segmentTimelineNode, 'SegmentTimeline')[0];
+  const segmentInitializationNode = segmentList || segmentBase || segmentTemplate;
+  const segmentInitialization = segmentInitializationNode &&
+    findChildren(segmentInitializationNode, 'Initialization')[0];
+
+  // SegmentTemplate is handled slightly differently, since it can have both @initialization
+  // and an <Initialization> node.  @initialization can be templated, while the node can have a
+  // url and range specified.  If the <SegmentTemplate> has both @initialization and
+  // an <Initialization> subelement we opt to override with the node,
+  // as this interaction is not defined in the spec.
+  const template = segmentTemplate && getAttributes(segmentTemplate);
+
+  if (template && segmentInitialization) {
+    template.initialization = getAttributes(segmentInitialization);
+  }
 
   return {
-    template: segmentTemplate && getAttributes(segmentTemplate),
+    template,
     timeline: segmentTimeline &&
-                     findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
-    list: segmentList &&
-            shallowMerge(getAttributes(segmentList),
-              {
-                segmentUrls: segmentUrls &&
-                  segmentUrls.map(s =>
-                    shallowMerge({ tag: 'SegmentURL' }, getAttributes(s)))
-              }),
-    base: segmentBase && getAttributes(segmentBase)
+                    findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
+    list: segmentList && shallowMerge(
+      getAttributes(segmentList),
+      {
+        segmentUrls,
+        initialization: getAttributes(segmentInitialization)
+      }),
+    base: segmentBase && shallowMerge(
+      getAttributes(segmentBase), {
+        initialization: getAttributes(segmentInitialization)
+      })
   };
 };
 

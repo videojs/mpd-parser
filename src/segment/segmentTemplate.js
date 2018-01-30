@@ -1,4 +1,5 @@
 import resolveUrl from '../utils/resolveUrl';
+import urlTypeToSegment from './urlType';
 import { parseByDuration, parseByTimeline } from './timeParser';
 
 const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
@@ -151,7 +152,26 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
     RepresentationID: attributes.id,
     Bandwidth: parseInt(attributes.bandwidth || 0, 10)
   };
-  const mapUri = constructTemplateUrl(attributes.initialization || '', templateValues);
+
+  let mapSegment = { uri: '', resolvedUri: resolveUrl(attributes.baseUrl || '', '') };
+
+  if (attributes.initialization && typeof attributes.initialization === 'string') {
+    const mapUri = constructTemplateUrl(attributes.initialization || '', templateValues);
+
+    mapSegment = {
+      uri: mapUri,
+      resolvedUri: resolveUrl(attributes.baseUrl || '', mapUri)
+    };
+  }
+
+  if (attributes.initialization && typeof attributes.initialization === 'object') {
+    mapSegment = urlTypeToSegment({
+      baseUrl: attributes.baseUrl,
+      source: attributes.initialization.sourceURL,
+      range: attributes.initialization.range
+    });
+  }
+
   const segments = parseTemplateInfo(attributes, segmentTimeline);
 
   return segments.map(segment => {
@@ -165,10 +185,7 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
       timeline: segment.timeline,
       duration: segment.duration,
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
-      map: {
-        uri: mapUri,
-        resolvedUri: resolveUrl(attributes.baseUrl || '', mapUri)
-      }
+      map: mapSegment
     };
   });
 };

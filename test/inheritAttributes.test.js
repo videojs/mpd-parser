@@ -115,7 +115,8 @@ QUnit.test('gets SegmentList attributes', function(assert) {
     timeline: void 0,
     list: {
       duration: '10',
-      segmentUrls: []
+      segmentUrls: [],
+      initialization: {}
     },
     base: void 0
   };
@@ -128,14 +129,15 @@ QUnit.test('gets SegmentBase attributes', function(assert) {
   const adaptationSet = {
     childNodes: [{
       tagName: 'SegmentBase',
-      attributes: [{ name: 'duration', value: '10' }]
+      attributes: [{ name: 'duration', value: '10' }],
+      childNodes: []
     }]
   };
   const expected = {
     template: void 0,
     timeline: void 0,
     list: void 0,
-    base: { duration: '10' }
+    base: { duration: '10', initialization: {} }
   };
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,

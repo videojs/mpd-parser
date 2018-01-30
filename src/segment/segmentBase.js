@@ -1,5 +1,5 @@
-import resolveUrl from '../utils/resolveUrl';
 import errors from '../errors';
+import urlTypeConverter from './urlType';
 import { parseByDuration } from './timeParser';
 
 /**
@@ -15,11 +15,12 @@ import { parseByDuration } from './timeParser';
 export const segmentsFromBase = (attributes) => {
   const {
     baseUrl,
-    initialization = '',
+    initialization = {},
     sourceDuration,
     timescale = 1,
     startNumber = 1,
     periodIndex = 0,
+    indexRange = '',
     duration
   } = attributes;
 
@@ -28,14 +29,15 @@ export const segmentsFromBase = (attributes) => {
     throw new Error(errors.NO_BASE_URL);
   }
 
-  const segment = {
-    map: {
-      uri: initialization,
-      resolvedUri: resolveUrl(attributes.baseUrl || '', initialization)
-    },
-    resolvedUri: resolveUrl(attributes.baseUrl || '', ''),
-    uri: attributes.baseUrl
-  };
+  const initSegment = urlTypeConverter({
+    baseUrl,
+    source: initialization.sourceURL,
+    range: initialization.range
+  });
+  const segment = urlTypeConverter({ baseUrl, source: baseUrl, range: indexRange });
+
+  segment.map = initSegment;
+
   const parsedTimescale = parseInt(timescale, 10);
 
   // If there is a duration, use it, otherwise use the given duration of the source

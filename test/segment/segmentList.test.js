@@ -19,7 +19,7 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     }, {
       media: '5.fmp4'
     }],
-    initialization: 'init.fmp4',
+    initialization: { sourceURL: 'init.fmp4' },
     periodIndex: 0,
     startNumber: 1,
     baseUrl: 'http://example.com/'
@@ -93,7 +93,7 @@ QUnit.test('truncates if segmentTimeline does not apply for all segments',
       }, {
         media: '5.fmp4'
       }],
-      initialization: 'init.fmp4',
+      initialization: { sourceURL: 'init.fmp4' },
       periodIndex: 0,
       startNumber: 1,
       baseUrl: 'http://example.com/'
@@ -140,7 +140,7 @@ QUnit.test('if segment timeline is too long does not add extra blank segments',
       }, {
         media: '5.fmp4'
       }],
-      initialization: 'init.fmp4',
+      initialization: { sourceURL: 'init.fmp4' },
       periodIndex: 0,
       startNumber: 1,
       baseUrl: 'http://example.com/'
@@ -213,7 +213,7 @@ QUnit.test('uses duration to set segments', function(assert) {
     }, {
       media: '5.fmp4'
     }],
-    initialization: 'init.fmp4',
+    initialization: { sourceURL: 'init.fmp4' },
     duration: 10,
     periodIndex: 0,
     startNumber: 1,
@@ -282,7 +282,7 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     }, {
       media: '5.fmp4'
     }],
-    initialization: 'init.fmp4',
+    initialization: { sourceURL: 'init.fmp4' },
     duration: 10,
     timescale: 2,
     periodIndex: 0,
@@ -346,7 +346,7 @@ QUnit.test('timescale sets duration of last segment correctly', function(assert)
     }, {
       media: '2.fmp4'
     }],
-    initialization: 'init.fmp4',
+    initialization: { sourceURL: 'init.fmp4' },
     duration: 10,
     timescale: 1,
     periodIndex: 0,
@@ -385,7 +385,7 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
       media: '1.fmp4',
       mediaRange: '201-400'
     }],
-    initialization: 'init.fmp4',
+    initialization: { sourceURL: 'init.fmp4' },
     duration: 10,
     timescale: 1,
     periodIndex: 0,
@@ -432,7 +432,7 @@ QUnit.test('throws error if more than 1 segment and no duration or timeline',
         media: '2.fmp4'
       }],
       duration: 10,
-      initialization: 'init.fmp4',
+      initialization: { sourceURL: 'init.fmp4' },
       timescale: 1,
       periodIndex: 0,
       startNumber: 1,
@@ -457,7 +457,7 @@ QUnit.test('throws error if timeline and duration are both defined', function(as
     }, {
       media: '2.fmp4'
     }],
-    initialization: 'init.fmp4',
+    initialization: { sourceURL: 'init.fmp4' },
     timescale: 1,
     periodIndex: 0,
     startNumber: 1,
@@ -467,4 +467,49 @@ QUnit.test('throws error if timeline and duration are both defined', function(as
 
   assert.throws(() => segmentsFromList(inputAttributes),
     new Error(errors.SEGMENT_TIME_UNSPECIFIED));
+});
+
+QUnit.test('translates ranges in <Initialization> node', function(assert) {
+  const inputAttributes = {
+    segmentUrls: [{
+      media: '1.fmp4'
+    }, {
+      media: '1.fmp4'
+    }],
+    initialization: { sourceURL: 'init.fmp4', range: '121-125' },
+    duration: 10,
+    timescale: 1,
+    periodIndex: 0,
+    startNumber: 1,
+    sourceDuration: 20,
+    baseUrl: 'http://example.com/'
+  };
+
+  assert.deepEqual(segmentsFromList(inputAttributes), [{
+    duration: 10,
+    map: {
+      resolvedUri: 'http://example.com/init.fmp4',
+      uri: 'init.fmp4',
+      byterange: {
+        length: 4,
+        offset: 121
+      }
+    },
+    resolvedUri: 'http://example.com/1.fmp4',
+    timeline: 0,
+    uri: '1.fmp4'
+  }, {
+    duration: 10,
+    map: {
+      resolvedUri: 'http://example.com/init.fmp4',
+      uri: 'init.fmp4',
+      byterange: {
+        length: 4,
+        offset: 121
+      }
+    },
+    resolvedUri: 'http://example.com/1.fmp4',
+    timeline: 0,
+    uri: '1.fmp4'
+  }]);
 });

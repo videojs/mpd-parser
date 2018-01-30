@@ -740,3 +740,67 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
     'creates segments from template');
 });
 
+QUnit.test('constructs simple segment list and with <Initialization> node', function(assert) {
+  const attributes = {
+    startNumber: '0',
+    duration: '6000',
+    sourceDuration: 16,
+    timescale: '1000',
+    bandwidth: '100',
+    id: 'Rep1',
+    initialization: {
+      sourceURL: 'init.mp4',
+      range: '121-125'
+    },
+    media: '$RepresentationID$/$Bandwidth$/$Number%03d$-$Time%05d$.mp4',
+    periodIndex: 1,
+    baseUrl: 'https://example.com/'
+  };
+  const segments = [
+    {
+      duration: 6,
+      map: {
+        resolvedUri: 'https://example.com/init.mp4',
+        uri: 'init.mp4',
+        byterange: {
+          length: 4,
+          offset: 121
+        }
+      },
+      resolvedUri: 'https://example.com/Rep1/100/000-00000.mp4',
+      timeline: 1,
+      uri: 'Rep1/100/000-00000.mp4'
+    },
+    {
+      duration: 6,
+      map: {
+        resolvedUri: 'https://example.com/init.mp4',
+        uri: 'init.mp4',
+        byterange: {
+          length: 4,
+          offset: 121
+        }
+      },
+      resolvedUri: 'https://example.com/Rep1/100/001-06000.mp4',
+      timeline: 1,
+      uri: 'Rep1/100/001-06000.mp4'
+    },
+    {
+      duration: 4,
+      map: {
+        resolvedUri: 'https://example.com/init.mp4',
+        uri: 'init.mp4',
+        byterange: {
+          length: 4,
+          offset: 121
+        }
+      },
+      resolvedUri: 'https://example.com/Rep1/100/002-12000.mp4',
+      timeline: 1,
+      uri: 'Rep1/100/002-12000.mp4'
+    }
+  ];
+
+  assert.deepEqual(segmentsFromTemplate(attributes, void 0), segments,
+    'creates segments from template');
+});

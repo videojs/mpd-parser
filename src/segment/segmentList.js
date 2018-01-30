@@ -1,5 +1,5 @@
-import resolveUrl from '../utils/resolveUrl';
 import { parseByDuration, parseByTimeline } from './timeParser';
+import urlTypeConverter from './urlType';
 import errors from '../errors';
 
 /**
@@ -14,29 +14,21 @@ import errors from '../errors';
  * @return {Object} translated segment object
  */
 const SegmentURLToSegmentObject = (attributes, segmentUrl) => {
-  const initUri = attributes.initialization || '';
+  const { baseUrl, initialization = {} } = attributes;
 
-  const segment = {
-    map: {
-      uri: initUri,
-      resolvedUri: resolveUrl(attributes.baseUrl || '', initUri)
-    },
-    resolvedUri: resolveUrl(attributes.baseUrl || '', segmentUrl.media),
-    uri: segmentUrl.media
-  };
+  const initSegment = urlTypeConverter({
+    baseUrl,
+    source: initialization.sourceURL,
+    range: initialization.range
+  });
 
-  // Follows byte-range-spec per RFC2616
-  // @see https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35.1
-  if (segmentUrl.mediaRange) {
-    const ranges = segmentUrl.mediaRange.split('-');
-    const startRange = parseInt(ranges[0], 10);
-    const endRange = parseInt(ranges[1], 10);
+  const segment = urlTypeConverter({
+    baseUrl,
+    source: segmentUrl.media,
+    range: segmentUrl.mediaRange
+  });
 
-    segment.byterange = {
-      length: endRange - startRange,
-      offset: startRange
-    };
-  }
+  segment.map = initSegment;
 
   return segment;
 };
