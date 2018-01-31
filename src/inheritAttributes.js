@@ -81,7 +81,7 @@ export const getSegmentInformation = (adaptationSet) => {
   return {
     template,
     timeline: segmentTimeline &&
-                    findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
+      findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
     list: segmentList && shallowMerge(
       getAttributes(segmentList),
       {
