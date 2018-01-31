@@ -54,12 +54,12 @@ export const getSegmentInformation = (adaptationSet) => {
   const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL')
     .map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s)));
   const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
-  const segmentTimelineNode = segmentList || segmentTemplate;
-  const segmentTimeline =
-    segmentTimelineNode && findChildren(segmentTimelineNode, 'SegmentTimeline')[0];
-  const segmentInitializationNode = segmentList || segmentBase || segmentTemplate;
-  const segmentInitialization = segmentInitializationNode &&
-    findChildren(segmentInitializationNode, 'Initialization')[0];
+  const segmentTimelineParentNode = segmentList || segmentTemplate;
+  const segmentTimeline = segmentTimelineParentNode &&
+    findChildren(segmentTimelineParentNode, 'SegmentTimeline')[0];
+  const segmentInitializationParentNode = segmentList || segmentBase || segmentTemplate;
+  const segmentInitialization = segmentInitializationParentNode &&
+    findChildren(segmentInitializationParentNode, 'Initialization')[0];
 
   // SegmentTemplate is handled slightly differently, since it can have both
   // @initialization and an <Initialization> node.  @initialization can be templated,
