@@ -2,7 +2,7 @@ import { flatten } from './utils/list';
 import { shallowMerge, getAttributes } from './utils/object';
 import { parseDuration } from './utils/time';
 import { findChildren, getContent } from './utils/xml';
-import resolveUrl from './resolveUrl';
+import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
 
 /**
@@ -50,17 +50,48 @@ export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
  */
 export const getSegmentInformation = (adaptationSet) => {
   const segmentTemplate = findChildren(adaptationSet, 'SegmentTemplate')[0];
-  const segmentTimeline =
-    segmentTemplate && findChildren(segmentTemplate, 'SegmentTimeline')[0];
   const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
+  const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL')
+    .map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s)));
   const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
+  const segmentTimelineParentNode = segmentList || segmentTemplate;
+  const segmentTimeline = segmentTimelineParentNode &&
+    findChildren(segmentTimelineParentNode, 'SegmentTimeline')[0];
+  const segmentInitializationParentNode = segmentList || segmentBase || segmentTemplate;
+  const segmentInitialization = segmentInitializationParentNode &&
+    findChildren(segmentInitializationParentNode, 'Initialization')[0];
+
+  // SegmentTemplate is handled slightly differently, since it can have both
+  // @initialization and an <Initialization> node.  @initialization can be templated,
+  // while the node can have a url and range specified.  If the <SegmentTemplate> has
+  // both @initialization and an <Initialization> subelement we opt to override with
+  // the node, as this interaction is not defined in the spec.
+  const template = segmentTemplate && getAttributes(segmentTemplate);
+
+  if (template && segmentInitialization) {
+    template.initialization =
+      (segmentInitialization && getAttributes(segmentInitialization));
+  } else if (template && template.initialization) {
+    // If it is @initialization we convert it to an object since this is the format that
+    // later functions will rely on for the initialization segment.  This is only valid
+    // for <SegmentTemplate>
+    template.initialization = { sourceURL: template.initialization };
+  }
 
   return {
-    template: segmentTemplate && getAttributes(segmentTemplate),
+    template,
     timeline: segmentTimeline &&
-                     findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
-    list: segmentList && getAttributes(segmentList),
-    base: segmentBase && getAttributes(segmentBase)
+      findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
+    list: segmentList && shallowMerge(
+      getAttributes(segmentList),
+      {
+        segmentUrls,
+        initialization: getAttributes(segmentInitialization)
+      }),
+    base: segmentBase && shallowMerge(
+      getAttributes(segmentBase), {
+        initialization: getAttributes(segmentInitialization)
+      })
   };
 };
 
