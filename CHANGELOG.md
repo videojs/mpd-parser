@@ -1,6 +1,12 @@
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/videojs/mpd-parser/compare/v0.2.1...v0.3.0) (2018-02-06)
 
+### Features
+
+* Parse <SegmentList> and <SegmentBase> ([#18](https://github.com/videojs/mpd-parser/issues/18)) ([71b8976](https://github.com/videojs/mpd-parser/commit/71b8976))
+* Support for inheriting BaseURL and alternate BaseURLs ([#17](https://github.com/videojs/mpd-parser/issues/17)) ([7dad5d5](https://github.com/videojs/mpd-parser/commit/7dad5d5))
+* add support for SegmentTemplate padding format string and SegmentTimeline ([#16](https://github.com/videojs/mpd-parser/issues/16)) ([87933f6](https://github.com/videojs/mpd-parser/commit/87933f6))
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/videojs/mpd-parser/compare/v0.2.0...v0.2.1) (2017-12-15)
 
