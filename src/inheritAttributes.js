@@ -4,6 +4,7 @@ import { parseDuration } from './utils/time';
 import { findChildren, getContent } from './utils/xml';
 import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
+import merge from 'deepmerge';
 
 /**
  * Builds a list of urls that is the product of the reference urls and BaseURL values
@@ -131,17 +132,21 @@ export const getSegmentInformation = (adaptationSet) => {
  *         Callback map function
  */
 export const inheritBaseUrls =
-(adaptationSetAttributes, adaptationSetBaseUrls, segmentInfo) => (representation) => {
+(adaptationSetAttributes, adaptationSetBaseUrls, periodAdaptationSetInfo) => (representation) => {
   const repBaseUrlElements = findChildren(representation, 'BaseURL');
   const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
   const attributes = shallowMerge(adaptationSetAttributes, getAttributes(representation));
+  const segmentInfoFromRepresenation = getSegmentInformation(representation);
+  const segmentRepresentationInfo = merge(periodAdaptationSetInfo, segmentInfoFromRepresenation);
 
-  return repBaseUrls.map(baseUrl => {
-    return {
-      segmentInfo,
-      attributes: shallowMerge(attributes, { baseUrl })
-    };
-  });
+  if (segmentRepresentationInfo) {
+    return repBaseUrls.map(baseUrl => {
+      return {
+        segmentInfo: segmentRepresentationInfo,
+        attributes: shallowMerge(attributes, { baseUrl })
+      };
+    });
+  }
 };
 
 /**
@@ -167,7 +172,7 @@ export const inheritBaseUrls =
  *         Callback map function
  */
 export const toRepresentations =
-(periodAttributes, periodBaseUrls) => (adaptationSet) => {
+(periodAttributes, periodBaseUrls, periodInfo) => (adaptationSet) => {
   const adaptationSetAttributes = getAttributes(adaptationSet);
   const adaptationSetBaseUrls = buildBaseUrls(periodBaseUrls,
                                               findChildren(adaptationSet, 'BaseURL'));
@@ -178,9 +183,10 @@ export const toRepresentations =
                              roleAttributes);
   const segmentInfo = getSegmentInformation(adaptationSet);
   const representations = findChildren(adaptationSet, 'Representation');
+  const periodAdaptationSetInfo = merge(periodInfo, segmentInfo);
 
   return flatten(
-    representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, segmentInfo)));
+    representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, periodAdaptationSetInfo)));
 };
 
 /**
@@ -210,10 +216,12 @@ export const toRepresentations =
  */
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
-  const periodAttributes = shallowMerge({ periodIndex }, mpdAttributes);
+  const periodAtt = getAttributes(period);
+  const periodAttributes = shallowMerge(periodAtt, { periodIndex }, mpdAttributes);
   const adaptationSets = findChildren(period, 'AdaptationSet');
+  const periodInfo = getSegmentInformation(period);
 
-  return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls)));
+  return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodInfo)));
 };
 
 /**
@@ -243,4 +251,3 @@ export const inheritAttributes = (mpd, manifestUri = '') => {
 
   return flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls)));
 };
-

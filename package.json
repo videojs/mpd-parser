@@ -86,6 +86,7 @@
     "version": "5.0.0"
   },
   "dependencies": {
+    "deepmerge": "^2.0.1",
     "global": "^4.3.0",
     "url-toolkit": "^2.1.1"
   }
