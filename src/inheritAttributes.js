@@ -139,14 +139,12 @@ export const inheritBaseUrls =
   const segmentInfoFromRepresenation = getSegmentInformation(representation);
   const segmentRepresentationInfo = merge(periodAdaptationSetInfo, segmentInfoFromRepresenation);
 
-  if (segmentRepresentationInfo) {
-    return repBaseUrls.map(baseUrl => {
-      return {
-        segmentInfo: segmentRepresentationInfo,
-        attributes: shallowMerge(attributes, { baseUrl })
-      };
-    });
-  }
+  return repBaseUrls.map(baseUrl => {
+    return {
+      segmentInfo: segmentRepresentationInfo,
+      attributes: shallowMerge(attributes, { baseUrl })
+    };
+  });
 };
 
 /**

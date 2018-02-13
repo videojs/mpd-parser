@@ -6,6 +6,7 @@ import {
 import { stringToMpdXml } from '../src/stringToMpdXml';
 import errors from '../src/errors';
 import QUnit from 'qunit';
+import { toPlaylists } from '../src/toPlaylists';
 
 QUnit.module('buildBaseUrls');
 
@@ -895,6 +896,138 @@ QUnit.test(' End to End test for returning adaptation set info', function(assert
     </MPD>
   `
   ));
+
+  const expected = [{
+    attributes: {
+      bandwidth: '5000000',
+      baseUrl: 'https://www.example.com/base/',
+      duration: 'PT0H4M40.414S',
+      codecs: 'avc1.64001e',
+      height: '404',
+      id: 'test',
+      mediaPresentationDuration: 'PT30S',
+      mimeType: 'video/mp6',
+      periodIndex: 0,
+      role: {
+        value: 'main'
+      },
+      sourceDuration: 30,
+      width: '720'
+    },
+    segmentInfo: {
+      base: {
+        indexRange: '1212',
+        indexRangeExact: 'true',
+        initialization: {
+          range: '0-8888'
+
+        }
+      },
+      list: undefined,
+      template: undefined,
+      timeline: undefined
+    }
+  }, {
+    attributes: {
+      baseUrl: 'https://www.example.com/base/',
+      mediaPresentationDuration: 'PT30S',
+      duration: 'PT0H4M40.414S',
+      mimeType: 'video/mp4',
+      periodIndex: 0,
+      height: '545',
+      role: {
+        value: 'main'
+      },
+      sourceDuration: 30
+    },
+    segmentInfo: {
+      base: {
+        indexRange: '1212',
+        indexRangeExact: 'false',
+        initialization: {
+          range: '0-8888'
+        }
+      },
+      list: undefined,
+      template: undefined,
+      timeline: undefined
+    }
+  }, {
+    attributes: {
+      bandwidth: '256',
+      baseUrl: 'https://example.com/en.vtt',
+      duration: 'PT0H4M40.414S',
+      id: 'en',
+      lang: 'en',
+      mediaPresentationDuration: 'PT30S',
+      mimeType: 'text/vtt',
+      periodIndex: 0,
+      role: {},
+      sourceDuration: 30
+    },
+    segmentInfo: {
+      base: undefined,
+      list: undefined,
+      template: undefined,
+      timeline: undefined
+    }
+  }];
+
+  assert.equal(actual.length, 3);
+  assert.deepEqual(actual, expected);
+});
+
+// Atmost one segment at each levels
+
+QUnit.only(' Test for checking atmost one segment at each level', function(assert) {
+  const actual = toPlaylists(inheritAttributes(stringToMpdXml(
+    `
+    <MPD mediaPresentationDuration="PT30S" >
+      <BaseURL>https://www.example.com/base/</BaseURL>
+      <Period duration="PT0H4M40.414S">
+        <AdaptationSet mimeType="video/mp4" >
+          <Role value="main"></Role>
+          <SegmentTemplate duration="95232" initialization="$RepresentationID$/es/init.m4f" media="$RepresentationID$/es/$Number$.m4f" startNumber="0" timescale="48000">
+          </SegmentTemplate>
+          <SegmentList timescale="90000">
+            <RepresentationIndex sourceURL="representation-index-high"/>
+            <SegmentTimeline>
+              <S t="0" r="9" d="5400000"/>
+            </SegmentTimeline>
+            <SegmentURL media="high/segment-1.ts"/>
+            <SegmentURL media="high/segment-2.ts"/>
+            <SegmentURL media="high/segment-3.ts"/>
+            <SegmentURL media="high/segment-4.ts"/>
+            <SegmentURL media="high/segment-5.ts"/>
+            <SegmentURL media="high/segment-6.ts"/>
+            <SegmentURL media="high/segment-7.ts"/>
+            <SegmentURL media="high/segment-8.ts"/>
+            <SegmentURL media="high/segment-9.ts"/>
+            <SegmentURL media="high/segment-10.ts"/>
+          </SegmentList>
+          <Representation
+            mimeType="video/mp6"
+            bandwidth="5000000"
+            codecs="avc1.64001e"
+            height="404"
+            id="test"
+            width="720">
+            <SegmentBase></SegmentBase>
+          </Representation>
+          <Representation
+            height="545">
+            <SegmentBase></SegmentBase>
+          </Representation>
+        </AdaptationSet>
+        <AdaptationSet mimeType="text/vtt" lang="en">
+          <Representation bandwidth="256" id="en">
+            <SegmentBase></SegmentBase>
+          </Representation>
+        </AdaptationSet>
+      </Period>
+    </MPD>
+  `
+ )));
 
   const expected = [{
     attributes: {

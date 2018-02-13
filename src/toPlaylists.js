@@ -22,7 +22,7 @@ export const generateSegments = (segmentInfo, attributes) => {
   }
 };
 
-export const toPlaylists = representations => {
+export const toPlaylists = (representations) => {
   return representations.map(({ attributes, segmentInfo }) => {
     const segments = generateSegments(segmentInfo, attributes);
 
