@@ -18,6 +18,14 @@ export const parsedManifest = {
               NAME: '125000',
               ['PROGRAM-ID']: 1
             },
+            contentProtection: {
+              'com.widevine.alpha': {
+                attributes: {
+                  schemeIdUri: 'urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed'
+                },
+                pssh: new Uint8Array([181, 235, 45])
+              }
+            },
             endList: true,
             mediaSequence: 0,
             targetDuration: 1.984,
@@ -78,6 +86,14 @@ export const parsedManifest = {
               CODECS: 'mp4a.40.2',
               NAME: '125000',
               ['PROGRAM-ID']: 1
+            },
+            contentProtection: {
+              'com.widevine.alpha': {
+                attributes: {
+                  schemeIdUri: 'urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed'
+                },
+                pssh: new Uint8Array([181, 235, 45])
+              }
             },
             endList: true,
             targetDuration: 1.984,
@@ -203,6 +219,14 @@ export const parsedManifest = {
         width: 482
       }
     },
+    contentProtection: {
+      'com.widevine.alpha': {
+        attributes: {
+          schemeIdUri: 'urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed'
+        },
+        pssh: new Uint8Array([181, 235, 45])
+      }
+    },
     endList: true,
     targetDuration: 1.9185833333333333,
     mediaSequence: 0,
@@ -261,6 +285,14 @@ export const parsedManifest = {
       RESOLUTION: {
         height: 404,
         width: 720
+      }
+    },
+    contentProtection: {
+      'com.widevine.alpha': {
+        attributes: {
+          schemeIdUri: 'urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed'
+        },
+        pssh: new Uint8Array([181, 235, 45])
       }
     },
     endList: true,
