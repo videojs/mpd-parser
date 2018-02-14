@@ -7,7 +7,7 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: true,
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     segments
@@ -31,7 +31,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: true,
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
     segments
@@ -105,7 +105,7 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: true,
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     segments
