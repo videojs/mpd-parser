@@ -2,22 +2,20 @@ import { shallowMerge } from './utils/object';
 import { segmentsFromTemplate } from './segment/segmentTemplate';
 import { segmentsFromList } from './segment/segmentList';
 import { segmentsFromBase } from './segment/segmentBase';
-
+// import merge from 'deepmerge';
 export const generateSegments = (segmentInfo, attributes) => {
-  if (segmentInfo.template) {
-    return segmentsFromTemplate(
-      shallowMerge(segmentInfo.template, attributes),
-      segmentInfo.timeline
-    );
-  }
-
-  if (segmentInfo.base) {
-    return segmentsFromBase(shallowMerge(segmentInfo.base, attributes));
-  }
-
   if (segmentInfo.list) {
     return segmentsFromList(
-      shallowMerge(segmentInfo.list, attributes), segmentInfo.timeline
+      shallowMerge(attributes, segmentInfo.list), segmentInfo.timeline
+    );
+  }
+  if (segmentInfo.base) {
+    return segmentsFromBase(shallowMerge(attributes, segmentInfo.base));
+  }
+  if (segmentInfo.template) {
+    return segmentsFromTemplate(
+      shallowMerge(attributes, segmentInfo.template),
+      segmentInfo.timeline
     );
   }
 };

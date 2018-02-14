@@ -6,21 +6,33 @@
     <AdaptationSet mimeType="audio/mp4" segmentAlignment="true" startWithSAP="1" lang="en">
       <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"></Role>
       <SegmentTemplate duration="95232" initialization="$RepresentationID$/init.m4f" media="$RepresentationID$/$Number$.m4f" startNumber="0" timescale="48000"></SegmentTemplate>
-      <Representation audioSamplingRate="48000" bandwidth="63000" codecs="mp4a.40.2" id="63000"></Representation>
-      <Representation audioSamplingRate="48000" bandwidth="125000" codecs="mp4a.40.2" id="125000"></Representation>
+      <Representation audioSamplingRate="48000" bandwidth="63000" codecs="mp4a.40.2" id="63000">
+        <SegmentTemplate></SegmentTemplate>
+      </Representation>
+      <Representation audioSamplingRate="48000" bandwidth="125000" codecs="mp4a.40.2" id="125000">
+        <SegmentTemplate></SegmentTemplate>
+      </Representation>
     </AdaptationSet>
      <AdaptationSet mimeType="audio/mp4" segmentAlignment="true" startWithSAP="1" lang="es">
       <Role schemeIdUri="urn:mpeg:dash:role:2011"></Role>
       <SegmentTemplate duration="95232" initialization="$RepresentationID$/es/init.m4f" media="$RepresentationID$/es/$Number$.m4f" startNumber="0" timescale="48000"></SegmentTemplate>
-      <Representation audioSamplingRate="48000" bandwidth="63000" codecs="mp4a.40.2" id="63000"></Representation>
-      <Representation audioSamplingRate="48000" bandwidth="125000" codecs="mp4a.40.2" id="125000"></Representation>
+      <Representation audioSamplingRate="48000" bandwidth="63000" codecs="mp4a.40.2" id="63000">
+        <SegmentTemplate></SegmentTemplate>
+      </Representation>
+      <Representation audioSamplingRate="48000" bandwidth="125000" codecs="mp4a.40.2" id="125000">
+        <SegmentTemplate></SegmentTemplate>
+      </Representation>
     </AdaptationSet>
 
     <AdaptationSet mimeType="video/mp4" scanType="progressive" segmentAlignment="true" startWithSAP="1">
       <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"></Role>
       <SegmentTemplate duration="46046" initialization="$RepresentationID$/init.m4f" media="$RepresentationID$/$Number$.m4f" startNumber="0" timescale="24000"></SegmentTemplate>
-      <Representation bandwidth="449000" codecs="avc1.420015" frameRate="2997/125" height="270" id="482" width="482"></Representation>
-      <Representation bandwidth="3971000" codecs="avc1.64001e" frameRate="2997/125" height="404" id="720" width="720"></Representation>
+      <Representation bandwidth="449000" codecs="avc1.420015" frameRate="2997/125" height="270" id="482" width="482">
+        <SegmentTemplate></SegmentTemplate>
+      </Representation>
+      <Representation bandwidth="3971000" codecs="avc1.64001e" frameRate="2997/125" height="404" id="720" width="720">
+        <SegmentTemplate></SegmentTemplate>
+      </Representation>
     </AdaptationSet>
 
     <AdaptationSet mimeType="text/vtt" lang="en">

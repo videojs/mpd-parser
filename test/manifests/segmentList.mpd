@@ -4,7 +4,9 @@
   <Period>
     <AdaptationSet mimeType="video/mp4" scanType="progressive" segmentAlignment="true" startWithSAP="1">
       <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"></Role>
-      <Representation bandwidth="449000" codecs="avc1.420015" frameRate="2997/125" height="270" id="482" width="482" />
+      <Representation bandwidth="449000" codecs="avc1.420015" frameRate="2997/125" height="270" id="482" width="482" >
+        <SegmentList></SegmentList>
+      </Representation>
       <SegmentList timescale="1000" duration="1000">
         <RepresentationIndex sourceURL="representation-index-low"/>
         <SegmentURL media="low/segment-1.ts"/>
@@ -22,7 +24,11 @@
 
     <AdaptationSet mimeType="video/mp4" scanType="progressive" segmentAlignment="true" startWithSAP="1">
       <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"></Role>
-      <Representation bandwidth="3971000" codecs="avc1.420015" frameRate="2997/125" height="404" id="720" width="720" />
+      <Representation bandwidth="3971000" codecs="avc1.420015" frameRate="2997/125" height="404" id="720" width="720" >
+        <SegmentList>
+          <SegmentTimeline></SegmentTimeline>
+        </SegmentList>
+      </Representation>
       <SegmentList timescale="90000">
         <RepresentationIndex sourceURL="representation-index-high"/>
         <SegmentTimeline>
