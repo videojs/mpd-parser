@@ -1,4 +1,6 @@
 import { range } from '../utils/list';
+import { parseDuration } from '../utils/time';
+
 /**
  * Uses information provided by SegmentTemplate.SegmentTimeline to determine segment
  * timing and duration
@@ -99,6 +101,31 @@ export const parseByDuration = (start, timeline, timescale, duration, sourceDura
     }
 
     segment.time = (segment.number - start) * duration;
+
+    return segment;
+  });
+};
+
+export const parseByDurationDynamic = (attributes) => {
+  const now = Date.now() / 1000;
+  const timeline = attributes
+  const availabilityStartTime = Date.parse(attributes.availabilityStartTime) / 1000;
+  const timescale = parseInt(attributes.timescale || 1, 10);
+  const segmentDuration = parseInt(attributes.duration, 10);
+  const periodStart = parseDuration(attributes.start);
+  const periodStartWC = availabilityStartTime + periodStart;
+  const periodEndWC = now + parseDuration(attributes.minimumUpdatePeriod);
+  const periodDuration = periodEndWC - periodStartWC;
+  const repeat = Math.ceil(periodDuration * timescale / segmentDuration);
+  const startNumber = parseInt(attributes.startNumber || 1, 10);
+  const timeShiftBuffer = parseDuration(attributes.timeShiftBufferDepth) || Infinity;
+  const liveWindowEnd = Math.min(Math.floor((now - periodStartWC) / segmentDuration), startNumber + repeat);
+  const liveWindowStart = Math.max(startNumber, Math.floor((now - periodStartWC - timeShiftBuffer) / segmentDuration));
+
+  return range(liveWindowStart, liveWindowEnd).map((number) => {
+    const segment = { number, duration: segmentDuration / timescale, timeline: attributes.periodIndex };
+
+    segment.time = (segment.number - liveWindowStart) * segmentDuration;
 
     return segment;
   });

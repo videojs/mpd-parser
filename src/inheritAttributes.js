@@ -133,13 +133,14 @@ export const getSegmentInformation = (adaptationSet) => {
  *        Contains attributes inherited by the AdaptationSet
  * @param {string[]} adaptationSetBaseUrls
  *        Contains list of resolved base urls inherited by the AdaptationSet
- * @param {SegmentInformation} segmentInfo
+ * @param {SegmentInformation} adaptationSetSegmentInfo
  *        Contains Segment information for the AdaptationSet
  * @return {inheritBaseUrlsCallback}
  *         Callback map function
  */
 export const inheritBaseUrls =
-(adaptationSetAttributes, adaptationSetBaseUrls, adaptationSetSegmentInfo) => (representation) => {
+(adaptationSetAttributes, adaptationSetBaseUrls, adaptationSetSegmentInfo) =>
+(representation) => {
   const repBaseUrlElements = findChildren(representation, 'BaseURL');
   const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
   const attributes = merge(adaptationSetAttributes, getAttributes(representation));
@@ -189,8 +190,8 @@ export const toRepresentations =
   const representations = findChildren(adaptationSet, 'Representation');
   const adaptationSetSegmentInfo = merge(periodSegmentInfo, segmentInfo);
 
-  return flatten(
-    representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));
+  return flatten(representations.map(
+    inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));
 };
 
 /**
@@ -225,7 +226,8 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodI
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
-  return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
+  return flatten(adaptationSets.map(
+    toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
 };
 
 /**
@@ -239,7 +241,7 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodI
  * @return {RepresentationInformation[]}
  *         List of objects containing Representation information
  */
-export const inheritAttributes = (mpd, manifestUri = '') => {
+export const inheritAttributes = (mpd, manifestUri = '', NOW = Date.now()) => {
   const periods = findChildren(mpd, 'Period');
 
   if (periods.length !== 1) {
@@ -252,6 +254,8 @@ export const inheritAttributes = (mpd, manifestUri = '') => {
 
   mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration ?
     parseDuration(mpdAttributes.mediaPresentationDuration) : 0;
+
+  mpdAttributes.NOW = NOW;
 
   return flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls)));
 };

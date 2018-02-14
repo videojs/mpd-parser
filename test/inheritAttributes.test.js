@@ -438,7 +438,8 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test(' End to End test for checking support of segments in representation', function(assert) {
+QUnit.test(' End to End test for checking support of segments in representation',
+function(assert) {
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
@@ -540,7 +541,8 @@ QUnit.test(' End to End test for checking support of segments in representation'
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test(' End to End test for checking support of segments in period ', function(assert) {
+QUnit.test(' End to End test for checking support of segments in period ',
+function(assert) {
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
@@ -649,7 +651,8 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test(' End to End test for checking support of Segments in Adaptation set', function(assert) {
+QUnit.test(' End to End test for checking support of Segments in Adaptation set',
+function(assert) {
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
@@ -751,18 +754,30 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
   assert.deepEqual(actual, expected);
 });
 
-// Although according to the Spec, at most one set of Segment information should be present at each level,
-// This test would still handle the case and prevent errors if multiple set of segment information are present at any particular level.
+// Although according to the Spec, at most one set of Segment information should be
+// present at each level, this test would still handle the case and prevent errors if
+// multiple set of segment information are present at any particular level.
 
-QUnit.test(' Test for checking use of only one set of Segment Information when multiple are present', function(assert) {
+QUnit.test(
+'Test for checking use of only one set of Segment Information when multiple are present',
+function(assert) {
   const actual = toPlaylists(inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
       <Period duration= "PT0H4M40.414S" >
-        <AdaptationSet mimeType= "video/mp4"  segmentAlignment= "true"  startWithSAP= "1"  lang= "es" >
+        <AdaptationSet
+          mimeType= "video/mp4"
+          segmentAlignment= "true"
+          startWithSAP= "1"
+          lang= "es" >
           <Role value= "main" ></Role>
-          <SegmentTemplate duration= "95232"  initialization= "$RepresentationID$/es/init.m4f"  media= "$RepresentationID$/es/$Number$.m4f"  startNumber= "0"  timescale= "48000" >
+          <SegmentTemplate
+            duration= "95232"
+            initialization= "$RepresentationID$/es/init.m4f"
+            media= "$RepresentationID$/es/$Number$.m4f"
+            startNumber= "0"
+            timescale= "48000" >
           </SegmentTemplate>
           <SegmentList timescale= "1000"  duration= "1000" >
             <RepresentationIndex sourceURL= "representation-index-low" />
@@ -1125,18 +1140,30 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
   assert.deepEqual(actual, expected);
 });
 
-// Although the Spec states that if SegmentTemplate or SegmentList is present on one level of the hierarchy the other one shall not be present on any lower level,
-// This test would still handle the case if both are present in the hierarchy and would prevent throwing errors.
+// Although the Spec states that if SegmentTemplate or SegmentList is present on one
+// level of the hierarchy the other one shall not be present on any lower level, this
+// test would still handle the case if both are present in the hierarchy and would
+// prevent throwing errors.
 
-QUnit.test('Test to check use of either Segment Template or Segment List when both are present in the hierarchy', function(assert) {
+QUnit.test('Test to check use of either Segment Template or Segment List when both are' +
+' present in the hierarchy', function(assert) {
   const actual = toPlaylists(inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
       <Period duration= "PT0H4M40.414S" >
-        <AdaptationSet mimeType= "video/mp4"  segmentAlignment= "true"  startWithSAP= "1"  lang= "es" >
+        <AdaptationSet
+          mimeType= "video/mp4"
+          segmentAlignment= "true"
+          startWithSAP= "1"
+          lang= "es" >
           <Role value= "main" ></Role>
-          <SegmentTemplate duration= "95232"  initialization= "$RepresentationID$/es/init.m4f"  media= "$RepresentationID$/es/$Number$.m4f"  startNumber= "0"  timescale= "48000" >
+          <SegmentTemplate
+            duration= "95232"
+            initialization= "$RepresentationID$/es/init.m4f"
+            media= "$RepresentationID$/es/$Number$.m4f"
+            startNumber= "0"
+            timescale= "48000" >
           </SegmentTemplate>
           <Representation
             mimeType= "video/mp6"

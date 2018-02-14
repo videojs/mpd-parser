@@ -1,6 +1,6 @@
 import resolveUrl from '../utils/resolveUrl';
 import urlTypeToSegment from './urlType';
-import { parseByDuration, parseByTimeline } from './timeParser';
+import { parseByDuration, parseByTimeline, parseByDurationDynamic } from './timeParser';
 
 const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
 
@@ -120,6 +120,10 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
   }
 
   if (attributes.duration) {
+    if (attributes.type === 'dynamic') {
+      return parseByDurationDynamic(attributes);
+    }
+
     return parseByDuration(start,
                            attributes.periodIndex,
                            timescale,
