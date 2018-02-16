@@ -132,16 +132,20 @@ export const getSegmentInformation = (adaptationSet) => {
  *         Callback map function
  */
 export const inheritBaseUrls =
-(adaptationSetAttributes, adaptationSetBaseUrls, periodAdaptationSetInfo) => (representation) => {
+(adaptationSetAttributes, adaptationSetBaseUrls, adaptationSetSegmentInfo) => (representation) => {
   const repBaseUrlElements = findChildren(representation, 'BaseURL');
   const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
   const attributes = shallowMerge(adaptationSetAttributes, getAttributes(representation));
-  const segmentInfoFromRepresenation = getSegmentInformation(representation);
-  const segmentRepresentationInfo = merge(periodAdaptationSetInfo, segmentInfoFromRepresenation);
+  const representationSegmentInfo = getSegmentInformation(representation);
 
   return repBaseUrls.map(baseUrl => {
     return {
-      segmentInfo: segmentRepresentationInfo,
+      segmentInfo: {
+        list: adaptationSetSegmentInfo.list && representationSegmentInfo.list ? merge(adaptationSetSegmentInfo.list, representationSegmentInfo.list) : adaptationSetSegmentInfo.list && !representationSegmentInfo.list ? adaptationSetSegmentInfo.list : !adaptationSetSegmentInfo.list && representationSegmentInfo.list ? representationSegmentInfo.list : undefined,
+        template: adaptationSetSegmentInfo.template && representationSegmentInfo.template ? merge(adaptationSetSegmentInfo.template, representationSegmentInfo.template) : adaptationSetSegmentInfo.template && !representationSegmentInfo.template ? adaptationSetSegmentInfo.template : !adaptationSetSegmentInfo.template && representationSegmentInfo.template ? representationSegmentInfo.template : undefined,
+        base: adaptationSetSegmentInfo.base && representationSegmentInfo.base ? merge(adaptationSetSegmentInfo.base, representationSegmentInfo.base) : adaptationSetSegmentInfo.base && !representationSegmentInfo.base ? adaptationSetSegmentInfo.base : !adaptationSetSegmentInfo.base && representationSegmentInfo.base ? representationSegmentInfo.base : undefined,
+        timeline: adaptationSetSegmentInfo.timeline && representationSegmentInfo.timeline ? merge(adaptationSetSegmentInfo.timeline, representationSegmentInfo.timeline) : adaptationSetSegmentInfo.timeline && !representationSegmentInfo.timeline ? adaptationSetSegmentInfo.timeline : !adaptationSetSegmentInfo.timeline && representationSegmentInfo.timeline ? representationSegmentInfo.timeline : undefined
+      },
       attributes: shallowMerge(attributes, { baseUrl })
     };
   });
@@ -170,7 +174,7 @@ export const inheritBaseUrls =
  *         Callback map function
  */
 export const toRepresentations =
-(periodAttributes, periodBaseUrls, periodInfo) => (adaptationSet) => {
+(periodAttributes, periodBaseUrls, periodSegmentInfo) => (adaptationSet) => {
   const adaptationSetAttributes = getAttributes(adaptationSet);
   const adaptationSetBaseUrls = buildBaseUrls(periodBaseUrls,
                                               findChildren(adaptationSet, 'BaseURL'));
@@ -181,10 +185,15 @@ export const toRepresentations =
                              roleAttributes);
   const segmentInfo = getSegmentInformation(adaptationSet);
   const representations = findChildren(adaptationSet, 'Representation');
-  const periodAdaptationSetInfo = merge(periodInfo, segmentInfo);
+  const adaptationSetSegmentInfo = {
+    list: periodSegmentInfo.list && segmentInfo.list ? merge(periodSegmentInfo.list, segmentInfo.list) : periodSegmentInfo.list && !segmentInfo.list ? periodSegmentInfo.list : !periodSegmentInfo.list && segmentInfo.list ? segmentInfo.list : undefined,
+    template: periodSegmentInfo.template && segmentInfo.template ? merge(periodSegmentInfo.template, segmentInfo.template) : periodSegmentInfo.template && !segmentInfo.template ? periodSegmentInfo.template : !periodSegmentInfo.template && segmentInfo.template ? segmentInfo.template : undefined,
+    base: periodSegmentInfo.base && segmentInfo.base ? merge(periodSegmentInfo.base, segmentInfo.base) : periodSegmentInfo.base && !segmentInfo.base ? periodSegmentInfo.base : !periodSegmentInfo.base && segmentInfo.base ? segmentInfo.base : undefined,
+    timeline: periodSegmentInfo.timeline && segmentInfo.timeline ? merge(periodSegmentInfo.timeline, segmentInfo.timeline) : periodSegmentInfo.timeline && !segmentInfo.timeline ? periodSegmentInfo.timeline : !periodSegmentInfo.timeline && segmentInfo.timeline ? segmentInfo.timeline : undefined
+  };
 
   return flatten(
-    representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, periodAdaptationSetInfo)));
+    representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));
 };
 
 /**
@@ -217,9 +226,9 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodI
   const periodAtt = getAttributes(period);
   const periodAttributes = shallowMerge(periodAtt, { periodIndex }, mpdAttributes);
   const adaptationSets = findChildren(period, 'AdaptationSet');
-  const periodInfo = getSegmentInformation(period);
+  const periodSegmentInfo = getSegmentInformation(period);
 
-  return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodInfo)));
+  return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
 };
 
 /**
