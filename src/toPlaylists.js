@@ -1,4 +1,4 @@
-import { shallowMerge } from './utils/object';
+import { merge } from './utils/object';
 import { segmentsFromTemplate } from './segment/segmentTemplate';
 import { segmentsFromList } from './segment/segmentList';
 import { segmentsFromBase } from './segment/segmentBase';
@@ -6,16 +6,16 @@ import { segmentsFromBase } from './segment/segmentBase';
 export const generateSegments = (segmentInfo, attributes) => {
   if (segmentInfo.template) {
     return segmentsFromTemplate(
-      shallowMerge(attributes, segmentInfo.template),
+      merge(attributes, segmentInfo.template),
       segmentInfo.timeline
     );
   }
   if (segmentInfo.base) {
-    return segmentsFromBase(shallowMerge(attributes, segmentInfo.base));
+    return segmentsFromBase(merge(attributes, segmentInfo.base));
   }
   if (segmentInfo.list) {
     return segmentsFromList(
-      shallowMerge(attributes, segmentInfo.list), segmentInfo.timeline
+      merge(attributes, segmentInfo.list), segmentInfo.timeline
     );
   }
 };

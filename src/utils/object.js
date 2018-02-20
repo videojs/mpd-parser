@@ -1,13 +1,24 @@
 import { from } from './list';
 
-export const shallowMerge = (...objects) => {
-  return objects.reduce((x, y) => {
-    return Object.keys(y)
-      .reduce((o, key) => {
-        o[key] = y[key];
+export const merge = (...objects) => {
 
-        return o;
-      }, x);
+  const isObject = (obj) => {
+    return obj && typeof obj === 'object';
+  };
+
+  return objects.reduce((x, y) => {
+
+    Object.keys(y).forEach(key => {
+
+      if (Array.isArray(x[key]) && Array.isArray(y[key])) {
+        x[key] = x[key].concat(y[key]);
+      } else if (isObject(x[key]) && isObject(y[key])) {
+        x[key] = merge(x[key], y[key]);
+      } else {
+        x[key] = y[key];
+      }
+    });
+    return x;
   }, {});
 };
 

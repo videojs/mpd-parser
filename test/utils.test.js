@@ -1,4 +1,4 @@
-import { shallowMerge, getAttributes } from '../src/utils/object';
+import { getAttributes, merge } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
 import { flatten, range, from } from '../src/utils/list';
 import { findChildren, getContent } from '../src/utils/xml';
@@ -8,25 +8,25 @@ import QUnit from 'qunit';
 
 QUnit.module('utils');
 
-QUnit.module('shallowMerge');
+QUnit.module('merge');
 QUnit.test('empty', function(assert) {
-  assert.deepEqual(shallowMerge({}, { a: 1 }), { a: 1 });
-  assert.deepEqual(shallowMerge({ a: 1 }, { a: 1 }), { a: 1 });
-  assert.deepEqual(shallowMerge({ a: 1 }, {}), { a: 1 });
+  assert.deepEqual(merge({}, { a: 1 }), { a: 1 });
+  assert.deepEqual(merge({ a: 1 }, { a: 1 }), { a: 1 });
+  assert.deepEqual(merge({ a: 1 }, {}), { a: 1 });
 });
 
 QUnit.test('append', function(assert) {
-  assert.deepEqual(shallowMerge({ a: 1 }, { b: 3 }), { a: 1, b: 3 });
+  assert.deepEqual(merge({ a: 1 }, { b: 3 }), { a: 1, b: 3 });
 });
 
 QUnit.test('overwrite', function(assert) {
-  assert.deepEqual(shallowMerge({ a: 1 }, { a: 2 }), { a: 2 });
+  assert.deepEqual(merge({ a: 1 }, { a: 2 }), { a: 2 });
 });
 
 QUnit.test('empty', function(assert) {
-  assert.deepEqual(shallowMerge({}, {}), {});
-  assert.deepEqual(shallowMerge({}, 1), {});
-  assert.deepEqual(shallowMerge(1, {}), {});
+  assert.deepEqual(merge({}, {}), {});
+  assert.deepEqual(merge({}, 1), {});
+  assert.deepEqual(merge(1, {}), {});
 });
 
 QUnit.module('flatten');

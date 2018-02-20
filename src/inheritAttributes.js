@@ -1,10 +1,11 @@
 import { flatten } from './utils/list';
-import { shallowMerge, getAttributes } from './utils/object';
+import { getAttributes } from './utils/object';
 import { parseDuration } from './utils/time';
 import { findChildren, getContent } from './utils/xml';
 import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
-import merge from 'deepmerge';
+// import merge from 'deepmerge';
+import { merge } from './utils/object';
 
 /**
  * Builds a list of urls that is the product of the reference urls and BaseURL values
@@ -53,7 +54,7 @@ export const getSegmentInformation = (adaptationSet) => {
   const segmentTemplate = findChildren(adaptationSet, 'SegmentTemplate')[0];
   const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
   const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL')
-    .map(s => shallowMerge({ tag: 'SegmentURL' }, getAttributes(s)));
+    .map(s => merge({ tag: 'SegmentURL' }, getAttributes(s)));
   const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
   const segmentTimelineParentNode = segmentList || segmentTemplate;
   const segmentTimeline = segmentTimelineParentNode &&
@@ -83,13 +84,13 @@ export const getSegmentInformation = (adaptationSet) => {
     template,
     timeline: segmentTimeline &&
       findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
-    list: segmentList && shallowMerge(
+    list: segmentList && merge(
       getAttributes(segmentList),
       {
         segmentUrls,
         initialization: getAttributes(segmentInitialization)
       }),
-    base: segmentBase && shallowMerge(
+    base: segmentBase && merge(
       getAttributes(segmentBase), {
         initialization: getAttributes(segmentInitialization)
       })
@@ -143,13 +144,13 @@ export const inheritBaseUrls =
 (adaptationSetAttributes, adaptationSetBaseUrls, adaptationSetSegmentInfo) => (representation) => {
   const repBaseUrlElements = findChildren(representation, 'BaseURL');
   const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
-  const attributes = shallowMerge(adaptationSetAttributes, getAttributes(representation));
+  const attributes = merge(adaptationSetAttributes, getAttributes(representation));
   const representationSegmentInfo = getSegmentInformation(representation);
 
   return repBaseUrls.map(baseUrl => {
     return {
       segmentInfo: merge(adaptationSetSegmentInfo, representationSegmentInfo),
-      attributes: shallowMerge(attributes, { baseUrl })
+      attributes: merge(attributes, { baseUrl })
     };
   });
 };
@@ -183,7 +184,7 @@ export const toRepresentations =
                                               findChildren(adaptationSet, 'BaseURL'));
   const role = findChildren(adaptationSet, 'Role')[0];
   const roleAttributes = { role: getAttributes(role) };
-  const attrs = shallowMerge(periodAttributes,
+  const attrs = merge(periodAttributes,
                              adaptationSetAttributes,
                              roleAttributes);
   const segmentInfo = getSegmentInformation(adaptationSet);
@@ -222,7 +223,7 @@ export const toRepresentations =
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
   const periodAtt = getAttributes(period);
-  const periodAttributes = shallowMerge(mpdAttributes, periodAtt, { periodIndex });
+  const periodAttributes = merge(mpdAttributes, periodAtt, { periodIndex });
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
