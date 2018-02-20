@@ -1,5 +1,7 @@
 # mpd-parser
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/videojs/mpd-parser.svg)](https://greenkeeper.io/)
+
 mpd parser
 
 ## Table of Contents
