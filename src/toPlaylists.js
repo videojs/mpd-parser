@@ -24,6 +24,14 @@ export const toPlaylists = (representations) => {
   return representations.map(({ attributes, segmentInfo }) => {
     const segments = generateSegments(segmentInfo, attributes);
 
+    // if there is no segment duration attribute, use the largest segment duration as
+    // as target duration
+    if (!attributes.duration) {
+      attributes.duration = segments.reduce((max, segment) => {
+        return Math.max(max, Math.ceil(segment.duration));
+      }, 0);
+    }
+
     return { attributes, segments };
   });
 };

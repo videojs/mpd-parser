@@ -1,3 +1,5 @@
+import { parseDuration } from './utils/time';
+
 export const formatAudioPlaylist = ({ attributes, segments }) => {
   return {
     attributes: {
@@ -10,7 +12,9 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
     endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
-    segments
+    targetDuration: parseInt(attributes.duration, 10),
+    segments,
+    mediaSequence: segments.length ? segments[0].number : 1
   };
 };
 
@@ -34,7 +38,9 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
     endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
-    segments
+    targetDuration: parseInt(attributes.duration, 10),
+    segments,
+    mediaSequence: segments.length ? segments[0].number : 1
   };
 };
 
@@ -108,7 +114,9 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
     endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
-    segments
+    targetDuration: parseInt(attributes.duration, 10),
+    segments,
+    mediaSequence: segments.length ? segments[0].number : 1
   };
 };
 
@@ -118,7 +126,10 @@ export const toM3u8 = dashPlaylists => {
   }
 
   // grab all master attributes
-  const { sourceDuration: duration } = dashPlaylists[0].attributes;
+  const {
+    sourceDuration: duration,
+    minimumUpdatePeriod
+  } = dashPlaylists[0].attributes;
 
   const videoOnly = ({ attributes }) =>
     attributes.mimeType === 'video/mp4' || attributes.contentType === 'video';
@@ -144,7 +155,8 @@ export const toM3u8 = dashPlaylists => {
     },
     uri: '',
     duration,
-    playlists: videoPlaylists
+    playlists: videoPlaylists,
+    minimumUpdatePeriod: parseDuration(minimumUpdatePeriod) * 1000
   };
 
   if (audioPlaylists.length) {

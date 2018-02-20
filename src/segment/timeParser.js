@@ -119,8 +119,8 @@ export const parseByDurationDynamic = (attributes) => {
   const repeat = Math.ceil(periodDuration * timescale / segmentDuration);
   const startNumber = parseInt(attributes.startNumber || 1, 10);
   const timeShiftBuffer = parseDuration(attributes.timeShiftBufferDepth) || Infinity;
-  const liveWindowEnd = Math.min(Math.floor((now - periodStartWC) / segmentDuration), startNumber + repeat);
-  const liveWindowStart = Math.max(startNumber, Math.floor((now - periodStartWC - timeShiftBuffer) / segmentDuration));
+  const liveWindowEnd = Math.min(Math.floor((now - periodStartWC) / (segmentDuration / timescale)), startNumber + repeat);
+  const liveWindowStart = Math.max(startNumber, Math.floor((now - periodStartWC - timeShiftBuffer) / (segmentDuration / timescale)));
 
   return range(liveWindowStart, liveWindowEnd).map((number) => {
     const segment = { number, duration: segmentDuration / timescale, timeline: attributes.periodIndex };

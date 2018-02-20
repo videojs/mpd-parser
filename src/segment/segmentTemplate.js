@@ -178,7 +178,8 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
       timeline: segment.timeline,
       duration: segment.duration,
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
-      map: mapSegment
+      map: mapSegment,
+      number: segment.number
     };
   });
 };
