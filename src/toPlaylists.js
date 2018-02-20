@@ -2,7 +2,7 @@ import { merge } from './utils/object';
 import { segmentsFromTemplate } from './segment/segmentTemplate';
 import { segmentsFromList } from './segment/segmentList';
 import { segmentsFromBase } from './segment/segmentBase';
-// import merge from 'deepmerge';
+
 export const generateSegments = (segmentInfo, attributes) => {
   if (segmentInfo.template) {
     return segmentsFromTemplate(

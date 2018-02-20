@@ -1,24 +1,24 @@
 import { from } from './list';
 
+const isObject = (obj) => {
+  return !!obj && typeof obj === 'object';
+};
+
 export const merge = (...objects) => {
 
-  const isObject = (obj) => {
-    return obj && typeof obj === 'object';
-  };
+  return objects.reduce((result, source) => {
 
-  return objects.reduce((x, y) => {
+    Object.keys(source).forEach(key => {
 
-    Object.keys(y).forEach(key => {
-
-      if (Array.isArray(x[key]) && Array.isArray(y[key])) {
-        x[key] = x[key].concat(y[key]);
-      } else if (isObject(x[key]) && isObject(y[key])) {
-        x[key] = merge(x[key], y[key]);
+      if (Array.isArray(result[key]) && Array.isArray(source[key])) {
+        result[key] = result[key].concat(source[key]);
+      } else if (isObject(result[key]) && isObject(source[key])) {
+        result[key] = merge(result[key], source[key]);
       } else {
-        x[key] = y[key];
+        result[key] = source[key];
       }
     });
-    return x;
+    return result;
   }, {});
 };
 

@@ -1,11 +1,9 @@
 import { flatten } from './utils/list';
-import { getAttributes } from './utils/object';
+import { getAttributes, merge } from './utils/object';
 import { parseDuration } from './utils/time';
 import { findChildren, getContent } from './utils/xml';
 import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
-// import merge from 'deepmerge';
-import { merge } from './utils/object';
 
 /**
  * Builds a list of urls that is the product of the reference urls and BaseURL values
