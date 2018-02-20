@@ -79,7 +79,7 @@ export const getSegmentInformation = (adaptationSet) => {
     template.initialization = { sourceURL: template.initialization };
   }
 
-  return {
+  const segmentInfo = {
     template,
     timeline: segmentTimeline &&
       findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
@@ -94,6 +94,14 @@ export const getSegmentInformation = (adaptationSet) => {
         initialization: getAttributes(segmentInitialization)
       })
   };
+
+  Object.keys(segmentInfo).forEach(key => {
+    if (!segmentInfo[key]) {
+      delete segmentInfo[key];
+    }
+  });
+
+  return segmentInfo;
 };
 
 /**
@@ -140,12 +148,7 @@ export const inheritBaseUrls =
 
   return repBaseUrls.map(baseUrl => {
     return {
-      segmentInfo: {
-        list: adaptationSetSegmentInfo.list && representationSegmentInfo.list ? merge(adaptationSetSegmentInfo.list, representationSegmentInfo.list) : adaptationSetSegmentInfo.list && !representationSegmentInfo.list ? adaptationSetSegmentInfo.list : !adaptationSetSegmentInfo.list && representationSegmentInfo.list ? representationSegmentInfo.list : undefined,
-        template: adaptationSetSegmentInfo.template && representationSegmentInfo.template ? merge(adaptationSetSegmentInfo.template, representationSegmentInfo.template) : adaptationSetSegmentInfo.template && !representationSegmentInfo.template ? adaptationSetSegmentInfo.template : !adaptationSetSegmentInfo.template && representationSegmentInfo.template ? representationSegmentInfo.template : undefined,
-        base: adaptationSetSegmentInfo.base && representationSegmentInfo.base ? merge(adaptationSetSegmentInfo.base, representationSegmentInfo.base) : adaptationSetSegmentInfo.base && !representationSegmentInfo.base ? adaptationSetSegmentInfo.base : !adaptationSetSegmentInfo.base && representationSegmentInfo.base ? representationSegmentInfo.base : undefined,
-        timeline: adaptationSetSegmentInfo.timeline && representationSegmentInfo.timeline ? merge(adaptationSetSegmentInfo.timeline, representationSegmentInfo.timeline) : adaptationSetSegmentInfo.timeline && !representationSegmentInfo.timeline ? adaptationSetSegmentInfo.timeline : !adaptationSetSegmentInfo.timeline && representationSegmentInfo.timeline ? representationSegmentInfo.timeline : undefined
-      },
+      segmentInfo: merge(adaptationSetSegmentInfo, representationSegmentInfo),
       attributes: shallowMerge(attributes, { baseUrl })
     };
   });
@@ -185,12 +188,7 @@ export const toRepresentations =
                              roleAttributes);
   const segmentInfo = getSegmentInformation(adaptationSet);
   const representations = findChildren(adaptationSet, 'Representation');
-  const adaptationSetSegmentInfo = {
-    list: periodSegmentInfo.list && segmentInfo.list ? merge(periodSegmentInfo.list, segmentInfo.list) : periodSegmentInfo.list && !segmentInfo.list ? periodSegmentInfo.list : !periodSegmentInfo.list && segmentInfo.list ? segmentInfo.list : undefined,
-    template: periodSegmentInfo.template && segmentInfo.template ? merge(periodSegmentInfo.template, segmentInfo.template) : periodSegmentInfo.template && !segmentInfo.template ? periodSegmentInfo.template : !periodSegmentInfo.template && segmentInfo.template ? segmentInfo.template : undefined,
-    base: periodSegmentInfo.base && segmentInfo.base ? merge(periodSegmentInfo.base, segmentInfo.base) : periodSegmentInfo.base && !segmentInfo.base ? periodSegmentInfo.base : !periodSegmentInfo.base && segmentInfo.base ? segmentInfo.base : undefined,
-    timeline: periodSegmentInfo.timeline && segmentInfo.timeline ? merge(periodSegmentInfo.timeline, segmentInfo.timeline) : periodSegmentInfo.timeline && !segmentInfo.timeline ? periodSegmentInfo.timeline : !periodSegmentInfo.timeline && segmentInfo.timeline ? segmentInfo.timeline : undefined
-  };
+  const adaptationSetSegmentInfo = merge(periodSegmentInfo, segmentInfo);
 
   return flatten(
     representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));

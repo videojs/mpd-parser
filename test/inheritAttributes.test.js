@@ -73,12 +73,7 @@ QUnit.module('getSegmentInformation');
 
 QUnit.test('undefined Segment information when no Segment nodes', function(assert) {
   const adaptationSet = { childNodes: [] };
-  const expected = {
-    template: void 0,
-    timeline: void 0,
-    list: void 0,
-    base: void 0
-  };
+  const expected = {};
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,
     'undefined segment info');
@@ -93,10 +88,7 @@ QUnit.test('gets SegmentTemplate attributes', function(assert) {
     }]
   };
   const expected = {
-    template: { media: 'video.mp4' },
-    timeline: void 0,
-    list: void 0,
-    base: void 0
+    template: { media: 'video.mp4' }
   };
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,
@@ -112,14 +104,11 @@ QUnit.test('gets SegmentList attributes', function(assert) {
     }]
   };
   const expected = {
-    template: void 0,
-    timeline: void 0,
     list: {
       duration: '10',
       segmentUrls: [],
       initialization: {}
-    },
-    base: void 0
+    }
   };
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,
@@ -135,9 +124,6 @@ QUnit.test('gets SegmentBase attributes', function(assert) {
     }]
   };
   const expected = {
-    template: void 0,
-    timeline: void 0,
-    list: void 0,
     base: { duration: '10', initialization: {} }
   };
 
@@ -167,9 +153,7 @@ QUnit.test('gets SegmentTemplate and SegmentTimeline attributes', function(asser
   };
   const expected = {
     template: { media: 'video.mp4' },
-    timeline: [{ d: '10' }, { d: '5' }, { d: '7' }],
-    list: void 0,
-    base: void 0
+    timeline: [{ d: '10' }, { d: '5' }, { d: '7' }]
   };
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,
@@ -227,10 +211,7 @@ QUnit.test('end to end - basic', function(assert) {
       width: '720'
     },
     segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: {},
-      timeline: undefined
+      template: {}
     }
   }, {
     attributes: {
@@ -244,12 +225,7 @@ QUnit.test('end to end - basic', function(assert) {
       role: {},
       sourceDuration: 30
     },
-    segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: undefined,
-      timeline: undefined
-    }
+    segmentInfo: {}
   }];
 
   assert.equal(actual.length, 2);
@@ -303,10 +279,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
       width: '720'
     },
     segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: {},
-      timeline: undefined
+      template: {}
     }
   }, {
     attributes: {
@@ -320,12 +293,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
       role: {},
       sourceDuration: 30
     },
-    segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: undefined,
-      timeline: undefined
-    }
+    segmentInfo: { }
   }];
 
   assert.equal(actual.length, 2);
@@ -379,10 +347,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
       width: '720'
     },
     segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: {},
-      timeline: undefined
+      template: {}
     }
   }, {
     attributes: {
@@ -401,10 +366,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
       width: '720'
     },
     segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: {},
-      timeline: undefined
+      template: {}
     }
   }, {
     attributes: {
@@ -423,10 +385,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
       width: '720'
     },
     segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: {},
-      timeline: undefined
+      template: {}
     }
   }, {
     attributes: {
@@ -445,10 +404,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
       width: '720'
     },
     segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: {},
-      timeline: undefined
+      template: {}
     }
   }, {
     attributes: {
@@ -462,12 +418,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
       role: {},
       sourceDuration: 30
     },
-    segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: undefined,
-      timeline: undefined
-    }
+    segmentInfo: {}
   }, {
     attributes: {
       bandwidth: '256',
@@ -480,12 +431,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
       role: {},
       sourceDuration: 30
     },
-    segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: undefined,
-      timeline: undefined
-    }
+    segmentInfo: {}
   }];
 
   assert.equal(actual.length, 6);
@@ -552,10 +498,7 @@ QUnit.test(' End to End test for checking support of segments in representation'
         initialization: {
           range: '0-567'
         }
-      },
-      list: undefined,
-      template: undefined,
-      timeline: undefined
+      }
     }
   }, {
     attributes: {
@@ -576,10 +519,7 @@ QUnit.test(' End to End test for checking support of segments in representation'
         initialization: {
           range: '0-987'
         }
-      },
-      list: undefined,
-      template: undefined,
-      timeline: undefined
+      }
     }
   }, {
     attributes: {
@@ -593,12 +533,7 @@ QUnit.test(' End to End test for checking support of segments in representation'
       role: {},
       sourceDuration: 30
     },
-    segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: undefined,
-      timeline: undefined
-    }
+    segmentInfo: {}
   }];
 
   assert.equal(actual.length, 3);
@@ -662,10 +597,7 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
         initialization: {
           range: '0-1111'
         }
-      },
-      list: undefined,
-      template: undefined,
-      timeline: undefined
+      }
     }
   }, {
     attributes: {
@@ -687,10 +619,7 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
         initialization: {
           range: '0-1111'
         }
-      },
-      list: undefined,
-      template: undefined,
-      timeline: undefined
+      }
     }
   }, {
     attributes: {
@@ -712,10 +641,7 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
         initialization: {
           range: '0-1111'
         }
-      },
-      list: undefined,
-      template: undefined,
-      timeline: undefined
+      }
     }
   }];
 
@@ -781,10 +707,7 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
           range: '0-8888'
 
         }
-      },
-      list: undefined,
-      template: undefined,
-      timeline: undefined
+      }
     }
   }, {
     attributes: {
@@ -806,10 +729,7 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
         initialization: {
           range: '0-8888'
         }
-      },
-      list: undefined,
-      template: undefined,
-      timeline: undefined
+      }
     }
   }, {
     attributes: {
@@ -824,12 +744,7 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
       role: {},
       sourceDuration: 30
     },
-    segmentInfo: {
-      base: undefined,
-      list: undefined,
-      template: undefined,
-      timeline: undefined
-    }
+    segmentInfo: {}
   }];
 
   assert.equal(actual.length, 3);
