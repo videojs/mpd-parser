@@ -222,7 +222,7 @@ export const toRepresentations =
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
   const periodAtt = getAttributes(period);
-  const periodAttributes = shallowMerge(periodAtt, { periodIndex }, mpdAttributes);
+  const periodAttributes = shallowMerge(mpdAttributes, periodAtt, { periodIndex });
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
