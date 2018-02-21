@@ -10,8 +10,7 @@
   },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "run-s build:rollup",
-    "build:rollup": "rollup -c scripts/rollup.config.js",
+    "build": "rollup -c scripts/rollup.config.js",
     "clean": "rimraf dist",
     "postclean": "mkdirp dist",
     "docs": "run-p docs:*",

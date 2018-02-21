@@ -67,7 +67,15 @@ export default [
     banner,
     plugins: [ json(), babel({exclude: 'node_modules/**'}) ],
     output: [
-      {file: 'dist/mpd-parser.cjs.js', format: 'cjs'},
+      {file: 'dist/mpd-parser.cjs.js', format: 'cjs'}
+    ]
+  }, {
+    name: 'mpdParser',
+    input: 'src/index.js',
+    legacy: true,
+    banner,
+    plugins: [ json({ preferConst: true }) ],
+    output: [
       {file: 'dist/mpd-parser.es.js', format: 'es'}
     ]
   }
