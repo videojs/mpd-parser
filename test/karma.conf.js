@@ -4,6 +4,7 @@ var json = require('rollup-plugin-json');
 var multiEntry = require('rollup-plugin-multi-entry');
 var resolve = require('rollup-plugin-node-resolve');
 var string = require('rollup-plugin-string');
+var istanbul = require('rollup-plugin-istanbul');
 
 module.exports = function(config) {
   config.set({
@@ -27,7 +28,12 @@ module.exports = function(config) {
       // because the preprocessor will use its own.
       watched: false
     }],
-    reporters: ['dots'],
+    reporters: ['dots', 'coverage'],
+    coverageReporter: {
+      reporters: [{
+        type: 'text-summary'
+      }]
+    },
     port: 9876,
     colors: true,
     autoWatch: false,
@@ -48,7 +54,8 @@ module.exports = function(config) {
         resolve({ browser: true, main: true, jsnext: true }),
         json(),
         commonjs({ sourceMap: false }),
-        babel({exclude: 'node_modules/**'})
+        babel({exclude: 'node_modules/**'}),
+        istanbul({ exclude: ['test/**/*.js'] })
       ]
     }
   });
