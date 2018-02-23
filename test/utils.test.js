@@ -29,6 +29,55 @@ QUnit.test('empty', function(assert) {
   assert.deepEqual(merge(1, {}), {});
 });
 
+QUnit.test('Test for checking the merge when multiple segment Information are present', function(assert) {
+
+  const adaptationSetInfo = {
+
+    base: { duration: '10'}
+  };
+
+  const representationInfo = {
+
+    base: { duration: '25', indexRange: '230-252'}
+  };
+
+  const expected = {
+
+    base: { duration: '25', indexRange: '230-252'}
+  };
+
+  assert.deepEqual(merge(adaptationSetInfo, representationInfo), expected,
+    'Merged SegmentBase info');
+
+});
+
+QUnit.test('Test for checking the merge when segment Information is present at a level and is undefined at another', function(assert) {
+  const periodInfo = {
+    base: {
+      initialization: {
+        range: '0-8888'
+
+      }
+    }
+  };
+
+  const adaptationSetInfo = {
+
+    base: { duration: '10', indexRange: '230-252'}
+  };
+
+  const representationInfo = {};
+
+  const expected = {
+
+    base: { duration: '10', indexRange: '230-252', initialization: {range: '0-8888'}}
+  };
+
+  assert.deepEqual(merge(periodInfo, adaptationSetInfo, representationInfo), expected,
+    'Merged SegmentBase info');
+
+});
+
 QUnit.module('flatten');
 QUnit.test('empty', function(assert) {
   assert.deepEqual(flatten([]), []);
