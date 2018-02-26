@@ -1,3 +1,10 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/videojs/mpd-parser/compare/v0.3.0...v0.4.0) (2018-02-26)
+
+### Features
+
+* Adding support for segments in Period and Representation. ([#19](https://github.com/videojs/mpd-parser/issues/19)) ([8e59b38](https://github.com/videojs/mpd-parser/commit/8e59b38))
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/videojs/mpd-parser/compare/v0.2.1...v0.3.0) (2018-02-06)
 
