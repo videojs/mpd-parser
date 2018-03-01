@@ -1,4 +1,5 @@
-import { parseByDuration, parseByTimeline } from './timeParser';
+import { parseByTimeline } from './timelineTimeParser';
+import { parseByDuration } from './durationTimeParser';
 import urlTypeConverter from './urlType';
 import errors from '../errors';
 
@@ -48,11 +49,8 @@ const SegmentURLToSegmentObject = (attributes, segmentUrl) => {
  */
 export const segmentsFromList = (attributes, segmentTimeline) => {
   const {
-    timescale = 1,
     duration,
     segmentUrls = [],
-    periodIndex = 0,
-    startNumber = 1
   } = attributes;
 
   // Per spec (5.3.9.2.1) no way to determine segment duration OR
@@ -62,28 +60,16 @@ export const segmentsFromList = (attributes, segmentTimeline) => {
     throw new Error(errors.SEGMENT_TIME_UNSPECIFIED);
   }
 
-  const parsedTimescale = parseInt(timescale, 10);
-  const start = parseInt(startNumber, 10);
   const segmentUrlMap = segmentUrls.map(segmentUrlObject =>
     SegmentURLToSegmentObject(attributes, segmentUrlObject));
   let segmentTimeInfo;
 
   if (duration) {
-    const parsedDuration = parseInt(duration, 10);
-
-    segmentTimeInfo = parseByDuration(start,
-      periodIndex,
-      parsedTimescale,
-      parsedDuration,
-      attributes.sourceDuration);
+    segmentTimeInfo = parseByDuration(attributes);
   }
 
   if (segmentTimeline) {
-    segmentTimeInfo = parseByTimeline(start,
-      periodIndex,
-      parsedTimescale,
-      segmentTimeline,
-      attributes.sourceDuration);
+    segmentTimeInfo = parseByTimeline(attributes, segmentTimeline);
   }
 
   const segments = segmentTimeInfo.map((segmentTime, index) => {

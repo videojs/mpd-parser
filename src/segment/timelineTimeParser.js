@@ -1,6 +1,3 @@
-import { range } from '../utils/list';
-import { parseDuration } from '../utils/time';
-
 /**
  * Uses information provided by SegmentTemplate.SegmentTimeline to determine segment
  * timing and duration
@@ -18,16 +15,21 @@ import { parseDuration } from '../utils/time';
  * @return {{number: number, duration: number, time: number, timeline: number}[]}
  *         List of Objects with segment timing and duration info
  */
-export const parseByTimeline =
-(start, timeline, timescale, segmentTimeline, sourceDuration) => {
+export const parseByTimeline = (attributes, segmentTimeline) => {
+  const {
+    sourceDuration,
+    timescale = 1,
+    startNumber = 1,
+    periodIndex: timeline
+  } = attributes;
   const segments = [];
   let time = -1;
 
   for (let sIndex = 0; sIndex < segmentTimeline.length; sIndex++) {
     const S = segmentTimeline[sIndex];
-    const duration = parseInt(S.d, 10);
-    const repeat = parseInt(S.r || 0, 10);
-    const segmentTime = parseInt(S.t || 0, 10);
+    const duration = S.d
+    const repeat = S.r || 0;
+    const segmentTime = S.t || 0;
 
     if (time < 0) {
       // first segment
@@ -70,14 +72,14 @@ export const parseByTimeline =
         // TODO: This may be incorrect depending on conclusion of TODO above
         count = ((sourceDuration * timescale) - time) / duration;
       } else {
-        count = (parseInt(segmentTimeline[nextS].t, 10) - time) / duration;
+        count = (segmentTimeline[nextS].t - time) / duration;
       }
     } else {
       count = repeat + 1;
     }
 
-    const end = start + segments.length + count;
-    let number = start + segments.length;
+    const end = startNumber + segments.length + count;
+    let number = startNumber + segments.length;
 
     while (number < end) {
       segments.push({ number, duration: duration / timescale, time, timeline });
@@ -87,46 +89,4 @@ export const parseByTimeline =
   }
 
   return segments;
-};
-
-export const parseByDuration = (start, timeline, timescale, duration, sourceDuration) => {
-  const count = Math.ceil(sourceDuration / (duration / timescale));
-
-  return range(start, start + count).map((number, index) => {
-    const segment = { number, duration: duration / timescale, timeline };
-
-    if (index === count - 1) {
-      // final segment may be less than duration
-      segment.duration = sourceDuration - (segment.duration * index);
-    }
-
-    segment.time = (segment.number - start) * duration;
-
-    return segment;
-  });
-};
-
-export const parseByDurationDynamic = (attributes) => {
-  const now = Date.now() / 1000;
-  const timeline = attributes
-  const availabilityStartTime = Date.parse(attributes.availabilityStartTime) / 1000;
-  const timescale = parseInt(attributes.timescale || 1, 10);
-  const segmentDuration = parseInt(attributes.duration, 10);
-  const periodStart = parseDuration(attributes.start);
-  const periodStartWC = availabilityStartTime + periodStart;
-  const periodEndWC = now + parseDuration(attributes.minimumUpdatePeriod);
-  const periodDuration = periodEndWC - periodStartWC;
-  const repeat = Math.ceil(periodDuration * timescale / segmentDuration);
-  const startNumber = parseInt(attributes.startNumber || 1, 10);
-  const timeShiftBuffer = parseDuration(attributes.timeShiftBufferDepth) || Infinity;
-  const liveWindowEnd = Math.min(Math.floor((now - periodStartWC) / (segmentDuration / timescale)), startNumber + repeat);
-  const liveWindowStart = Math.max(startNumber, Math.floor((now - periodStartWC - timeShiftBuffer) / (segmentDuration / timescale)));
-
-  return range(liveWindowStart, liveWindowEnd).map((number) => {
-    const segment = { number, duration: segmentDuration / timescale, timeline: attributes.periodIndex };
-
-    segment.time = (segment.number - liveWindowStart) * segmentDuration;
-
-    return segment;
-  });
 };

@@ -4,7 +4,7 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
   return {
     attributes: {
       NAME: attributes.id,
-      BANDWIDTH: parseInt(attributes.bandwidth, 10),
+      BANDWIDTH: attributes.bandwidth,
       CODECS: attributes.codecs,
       ['PROGRAM-ID']: 1
     },
@@ -12,7 +12,7 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
     endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
-    targetDuration: parseInt(attributes.duration, 10),
+    targetDuration: attributes.duration,
     segments,
     mediaSequence: segments.length ? segments[0].number : 1
   };
@@ -31,14 +31,14 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   return {
     attributes: {
       NAME: attributes.id,
-      BANDWIDTH: parseInt(attributes.bandwidth, 10),
+      BANDWIDTH: attributes.bandwidth,
       ['PROGRAM-ID']: 1
     },
     uri: '',
     endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
-    targetDuration: parseInt(attributes.duration, 10),
+    targetDuration: attributes.duration,
     segments,
     mediaSequence: segments.length ? segments[0].number : 1
   };
@@ -103,18 +103,18 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
       AUDIO: 'audio',
       SUBTITLES: 'subs',
       RESOLUTION: {
-        width: parseInt(attributes.width, 10),
-        height: parseInt(attributes.height, 10)
+        width: attributes.width,
+        height: attributes.height
       },
       CODECS: attributes.codecs,
-      BANDWIDTH: parseInt(attributes.bandwidth, 10),
+      BANDWIDTH: attributes.bandwidth,
       ['PROGRAM-ID']: 1
     },
     uri: '',
     endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
-    targetDuration: parseInt(attributes.duration, 10),
+    targetDuration: attributes.duration,
     segments,
     mediaSequence: segments.length ? segments[0].number : 1
   };
@@ -156,7 +156,7 @@ export const toM3u8 = dashPlaylists => {
     uri: '',
     duration,
     playlists: videoPlaylists,
-    minimumUpdatePeriod: parseDuration(minimumUpdatePeriod) * 1000
+    minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };
 
   if (audioPlaylists.length) {

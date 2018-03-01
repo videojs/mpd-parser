@@ -1,5 +1,3 @@
-import { from } from './list';
-
 const isObject = (obj) => {
   return !!obj && typeof obj === 'object';
 };
@@ -20,17 +18,4 @@ export const merge = (...objects) => {
     });
     return result;
   }, {});
-};
-
-export const getAttributes = el => {
-  if (!(el && el.attributes)) {
-    return {};
-  }
-
-  return from(el.attributes)
-    .reduce((a, e) => {
-      a[e.name] = e.value;
-
-      return a;
-    }, {});
 };

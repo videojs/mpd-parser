@@ -23,3 +23,17 @@ export const parseDuration = str => {
     parseFloat(minute || 0) * SECONDS_IN_MIN +
     parseFloat(second || 0));
 };
+
+export const parseDate = str => {
+  // Date format without timezone according to ISO 8601
+  // YYY-MM-DDThh:mm:ss.ssssss
+  const dateRegex = /^\d+-\d+-\d+T\d+:\d+:\d+(\.\d+)?$/;
+
+  // If the date string does not specifiy a timezone, we must specifiy UTC. This is
+  // expressed by ending with 'Z'
+  if (dateRegex.test(str)) {
+    str += 'Z';
+  }
+
+  return Date.parse(str);
+}
