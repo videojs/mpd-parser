@@ -1,4 +1,4 @@
-export const parseDuration = str => {
+export const parseDuration = (str) => {
   const SECONDS_IN_YEAR = 365 * 24 * 60 * 60;
   const SECONDS_IN_MONTH = 30 * 24 * 60 * 60;
   const SECONDS_IN_DAY = 24 * 60 * 60;
@@ -24,7 +24,7 @@ export const parseDuration = str => {
     parseFloat(second || 0));
 };
 
-export const parseDate = str => {
+export const parseDate = (str) => {
   // Date format without timezone according to ISO 8601
   // YYY-MM-DDThh:mm:ss.ssssss
   const dateRegex = /^\d+-\d+-\d+T\d+:\d+:\d+(\.\d+)?$/;
@@ -36,4 +36,4 @@ export const parseDate = str => {
   }
 
   return Date.parse(str);
-}
+};

@@ -1,5 +1,3 @@
-import { parseDuration } from './utils/time';
-
 export const formatAudioPlaylist = ({ attributes, segments }) => {
   return {
     attributes: {

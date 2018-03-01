@@ -50,7 +50,7 @@ const SegmentURLToSegmentObject = (attributes, segmentUrl) => {
 export const segmentsFromList = (attributes, segmentTimeline) => {
   const {
     duration,
-    segmentUrls = [],
+    segmentUrls = []
   } = attributes;
 
   // Per spec (5.3.9.2.1) no way to determine segment duration OR

@@ -27,7 +27,7 @@ export const parseByTimeline = (attributes, segmentTimeline) => {
 
   for (let sIndex = 0; sIndex < segmentTimeline.length; sIndex++) {
     const S = segmentTimeline[sIndex];
-    const duration = S.d
+    const duration = S.d;
     const repeat = S.r || 0;
     const segmentTime = S.t || 0;
 
