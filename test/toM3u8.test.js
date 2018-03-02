@@ -9,7 +9,8 @@ QUnit.test('playlists', function(assert) {
       id: '1',
       codecs: 'foo;bar',
       sourceDuration: 100,
-      bandwidth: '20000',
+      duration: 0,
+      bandwidth: 20000,
       periodIndex: 1,
       mimeType: 'audio/mp4'
     },
@@ -19,7 +20,8 @@ QUnit.test('playlists', function(assert) {
       id: '2',
       codecs: 'foo;bar',
       sourceDuration: 100,
-      bandwidth: '10000',
+      duration: 0,
+      bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'audio/mp4'
     },
@@ -28,10 +30,11 @@ QUnit.test('playlists', function(assert) {
     attributes: {
       sourceDuration: 100,
       id: '1',
-      width: '800',
-      height: '600',
+      width: 800,
+      height: 600,
       codecs: 'foo;bar',
-      bandwidth: '10000',
+      duration: 0,
+      bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'video/mp4'
     },
@@ -40,7 +43,7 @@ QUnit.test('playlists', function(assert) {
     attributes: {
       sourceDuration: 100,
       id: '1',
-      bandwidth: '20000',
+      bandwidth: 20000,
       periodIndex: 1,
       mimeType: 'text/vtt',
       baseUrl: 'https://www.example.com/vtt'
@@ -49,7 +52,7 @@ QUnit.test('playlists', function(assert) {
     attributes: {
       sourceDuration: 100,
       id: '1',
-      bandwidth: '10000',
+      bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'text/vtt',
       baseUrl: 'https://www.example.com/vtt'
@@ -61,6 +64,7 @@ QUnit.test('playlists', function(assert) {
     discontinuityStarts: [],
     duration: 100,
     endList: true,
+    minimumUpdatePeriod: 0,
     mediaGroups: {
       AUDIO: {
         audio: {
@@ -75,11 +79,13 @@ QUnit.test('playlists', function(assert) {
                 NAME: '1',
                 ['PROGRAM-ID']: 1
               },
+              mediaSequence: 1,
               endList: true,
               resolvedUri: '',
               segments: [],
               timeline: 1,
-              uri: ''
+              uri: '',
+              targetDuration: 0
             }],
             uri: ''
           }
@@ -98,13 +104,16 @@ QUnit.test('playlists', function(assert) {
                 NAME: '1',
                 ['PROGRAM-ID']: 1
               },
+              mediaSequence: 0,
+              targetDuration: 100,
               endList: true,
               resolvedUri: 'https://www.example.com/vtt',
               segments: [{
                 duration: 100,
                 resolvedUri: 'https://www.example.com/vtt',
                 timeline: 1,
-                uri: 'https://www.example.com/vtt'
+                uri: 'https://www.example.com/vtt',
+                number: 0
               }],
               timeline: 1,
               uri: ''
@@ -129,6 +138,8 @@ QUnit.test('playlists', function(assert) {
         }
       },
       endList: true,
+      mediaSequence: 1,
+      targetDuration: 0,
       resolvedUri: '',
       segments: [],
       timeline: 1,
@@ -146,8 +157,9 @@ QUnit.test('playlists with segments', function(assert) {
     attributes: {
       id: '1',
       codecs: 'foo;bar',
+      duration: 2,
       sourceDuration: 100,
-      bandwidth: '20000',
+      bandwidth: 20000,
       periodIndex: 1,
       mimeType: 'audio/mp4'
     },
@@ -159,7 +171,8 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 1
     }, {
       uri: '',
       timeline: 1,
@@ -168,14 +181,16 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 2
     }]
   }, {
     attributes: {
       id: '2',
       codecs: 'foo;bar',
       sourceDuration: 100,
-      bandwidth: '10000',
+      duration: 2,
+      bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'audio/mp4'
     },
@@ -187,7 +202,8 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 1
     }, {
       uri: '',
       timeline: 1,
@@ -196,16 +212,18 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 2
     }]
   }, {
     attributes: {
       sourceDuration: 100,
       id: '1',
-      width: '800',
-      height: '600',
+      width: 800,
+      duration: 2,
+      height: 600,
       codecs: 'foo;bar',
-      bandwidth: '10000',
+      bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'video/mp4'
     },
@@ -217,7 +235,8 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 1
     }, {
       uri: '',
       timeline: 1,
@@ -226,13 +245,15 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 2
     }]
   }, {
     attributes: {
       sourceDuration: 100,
       id: '1',
-      bandwidth: '20000',
+      duration: 2,
+      bandwidth: 20000,
       periodIndex: 1,
       mimeType: 'text/vtt',
       baseUrl: 'https://www.example.com/vtt'
@@ -245,7 +266,8 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 1
     }, {
       uri: '',
       timeline: 1,
@@ -254,13 +276,15 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 2
     }]
   }, {
     attributes: {
       sourceDuration: 100,
+      duration: 2,
       id: '1',
-      bandwidth: '10000',
+      bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'text/vtt',
       baseUrl: 'https://www.example.com/vtt'
@@ -273,7 +297,8 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 1
     }, {
       uri: '',
       timeline: 1,
@@ -282,7 +307,8 @@ QUnit.test('playlists with segments', function(assert) {
       map: {
         uri: '',
         resolvedUri: ''
-      }
+      },
+      number: 2
     }]
   }];
 
@@ -291,6 +317,7 @@ QUnit.test('playlists with segments', function(assert) {
     discontinuityStarts: [],
     duration: 100,
     endList: true,
+    minimumUpdatePeriod: 0,
     mediaGroups: {
       AUDIO: {
         audio: {
@@ -305,6 +332,8 @@ QUnit.test('playlists with segments', function(assert) {
                 NAME: '1',
                 ['PROGRAM-ID']: 1
               },
+              targetDuration: 2,
+              mediaSequence: 1,
               endList: true,
               resolvedUri: '',
               segments: [{
@@ -315,7 +344,8 @@ QUnit.test('playlists with segments', function(assert) {
                 map: {
                   uri: '',
                   resolvedUri: ''
-                }
+                },
+                number: 1
               }, {
                 uri: '',
                 timeline: 1,
@@ -324,7 +354,8 @@ QUnit.test('playlists with segments', function(assert) {
                 map: {
                   uri: '',
                   resolvedUri: ''
-                }
+                },
+                number: 2
               }],
               timeline: 1,
               uri: ''
@@ -347,6 +378,8 @@ QUnit.test('playlists with segments', function(assert) {
                 ['PROGRAM-ID']: 1
               },
               endList: true,
+              targetDuration: 2,
+              mediaSequence: 1,
               resolvedUri: 'https://www.example.com/vtt',
               segments: [{
                 uri: '',
@@ -356,7 +389,8 @@ QUnit.test('playlists with segments', function(assert) {
                 map: {
                   uri: '',
                   resolvedUri: ''
-                }
+                },
+                number: 1
               }, {
                 uri: '',
                 timeline: 1,
@@ -365,7 +399,8 @@ QUnit.test('playlists with segments', function(assert) {
                 map: {
                   uri: '',
                   resolvedUri: ''
-                }
+                },
+                number: 2
               }],
               timeline: 1,
               uri: ''
@@ -391,6 +426,8 @@ QUnit.test('playlists with segments', function(assert) {
       },
       endList: true,
       resolvedUri: '',
+      mediaSequence: 1,
+      targetDuration: 2,
       segments: [{
         uri: '',
         timeline: 1,
@@ -399,7 +436,8 @@ QUnit.test('playlists with segments', function(assert) {
         map: {
           uri: '',
           resolvedUri: ''
-        }
+        },
+        number: 1
       }, {
         uri: '',
         timeline: 1,
@@ -408,7 +446,8 @@ QUnit.test('playlists with segments', function(assert) {
         map: {
           uri: '',
           resolvedUri: ''
-        }
+        },
+        number: 2
       }],
       timeline: 1,
       uri: ''

@@ -11,23 +11,29 @@ QUnit.test('no representations', function(assert) {
 
 QUnit.test('pretty simple', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/' },
+    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
     segmentInfo: {
-      template: true
+      template: { }
     }
   }];
 
   const playlists = [{
-    attributes: { baseUrl: 'http://example.com/' },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      duration: 2
+    },
     segments: [{
       uri: '',
-      timeline: undefined,
-      duration: undefined,
+      timeline: 0,
+      duration: 2,
       resolvedUri: 'http://example.com/',
       map: {
         uri: '',
         resolvedUri: 'http://example.com/'
-      }
+      },
+      number: 1
     }]
   }];
 
@@ -36,21 +42,29 @@ QUnit.test('pretty simple', function(assert) {
 
 QUnit.test('segment base', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/' },
+    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
     segmentInfo: {
       base: true
     }
   }];
 
   const playlists = [{
-    attributes: { baseUrl: 'http://example.com/' },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      duration: 2
+    },
     segments: [{
       map: {
         resolvedUri: 'http://example.com/',
         uri: ''
       },
       resolvedUri: 'http://example.com/',
-      uri: 'http://example.com/'
+      uri: 'http://example.com/',
+      timeline: 0,
+      duration: 2,
+      number: 0
     }]
   }];
 
@@ -62,7 +76,8 @@ QUnit.test('segment list', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       duration: 10,
-      sourceDuration: 11
+      sourceDuration: 11,
+      periodIndex: 0
     },
     segmentInfo: {
       list: {
@@ -79,7 +94,13 @@ QUnit.test('segment list', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       duration: 10,
-      sourceDuration: 11
+      sourceDuration: 11,
+      segmentUrls: [{
+        media: '1.fmp4'
+      }, {
+        media: '2.fmp4'
+      }],
+      periodIndex: 0
     },
     segments: [{
       duration: 10,
@@ -89,7 +110,8 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/1.fmp4',
       timeline: 0,
-      uri: '1.fmp4'
+      uri: '1.fmp4',
+      number: 1
     }, {
       duration: 1,
       map: {
@@ -98,7 +120,8 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/2.fmp4',
       timeline: 0,
-      uri: '2.fmp4'
+      uri: '2.fmp4',
+      number: 2
     }]
   }];
 

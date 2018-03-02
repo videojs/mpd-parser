@@ -50,5 +50,8 @@ export const segmentsFromBase = (attributes) => {
     segment.timeline = 0;
   }
 
+  // This is used for mediaSequence
+  segment.number = 0;
+
   return [segment];
 };

@@ -3,6 +3,7 @@ export const parsedManifest = {
   discontinuityStarts: [],
   duration: 6,
   endList: true,
+  minimumUpdatePeriod: 0,
   mediaGroups: {
     AUDIO: {
       audio: {
@@ -18,6 +19,8 @@ export const parsedManifest = {
               ['PROGRAM-ID']: 1
             },
             endList: true,
+            mediaSequence: 0,
+            targetDuration: 1.984,
             resolvedUri: '',
             segments: [{
               duration: 1.984,
@@ -27,7 +30,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/0.m4f',
               timeline: 0,
-              uri: '125000/0.m4f'
+              uri: '125000/0.m4f',
+              number: 0
             }, {
               duration: 1.984,
               map: {
@@ -36,7 +40,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/1.m4f',
               timeline: 0,
-              uri: '125000/1.m4f'
+              uri: '125000/1.m4f',
+              number: 1
             }, {
               duration: 1.984,
               map: {
@@ -45,7 +50,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/2.m4f',
               timeline: 0,
-              uri: '125000/2.m4f'
+              uri: '125000/2.m4f',
+              number: 2
             }, {
               duration: 0.04800000000000004,
               map: {
@@ -54,7 +60,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/3.m4f',
               timeline: 0,
-              uri: '125000/3.m4f'
+              uri: '125000/3.m4f',
+              number: 3
             }],
             timeline: 0,
             uri: ''
@@ -73,6 +80,8 @@ export const parsedManifest = {
               ['PROGRAM-ID']: 1
             },
             endList: true,
+            targetDuration: 1.984,
+            mediaSequence: 0,
             resolvedUri: '',
             segments: [{
               duration: 1.984,
@@ -82,7 +91,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/es/0.m4f',
               timeline: 0,
-              uri: '125000/es/0.m4f'
+              uri: '125000/es/0.m4f',
+              number: 0
             }, {
               duration: 1.984,
               map: {
@@ -91,7 +101,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/es/1.m4f',
               timeline: 0,
-              uri: '125000/es/1.m4f'
+              uri: '125000/es/1.m4f',
+              number: 1
             }, {
               duration: 1.984,
               map: {
@@ -100,7 +111,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/es/2.m4f',
               timeline: 0,
-              uri: '125000/es/2.m4f'
+              uri: '125000/es/2.m4f',
+              number: 2
             }, {
               duration: 0.04800000000000004,
               map: {
@@ -109,7 +121,8 @@ export const parsedManifest = {
               },
               resolvedUri: 'https://www.example.com/125000/es/3.m4f',
               timeline: 0,
-              uri: '125000/es/3.m4f'
+              uri: '125000/es/3.m4f',
+              number: 3
             }],
             timeline: 0,
             uri: ''
@@ -131,13 +144,16 @@ export const parsedManifest = {
               NAME: 'en',
               ['PROGRAM-ID']: 1
             },
+            mediaSequence: 0,
             endList: true,
+            targetDuration: 6,
             resolvedUri: 'https://example.com/en.vtt',
             segments: [{
               duration: 6,
               resolvedUri: 'https://example.com/en.vtt',
               timeline: 0,
-              uri: 'https://example.com/en.vtt'
+              uri: 'https://example.com/en.vtt',
+              number: 0
             }],
             timeline: 0,
             uri: ''
@@ -155,12 +171,15 @@ export const parsedManifest = {
               ['PROGRAM-ID']: 1
             },
             endList: true,
+            targetDuration: 6,
+            mediaSequence: 0,
             resolvedUri: 'https://example.com/es.vtt',
             segments: [{
               duration: 6,
               resolvedUri: 'https://example.com/es.vtt',
               timeline: 0,
-              uri: 'https://example.com/es.vtt'
+              uri: 'https://example.com/es.vtt',
+              number: 0
             }],
             timeline: 0,
             uri: ''
@@ -185,6 +204,8 @@ export const parsedManifest = {
       }
     },
     endList: true,
+    targetDuration: 1.9185833333333333,
+    mediaSequence: 0,
     resolvedUri: '',
     segments: [{
       duration: 1.9185833333333333,
@@ -194,7 +215,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/482/0.m4f',
       timeline: 0,
-      uri: '482/0.m4f'
+      uri: '482/0.m4f',
+      number: 0
     }, {
       duration: 1.9185833333333333,
       map: {
@@ -203,7 +225,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/482/1.m4f',
       timeline: 0,
-      uri: '482/1.m4f'
+      uri: '482/1.m4f',
+      number: 1
     }, {
       duration: 1.9185833333333333,
       map: {
@@ -212,7 +235,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/482/2.m4f',
       timeline: 0,
-      uri: '482/2.m4f'
+      uri: '482/2.m4f',
+      number: 2
     }, {
       duration: 0.24425000000000008,
       map: {
@@ -221,7 +245,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/482/3.m4f',
       timeline: 0,
-      uri: '482/3.m4f'
+      uri: '482/3.m4f',
+      number: 3
     }],
     timeline: 0,
     uri: ''
@@ -239,6 +264,8 @@ export const parsedManifest = {
       }
     },
     endList: true,
+    targetDuration: 1.9185833333333333,
+    mediaSequence: 0,
     resolvedUri: '',
     segments: [{
       duration: 1.9185833333333333,
@@ -248,7 +275,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/720/0.m4f',
       timeline: 0,
-      uri: '720/0.m4f'
+      uri: '720/0.m4f',
+      number: 0
     }, {
       duration: 1.9185833333333333,
       map: {
@@ -257,7 +285,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/720/1.m4f',
       timeline: 0,
-      uri: '720/1.m4f'
+      uri: '720/1.m4f',
+      number: 1
     }, {
       duration: 1.9185833333333333,
       map: {
@@ -266,7 +295,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/720/2.m4f',
       timeline: 0,
-      uri: '720/2.m4f'
+      uri: '720/2.m4f',
+      number: 2
     }, {
       duration: 0.24425000000000008,
       map: {
@@ -275,7 +305,8 @@ export const parsedManifest = {
       },
       resolvedUri: 'https://www.example.com/720/3.m4f',
       timeline: 0,
-      uri: '720/3.m4f'
+      uri: '720/3.m4f',
+      number: 3
     }],
     timeline: 0,
     uri: ''
