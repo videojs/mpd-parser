@@ -3,6 +3,7 @@ export const parsedManifest = {
   discontinuityStarts: [],
   duration: 6,
   endList: true,
+  minimumUpdatePeriod: 0,
   mediaGroups: {
     'AUDIO': {},
     'CLOSED-CAPTIONS': {},
@@ -24,6 +25,8 @@ export const parsedManifest = {
         'SUBTITLES': 'subs'
       },
       endList: true,
+      mediaSequence: 1,
+      targetDuration: 1,
       resolvedUri: '',
       segments: [
         {
@@ -34,7 +37,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/low/segment-1.ts',
           timeline: 0,
-          uri: 'low/segment-1.ts'
+          uri: 'low/segment-1.ts',
+          number: 1
         },
         {
           duration: 1,
@@ -44,7 +48,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/low/segment-2.ts',
           timeline: 0,
-          uri: 'low/segment-2.ts'
+          uri: 'low/segment-2.ts',
+          number: 2
         },
         {
           duration: 1,
@@ -54,7 +59,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/low/segment-3.ts',
           timeline: 0,
-          uri: 'low/segment-3.ts'
+          uri: 'low/segment-3.ts',
+          number: 3
         },
         {
           duration: 1,
@@ -64,7 +70,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/low/segment-4.ts',
           timeline: 0,
-          uri: 'low/segment-4.ts'
+          uri: 'low/segment-4.ts',
+          number: 4
         },
         {
           duration: 1,
@@ -74,7 +81,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/low/segment-5.ts',
           timeline: 0,
-          uri: 'low/segment-5.ts'
+          uri: 'low/segment-5.ts',
+          number: 5
         },
         {
           duration: 1,
@@ -84,7 +92,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/low/segment-6.ts',
           timeline: 0,
-          uri: 'low/segment-6.ts'
+          uri: 'low/segment-6.ts',
+          number: 6
         }
       ],
       timeline: 0,
@@ -105,6 +114,8 @@ export const parsedManifest = {
       },
       endList: true,
       resolvedUri: '',
+      mediaSequence: 1,
+      targetDuration: 60,
       segments: [
         {
           duration: 60,
@@ -114,7 +125,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-1.ts',
           timeline: 0,
-          uri: 'high/segment-1.ts'
+          uri: 'high/segment-1.ts',
+          number: 1
         },
         {
           duration: 60,
@@ -124,7 +136,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-2.ts',
           timeline: 0,
-          uri: 'high/segment-2.ts'
+          uri: 'high/segment-2.ts',
+          number: 2
         },
         {
           duration: 60,
@@ -134,7 +147,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-3.ts',
           timeline: 0,
-          uri: 'high/segment-3.ts'
+          uri: 'high/segment-3.ts',
+          number: 3
         },
         {
           duration: 60,
@@ -144,7 +158,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-4.ts',
           timeline: 0,
-          uri: 'high/segment-4.ts'
+          uri: 'high/segment-4.ts',
+          number: 4
         },
         {
           duration: 60,
@@ -154,7 +169,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-5.ts',
           timeline: 0,
-          uri: 'high/segment-5.ts'
+          uri: 'high/segment-5.ts',
+          number: 5
         },
         {
           duration: 60,
@@ -164,7 +180,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-6.ts',
           timeline: 0,
-          uri: 'high/segment-6.ts'
+          uri: 'high/segment-6.ts',
+          number: 6
         },
         {
           duration: 60,
@@ -174,7 +191,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-7.ts',
           timeline: 0,
-          uri: 'high/segment-7.ts'
+          uri: 'high/segment-7.ts',
+          number: 7
         },
         {
           duration: 60,
@@ -184,7 +202,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-8.ts',
           timeline: 0,
-          uri: 'high/segment-8.ts'
+          uri: 'high/segment-8.ts',
+          number: 8
         },
         {
           duration: 60,
@@ -194,7 +213,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-9.ts',
           timeline: 0,
-          uri: 'high/segment-9.ts'
+          uri: 'high/segment-9.ts',
+          number: 9
         },
         {
           duration: 60,
@@ -204,7 +224,8 @@ export const parsedManifest = {
           },
           resolvedUri: 'https://www.example.com/high/segment-10.ts',
           timeline: 0,
-          uri: 'high/segment-10.ts'
+          uri: 'high/segment-10.ts',
+          number: 10
         }
       ],
       timeline: 0,

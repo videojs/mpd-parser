@@ -67,7 +67,13 @@ export const parsers = {
    *
    */
   duration(value) {
-    return parseInt(value, 10);
+    const parsedValue = parseInt(value, 10);
+
+    if (isNaN(parsedValue)) {
+      return parseDuration(value);
+    }
+
+    return parsedValue;
   },
   /**
    *

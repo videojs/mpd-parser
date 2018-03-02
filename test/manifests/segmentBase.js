@@ -3,6 +3,7 @@ export const parsedManifest = {
   discontinuityStarts: [],
   duration: 6,
   endList: true,
+  minimumUpdatePeriod: 0,
   mediaGroups: {
     'AUDIO': {},
     'CLOSED-CAPTIONS': {},
@@ -25,10 +26,13 @@ export const parsedManifest = {
       },
       endList: true,
       resolvedUri: '',
+      targetDuration: 6,
+      mediaSequence: 0,
       segments: [
         {
           duration: 6,
           timeline: 0,
+          number: 0,
           map: {
             uri: '',
             resolvedUri: 'https://www.example.com/1080p.ts'

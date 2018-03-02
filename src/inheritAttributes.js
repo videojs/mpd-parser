@@ -241,7 +241,7 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodI
  * @return {RepresentationInformation[]}
  *         List of objects containing Representation information
  */
-export const inheritAttributes = (mpd, options) => {
+export const inheritAttributes = (mpd, options = {}) => {
   const {
     manifestUri = '',
     NOW = Date.now(),

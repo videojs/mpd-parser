@@ -7,7 +7,7 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: attributes.type === 'static',
+    endList: (attributes.type || 'static') === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
@@ -23,8 +23,11 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
       uri: attributes.baseUrl,
       timeline: attributes.periodIndex,
       resolvedUri: attributes.baseUrl || '',
-      duration: attributes.sourceDuration
+      duration: attributes.sourceDuration,
+      number: 0
     }];
+    // targetDuration should be the same duration as the only segment
+    attributes.duration = attributes.sourceDuration;
   }
   return {
     attributes: {
@@ -33,7 +36,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: attributes.type === 'static',
+    endList: (attributes.type || 'static') === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
     targetDuration: attributes.duration,
@@ -109,7 +112,7 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: attributes.type === 'static',
+    endList: (attributes.type || 'static') === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
@@ -126,7 +129,7 @@ export const toM3u8 = dashPlaylists => {
   // grab all master attributes
   const {
     sourceDuration: duration,
-    minimumUpdatePeriod
+    minimumUpdatePeriod = 0
   } = dashPlaylists[0].attributes;
 
   const videoOnly = ({ attributes }) =>

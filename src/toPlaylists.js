@@ -3,35 +3,48 @@ import { segmentsFromTemplate } from './segment/segmentTemplate';
 import { segmentsFromList } from './segment/segmentList';
 import { segmentsFromBase } from './segment/segmentBase';
 
-export const generateSegments = (segmentInfo, attributes) => {
+export const generateSegments = ({ attributes, segmentInfo }) => {
+  let segmentAttributes;
+  let segmentsFn;
+
   if (segmentInfo.template) {
-    return segmentsFromTemplate(
-      merge(attributes, segmentInfo.template),
-      segmentInfo.timeline
-    );
+    segmentsFn = segmentsFromTemplate;
+    segmentAttributes = merge(attributes, segmentInfo.template);
+  } else if (segmentInfo.base) {
+    segmentsFn = segmentsFromBase;
+    segmentAttributes = merge(attributes, segmentInfo.base);
+  } else if (segmentInfo.list) {
+    segmentsFn = segmentsFromList;
+    segmentAttributes = merge(attributes, segmentInfo.list);
   }
-  if (segmentInfo.base) {
-    return segmentsFromBase(merge(attributes, segmentInfo.base));
-  }
-  if (segmentInfo.list) {
-    return segmentsFromList(
-      merge(attributes, segmentInfo.list), segmentInfo.timeline
-    );
-  }
-};
 
-export const toPlaylists = (representations) => {
-  return representations.map(({ attributes, segmentInfo }) => {
-    const segments = generateSegments(segmentInfo, attributes);
+  if (!segmentsFn) {
+    return { attributes };
+  }
 
-    // if there is no segment duration attribute, use the largest segment duration as
+  const segments = segmentsFn(segmentAttributes, segmentInfo.timeline);
+
+  // The @duration attribute will be used to determin the playlist's targetDuration which
+  // must be in seconds. Since we've generated the segment list, we no longer need
+  // @duration to be in @timescale units, so we can convert it here.
+  if (segmentAttributes.duration) {
+    const { duration, timescale = 1 } = segmentAttributes;
+
+    segmentAttributes.duration = duration / timescale;
+  } else if (segments.length) {
+    // if there is no @duration attribute, use the largest segment duration as
     // as target duration
-    if (!attributes.duration) {
-      attributes.duration = segments.reduce((max, segment) => {
-        return Math.max(max, Math.ceil(segment.duration));
-      }, 0);
-    }
+    segmentAttributes.duration = segments.reduce((max, segment) => {
+      return Math.max(max, Math.ceil(segment.duration));
+    }, 0);
+  } else {
+    segmentAttributes.duration = 0;
+  }
 
-    return { attributes, segments };
-  });
+  return {
+    attributes: segmentAttributes,
+    segments
+  };
 };
+
+export const toPlaylists = (representations) => representations.map(generateSegments);

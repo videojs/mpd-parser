@@ -78,6 +78,7 @@ export const segmentsFromList = (attributes, segmentTimeline) => {
 
       segment.timeline = segmentTime.timeline;
       segment.duration = segmentTime.duration;
+      segment.number = segmentTime.number;
       return segment;
     }
     // Since we're mapping we should get rid of any blank segments (in case
