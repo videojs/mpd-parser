@@ -10,7 +10,7 @@ export const segmentRange = {
    *
    * @param {Object} attributes
    *        Inheritied MPD attributes
-   * @return {{ start: Number, end: Number }}
+   * @return {{ start: number, end: number }}
    *         The start and end numbers for available segments
    */
   static(attributes) {
@@ -31,7 +31,7 @@ export const segmentRange = {
    *
    * @param {Object} attributes
    *        Inheritied MPD attributes
-   * @return {{ start: Number, end: Number }}
+   * @return {{ start: number, end: number }}
    *         The start and end numbers for available segments
    */
   dynamic(attributes) {
@@ -67,9 +67,9 @@ export const segmentRange = {
  *
  * @name toSegmentsCallback
  * @function
- * @param {Number} number
+ * @param {number} number
  *        Number of the segment
- * @param {Number} index
+ * @param {number} index
  *        Index of the number in the range list
  * @return {{ number: Number, duration: Number, timeline: Number, time: Number }}
  *         Object with segment timing and duration info

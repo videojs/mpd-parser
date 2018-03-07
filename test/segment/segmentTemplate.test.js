@@ -709,9 +709,9 @@ QUnit.test('correctly handles duration', function(assert) {
     segmentsFromTemplate(basicAttributes, []),
     [{
       duration: 2,
-      'map': {
-        'resolvedUri': 'http://www.example.com/',
-        'uri': ''
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
@@ -764,9 +764,9 @@ QUnit.test('correctly handles duration', function(assert) {
     segmentsFromTemplate(Object.assign({}, basicAttributes, { startNumber: 10 }), []),
     [{
       duration: 2,
-      'map': {
-        'resolvedUri': 'http://www.example.com/',
-        'uri': ''
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
       },
       number: 10,
       resolvedUri: 'http://www.example.com/n-10.m4s',
@@ -815,15 +815,14 @@ QUnit.test('correctly handles duration', function(assert) {
     }],
     'segments adjusted correctly based on @startNumber');
 
-
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes,
       { availabilityStartTime: 4 }), []),
     [{
       duration: 2,
-      'map': {
-        'resolvedUri': 'http://www.example.com/',
-        'uri': ''
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
@@ -858,9 +857,9 @@ QUnit.test('correctly handles duration', function(assert) {
       { availabilityStartTime: 2, start: 4 }), []),
     [{
       duration: 2,
-      'map': {
-        'resolvedUri': 'http://www.example.com/',
-        'uri': ''
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
@@ -878,7 +877,6 @@ QUnit.test('correctly handles duration', function(assert) {
       uri: 'n-2.m4s'
     }],
    'segments correct with @availabilityStartTime and @start set');
-
 
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes,
@@ -911,9 +909,9 @@ QUnit.test('correctly handles duration', function(assert) {
       { clientOffset: -2000 }, [])),
     [{
       duration: 2,
-      'map': {
-        'resolvedUri': 'http://www.example.com/',
-        'uri': ''
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
@@ -983,9 +981,9 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
     segmentsFromTemplate(basicAttributes, segmentTimeline),
       [{
         duration: 2,
-        'map': {
-          'resolvedUri': 'http://www.example.com/',
-          'uri': ''
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
         },
         number: 1,
         resolvedUri: 'http://www.example.com/n-1.m4s',
@@ -1039,9 +1037,9 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       Object.assign({}, basicAttributes, {clientOffset: -2000}), segmentTimeline),
       [{
         duration: 2,
-        'map': {
-          'resolvedUri': 'http://www.example.com/',
-          'uri': ''
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
         },
         number: 1,
         resolvedUri: 'http://www.example.com/n-1.m4s',
@@ -1080,25 +1078,25 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       }],
       'segments should fill correctly when taking client offset into account');
 
-    const segmentTimelineShifted = [
-      {
-        t: 2,
-        d: 2,
-        r: 1
-      },
-      {
-        d: 2,
-        r: -1
-      }
-    ];
+  const segmentTimelineShifted = [
+    {
+      t: 2,
+      d: 2,
+      r: 1
+    },
+    {
+      d: 2,
+      r: -1
+    }
+  ];
 
   assert.deepEqual(
     segmentsFromTemplate(basicAttributes, segmentTimelineShifted),
     [{
       duration: 2,
-      'map': {
-        'resolvedUri': 'http://www.example.com/',
-        'uri': ''
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
