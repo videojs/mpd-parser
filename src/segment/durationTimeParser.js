@@ -11,13 +11,12 @@ export const segmentRange = {
     const {
       duration,
       timescale = 1,
-      sourceDuration,
-      startNumber = 1
+      sourceDuration
     } = attributes;
 
     return {
-      start: startNumber,
-      end: startNumber + Math.ceil(sourceDuration / (duration / timescale))
+      start: 0,
+      end: Math.ceil(sourceDuration / (duration / timescale))
     };
   },
   /**
@@ -31,7 +30,6 @@ export const segmentRange = {
       timescale = 1,
       duration,
       start = 0,
-      startNumber = 1,
       minimumUpdatePeriod = 0,
       timeShiftBufferDepth = Infinity
     } = attributes;
@@ -45,8 +43,8 @@ export const segmentRange = {
     const availableEnd = Math.floor((now - periodStartWC) * timescale / duration);
 
     return {
-      start: Math.max(startNumber, availableStart),
-      end: Math.min(startNumber + segmentCount, availableEnd)
+      start: Math.max(0, availableStart),
+      end: Math.min(segmentCount, availableEnd)
     };
   }
 };
@@ -58,11 +56,12 @@ export const toSegments = (attributes) => (number, index) => {
   const {
     duration,
     timescale = 1,
-    periodIndex
+    periodIndex,
+    startNumber = 1
   } = attributes;
 
   return {
-    number,
+    number: startNumber + number,
     duration: duration / timescale,
     timeline: periodIndex,
     time: index * duration

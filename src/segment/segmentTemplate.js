@@ -122,7 +122,6 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
   }
 
   return parseByTimeline(attributes, segmentTimeline);
-
 };
 
 /**

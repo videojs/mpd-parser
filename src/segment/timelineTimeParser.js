@@ -1,22 +1,54 @@
 /**
+ * Calculates the R (repetition) value for a live stream (for the final segment
+ * in a manifest where the r value is negative 1)
+ *
+ * @param {Object} attributes
+ *        Object containing all inherited attributes from parent elements with attribute
+ *        names as keys
+ * @param {number} time
+ *        current time (typically the total time up until the final segment)
+ * @param {number} duration
+ *        duration property for the given <S />
+ *
+ * @return {number}
+ *        R value to reach the end of the given period
+ */
+const getLiveRValue = (attributes, time, duration) => {
+  const {
+    NOW,
+    clientOffset,
+    availabilityStartTime,
+    timescale = 1,
+    start = 0,
+    minimumUpdatePeriod = 0
+  } = attributes;
+  const now = (NOW + clientOffset) / 1000;
+  const periodStartWC = availabilityStartTime + start;
+  const periodEndWC = now + minimumUpdatePeriod;
+  const periodDuration = periodEndWC - periodStartWC;
+  const segmentDuration = duration / timescale;
+
+  return Math.ceil((periodDuration - time) / segmentDuration);
+};
+
+/**
  * Uses information provided by SegmentTemplate.SegmentTimeline to determine segment
  * timing and duration
  *
- * @param {number} start
- *        The start number for the first segment of this period
- * @param {number} timeline
- *        The timeline (period index) for the first segment of this period
- * @param {number} timescale
- *        The timescale for the timestamps contained within the media content
+ * @param {Object} attributes
+ *        Object containing all inherited attributes from parent elements with attribute
+ *        names as keys
  * @param {Object[]} segmentTimeline
  *        List of objects representing the attributes of each S element contained within
- * @param {number} sourceDuration
- *        Duration of the entire Media Presentation
+ *
  * @return {{number: number, duration: number, time: number, timeline: number}[]}
  *         List of Objects with segment timing and duration info
  */
 export const parseByTimeline = (attributes, segmentTimeline) => {
   const {
+    type = 'static',
+    minimumUpdatePeriod = 0,
+    media = '',
     sourceDuration,
     timescale = 1,
     startNumber = 1,
@@ -69,8 +101,14 @@ export const parseByTimeline = (attributes, segmentTimeline) => {
 
       if (nextS === segmentTimeline.length) {
         // last segment
-        // TODO: This may be incorrect depending on conclusion of TODO above
-        count = ((sourceDuration * timescale) - time) / duration;
+        if (type === 'dynamic' &&
+            minimumUpdatePeriod > 0 &&
+            media.indexOf('$Number$') > 0) {
+          count = getLiveRValue(attributes, time, duration);
+        } else {
+          // TODO: This may be incorrect depending on conclusion of TODO above
+          count = ((sourceDuration * timescale) - time) / duration;
+        }
       } else {
         count = (segmentTimeline[nextS].t - time) / duration;
       }
