@@ -1,11 +1,17 @@
 import { range } from '../utils/list';
 
 /**
- *
+ * Functions for calculating the range of available segments in static and dynamic
+ * manifests.
  */
 export const segmentRange = {
   /**
+   * Returns the entire range of available segments for a static MPD
    *
+   * @param {Object} attributes
+   *        Inheritied MPD attributes
+   * @return {{ start: Number, end: Number }}
+   *         The start and end numbers for available segments
    */
   static(attributes) {
     const {
@@ -20,8 +26,14 @@ export const segmentRange = {
       end: startNumber + Math.ceil(sourceDuration / (duration / timescale))
     };
   },
+
   /**
+   * Returns the current live window range of available segments for a dynamic MPD
    *
+   * @param {Object} attributes
+   *        Inheritied MPD attributes
+   * @return {{ start: Number, end: Number }}
+   *         The start and end numbers for available segments
    */
   dynamic(attributes) {
     const {
@@ -52,7 +64,27 @@ export const segmentRange = {
 };
 
 /**
+ * Maps a range of numbers to objects with information needed to build the corresponding
+ * segment list
  *
+ * @name toSegmentsCallback
+ * @function
+ * @param {Number} number
+ *        Number of the segment
+ * @param {Number} index
+ *        Index of the number in the range list
+ * @return {{ number: Number, duration: Number, timeline: Number, time: Number }}
+ *         Object with segment timing and duration info
+ */
+
+/**
+ * Returns a callback for Array.prototype.map for mapping a range of numbers to
+ * information needed to build the segment list.
+ *
+ * @param {Object} attributes
+ *        Inherited MPD attributes
+ * @return {toSegmentsCallback}
+ *         Callback map function
  */
 export const toSegments = (attributes) => (number, index) => {
   const {
@@ -70,7 +102,14 @@ export const toSegments = (attributes) => (number, index) => {
 };
 
 /**
+ * Returns a list of objects containing segment timing and duration info used for
+ * building the list of segments. This uses the @duration attribute specified
+ * in the MPD manifest to derive the range of segments.
  *
+ * @param {Object} attributes
+ *        Inherited MPD attributes
+ * @return {{number: number, duration: number, time: number, timeline: number}[]}
+ *         List of Objects with segment timing and duration info
  */
 export const parseByDuration = (attributes) => {
   const {

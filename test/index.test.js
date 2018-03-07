@@ -1,8 +1,6 @@
 import { parse, VERSION } from '../src';
 import QUnit from 'qunit';
 
-QUnit.dump.maxDepth = 100;
-
 // manifests
 import maatVttSegmentTemplate from './manifests/maat_vtt_segmentTemplate.mpd';
 import segmentBaseTemplate from './manifests/segmentBase.mpd';
