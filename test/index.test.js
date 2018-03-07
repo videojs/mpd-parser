@@ -14,7 +14,6 @@ import {
 import {
   parsedManifest as segmentListManifest
 } from './manifests/segmentList.js';
-
 QUnit.module('mpd-parser');
 
 QUnit.test('has VERSION', function(assert) {
@@ -39,7 +38,7 @@ QUnit.test('has parse', function(assert) {
   expected: segmentListManifest
 }].forEach(({ name, input, expected }) => {
   QUnit.test(`${name} test manifest`, function(assert) {
-    const actual = parse(input, { NOW: 10000 });
+    const actual = parse(input);
 
     assert.deepEqual(actual, expected);
   });
