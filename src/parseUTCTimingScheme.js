@@ -5,7 +5,7 @@ import errors from './errors';
 /**
  * Parses the manifest for a UTCTiming node, returning the nodes attributes if found
  *
- * @param {String} mpd
+ * @param {string} mpd
  *        XML string of the MPD manifest
  * @return {Object|null}
  *         Attributes of UTCTiming node specified in the manifest. Null if none found

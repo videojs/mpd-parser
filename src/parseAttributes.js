@@ -7,9 +7,9 @@ export const parsers = {
    * Specifies the duration of the entire Media Presentation. Format is a duration string
    * as specified in ISO 8601
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The duration in seconds
    */
   mediaPresentationDuration(value) {
@@ -21,9 +21,9 @@ export const parsers = {
    * MPD. For a dynamic manifest, it specifies the anchor for the earliest availability
    * time. Format is a date string as specified in ISO 8601
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The date as seconds from unix epoch
    */
   availabilityStartTime(value) {
@@ -34,9 +34,9 @@ export const parsers = {
    * Specifies the smallest period between potential changes to the MPD. Format is a
    * duration string as specified in ISO 8601
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The duration in seconds
    */
   minimumUpdatePeriod(value) {
@@ -47,9 +47,9 @@ export const parsers = {
    * Specifies the duration of the smallest time shifting buffer for any Representation
    * in the MPD. Format is a duration string as specified in ISO 8601
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The duration in seconds
    */
   timeShiftBufferDepth(value) {
@@ -60,9 +60,9 @@ export const parsers = {
    * Specifies the PeriodStart time of the Period relative to the availabilityStarttime.
    * Format is a duration string as specified in ISO 8601
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The duration in seconds
    */
   start(value) {
@@ -72,9 +72,9 @@ export const parsers = {
   /**
    * Specifies the width of the visual presentation
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed width
    */
   width(value) {
@@ -84,9 +84,9 @@ export const parsers = {
   /**
    * Specifies the height of the visual presentation
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed height
    */
   height(value) {
@@ -96,9 +96,9 @@ export const parsers = {
   /**
    * Specifies the bitrate of the representation
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed bandwidth
    */
   bandwidth(value) {
@@ -108,9 +108,9 @@ export const parsers = {
   /**
    * Specifies the number of the first Media Segment in this Representation in the Period
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed number
    */
   startNumber(value) {
@@ -120,9 +120,9 @@ export const parsers = {
   /**
    * Specifies the timescale in units per seconds
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The aprsed timescale
    */
   timescale(value) {
@@ -135,9 +135,10 @@ export const parsers = {
    *       specifies the duration of the Period. This attribute is currently not
    *       supported by the rest of the parser, however we still check for it to prevent
    *       errors.
-   * @param {String} value
+   *
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed duration
    */
   duration(value) {
@@ -153,9 +154,9 @@ export const parsers = {
   /**
    * Specifies the Segment duration, in units of the value of the @timescale.
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed duration
    */
   d(value) {
@@ -166,9 +167,9 @@ export const parsers = {
    * Specifies the MPD start time, in @timescale units, the first Segment in the series
    * starts relative to the beginning of the Period
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed time
    */
   t(value) {
@@ -179,9 +180,9 @@ export const parsers = {
    * Specifies the repeat count of the number of following contiguous Segments with the
    * same duration expressed by the value of @d
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {Number}
+   * @return {number}
    *         The parsed number
    */
   r(value) {
@@ -192,9 +193,9 @@ export const parsers = {
    * Default parser for all other attributes. Acts as a no-op and just returns the value
    * as a string
    *
-   * @param {String} value
+   * @param {string} value
    *        value of attribute as a string
-   * @return {String}
+   * @return {string}
    *         Unparsed value
    */
   DEFAULT(value) {

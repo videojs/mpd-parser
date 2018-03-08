@@ -10,20 +10,19 @@ export const segmentRange = {
    *
    * @param {Object} attributes
    *        Inheritied MPD attributes
-   * @return {{ start: Number, end: Number }}
+   * @return {{ start: number, end: number }}
    *         The start and end numbers for available segments
    */
   static(attributes) {
     const {
       duration,
       timescale = 1,
-      sourceDuration,
-      startNumber = 1
+      sourceDuration
     } = attributes;
 
     return {
-      start: startNumber,
-      end: startNumber + Math.ceil(sourceDuration / (duration / timescale))
+      start: 0,
+      end: Math.ceil(sourceDuration / (duration / timescale))
     };
   },
 
@@ -32,7 +31,7 @@ export const segmentRange = {
    *
    * @param {Object} attributes
    *        Inheritied MPD attributes
-   * @return {{ start: Number, end: Number }}
+   * @return {{ start: number, end: number }}
    *         The start and end numbers for available segments
    */
   dynamic(attributes) {
@@ -43,7 +42,6 @@ export const segmentRange = {
       timescale = 1,
       duration,
       start = 0,
-      startNumber = 1,
       minimumUpdatePeriod = 0,
       timeShiftBufferDepth = Infinity
     } = attributes;
@@ -57,8 +55,8 @@ export const segmentRange = {
     const availableEnd = Math.floor((now - periodStartWC) * timescale / duration);
 
     return {
-      start: Math.max(startNumber, availableStart),
-      end: Math.min(startNumber + segmentCount, availableEnd)
+      start: Math.max(0, availableStart),
+      end: Math.min(segmentCount, availableEnd)
     };
   }
 };
@@ -69,9 +67,9 @@ export const segmentRange = {
  *
  * @name toSegmentsCallback
  * @function
- * @param {Number} number
+ * @param {number} number
  *        Number of the segment
- * @param {Number} index
+ * @param {number} index
  *        Index of the number in the range list
  * @return {{ number: Number, duration: Number, timeline: Number, time: Number }}
  *         Object with segment timing and duration info
@@ -90,11 +88,12 @@ export const toSegments = (attributes) => (number, index) => {
   const {
     duration,
     timescale = 1,
-    periodIndex
+    periodIndex,
+    startNumber = 1
   } = attributes;
 
   return {
-    number,
+    number: startNumber + number,
     duration: duration / timescale,
     timeline: periodIndex,
     time: index * duration

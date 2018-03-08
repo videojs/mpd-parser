@@ -173,6 +173,8 @@ export const inheritBaseUrls =
  *        Contains attributes inherited by the Period
  * @param {string[]} periodBaseUrls
  *        Contains list of resolved base urls inherited by the Period
+ * @param {string[]} periodSegmentInfo
+ *        Contains Segment Information at the period level
  * @return {toRepresentationsCallback}
  *         Callback map function
  */
@@ -236,8 +238,14 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodI
  *
  * @param {Node} mpd
  *        The root node of the mpd
- * @param {string} manifestUri
- *        The uri of the source mpd
+ * @param {Object} options
+ *        Available options for inheritAttributes
+ * @param {string} options.manifestUri
+ *        The uri source of the mpd
+ * @param {number} options.NOW
+ *        Current time per DASH IOP.  Default is current time in ms since epoch
+ * @param {number} options.clientOffset
+ *        Client time difference from NOW (in milliseconds)
  * @return {RepresentationInformation[]}
  *         List of objects containing Representation information
  */
