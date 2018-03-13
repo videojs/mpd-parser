@@ -26,9 +26,8 @@ const getLiveRValue = (attributes, time, duration) => {
   const periodStartWC = availabilityStartTime + start;
   const periodEndWC = now + minimumUpdatePeriod;
   const periodDuration = periodEndWC - periodStartWC;
-  const segmentDuration = duration / timescale;
 
-  return Math.ceil((periodDuration - time) / segmentDuration);
+  return Math.ceil(((periodDuration * timescale) - time) / duration);
 };
 
 /**
