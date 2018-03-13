@@ -1134,6 +1134,102 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       uri: 'n-4.m4s'
     }],
     'segments take into account different time value for first segment');
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign({}, basicAttributes, {timescale: 2 }),
+      segmentTimelineShifted),
+    [{
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 3,
+      resolvedUri: 'http://www.example.com/n-3.m4s',
+      timeline: 1,
+      uri: 'n-3.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 4,
+      resolvedUri: 'http://www.example.com/n-4.m4s',
+      timeline: 1,
+      uri: 'n-4.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 5,
+      resolvedUri: 'http://www.example.com/n-5.m4s',
+      timeline: 1,
+      uri: 'n-5.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 6,
+      resolvedUri: 'http://www.example.com/n-6.m4s',
+      timeline: 1,
+      uri: 'n-6.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 7,
+      resolvedUri: 'http://www.example.com/n-7.m4s',
+      timeline: 1,
+      uri: 'n-7.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 8,
+      resolvedUri: 'http://www.example.com/n-8.m4s',
+      timeline: 1,
+      uri: 'n-8.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 9,
+      resolvedUri: 'http://www.example.com/n-9.m4s',
+      timeline: 1,
+      uri: 'n-9.m4s'
+    }],
+    'segments take into account different time value for first segment with timescale');
 });
 
 QUnit.module('segmentTemplate - segmentsFromTemplate');
