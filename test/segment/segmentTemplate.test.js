@@ -108,8 +108,8 @@ QUnit.module('segmentTemplate - parseTemplateInfo');
 QUnit.test('one media segment when no @duration attribute or SegmentTimeline element',
 function(assert) {
   const attributes = {
-    startNumber: '3',
-    timescale: '1000',
+    startNumber: 3,
+    timescale: 1000,
     sourceDuration: 42,
     periodIndex: 1
   };
@@ -122,10 +122,10 @@ function(assert) {
 
 QUnit.test('uses @duration attribute when present', function(assert) {
   const attributes = {
-    startNumber: '0',
-    timescale: '1000',
+    startNumber: 0,
+    timescale: 1000,
     sourceDuration: 16,
-    duration: '6000',
+    duration: 6000,
     periodIndex: 1
   };
 
@@ -156,10 +156,10 @@ QUnit.test('uses @duration attribute when present', function(assert) {
 
 QUnit.test('parseByDuration allows non zero startNumber', function(assert) {
   const attributes = {
-    startNumber: '101',
-    timescale: '1000',
+    startNumber: 101,
+    timescale: 1000,
     sourceDuration: 16,
-    duration: '6000',
+    duration: 6000,
     periodIndex: 1
   };
 
@@ -222,24 +222,24 @@ QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(
 
 QUnit.test('uses SegmentTimeline info when no @duration attribute', function(assert) {
   const attributes = {
-    startNumber: '0',
+    startNumber: 0,
     sourceDuration: 16,
-    timescale: '1000',
+    timescale: 1000,
     periodIndex: 1
   };
   const segmentTimeline = [
     {
-      t: '0',
-      d: '6000'
+      t: 0,
+      d: 6000
     },
     {
-      d: '2000'
+      d: 2000
     },
     {
-      d: '3000'
+      d: 3000
     },
     {
-      d: '5000'
+      d: 5000
     }
   ];
 
@@ -276,24 +276,24 @@ QUnit.test('uses SegmentTimeline info when no @duration attribute', function(ass
 
 QUnit.test('parseByTimeline allows non zero startNumber', function(assert) {
   const attributes = {
-    startNumber: '101',
+    startNumber: 101,
     sourceDuration: 16,
-    timescale: '1000',
+    timescale: 1000,
     periodIndex: 1
   };
   const segmentTimeline = [
     {
-      t: '0',
-      d: '6000'
+      t: 0,
+      d: 6000
     },
     {
-      d: '2000'
+      d: 2000
     },
     {
-      d: '3000'
+      d: 3000
     },
     {
-      d: '5000'
+      d: 5000
     }
   ];
 
@@ -335,17 +335,17 @@ QUnit.test('parseByTimeline defaults 1 for startNumber and timescale', function(
   };
   const segmentTimeline = [
     {
-      t: '0',
-      d: '4'
+      t: 0,
+      d: 4
     },
     {
-      d: '2'
+      d: 2
     },
     {
-      d: '3'
+      d: 3
     },
     {
-      d: '2'
+      d: 2
     }
   ];
 
@@ -382,23 +382,23 @@ QUnit.test('parseByTimeline defaults 1 for startNumber and timescale', function(
 
 QUnit.test('defaults SegmentTimeline.S@t to 0 for first segment', function(assert) {
   const attributes = {
-    startNumber: '0',
+    startNumber: 0,
     sourceDuration: 16,
-    timescale: '1000',
+    timescale: 1000,
     periodIndex: 1
   };
   const segmentTimeline = [
     {
-      d: '6000'
+      d: 6000
     },
     {
-      d: '2000'
+      d: 2000
     },
     {
-      d: '3000'
+      d: 3000
     },
     {
-      d: '5000'
+      d: 5000
     }
   ];
 
@@ -435,24 +435,24 @@ QUnit.test('defaults SegmentTimeline.S@t to 0 for first segment', function(asser
 
 QUnit.test('allows non zero starting SegmentTimeline.S@t value', function(assert) {
   const attributes = {
-    startNumber: '0',
+    startNumber: 0,
     sourceDuration: 16,
-    timescale: '1000',
+    timescale: 1000,
     periodIndex: 1
   };
   const segmentTimeline = [
     {
-      t: '42000',
-      d: '6000'
+      t: 42000,
+      d: 6000
     },
     {
-      d: '2000'
+      d: 2000
     },
     {
-      d: '3000'
+      d: 3000
     },
     {
-      d: '5000'
+      d: 5000
     }
   ];
 
@@ -489,25 +489,25 @@ QUnit.test('allows non zero starting SegmentTimeline.S@t value', function(assert
 
 QUnit.test('honors @r repeat attribute for SegmentTimeline.S', function(assert) {
   const attributes = {
-    startNumber: '0',
+    startNumber: 0,
     sourceDuration: 16,
-    timescale: '1000',
+    timescale: 1000,
     periodIndex: 1
   };
   const segmentTimeline = [
     {
-      t: '0',
-      d: '6000'
+      t: 0,
+      d: 6000
     },
     {
-      d: '1000',
-      r: '3'
+      d: 1000,
+      r: 3
     },
     {
-      d: '5000'
+      d: 5000
     },
     {
-      d: '1000'
+      d: 1000
     }
   ];
 
@@ -562,26 +562,26 @@ QUnit.test('honors @r repeat attribute for SegmentTimeline.S', function(assert) 
 
 QUnit.test('correctly handles negative @r repeat value', function(assert) {
   const attributes = {
-    startNumber: '0',
+    startNumber: 0,
     sourceDuration: 16,
-    timescale: '1000',
+    timescale: 1000,
     periodIndex: 1
   };
   const segmentTimeline = [
     {
-      t: '0',
-      d: '6000'
+      t: 0,
+      d: 6000
     },
     {
-      d: '1000',
-      r: '-1'
+      d: 1000,
+      r: -1
     },
     {
-      t: '10000',
-      d: '5000'
+      t: 10000,
+      d: 5000
     },
     {
-      d: '1000'
+      d: 1000
     }
   ];
 
@@ -636,19 +636,19 @@ QUnit.test('correctly handles negative @r repeat value', function(assert) {
 
 QUnit.test('correctly handles negative @r repeat value for last S', function(assert) {
   const attributes = {
-    startNumber: '0',
+    startNumber: 0,
     sourceDuration: 15,
-    timescale: '1000',
+    timescale: 1000,
     periodIndex: 1
   };
   const segmentTimeline = [
     {
-      t: '0',
-      d: '6000'
+      t: 0,
+      d: 6000
     },
     {
-      d: '3000',
-      r: '-1'
+      d: 3000,
+      r: -1
     }
   ];
 
@@ -688,15 +688,559 @@ function(assert) {
 
 });
 
+QUnit.module('segmentTemplate - type ="dynamic"');
+
+QUnit.test('correctly handles duration', function(assert) {
+  const basicAttributes = {
+    baseUrl: 'http://www.example.com/',
+    type: 'dynamic',
+    media: 'n-$Number$.m4s',
+    minimumUpdatePeriod: 0,
+    timescale: 1,
+    NOW: 10000,
+    clientOffset: 0,
+    availabilityStartTime: 0,
+    startNumber: 1,
+    duration: 2,
+    periodIndex: 1
+  };
+
+  assert.deepEqual(
+    segmentsFromTemplate(basicAttributes, []),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 3,
+      resolvedUri: 'http://www.example.com/n-3.m4s',
+      timeline: 1,
+      uri: 'n-3.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 4,
+      resolvedUri: 'http://www.example.com/n-4.m4s',
+      timeline: 1,
+      uri: 'n-4.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 5,
+      resolvedUri: 'http://www.example.com/n-5.m4s',
+      timeline: 1,
+      uri: 'n-5.m4s'
+    }],
+    'segments correctly with basic settings');
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign({}, basicAttributes, { startNumber: 10 }), []),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 10,
+      resolvedUri: 'http://www.example.com/n-10.m4s',
+      timeline: 1,
+      uri: 'n-10.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 11,
+      resolvedUri: 'http://www.example.com/n-11.m4s',
+      timeline: 1,
+      uri: 'n-11.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 12,
+      resolvedUri: 'http://www.example.com/n-12.m4s',
+      timeline: 1,
+      uri: 'n-12.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 13,
+      resolvedUri: 'http://www.example.com/n-13.m4s',
+      timeline: 1,
+      uri: 'n-13.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 14,
+      resolvedUri: 'http://www.example.com/n-14.m4s',
+      timeline: 1,
+      uri: 'n-14.m4s'
+    }],
+    'segments adjusted correctly based on @startNumber');
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign({}, basicAttributes,
+      { availabilityStartTime: 4 }), []),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 3,
+      resolvedUri: 'http://www.example.com/n-3.m4s',
+      timeline: 1,
+      uri: 'n-3.m4s'
+    }],
+    'segments correct with @availabilityStartTime set'
+  );
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign({}, basicAttributes,
+      { availabilityStartTime: 2, start: 4 }), []),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }],
+   'segments correct with @availabilityStartTime and @start set');
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign({}, basicAttributes,
+      { timeShiftBufferDepth: 4 }, [])),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 4,
+      resolvedUri: 'http://www.example.com/n-4.m4s',
+      timeline: 1,
+      uri: 'n-4.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 5,
+      resolvedUri: 'http://www.example.com/n-5.m4s',
+      timeline: 1,
+      uri: 'n-5.m4s'
+    }],
+   'segments correct with @timeShiftBufferDepth set');
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign({}, basicAttributes,
+      { clientOffset: -2000 }, [])),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 3,
+      resolvedUri: 'http://www.example.com/n-3.m4s',
+      timeline: 1,
+      uri: 'n-3.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 4,
+      resolvedUri: 'http://www.example.com/n-4.m4s',
+      timeline: 1,
+      uri: 'n-4.m4s'
+    }],
+    'segments correct with given clientOffset');
+});
+
+QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
+  const basicAttributes = {
+    baseUrl: 'http://www.example.com/',
+    type: 'dynamic',
+    media: 'n-$Number$.m4s',
+    minimumUpdatePeriod: 2,
+    timescale: 1,
+    NOW: 8000,
+    clientOffset: 0,
+    availabilityStartTime: 0,
+    startNumber: 1,
+    periodIndex: 1
+  };
+
+  const segmentTimeline = [
+    {
+      t: 0,
+      d: 2,
+      r: 1
+    },
+    {
+      d: 2,
+      r: -1
+    }
+  ];
+
+  assert.deepEqual(
+    segmentsFromTemplate(basicAttributes, segmentTimeline),
+      [{
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 1,
+        resolvedUri: 'http://www.example.com/n-1.m4s',
+        timeline: 1,
+        uri: 'n-1.m4s'
+      }, {
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 2,
+        resolvedUri: 'http://www.example.com/n-2.m4s',
+        timeline: 1,
+        uri: 'n-2.m4s'
+      }, {
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 3,
+        resolvedUri: 'http://www.example.com/n-3.m4s',
+        timeline: 1,
+        uri: 'n-3.m4s'
+      }, {
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 4,
+        resolvedUri: 'http://www.example.com/n-4.m4s',
+        timeline: 1,
+        uri: 'n-4.m4s'
+      }, {
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 5,
+        resolvedUri: 'http://www.example.com/n-5.m4s',
+        timeline: 1,
+        uri: 'n-5.m4s'
+      }],
+      'segments should fill until current time when r = -1 and @minimumUpdatePeriod > 0');
+
+  assert.deepEqual(
+    segmentsFromTemplate(
+      Object.assign({}, basicAttributes, {clientOffset: -2000}), segmentTimeline),
+      [{
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 1,
+        resolvedUri: 'http://www.example.com/n-1.m4s',
+        timeline: 1,
+        uri: 'n-1.m4s'
+      }, {
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 2,
+        resolvedUri: 'http://www.example.com/n-2.m4s',
+        timeline: 1,
+        uri: 'n-2.m4s'
+      }, {
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 3,
+        resolvedUri: 'http://www.example.com/n-3.m4s',
+        timeline: 1,
+        uri: 'n-3.m4s'
+      }, {
+        duration: 2,
+        map: {
+          resolvedUri: 'http://www.example.com/',
+          uri: ''
+        },
+        number: 4,
+        resolvedUri: 'http://www.example.com/n-4.m4s',
+        timeline: 1,
+        uri: 'n-4.m4s'
+      }],
+      'segments should fill correctly when taking client offset into account');
+
+  const segmentTimelineShifted = [
+    {
+      t: 2,
+      d: 2,
+      r: 1
+    },
+    {
+      d: 2,
+      r: -1
+    }
+  ];
+
+  assert.deepEqual(
+    segmentsFromTemplate(basicAttributes, segmentTimelineShifted),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 3,
+      resolvedUri: 'http://www.example.com/n-3.m4s',
+      timeline: 1,
+      uri: 'n-3.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 4,
+      resolvedUri: 'http://www.example.com/n-4.m4s',
+      timeline: 1,
+      uri: 'n-4.m4s'
+    }],
+    'segments take into account different time value for first segment');
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign({}, basicAttributes, {timescale: 2 }),
+      segmentTimelineShifted),
+    [{
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 3,
+      resolvedUri: 'http://www.example.com/n-3.m4s',
+      timeline: 1,
+      uri: 'n-3.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 4,
+      resolvedUri: 'http://www.example.com/n-4.m4s',
+      timeline: 1,
+      uri: 'n-4.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 5,
+      resolvedUri: 'http://www.example.com/n-5.m4s',
+      timeline: 1,
+      uri: 'n-5.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 6,
+      resolvedUri: 'http://www.example.com/n-6.m4s',
+      timeline: 1,
+      uri: 'n-6.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 7,
+      resolvedUri: 'http://www.example.com/n-7.m4s',
+      timeline: 1,
+      uri: 'n-7.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 8,
+      resolvedUri: 'http://www.example.com/n-8.m4s',
+      timeline: 1,
+      uri: 'n-8.m4s'
+    }, {
+      duration: 1,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 9,
+      resolvedUri: 'http://www.example.com/n-9.m4s',
+      timeline: 1,
+      uri: 'n-9.m4s'
+    }],
+    'segments take into account different time value for first segment with timescale');
+});
+
 QUnit.module('segmentTemplate - segmentsFromTemplate');
 
 QUnit.test('constructs simple segment list and resolves uris', function(assert) {
   const attributes = {
-    startNumber: '0',
-    duration: '6000',
+    startNumber: 0,
+    duration: 6000,
     sourceDuration: 16,
-    timescale: '1000',
-    bandwidth: '100',
+    timescale: 1000,
+    bandwidth: 100,
     id: 'Rep1',
     initialization: {
       sourceURL: '$RepresentationID$/$Bandwidth$/init.mp4'
@@ -714,7 +1258,8 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
       },
       resolvedUri: 'https://example.com/Rep1/100/000-00000.mp4',
       timeline: 1,
-      uri: 'Rep1/100/000-00000.mp4'
+      uri: 'Rep1/100/000-00000.mp4',
+      number: 0
     },
     {
       duration: 6,
@@ -724,7 +1269,8 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
       },
       resolvedUri: 'https://example.com/Rep1/100/001-06000.mp4',
       timeline: 1,
-      uri: 'Rep1/100/001-06000.mp4'
+      uri: 'Rep1/100/001-06000.mp4',
+      number: 1
     },
     {
       duration: 4,
@@ -734,7 +1280,8 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
       },
       resolvedUri: 'https://example.com/Rep1/100/002-12000.mp4',
       timeline: 1,
-      uri: 'Rep1/100/002-12000.mp4'
+      uri: 'Rep1/100/002-12000.mp4',
+      number: 2
     }
   ];
 
@@ -744,11 +1291,11 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
 
 QUnit.test('constructs simple segment list and with <Initialization> node', function(assert) {
   const attributes = {
-    startNumber: '0',
-    duration: '6000',
+    startNumber: 0,
+    duration: 6000,
     sourceDuration: 16,
-    timescale: '1000',
-    bandwidth: '100',
+    timescale: 1000,
+    bandwidth: 100,
     id: 'Rep1',
     initialization: {
       sourceURL: 'init.mp4',
@@ -771,7 +1318,8 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
       },
       resolvedUri: 'https://example.com/Rep1/100/000-00000.mp4',
       timeline: 1,
-      uri: 'Rep1/100/000-00000.mp4'
+      uri: 'Rep1/100/000-00000.mp4',
+      number: 0
     },
     {
       duration: 6,
@@ -785,7 +1333,8 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
       },
       resolvedUri: 'https://example.com/Rep1/100/001-06000.mp4',
       timeline: 1,
-      uri: 'Rep1/100/001-06000.mp4'
+      uri: 'Rep1/100/001-06000.mp4',
+      number: 1
     },
     {
       duration: 4,
@@ -799,7 +1348,8 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
       },
       resolvedUri: 'https://example.com/Rep1/100/002-12000.mp4',
       timeline: 1,
-      uri: 'Rep1/100/002-12000.mp4'
+      uri: 'Rep1/100/002-12000.mp4',
+      number: 2
     }
   ];
 

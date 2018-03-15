@@ -1,7 +1,7 @@
 import { flatten } from './utils/list';
-import { getAttributes, merge } from './utils/object';
-import { parseDuration } from './utils/time';
+import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
+import { parseAttributes } from './parseAttributes';
 import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
 
@@ -52,7 +52,7 @@ export const getSegmentInformation = (adaptationSet) => {
   const segmentTemplate = findChildren(adaptationSet, 'SegmentTemplate')[0];
   const segmentList = findChildren(adaptationSet, 'SegmentList')[0];
   const segmentUrls = segmentList && findChildren(segmentList, 'SegmentURL')
-    .map(s => merge({ tag: 'SegmentURL' }, getAttributes(s)));
+    .map(s => merge({ tag: 'SegmentURL' }, parseAttributes(s)));
   const segmentBase = findChildren(adaptationSet, 'SegmentBase')[0];
   const segmentTimelineParentNode = segmentList || segmentTemplate;
   const segmentTimeline = segmentTimelineParentNode &&
@@ -66,11 +66,11 @@ export const getSegmentInformation = (adaptationSet) => {
   // while the node can have a url and range specified.  If the <SegmentTemplate> has
   // both @initialization and an <Initialization> subelement we opt to override with
   // the node, as this interaction is not defined in the spec.
-  const template = segmentTemplate && getAttributes(segmentTemplate);
+  const template = segmentTemplate && parseAttributes(segmentTemplate);
 
   if (template && segmentInitialization) {
     template.initialization =
-      (segmentInitialization && getAttributes(segmentInitialization));
+      (segmentInitialization && parseAttributes(segmentInitialization));
   } else if (template && template.initialization) {
     // If it is @initialization we convert it to an object since this is the format that
     // later functions will rely on for the initialization segment.  This is only valid
@@ -81,16 +81,16 @@ export const getSegmentInformation = (adaptationSet) => {
   const segmentInfo = {
     template,
     timeline: segmentTimeline &&
-      findChildren(segmentTimeline, 'S').map(s => getAttributes(s)),
+      findChildren(segmentTimeline, 'S').map(s => parseAttributes(s)),
     list: segmentList && merge(
-      getAttributes(segmentList),
+      parseAttributes(segmentList),
       {
         segmentUrls,
-        initialization: getAttributes(segmentInitialization)
+        initialization: parseAttributes(segmentInitialization)
       }),
     base: segmentBase && merge(
-      getAttributes(segmentBase), {
-        initialization: getAttributes(segmentInitialization)
+      parseAttributes(segmentBase), {
+        initialization: parseAttributes(segmentInitialization)
       })
   };
 
@@ -133,16 +133,17 @@ export const getSegmentInformation = (adaptationSet) => {
  *        Contains attributes inherited by the AdaptationSet
  * @param {string[]} adaptationSetBaseUrls
  *        Contains list of resolved base urls inherited by the AdaptationSet
- * @param {SegmentInformation} segmentInfo
+ * @param {SegmentInformation} adaptationSetSegmentInfo
  *        Contains Segment information for the AdaptationSet
  * @return {inheritBaseUrlsCallback}
  *         Callback map function
  */
 export const inheritBaseUrls =
-(adaptationSetAttributes, adaptationSetBaseUrls, adaptationSetSegmentInfo) => (representation) => {
+(adaptationSetAttributes, adaptationSetBaseUrls, adaptationSetSegmentInfo) =>
+(representation) => {
   const repBaseUrlElements = findChildren(representation, 'BaseURL');
   const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
-  const attributes = merge(adaptationSetAttributes, getAttributes(representation));
+  const attributes = merge(adaptationSetAttributes, parseAttributes(representation));
   const representationSegmentInfo = getSegmentInformation(representation);
 
   return repBaseUrls.map(baseUrl => {
@@ -172,25 +173,27 @@ export const inheritBaseUrls =
  *        Contains attributes inherited by the Period
  * @param {string[]} periodBaseUrls
  *        Contains list of resolved base urls inherited by the Period
+ * @param {string[]} periodSegmentInfo
+ *        Contains Segment Information at the period level
  * @return {toRepresentationsCallback}
  *         Callback map function
  */
 export const toRepresentations =
 (periodAttributes, periodBaseUrls, periodSegmentInfo) => (adaptationSet) => {
-  const adaptationSetAttributes = getAttributes(adaptationSet);
+  const adaptationSetAttributes = parseAttributes(adaptationSet);
   const adaptationSetBaseUrls = buildBaseUrls(periodBaseUrls,
                                               findChildren(adaptationSet, 'BaseURL'));
   const role = findChildren(adaptationSet, 'Role')[0];
-  const roleAttributes = { role: getAttributes(role) };
+  const roleAttributes = { role: parseAttributes(role) };
   const attrs = merge(periodAttributes,
-                             adaptationSetAttributes,
-                             roleAttributes);
+                      adaptationSetAttributes,
+                      roleAttributes);
   const segmentInfo = getSegmentInformation(adaptationSet);
   const representations = findChildren(adaptationSet, 'Representation');
   const adaptationSetSegmentInfo = merge(periodSegmentInfo, segmentInfo);
 
-  return flatten(
-    representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));
+  return flatten(representations.map(
+    inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));
 };
 
 /**
@@ -220,12 +223,13 @@ export const toRepresentations =
  */
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
-  const periodAtt = getAttributes(period);
+  const periodAtt = parseAttributes(period);
   const periodAttributes = merge(mpdAttributes, periodAtt, { periodIndex });
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
-  return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
+  return flatten(adaptationSets.map(
+    toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
 };
 
 /**
@@ -234,12 +238,23 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodI
  *
  * @param {Node} mpd
  *        The root node of the mpd
- * @param {string} manifestUri
- *        The uri of the source mpd
+ * @param {Object} options
+ *        Available options for inheritAttributes
+ * @param {string} options.manifestUri
+ *        The uri source of the mpd
+ * @param {number} options.NOW
+ *        Current time per DASH IOP.  Default is current time in ms since epoch
+ * @param {number} options.clientOffset
+ *        Client time difference from NOW (in milliseconds)
  * @return {RepresentationInformation[]}
  *         List of objects containing Representation information
  */
-export const inheritAttributes = (mpd, manifestUri = '') => {
+export const inheritAttributes = (mpd, options = {}) => {
+  const {
+    manifestUri = '',
+    NOW = Date.now(),
+    clientOffset = 0
+  } = options;
   const periods = findChildren(mpd, 'Period');
 
   if (periods.length !== 1) {
@@ -247,11 +262,12 @@ export const inheritAttributes = (mpd, manifestUri = '') => {
     throw new Error(errors.INVALID_NUMBER_OF_PERIOD);
   }
 
-  const mpdAttributes = getAttributes(mpd);
+  const mpdAttributes = parseAttributes(mpd);
   const mpdBaseUrls = buildBaseUrls([ manifestUri ], findChildren(mpd, 'BaseURL'));
 
-  mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration ?
-    parseDuration(mpdAttributes.mediaPresentationDuration) : 0;
+  mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration || 0;
+  mpdAttributes.NOW = NOW;
+  mpdAttributes.clientOffset = clientOffset;
 
   return flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls)));
 };

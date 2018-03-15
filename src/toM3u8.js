@@ -2,15 +2,17 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
   return {
     attributes: {
       NAME: attributes.id,
-      BANDWIDTH: parseInt(attributes.bandwidth, 10),
+      BANDWIDTH: attributes.bandwidth,
       CODECS: attributes.codecs,
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: true,
+    endList: (attributes.type || 'static') === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
-    segments
+    targetDuration: attributes.duration,
+    segments,
+    mediaSequence: segments.length ? segments[0].number : 1
   };
 };
 
@@ -21,20 +23,25 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
       uri: attributes.baseUrl,
       timeline: attributes.periodIndex,
       resolvedUri: attributes.baseUrl || '',
-      duration: attributes.sourceDuration
+      duration: attributes.sourceDuration,
+      number: 0
     }];
+    // targetDuration should be the same duration as the only segment
+    attributes.duration = attributes.sourceDuration;
   }
   return {
     attributes: {
       NAME: attributes.id,
-      BANDWIDTH: parseInt(attributes.bandwidth, 10),
+      BANDWIDTH: attributes.bandwidth,
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: true,
+    endList: (attributes.type || 'static') === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
-    segments
+    targetDuration: attributes.duration,
+    segments,
+    mediaSequence: segments.length ? segments[0].number : 1
   };
 };
 
@@ -97,18 +104,20 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
       AUDIO: 'audio',
       SUBTITLES: 'subs',
       RESOLUTION: {
-        width: parseInt(attributes.width, 10),
-        height: parseInt(attributes.height, 10)
+        width: attributes.width,
+        height: attributes.height
       },
       CODECS: attributes.codecs,
-      BANDWIDTH: parseInt(attributes.bandwidth, 10),
+      BANDWIDTH: attributes.bandwidth,
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: true,
+    endList: (attributes.type || 'static') === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
-    segments
+    targetDuration: attributes.duration,
+    segments,
+    mediaSequence: segments.length ? segments[0].number : 1
   };
 };
 
@@ -118,7 +127,10 @@ export const toM3u8 = dashPlaylists => {
   }
 
   // grab all master attributes
-  const { sourceDuration: duration } = dashPlaylists[0].attributes;
+  const {
+    sourceDuration: duration,
+    minimumUpdatePeriod = 0
+  } = dashPlaylists[0].attributes;
 
   const videoOnly = ({ attributes }) =>
     attributes.mimeType === 'video/mp4' || attributes.contentType === 'video';
@@ -144,7 +156,8 @@ export const toM3u8 = dashPlaylists => {
     },
     uri: '',
     duration,
-    playlists: videoPlaylists
+    playlists: videoPlaylists,
+    minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };
 
   if (audioPlaylists.length) {

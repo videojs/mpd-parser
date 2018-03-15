@@ -1,31 +1,66 @@
-import { range } from '../utils/list';
+/**
+ * Calculates the R (repetition) value for a live stream (for the final segment
+ * in a manifest where the r value is negative 1)
+ *
+ * @param {Object} attributes
+ *        Object containing all inherited attributes from parent elements with attribute
+ *        names as keys
+ * @param {number} time
+ *        current time (typically the total time up until the final segment)
+ * @param {number} duration
+ *        duration property for the given <S />
+ *
+ * @return {number}
+ *        R value to reach the end of the given period
+ */
+const getLiveRValue = (attributes, time, duration) => {
+  const {
+    NOW,
+    clientOffset,
+    availabilityStartTime,
+    timescale = 1,
+    start = 0,
+    minimumUpdatePeriod = 0
+  } = attributes;
+  const now = (NOW + clientOffset) / 1000;
+  const periodStartWC = availabilityStartTime + start;
+  const periodEndWC = now + minimumUpdatePeriod;
+  const periodDuration = periodEndWC - periodStartWC;
+
+  return Math.ceil(((periodDuration * timescale) - time) / duration);
+};
+
 /**
  * Uses information provided by SegmentTemplate.SegmentTimeline to determine segment
  * timing and duration
  *
- * @param {number} start
- *        The start number for the first segment of this period
- * @param {number} timeline
- *        The timeline (period index) for the first segment of this period
- * @param {number} timescale
- *        The timescale for the timestamps contained within the media content
+ * @param {Object} attributes
+ *        Object containing all inherited attributes from parent elements with attribute
+ *        names as keys
  * @param {Object[]} segmentTimeline
  *        List of objects representing the attributes of each S element contained within
- * @param {number} sourceDuration
- *        Duration of the entire Media Presentation
+ *
  * @return {{number: number, duration: number, time: number, timeline: number}[]}
  *         List of Objects with segment timing and duration info
  */
-export const parseByTimeline =
-(start, timeline, timescale, segmentTimeline, sourceDuration) => {
+export const parseByTimeline = (attributes, segmentTimeline) => {
+  const {
+    type = 'static',
+    minimumUpdatePeriod = 0,
+    media = '',
+    sourceDuration,
+    timescale = 1,
+    startNumber = 1,
+    periodIndex: timeline
+  } = attributes;
   const segments = [];
   let time = -1;
 
   for (let sIndex = 0; sIndex < segmentTimeline.length; sIndex++) {
     const S = segmentTimeline[sIndex];
-    const duration = parseInt(S.d, 10);
-    const repeat = parseInt(S.r || 0, 10);
-    const segmentTime = parseInt(S.t || 0, 10);
+    const duration = S.d;
+    const repeat = S.r || 0;
+    const segmentTime = S.t || 0;
 
     if (time < 0) {
       // first segment
@@ -65,17 +100,23 @@ export const parseByTimeline =
 
       if (nextS === segmentTimeline.length) {
         // last segment
-        // TODO: This may be incorrect depending on conclusion of TODO above
-        count = ((sourceDuration * timescale) - time) / duration;
+        if (type === 'dynamic' &&
+            minimumUpdatePeriod > 0 &&
+            media.indexOf('$Number$') > 0) {
+          count = getLiveRValue(attributes, time, duration);
+        } else {
+          // TODO: This may be incorrect depending on conclusion of TODO above
+          count = ((sourceDuration * timescale) - time) / duration;
+        }
       } else {
-        count = (parseInt(segmentTimeline[nextS].t, 10) - time) / duration;
+        count = (segmentTimeline[nextS].t - time) / duration;
       }
     } else {
       count = repeat + 1;
     }
 
-    const end = start + segments.length + count;
-    let number = start + segments.length;
+    const end = startNumber + segments.length + count;
+    let number = startNumber + segments.length;
 
     while (number < end) {
       segments.push({ number, duration: duration / timescale, time, timeline });
@@ -85,21 +126,4 @@ export const parseByTimeline =
   }
 
   return segments;
-};
-
-export const parseByDuration = (start, timeline, timescale, duration, sourceDuration) => {
-  const count = Math.ceil(sourceDuration / (duration / timescale));
-
-  return range(start, start + count).map((number, index) => {
-    const segment = { number, duration: duration / timescale, timeline };
-
-    if (index === count - 1) {
-      // final segment may be less than duration
-      segment.duration = sourceDuration - (segment.duration * index);
-    }
-
-    segment.time = (segment.number - start) * duration;
-
-    return segment;
-  });
 };

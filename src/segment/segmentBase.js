@@ -1,6 +1,6 @@
 import errors from '../errors';
 import urlTypeConverter from './urlType';
-import { parseByDuration } from './timeParser';
+import { parseByDuration } from './durationTimeParser';
 
 /**
  * Translates SegmentBase into a set of segments.
@@ -18,8 +18,6 @@ export const segmentsFromBase = (attributes) => {
     initialization = {},
     sourceDuration,
     timescale = 1,
-    startNumber = 1,
-    periodIndex = 0,
     indexRange = '',
     duration
   } = attributes;
@@ -38,27 +36,22 @@ export const segmentsFromBase = (attributes) => {
 
   segment.map = initSegment;
 
-  const parsedTimescale = parseInt(timescale, 10);
-
   // If there is a duration, use it, otherwise use the given duration of the source
   // (since SegmentBase is only for one total segment)
   if (duration) {
-    const parsedDuration = parseInt(duration, 10);
-    const start = parseInt(startNumber, 10);
-    const segmentTimeInfo = parseByDuration(start,
-      periodIndex,
-      parsedTimescale,
-      parsedDuration,
-      sourceDuration);
+    const segmentTimeInfo = parseByDuration(attributes);
 
-    if (segmentTimeInfo.length >= 1) {
+    if (segmentTimeInfo.length) {
       segment.duration = segmentTimeInfo[0].duration;
       segment.timeline = segmentTimeInfo[0].timeline;
     }
   } else if (sourceDuration) {
-    segment.duration = (sourceDuration / parsedTimescale);
+    segment.duration = (sourceDuration / timescale);
     segment.timeline = 0;
   }
+
+  // This is used for mediaSequence
+  segment.number = 0;
 
   return [segment];
 };

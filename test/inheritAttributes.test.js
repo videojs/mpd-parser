@@ -105,7 +105,7 @@ QUnit.test('gets SegmentList attributes', function(assert) {
   };
   const expected = {
     list: {
-      duration: '10',
+      duration: 10,
       segmentUrls: [],
       initialization: {}
     }
@@ -124,7 +124,7 @@ QUnit.test('gets SegmentBase attributes', function(assert) {
     }]
   };
   const expected = {
-    base: { duration: '10', initialization: {} }
+    base: { duration: 10, initialization: {} }
   };
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,
@@ -153,7 +153,7 @@ QUnit.test('gets SegmentTemplate and SegmentTimeline attributes', function(asser
   };
   const expected = {
     template: { media: 'video.mp4' },
-    timeline: [{ d: '10' }, { d: '5' }, { d: '7' }]
+    timeline: [{ d: 10 }, { d: 5 }, { d: 7 }]
   };
 
   assert.deepEqual(getSegmentInformation(adaptationSet), expected,
@@ -168,6 +168,8 @@ QUnit.test('needs at least one Period', function(assert) {
 });
 
 QUnit.test('end to end - basic', function(assert) {
+  const NOW = Date.now();
+
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration="PT30S" >
@@ -192,38 +194,42 @@ QUnit.test('end to end - basic', function(assert) {
       </Period>
     </MPD>
   `
-  ));
+  ), { NOW });
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base/',
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       template: {}
     }
   }, {
     attributes: {
-      bandwidth: '256',
+      bandwidth: 256,
       baseUrl: 'https://example.com/en.vtt',
       id: 'en',
       lang: 'en',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'text/vtt',
       periodIndex: 0,
       role: {},
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {}
   }];
@@ -233,6 +239,8 @@ QUnit.test('end to end - basic', function(assert) {
 });
 
 QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
+  const NOW = Date.now();
+
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration="PT30S" >
@@ -260,38 +268,42 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
       </Period>
     </MPD>
   `
-  ));
+  ), { NOW });
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base/foo/bar/buzz/',
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       template: {}
     }
   }, {
     attributes: {
-      bandwidth: '256',
+      bandwidth: 256,
       baseUrl: 'https://example.com/en.vtt',
       id: 'en',
       lang: 'en',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'text/vtt',
       periodIndex: 0,
       role: {},
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: { }
   }];
@@ -301,6 +313,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
 });
 
 QUnit.test('end to end - alternate BaseURLs', function(assert) {
+  const NOW = Date.now();
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
@@ -328,108 +341,120 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
       </Period>
     </MPD>
   `
-  ));
+  ), { NOW });
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base/segments/',
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       template: {}
     }
   }, {
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base/media/',
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       template: {}
     }
   }, {
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.test.com/base/segments/',
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       template: {}
     }
   }, {
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.test.com/base/media/',
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       template: {}
     }
   }, {
     attributes: {
-      bandwidth: '256',
+      bandwidth: 256,
       baseUrl: 'https://example.com/en.vtt',
       id: 'en',
       lang: 'en',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'text/vtt',
       periodIndex: 0,
       role: {},
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {}
   }, {
     attributes: {
-      bandwidth: '256',
+      bandwidth: 256,
       baseUrl: 'https://example.com/en.vtt',
       id: 'en',
       lang: 'en',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'text/vtt',
       periodIndex: 0,
       role: {},
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {}
   }];
@@ -438,7 +463,9 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test(' End to End test for checking support of segments in representation', function(assert) {
+QUnit.test(' End to End test for checking support of segments in representation',
+function(assert) {
+  const NOW = Date.now();
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
@@ -473,23 +500,25 @@ QUnit.test(' End to End test for checking support of segments in representation'
       </Period>
     </MPD>
   `
-  ));
+  ), { NOW });
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base/',
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp6',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       base: {
@@ -503,14 +532,16 @@ QUnit.test(' End to End test for checking support of segments in representation'
   }, {
     attributes: {
       baseUrl: 'https://www.example.com/base/',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
-      height: '545',
+      height: 545,
       role: {
         value: 'main'
       },
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       base: {
@@ -523,15 +554,17 @@ QUnit.test(' End to End test for checking support of segments in representation'
     }
   }, {
     attributes: {
-      bandwidth: '256',
+      bandwidth: 256,
       baseUrl: 'https://example.com/en.vtt',
       id: 'en',
       lang: 'en',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'text/vtt',
       periodIndex: 0,
       role: {},
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {}
   }];
@@ -540,7 +573,9 @@ QUnit.test(' End to End test for checking support of segments in representation'
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test(' End to End test for checking support of segments in period ', function(assert) {
+QUnit.test(' End to End test for checking support of segments in period ',
+function(assert) {
+  const NOW = Date.now();
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
@@ -571,24 +606,26 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
       </Period>
     </MPD>
   `
-  ));
+  ), { NOW });
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base/',
-      duration: 'PT0H4M40.414S',
+      duration: 280.414,
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp6',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       base: {
@@ -602,15 +639,17 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
   }, {
     attributes: {
       baseUrl: 'https://www.example.com/base/',
-      mediaPresentationDuration: 'PT30S',
-      duration: 'PT0H4M40.414S',
+      mediaPresentationDuration: 30,
+      duration: 280.414,
       mimeType: 'video/mp4',
       periodIndex: 0,
-      height: '545',
+      height: 545,
       role: {
         value: 'main'
       },
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       base: {
@@ -623,16 +662,18 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
     }
   }, {
     attributes: {
-      bandwidth: '256',
+      bandwidth: 256,
       baseUrl: 'https://example.com/en.vtt',
-      duration: 'PT0H4M40.414S',
+      duration: 280.414,
       id: 'en',
       lang: 'en',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'text/vtt',
       periodIndex: 0,
       role: {},
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       base: {
@@ -649,7 +690,9 @@ QUnit.test(' End to End test for checking support of segments in period ', funct
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test(' End to End test for checking support of Segments in Adaptation set', function(assert) {
+QUnit.test(' End to End test for checking support of Segments in Adaptation set',
+function(assert) {
+  const NOW = Date.now();
   const actual = inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
@@ -680,24 +723,26 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
       </Period>
     </MPD>
   `
-  ));
+  ), { NOW });
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base/',
-      duration: 'PT0H4M40.414S',
+      duration: 280.414,
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: 'test',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp6',
       periodIndex: 0,
       role: {
         value: 'main'
       },
       sourceDuration: 30,
-      width: '720'
+      width: 720,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       base: {
@@ -712,15 +757,17 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
   }, {
     attributes: {
       baseUrl: 'https://www.example.com/base/',
-      mediaPresentationDuration: 'PT30S',
-      duration: 'PT0H4M40.414S',
+      mediaPresentationDuration: 30,
+      duration: 280.414,
       mimeType: 'video/mp4',
       periodIndex: 0,
-      height: '545',
+      height: 545,
       role: {
         value: 'main'
       },
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {
       base: {
@@ -733,16 +780,18 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
     }
   }, {
     attributes: {
-      bandwidth: '256',
+      bandwidth: 256,
       baseUrl: 'https://example.com/en.vtt',
-      duration: 'PT0H4M40.414S',
+      duration: 280.414,
       id: 'en',
       lang: 'en',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'text/vtt',
       periodIndex: 0,
       role: {},
-      sourceDuration: 30
+      sourceDuration: 30,
+      NOW,
+      clientOffset: 0
     },
     segmentInfo: {}
   }];
@@ -751,18 +800,31 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
   assert.deepEqual(actual, expected);
 });
 
-// Although according to the Spec, at most one set of Segment information should be present at each level,
-// This test would still handle the case and prevent errors if multiple set of segment information are present at any particular level.
+// Although according to the Spec, at most one set of Segment information should be
+// present at each level, this test would still handle the case and prevent errors if
+// multiple set of segment information are present at any particular level.
 
-QUnit.test(' Test for checking use of only one set of Segment Information when multiple are present', function(assert) {
+QUnit.test(
+'Test for checking use of only one set of Segment Information when multiple are present',
+function(assert) {
+  const NOW = Date.now();
   const actual = toPlaylists(inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
       <Period duration= "PT0H4M40.414S" >
-        <AdaptationSet mimeType= "video/mp4"  segmentAlignment= "true"  startWithSAP= "1"  lang= "es" >
+        <AdaptationSet
+          mimeType= "video/mp4"
+          segmentAlignment= "true"
+          startWithSAP= "1"
+          lang= "es" >
           <Role value= "main" ></Role>
-          <SegmentTemplate duration= "95232"  initialization= "$RepresentationID$/es/init.m4f"  media= "$RepresentationID$/es/$Number$.m4f"  startNumber= "0"  timescale= "48000" >
+          <SegmentTemplate
+            duration= "95232"
+            initialization= "$RepresentationID$/es/init.m4f"
+            media= "$RepresentationID$/es/$Number$.m4f"
+            startNumber= "0"
+            timescale= "48000" >
           </SegmentTemplate>
           <SegmentList timescale= "1000"  duration= "1000" >
             <RepresentationIndex sourceURL= "representation-index-low" />
@@ -789,26 +851,34 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       </Period>
     </MPD>
   `
-)));
+), { NOW }));
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      NOW,
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base',
-      duration: 'PT0H4M40.414S',
+      duration: 1.984,
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: '125000',
       lang: 'es',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp6',
       periodIndex: 0,
+      startNumber: 0,
+      timescale: 48000,
       role: {
         value: 'main'
       },
+      clientOffset: 0,
+      initialization: {
+        sourceURL: '$RepresentationID$/es/init.m4f'
+      },
+      media: '$RepresentationID$/es/$Number$.m4f',
       segmentAlignment: 'true',
       sourceDuration: 30,
-      width: '720',
+      width: 720,
       startWithSAP: '1'
     },
     segments: [{
@@ -819,7 +889,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/0.m4f',
       timeline: 0,
-      uri: '125000/es/0.m4f'
+      uri: '125000/es/0.m4f',
+      number: 0
     }, {
       duration: 1.984,
       map: {
@@ -828,7 +899,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/1.m4f',
       timeline: 0,
-      uri: '125000/es/1.m4f'
+      uri: '125000/es/1.m4f',
+      number: 1
     }, {
       duration: 1.984,
       map: {
@@ -837,7 +909,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/2.m4f',
       timeline: 0,
-      uri: '125000/es/2.m4f'
+      uri: '125000/es/2.m4f',
+      number: 2
     }, {
       duration: 1.984,
       map: {
@@ -846,7 +919,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/3.m4f',
       timeline: 0,
-      uri: '125000/es/3.m4f'
+      uri: '125000/es/3.m4f',
+      number: 3
     }, {
       duration: 1.984,
       map: {
@@ -855,7 +929,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/4.m4f',
       timeline: 0,
-      uri: '125000/es/4.m4f'
+      uri: '125000/es/4.m4f',
+      number: 4
     }, {
       duration: 1.984,
       map: {
@@ -864,7 +939,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/5.m4f',
       timeline: 0,
-      uri: '125000/es/5.m4f'
+      uri: '125000/es/5.m4f',
+      number: 5
     }, {
       duration: 1.984,
       map: {
@@ -873,7 +949,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/6.m4f',
       timeline: 0,
-      uri: '125000/es/6.m4f'
+      uri: '125000/es/6.m4f',
+      number: 6
     }, {
       duration: 1.984,
       map: {
@@ -882,7 +959,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/7.m4f',
       timeline: 0,
-      uri: '125000/es/7.m4f'
+      uri: '125000/es/7.m4f',
+      number: 7
     }, {
       duration: 1.984,
       map: {
@@ -891,7 +969,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/8.m4f',
       timeline: 0,
-      uri: '125000/es/8.m4f'
+      uri: '125000/es/8.m4f',
+      number: 8
     }, {
       duration: 1.984,
       map: {
@@ -900,7 +979,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/9.m4f',
       timeline: 0,
-      uri: '125000/es/9.m4f'
+      uri: '125000/es/9.m4f',
+      number: 9
     }, {
       duration: 1.984,
       map: {
@@ -909,7 +989,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/10.m4f',
       timeline: 0,
-      uri: '125000/es/10.m4f'
+      uri: '125000/es/10.m4f',
+      number: 10
     }, {
       duration: 1.984,
       map: {
@@ -918,7 +999,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/11.m4f',
       timeline: 0,
-      uri: '125000/es/11.m4f'
+      uri: '125000/es/11.m4f',
+      number: 11
     }, {
       duration: 1.984,
       map: {
@@ -927,7 +1009,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/12.m4f',
       timeline: 0,
-      uri: '125000/es/12.m4f'
+      uri: '125000/es/12.m4f',
+      number: 12
     }, {
       duration: 1.984,
       map: {
@@ -936,7 +1019,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/13.m4f',
       timeline: 0,
-      uri: '125000/es/13.m4f'
+      uri: '125000/es/13.m4f',
+      number: 13
     }, {
       duration: 1.984,
       map: {
@@ -945,7 +1029,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/14.m4f',
       timeline: 0,
-      uri: '125000/es/14.m4f'
+      uri: '125000/es/14.m4f',
+      number: 14
     }, {
       duration: 0.240000000000002,
       map: {
@@ -954,16 +1039,18 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/15.m4f',
       timeline: 0,
-      uri: '125000/es/15.m4f'
+      uri: '125000/es/15.m4f',
+      number: 15
     }]
   }, {
     attributes: {
+      NOW,
       baseUrl: 'https://www.example.com/base',
-      duration: 'PT0H4M40.414S',
+      duration: 1.984,
       lang: 'es',
-      height: '545',
+      height: 545,
       id: '125000',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp4',
       periodIndex: 0,
       role: {
@@ -971,8 +1058,14 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       segmentAlignment: 'true',
       sourceDuration: 30,
-      startWithSAP: '1'
-
+      startWithSAP: '1',
+      clientOffset: 0,
+      initialization: {
+        sourceURL: '$RepresentationID$/es/init.m4f'
+      },
+      media: '$RepresentationID$/es/$Number$.m4f',
+      startNumber: 0,
+      timescale: 48000
     },
     segments: [{
       duration: 1.984,
@@ -982,7 +1075,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/0.m4f',
       timeline: 0,
-      uri: '125000/es/0.m4f'
+      uri: '125000/es/0.m4f',
+      number: 0
     }, {
       duration: 1.984,
       map: {
@@ -991,7 +1085,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/1.m4f',
       timeline: 0,
-      uri: '125000/es/1.m4f'
+      uri: '125000/es/1.m4f',
+      number: 1
     }, {
       duration: 1.984,
       map: {
@@ -1000,7 +1095,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/2.m4f',
       timeline: 0,
-      uri: '125000/es/2.m4f'
+      uri: '125000/es/2.m4f',
+      number: 2
     }, {
       duration: 1.984,
       map: {
@@ -1009,7 +1105,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/3.m4f',
       timeline: 0,
-      uri: '125000/es/3.m4f'
+      uri: '125000/es/3.m4f',
+      number: 3
     }, {
       duration: 1.984,
       map: {
@@ -1018,7 +1115,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/4.m4f',
       timeline: 0,
-      uri: '125000/es/4.m4f'
+      uri: '125000/es/4.m4f',
+      number: 4
     }, {
       duration: 1.984,
       map: {
@@ -1027,7 +1125,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/5.m4f',
       timeline: 0,
-      uri: '125000/es/5.m4f'
+      uri: '125000/es/5.m4f',
+      number: 5
     }, {
       duration: 1.984,
       map: {
@@ -1036,7 +1135,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/6.m4f',
       timeline: 0,
-      uri: '125000/es/6.m4f'
+      uri: '125000/es/6.m4f',
+      number: 6
     }, {
       duration: 1.984,
       map: {
@@ -1045,7 +1145,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/7.m4f',
       timeline: 0,
-      uri: '125000/es/7.m4f'
+      uri: '125000/es/7.m4f',
+      number: 7
     }, {
       duration: 1.984,
       map: {
@@ -1054,7 +1155,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/8.m4f',
       timeline: 0,
-      uri: '125000/es/8.m4f'
+      uri: '125000/es/8.m4f',
+      number: 8
     }, {
       duration: 1.984,
       map: {
@@ -1063,7 +1165,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/9.m4f',
       timeline: 0,
-      uri: '125000/es/9.m4f'
+      uri: '125000/es/9.m4f',
+      number: 9
     }, {
       duration: 1.984,
       map: {
@@ -1072,7 +1175,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/10.m4f',
       timeline: 0,
-      uri: '125000/es/10.m4f'
+      uri: '125000/es/10.m4f',
+      number: 10
     }, {
       duration: 1.984,
       map: {
@@ -1081,7 +1185,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/11.m4f',
       timeline: 0,
-      uri: '125000/es/11.m4f'
+      uri: '125000/es/11.m4f',
+      number: 11
     }, {
       duration: 1.984,
       map: {
@@ -1090,7 +1195,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/12.m4f',
       timeline: 0,
-      uri: '125000/es/12.m4f'
+      uri: '125000/es/12.m4f',
+      number: 12
     }, {
       duration: 1.984,
       map: {
@@ -1099,7 +1205,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/13.m4f',
       timeline: 0,
-      uri: '125000/es/13.m4f'
+      uri: '125000/es/13.m4f',
+      number: 13
     }, {
       duration: 1.984,
       map: {
@@ -1108,7 +1215,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/14.m4f',
       timeline: 0,
-      uri: '125000/es/14.m4f'
+      uri: '125000/es/14.m4f',
+      number: 14
     }, {
       duration: 0.240000000000002,
       map: {
@@ -1117,7 +1225,8 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
       },
       resolvedUri: 'https://www.example.com/125000/es/15.m4f',
       timeline: 0,
-      uri: '125000/es/15.m4f'
+      uri: '125000/es/15.m4f',
+      number: 15
     }]
   }];
 
@@ -1125,18 +1234,31 @@ QUnit.test(' Test for checking use of only one set of Segment Information when m
   assert.deepEqual(actual, expected);
 });
 
-// Although the Spec states that if SegmentTemplate or SegmentList is present on one level of the hierarchy the other one shall not be present on any lower level,
-// This test would still handle the case if both are present in the hierarchy and would prevent throwing errors.
+// Although the Spec states that if SegmentTemplate or SegmentList is present on one
+// level of the hierarchy the other one shall not be present on any lower level, this
+// test would still handle the case if both are present in the hierarchy and would
+// prevent throwing errors.
 
-QUnit.test('Test to check use of either Segment Template or Segment List when both are present in the hierarchy', function(assert) {
+QUnit.test('Test to check use of either Segment Template or Segment List when both are' +
+' present in the hierarchy', function(assert) {
+  const NOW = Date.now();
   const actual = toPlaylists(inheritAttributes(stringToMpdXml(
     `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
       <Period duration= "PT0H4M40.414S" >
-        <AdaptationSet mimeType= "video/mp4"  segmentAlignment= "true"  startWithSAP= "1"  lang= "es" >
+        <AdaptationSet
+          mimeType= "video/mp4"
+          segmentAlignment= "true"
+          startWithSAP= "1"
+          lang= "es" >
           <Role value= "main" ></Role>
-          <SegmentTemplate duration= "95232"  initialization= "$RepresentationID$/es/init.m4f"  media= "$RepresentationID$/es/$Number$.m4f"  startNumber= "0"  timescale= "48000" >
+          <SegmentTemplate
+            duration= "95232"
+            initialization= "$RepresentationID$/es/init.m4f"
+            media= "$RepresentationID$/es/$Number$.m4f"
+            startNumber= "0"
+            timescale= "48000" >
           </SegmentTemplate>
           <Representation
             mimeType= "video/mp6"
@@ -1159,18 +1281,24 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       </Period>
     </MPD>
   `
-)));
+), { NOW }));
 
   const expected = [{
     attributes: {
-      bandwidth: '5000000',
+      NOW,
+      clientOffset: 0,
+      initialization: {
+        sourceURL: '$RepresentationID$/es/init.m4f'
+      },
+      media: '$RepresentationID$/es/$Number$.m4f',
+      bandwidth: 5000000,
       baseUrl: 'https://www.example.com/base',
-      duration: 'PT0H4M40.414S',
+      duration: 1.984,
       codecs: 'avc1.64001e',
-      height: '404',
+      height: 404,
       id: '125000',
       lang: 'es',
-      mediaPresentationDuration: 'PT30S',
+      mediaPresentationDuration: 30,
       mimeType: 'video/mp6',
       periodIndex: 0,
       role: {
@@ -1178,8 +1306,10 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       segmentAlignment: 'true',
       sourceDuration: 30,
-      width: '720',
-      startWithSAP: '1'
+      width: 720,
+      startWithSAP: '1',
+      startNumber: 0,
+      timescale: 48000
     },
     segments: [{
       duration: 1.984,
@@ -1189,7 +1319,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/0.m4f',
       timeline: 0,
-      uri: '125000/es/0.m4f'
+      uri: '125000/es/0.m4f',
+      number: 0
     }, {
       duration: 1.984,
       map: {
@@ -1198,7 +1329,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/1.m4f',
       timeline: 0,
-      uri: '125000/es/1.m4f'
+      uri: '125000/es/1.m4f',
+      number: 1
     }, {
       duration: 1.984,
       map: {
@@ -1207,7 +1339,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/2.m4f',
       timeline: 0,
-      uri: '125000/es/2.m4f'
+      uri: '125000/es/2.m4f',
+      number: 2
     }, {
       duration: 1.984,
       map: {
@@ -1216,7 +1349,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/3.m4f',
       timeline: 0,
-      uri: '125000/es/3.m4f'
+      uri: '125000/es/3.m4f',
+      number: 3
     }, {
       duration: 1.984,
       map: {
@@ -1225,7 +1359,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/4.m4f',
       timeline: 0,
-      uri: '125000/es/4.m4f'
+      uri: '125000/es/4.m4f',
+      number: 4
     }, {
       duration: 1.984,
       map: {
@@ -1234,7 +1369,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/5.m4f',
       timeline: 0,
-      uri: '125000/es/5.m4f'
+      uri: '125000/es/5.m4f',
+      number: 5
     }, {
       duration: 1.984,
       map: {
@@ -1243,7 +1379,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/6.m4f',
       timeline: 0,
-      uri: '125000/es/6.m4f'
+      uri: '125000/es/6.m4f',
+      number: 6
     }, {
       duration: 1.984,
       map: {
@@ -1252,7 +1389,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/7.m4f',
       timeline: 0,
-      uri: '125000/es/7.m4f'
+      uri: '125000/es/7.m4f',
+      number: 7
     }, {
       duration: 1.984,
       map: {
@@ -1261,7 +1399,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/8.m4f',
       timeline: 0,
-      uri: '125000/es/8.m4f'
+      uri: '125000/es/8.m4f',
+      number: 8
     }, {
       duration: 1.984,
       map: {
@@ -1270,7 +1409,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/9.m4f',
       timeline: 0,
-      uri: '125000/es/9.m4f'
+      uri: '125000/es/9.m4f',
+      number: 9
     }, {
       duration: 1.984,
       map: {
@@ -1279,7 +1419,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/10.m4f',
       timeline: 0,
-      uri: '125000/es/10.m4f'
+      uri: '125000/es/10.m4f',
+      number: 10
     }, {
       duration: 1.984,
       map: {
@@ -1288,7 +1429,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/11.m4f',
       timeline: 0,
-      uri: '125000/es/11.m4f'
+      uri: '125000/es/11.m4f',
+      number: 11
     }, {
       duration: 1.984,
       map: {
@@ -1297,7 +1439,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/12.m4f',
       timeline: 0,
-      uri: '125000/es/12.m4f'
+      uri: '125000/es/12.m4f',
+      number: 12
     }, {
       duration: 1.984,
       map: {
@@ -1306,7 +1449,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/13.m4f',
       timeline: 0,
-      uri: '125000/es/13.m4f'
+      uri: '125000/es/13.m4f',
+      number: 13
     }, {
       duration: 1.984,
       map: {
@@ -1315,7 +1459,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/14.m4f',
       timeline: 0,
-      uri: '125000/es/14.m4f'
+      uri: '125000/es/14.m4f',
+      number: 14
     }, {
       duration: 0.240000000000002,
       map: {
@@ -1324,7 +1469,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       resolvedUri: 'https://www.example.com/125000/es/15.m4f',
       timeline: 0,
-      uri: '125000/es/15.m4f'
+      uri: '125000/es/15.m4f',
+      number: 15
     }]
   }
 ];
@@ -1332,3 +1478,4 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
   assert.equal(actual.length, 1);
   assert.deepEqual(actual, expected);
 });
+

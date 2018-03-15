@@ -1,6 +1,7 @@
 import resolveUrl from '../utils/resolveUrl';
 import urlTypeToSegment from './urlType';
-import { parseByDuration, parseByTimeline } from './timeParser';
+import { parseByTimeline } from './timelineTimeParser';
+import { parseByDuration } from './durationTimeParser';
 
 const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
 
@@ -105,14 +106,11 @@ export const constructTemplateUrl = (url, values) =>
  *         List of Objects with segment timing and duration info
  */
 export const parseTemplateInfo = (attributes, segmentTimeline) => {
-  const start = parseInt(attributes.startNumber || 1, 10);
-  const timescale = parseInt(attributes.timescale || 1, 10);
-
   if (!attributes.duration && !segmentTimeline) {
     // if neither @duration or SegmentTimeline are present, then there shall be exactly
     // one media segment
     return [{
-      number: start,
+      number: attributes.startNumber || 1,
       duration: attributes.sourceDuration,
       time: 0,
       timeline: attributes.periodIndex
@@ -120,19 +118,10 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
   }
 
   if (attributes.duration) {
-    return parseByDuration(start,
-                           attributes.periodIndex,
-                           timescale,
-                           parseInt(attributes.duration, 10),
-                           attributes.sourceDuration);
+    return parseByDuration(attributes);
   }
 
-  return parseByTimeline(start,
-                         attributes.periodIndex,
-                         timescale,
-                         segmentTimeline,
-                         attributes.sourceDuration);
-
+  return parseByTimeline(attributes, segmentTimeline);
 };
 
 /**
@@ -150,7 +139,7 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
 export const segmentsFromTemplate = (attributes, segmentTimeline) => {
   const templateValues = {
     RepresentationID: attributes.id,
-    Bandwidth: parseInt(attributes.bandwidth || 0, 10)
+    Bandwidth: attributes.bandwidth || 0
   };
 
   const { initialization = { sourceURL: '', range: '' } } = attributes;
@@ -174,7 +163,8 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
       timeline: segment.timeline,
       duration: segment.duration,
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
-      map: mapSegment
+      map: mapSegment,
+      number: segment.number
     };
   });
 };

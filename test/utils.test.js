@@ -1,4 +1,4 @@
-import { getAttributes, merge } from '../src/utils/object';
+import { merge } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
 import { flatten, range, from } from '../src/utils/list';
 import { findChildren, getContent } from '../src/utils/xml';
@@ -102,21 +102,6 @@ QUnit.test('nested nests', function(assert) {
 QUnit.test('not a list of lists', function(assert) {
   assert.deepEqual(flatten([1, 2]), [1, 2]);
   assert.deepEqual(flatten([[1], 2]), [1, 2]);
-});
-
-QUnit.module('getAttributes');
-QUnit.test('simple', function(assert) {
-  const el = document.createElement('el');
-
-  el.setAttribute('foo', 1);
-
-  assert.deepEqual(getAttributes(el), { foo: '1' });
-});
-
-QUnit.test('empty', function(assert) {
-  const el = document.createElement('el');
-
-  assert.deepEqual(getAttributes(el), {});
 });
 
 QUnit.module('parseDuration');

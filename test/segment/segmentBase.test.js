@@ -18,7 +18,8 @@ QUnit.test('sets segment to baseUrl', function(assert) {
       uri: 'http://www.example.com/init.fmp4'
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
-    uri: 'http://www.example.com/i.fmp4'
+    uri: 'http://www.example.com/i.fmp4',
+    number: 0
   }]);
 });
 
@@ -37,7 +38,8 @@ QUnit.test('sets duration based on sourceDuration', function(assert) {
       uri: 'http://www.example.com/init.fmp4'
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
-    uri: 'http://www.example.com/i.fmp4'
+    uri: 'http://www.example.com/i.fmp4',
+    number: 0
   }]);
 });
 
@@ -57,7 +59,8 @@ QUnit.test('sets duration based on sourceDuration and @timescale', function(asse
       uri: 'http://www.example.com/init.fmp4'
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
-    uri: 'http://www.example.com/i.fmp4'
+    uri: 'http://www.example.com/i.fmp4',
+    number: 0
   }]);
 });
 
@@ -66,7 +69,8 @@ QUnit.test('sets duration based on @duration', function(assert) {
     duration: 10,
     sourceDuration: 20,
     baseUrl: 'http://www.example.com/i.fmp4',
-    initialization: { sourceURL: 'http://www.example.com/init.fmp4' }
+    initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
+    periodIndex: 0
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -77,7 +81,8 @@ QUnit.test('sets duration based on @duration', function(assert) {
       uri: 'http://www.example.com/init.fmp4'
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
-    uri: 'http://www.example.com/i.fmp4'
+    uri: 'http://www.example.com/i.fmp4',
+    number: 0
   }]);
 });
 
@@ -87,7 +92,8 @@ QUnit.test('sets duration based on @duration and @timescale', function(assert) {
     sourceDuration: 20,
     timescale: 5,
     baseUrl: 'http://www.example.com/i.fmp4',
-    initialization: { sourceURL: 'http://www.example.com/init.fmp4' }
+    initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
+    periodIndex: 0
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -98,7 +104,8 @@ QUnit.test('sets duration based on @duration and @timescale', function(assert) {
       uri: 'http://www.example.com/init.fmp4'
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
-    uri: 'http://www.example.com/i.fmp4'
+    uri: 'http://www.example.com/i.fmp4',
+    number: 0
   }]);
 });
 
@@ -111,7 +118,8 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
     initialization: {
       sourceURL: 'http://www.example.com/init.fmp4',
       range: '121-125'
-    }
+    },
+    periodIndex: 0
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -126,7 +134,8 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       }
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
-    uri: 'http://www.example.com/i.fmp4'
+    uri: 'http://www.example.com/i.fmp4',
+    number: 0
   }]);
 });
 
