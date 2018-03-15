@@ -1,3 +1,10 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/videojs/mpd-parser/compare/v0.4.0...v0.5.0) (2018-03-15)
+
+### Features
+
+* live support with SegmentTemplate[@duration](https://github.com/duration) and more ([#22](https://github.com/videojs/mpd-parser/issues/22)) ([f1cee87](https://github.com/videojs/mpd-parser/commit/f1cee87))
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/videojs/mpd-parser/compare/v0.3.0...v0.4.0) (2018-02-26)
 
