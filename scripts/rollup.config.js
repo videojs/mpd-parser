@@ -65,9 +65,19 @@ export default [
     input: 'src/index.js',
     legacy: true,
     banner,
+    external: ['global/window', 'url-toolkit'],
     plugins: [ json(), babel({exclude: 'node_modules/**'}) ],
     output: [
-      {file: 'dist/mpd-parser.cjs.js', format: 'cjs'},
+      {file: 'dist/mpd-parser.cjs.js', format: 'cjs'}
+    ]
+  }, {
+    name: 'mpdParser',
+    input: 'src/index.js',
+    legacy: true,
+    banner,
+    external: ['global/window', 'url-toolkit'],
+    plugins: [ json({ preferConst: true }) ],
+    output: [
       {file: 'dist/mpd-parser.es.js', format: 'es'}
     ]
   }
