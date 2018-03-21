@@ -136,6 +136,13 @@ var mpdParser = require('mpd-parser');
 var parsedManifest = mpdParser.parse(manifest, manifestUrl);
 ```
 
+With ES6:
+```js
+import { parse } from 'mpd-parser';
+
+const parsedManifest = parse(manifest, manifestUrl);
+```
+
 ### RequireJS/AMD
 
 When using with RequireJS (or another AMD library), get the script in whatever way you prefer and `require` the parser as you normally would:
