@@ -4,6 +4,14 @@ import { findChildren, getContent } from './utils/xml';
 import { parseAttributes } from './parseAttributes';
 import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
+import decodeB64ToUint8Array from './utils/decodeB64ToUint8Array';
+
+const keySystemsMap = {
+  'urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b': 'org.w3.clearkey',
+  'urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed': 'com.widevine.alpha',
+  'urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95': 'com.microsoft.playready',
+  'urn:uuid:f239e769-efa3-4850-9c16-a903c6932efb': 'com.adobe.primetime'
+};
 
 /**
  * Builds a list of urls that is the product of the reference urls and BaseURL values
@@ -155,6 +163,37 @@ export const inheritBaseUrls =
 };
 
 /**
+ * Tranforms a series of content protection nodes to
+ * an object containing pssh data by key system
+ *
+ * @param {Node[]} contentProtectionNodes
+ *        Content protection nodes
+ * @return {Object}
+ *        Object containing pssh data by key system
+ */
+const generateKeySystemInformation = (contentProtectionNodes) => {
+  return contentProtectionNodes.reduce((acc, node) => {
+    const attributes = parseAttributes(node);
+    const keySystem = keySystemsMap[attributes.schemeIdUri];
+
+    if (keySystem) {
+      acc[keySystem] = { attributes };
+
+      const psshNode = findChildren(node, 'cenc:pssh')[0];
+
+      if (psshNode) {
+        const pssh = getContent(psshNode);
+        const psshBuffer = pssh && decodeB64ToUint8Array(pssh);
+
+        acc[keySystem].pssh = psshBuffer;
+      }
+    }
+
+    return acc;
+  }, {});
+};
+
+/**
  * Maps an AdaptationSet node to a list of Representation information objects
  *
  * @name toRepresentationsCallback
@@ -185,9 +224,18 @@ export const toRepresentations =
                                               findChildren(adaptationSet, 'BaseURL'));
   const role = findChildren(adaptationSet, 'Role')[0];
   const roleAttributes = { role: parseAttributes(role) };
-  const attrs = merge(periodAttributes,
-                      adaptationSetAttributes,
-                      roleAttributes);
+
+  let attrs = merge(periodAttributes,
+                    adaptationSetAttributes,
+                    roleAttributes);
+
+  const contentProtection = generateKeySystemInformation(
+    findChildren(adaptationSet, 'ContentProtection'));
+
+  if (Object.keys(contentProtection).length) {
+    attrs = merge(attrs, { contentProtection });
+  }
+
   const segmentInfo = getSegmentInformation(adaptationSet);
   const representations = findChildren(adaptationSet, 'Representation');
   const adaptationSetSegmentInfo = merge(periodSegmentInfo, segmentInfo);

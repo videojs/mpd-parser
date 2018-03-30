@@ -1,5 +1,5 @@
 export const formatAudioPlaylist = ({ attributes, segments }) => {
-  return {
+  const playlist = {
     attributes: {
       NAME: attributes.id,
       BANDWIDTH: attributes.bandwidth,
@@ -14,6 +14,12 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
     segments,
     mediaSequence: segments.length ? segments[0].number : 1
   };
+
+  if (attributes.contentProtection) {
+    playlist.contentProtection = attributes.contentProtection;
+  }
+
+  return playlist;
 };
 
 export const formatVttPlaylist = ({ attributes, segments }) => {
@@ -98,7 +104,7 @@ export const organizeVttPlaylists = playlists => {
 };
 
 export const formatVideoPlaylist = ({ attributes, segments }) => {
-  return {
+  const playlist = {
     attributes: {
       NAME: attributes.id,
       AUDIO: 'audio',
@@ -119,6 +125,12 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
     segments,
     mediaSequence: segments.length ? segments[0].number : 1
   };
+
+  if (attributes.contentProtection) {
+    playlist.contentProtection = attributes.contentProtection;
+  }
+
+  return playlist;
 };
 
 export const toM3u8 = dashPlaylists => {
