@@ -1,3 +1,10 @@
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/videojs/mpd-parser/compare/v0.5.0...v0.6.0) (2018-03-30)
+
+### Features
+
+* support in-manifest DRM data ([#23](https://github.com/videojs/mpd-parser/issues/23)) ([7ce9aca](https://github.com/videojs/mpd-parser/commit/7ce9aca))
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/videojs/mpd-parser/compare/v0.4.0...v0.5.0) (2018-03-15)
 
