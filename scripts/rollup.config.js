@@ -76,7 +76,10 @@ export default [
     legacy: true,
     banner,
     external: ['global/window', 'url-toolkit'],
-    plugins: [ json({ preferConst: true }) ],
+    plugins: [
+      json({ preferConst: true }),
+      babel({ exclude: 'node_modules/**' })
+    ],
     output: [
       {file: 'dist/mpd-parser.es.js', format: 'es'}
     ]
