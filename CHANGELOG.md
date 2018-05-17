@@ -1,3 +1,10 @@
+<a name="0.6.1"></a>
+## [0.6.1](https://github.com/videojs/mpd-parser/compare/v0.6.0...v0.6.1) (2018-05-17)
+
+### Bug Fixes
+
+* babel es module ([#25](https://github.com/videojs/mpd-parser/issues/25)) ([9a84461](https://github.com/videojs/mpd-parser/commit/9a84461))
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/videojs/mpd-parser/compare/v0.5.0...v0.6.0) (2018-03-30)
 
