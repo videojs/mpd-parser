@@ -6,10 +6,6 @@
 </head>
 <body>
   <p>Open dev tools to try it out</p>
-  <ul>
-    <li><a id="test-page">Run unit tests in browser.</a></li>
-    <li><a id="docs" href="docs/api/">Read generated docs.</a></li>
-  </ul>
 
   <form id=parse>
     <label>
@@ -19,13 +15,9 @@
     <button type=submit>Parse</button>
   </form>
 
-  <script src="dist/mpd-parser.js"></script>
+  <script src="https://unpkg.com/mpd-parser/dist/mpd-parser.js"></script>
   <script>
     (function(window, mpdParser) {
-      var testPage = document.getElementById('test-page');
-      testPage.href = window.location.protocol + '//' +
-        window.location.hostname + ':9876/debug.html';
-
       var parseForm = document.getElementById('parse');
       var url = document.getElementById('url');
 
