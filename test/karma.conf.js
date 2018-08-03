@@ -44,10 +44,12 @@ module.exports = function(config) {
     },
 
     rollupPreprocessor: {
-      name: 'mpdParserTest',
-      format: 'iife',
+      output: {
+        name: 'mpdParserTest',
+        format: 'iife',
+        globals: { qunit: 'QUnit' }
+      },
       external: [ 'qunit' ],
-      globals: { qunit: 'QUnit' },
       plugins: [
         string({ include: 'test/manifests/*.mpd' }),
         multiEntry({ exports: false }),
