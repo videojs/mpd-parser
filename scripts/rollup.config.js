@@ -10,10 +10,13 @@ const options = {
     defaults.test.unshift('string');
     defaults.test.push('istanbul');
 
+    return defaults;
   },
   primedPlugins(defaults) {
     defaults.istanbul = istanbul({exclude: ['test/**/*.js']});
     defaults.string = string({include: ['test/manifests/*.mpd']});
+
+    return defaults;
   }
 };
 const config = generate(options);
