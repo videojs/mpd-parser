@@ -6,6 +6,8 @@ module.exports = function(config) {
   // any custom stuff here!
 
   config.plugins.push('karma-coverage');
+  config.browsers = ['ChromeHeadless'];
+  config.detectBrowsers.enabled = false;
 
   config.coverageReporter = {
     reporters: [{
