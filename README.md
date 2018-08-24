@@ -1,5 +1,11 @@
 # mpd-parser
 
+[![Build Status](https://travis-ci.org/videojs/mpd-parser.svg?branch=master)](https://travis-ci.org/videojs/mpd-parser)
+[![Greenkeeper badge](https://badges.greenkeeper.io/videojs/mpd-parser.svg)](https://greenkeeper.io/)
+[![Slack Status](http://slack.videojs.com/badge.svg)](http://slack.videojs.com)
+
+[![NPM](https://nodei.co/npm/mpd-parser.png?downloads=true&downloadRank=true)](https://nodei.co/npm/mpd-parser/)
+
 mpd parser
 
 ## Table of Contents
