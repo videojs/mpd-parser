@@ -5,6 +5,9 @@ module.exports = function(config) {
 
   // any custom stuff here!
 
+  // We only test on ChromeHeadless
+  // which means the travis config in this repo is also
+  // different
   config.plugins.push('karma-coverage');
   config.browsers = ['ChromeHeadless'];
   config.detectBrowsers.enabled = false;
