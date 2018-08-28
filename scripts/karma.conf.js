@@ -17,4 +17,5 @@ module.exports = function(config) {
       type: 'text-summary'
     }]
   };
+  config.reporters.push('coverage');
 };
