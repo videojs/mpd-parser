@@ -9,7 +9,7 @@ export const stringToMpdXml = (manifestString) => {
   const parser = new window.DOMParser();
   const xml = parser.parseFromString(manifestString, 'application/xml');
   const mpd = xml && xml.documentElement.tagName === 'MPD' ?
-     xml.documentElement : null;
+    xml.documentElement : null;
 
   if (!mpd || mpd &&
       mpd.getElementsByTagName('parsererror').length > 0) {

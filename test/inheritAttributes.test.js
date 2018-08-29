@@ -464,10 +464,10 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
 });
 
 QUnit.test(' End to End test for checking support of segments in representation',
-function(assert) {
-  const NOW = Date.now();
-  const actual = inheritAttributes(stringToMpdXml(
-    `
+  function(assert) {
+    const NOW = Date.now();
+    const actual = inheritAttributes(stringToMpdXml(
+      `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period>
@@ -500,84 +500,84 @@ function(assert) {
       </Period>
     </MPD>
   `
-  ), { NOW });
+    ), { NOW });
 
-  const expected = [{
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base/',
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp6',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+    const expected = [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp6',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      base: {
-        indexRange: '820-2087',
-        indexRangeExact: 'true',
-        initialization: {
-          range: '0-567'
+      segmentInfo: {
+        base: {
+          indexRange: '820-2087',
+          indexRangeExact: 'true',
+          initialization: {
+            range: '0-567'
+          }
         }
       }
-    }
-  }, {
-    attributes: {
-      baseUrl: 'https://www.example.com/base/',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      height: 545,
-      role: {
-        value: 'main'
+    }, {
+      attributes: {
+        baseUrl: 'https://www.example.com/base/',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        height: 545,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      base: {
-        indexRange: '820-2087',
-        indexRangeExact: 'true',
-        initialization: {
-          range: '0-987'
+      segmentInfo: {
+        base: {
+          indexRange: '820-2087',
+          indexRangeExact: 'true',
+          initialization: {
+            range: '0-987'
+          }
         }
       }
-    }
-  }, {
-    attributes: {
-      bandwidth: 256,
-      baseUrl: 'https://example.com/en.vtt',
-      id: 'en',
-      lang: 'en',
-      mediaPresentationDuration: 30,
-      mimeType: 'text/vtt',
-      periodIndex: 0,
-      role: {},
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {}
-  }];
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {}
+    }];
 
-  assert.equal(actual.length, 3);
-  assert.deepEqual(actual, expected);
-});
+    assert.equal(actual.length, 3);
+    assert.deepEqual(actual, expected);
+  });
 
 QUnit.test(' End to End test for checking support of segments in period ',
-function(assert) {
-  const NOW = Date.now();
-  const actual = inheritAttributes(stringToMpdXml(
-    `
+  function(assert) {
+    const NOW = Date.now();
+    const actual = inheritAttributes(stringToMpdXml(
+      `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period duration= "PT0H4M40.414S" >
@@ -606,95 +606,95 @@ function(assert) {
       </Period>
     </MPD>
   `
-  ), { NOW });
+    ), { NOW });
 
-  const expected = [{
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base/',
-      duration: 280.414,
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp6',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+    const expected = [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/',
+        duration: 280.414,
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp6',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      base: {
-        indexRange: '9999',
-        indexRangeExact: 'false',
-        initialization: {
-          range: '0-1111'
+      segmentInfo: {
+        base: {
+          indexRange: '9999',
+          indexRangeExact: 'false',
+          initialization: {
+            range: '0-1111'
+          }
         }
       }
-    }
-  }, {
-    attributes: {
-      baseUrl: 'https://www.example.com/base/',
-      mediaPresentationDuration: 30,
-      duration: 280.414,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      height: 545,
-      role: {
-        value: 'main'
+    }, {
+      attributes: {
+        baseUrl: 'https://www.example.com/base/',
+        mediaPresentationDuration: 30,
+        duration: 280.414,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        height: 545,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      base: {
-        indexRange: '9999',
-        indexRangeExact: 'false',
-        initialization: {
-          range: '0-1111'
+      segmentInfo: {
+        base: {
+          indexRange: '9999',
+          indexRangeExact: 'false',
+          initialization: {
+            range: '0-1111'
+          }
         }
       }
-    }
-  }, {
-    attributes: {
-      bandwidth: 256,
-      baseUrl: 'https://example.com/en.vtt',
-      duration: 280.414,
-      id: 'en',
-      lang: 'en',
-      mediaPresentationDuration: 30,
-      mimeType: 'text/vtt',
-      periodIndex: 0,
-      role: {},
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      base: {
-        indexRange: '9999',
-        indexRangeExact: 'false',
-        initialization: {
-          range: '0-1111'
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        duration: 280.414,
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {
+        base: {
+          indexRange: '9999',
+          indexRangeExact: 'false',
+          initialization: {
+            range: '0-1111'
+          }
         }
       }
-    }
-  }];
+    }];
 
-  assert.equal(actual.length, 3);
-  assert.deepEqual(actual, expected);
-});
+    assert.equal(actual.length, 3);
+    assert.deepEqual(actual, expected);
+  });
 
 QUnit.test(' End to End test for checking support of Segments in Adaptation set',
-function(assert) {
-  const NOW = Date.now();
-  const actual = inheritAttributes(stringToMpdXml(
-    `
+  function(assert) {
+    const NOW = Date.now();
+    const actual = inheritAttributes(stringToMpdXml(
+      `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period duration= "PT0H4M40.414S" >
@@ -723,93 +723,93 @@ function(assert) {
       </Period>
     </MPD>
   `
-  ), { NOW });
+    ), { NOW });
 
-  const expected = [{
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base/',
-      duration: 280.414,
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp6',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+    const expected = [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/',
+        duration: 280.414,
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp6',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      base: {
-        indexRange: '1212',
-        indexRangeExact: 'true',
-        initialization: {
-          range: '0-8888'
+      segmentInfo: {
+        base: {
+          indexRange: '1212',
+          indexRangeExact: 'true',
+          initialization: {
+            range: '0-8888'
 
+          }
         }
       }
-    }
-  }, {
-    attributes: {
-      baseUrl: 'https://www.example.com/base/',
-      mediaPresentationDuration: 30,
-      duration: 280.414,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      height: 545,
-      role: {
-        value: 'main'
+    }, {
+      attributes: {
+        baseUrl: 'https://www.example.com/base/',
+        mediaPresentationDuration: 30,
+        duration: 280.414,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        height: 545,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      base: {
-        indexRange: '1212',
-        indexRangeExact: 'true',
-        initialization: {
-          range: '0-8888'
+      segmentInfo: {
+        base: {
+          indexRange: '1212',
+          indexRangeExact: 'true',
+          initialization: {
+            range: '0-8888'
+          }
         }
       }
-    }
-  }, {
-    attributes: {
-      bandwidth: 256,
-      baseUrl: 'https://example.com/en.vtt',
-      duration: 280.414,
-      id: 'en',
-      lang: 'en',
-      mediaPresentationDuration: 30,
-      mimeType: 'text/vtt',
-      periodIndex: 0,
-      role: {},
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {}
-  }];
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        duration: 280.414,
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {}
+    }];
 
-  assert.equal(actual.length, 3);
-  assert.deepEqual(actual, expected);
-});
+    assert.equal(actual.length, 3);
+    assert.deepEqual(actual, expected);
+  });
 
 // Although according to the Spec, at most one set of Segment information should be
 // present at each level, this test would still handle the case and prevent errors if
 // multiple set of segment information are present at any particular level.
 
 QUnit.test(
-'Test for checking use of only one set of Segment Information when multiple are present',
-function(assert) {
-  const NOW = Date.now();
-  const actual = toPlaylists(inheritAttributes(stringToMpdXml(
-    `
+  'Test for checking use of only one set of Segment Information when multiple are present',
+  function(assert) {
+    const NOW = Date.now();
+    const actual = toPlaylists(inheritAttributes(stringToMpdXml(
+      `
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
       <Period duration= "PT0H4M40.414S" >
@@ -851,388 +851,388 @@ function(assert) {
       </Period>
     </MPD>
   `
-), { NOW }));
+    ), { NOW }));
 
-  const expected = [{
-    attributes: {
-      NOW,
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base',
-      duration: 1.984,
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: '125000',
-      lang: 'es',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp6',
-      periodIndex: 0,
-      startNumber: 0,
-      timescale: 48000,
-      role: {
-        value: 'main'
+    const expected = [{
+      attributes: {
+        NOW,
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base',
+        duration: 1.984,
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: '125000',
+        lang: 'es',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp6',
+        periodIndex: 0,
+        startNumber: 0,
+        timescale: 48000,
+        role: {
+          value: 'main'
+        },
+        clientOffset: 0,
+        initialization: {
+          sourceURL: '$RepresentationID$/es/init.m4f'
+        },
+        media: '$RepresentationID$/es/$Number$.m4f',
+        segmentAlignment: 'true',
+        sourceDuration: 30,
+        width: 720,
+        startWithSAP: '1'
       },
-      clientOffset: 0,
-      initialization: {
-        sourceURL: '$RepresentationID$/es/init.m4f'
-      },
-      media: '$RepresentationID$/es/$Number$.m4f',
-      segmentAlignment: 'true',
-      sourceDuration: 30,
-      width: 720,
-      startWithSAP: '1'
-    },
-    segments: [{
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/0.m4f',
-      timeline: 0,
-      uri: '125000/es/0.m4f',
-      number: 0
+      segments: [{
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/0.m4f',
+        timeline: 0,
+        uri: '125000/es/0.m4f',
+        number: 0
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/1.m4f',
+        timeline: 0,
+        uri: '125000/es/1.m4f',
+        number: 1
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/2.m4f',
+        timeline: 0,
+        uri: '125000/es/2.m4f',
+        number: 2
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/3.m4f',
+        timeline: 0,
+        uri: '125000/es/3.m4f',
+        number: 3
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/4.m4f',
+        timeline: 0,
+        uri: '125000/es/4.m4f',
+        number: 4
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/5.m4f',
+        timeline: 0,
+        uri: '125000/es/5.m4f',
+        number: 5
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/6.m4f',
+        timeline: 0,
+        uri: '125000/es/6.m4f',
+        number: 6
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/7.m4f',
+        timeline: 0,
+        uri: '125000/es/7.m4f',
+        number: 7
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/8.m4f',
+        timeline: 0,
+        uri: '125000/es/8.m4f',
+        number: 8
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/9.m4f',
+        timeline: 0,
+        uri: '125000/es/9.m4f',
+        number: 9
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/10.m4f',
+        timeline: 0,
+        uri: '125000/es/10.m4f',
+        number: 10
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/11.m4f',
+        timeline: 0,
+        uri: '125000/es/11.m4f',
+        number: 11
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/12.m4f',
+        timeline: 0,
+        uri: '125000/es/12.m4f',
+        number: 12
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/13.m4f',
+        timeline: 0,
+        uri: '125000/es/13.m4f',
+        number: 13
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/14.m4f',
+        timeline: 0,
+        uri: '125000/es/14.m4f',
+        number: 14
+      }, {
+        duration: 0.240000000000002,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/15.m4f',
+        timeline: 0,
+        uri: '125000/es/15.m4f',
+        number: 15
+      }]
     }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
+      attributes: {
+        NOW,
+        baseUrl: 'https://www.example.com/base',
+        duration: 1.984,
+        lang: 'es',
+        height: 545,
+        id: '125000',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        segmentAlignment: 'true',
+        sourceDuration: 30,
+        startWithSAP: '1',
+        clientOffset: 0,
+        initialization: {
+          sourceURL: '$RepresentationID$/es/init.m4f'
+        },
+        media: '$RepresentationID$/es/$Number$.m4f',
+        startNumber: 0,
+        timescale: 48000
       },
-      resolvedUri: 'https://www.example.com/125000/es/1.m4f',
-      timeline: 0,
-      uri: '125000/es/1.m4f',
-      number: 1
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/2.m4f',
-      timeline: 0,
-      uri: '125000/es/2.m4f',
-      number: 2
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/3.m4f',
-      timeline: 0,
-      uri: '125000/es/3.m4f',
-      number: 3
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/4.m4f',
-      timeline: 0,
-      uri: '125000/es/4.m4f',
-      number: 4
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/5.m4f',
-      timeline: 0,
-      uri: '125000/es/5.m4f',
-      number: 5
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/6.m4f',
-      timeline: 0,
-      uri: '125000/es/6.m4f',
-      number: 6
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/7.m4f',
-      timeline: 0,
-      uri: '125000/es/7.m4f',
-      number: 7
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/8.m4f',
-      timeline: 0,
-      uri: '125000/es/8.m4f',
-      number: 8
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/9.m4f',
-      timeline: 0,
-      uri: '125000/es/9.m4f',
-      number: 9
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/10.m4f',
-      timeline: 0,
-      uri: '125000/es/10.m4f',
-      number: 10
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/11.m4f',
-      timeline: 0,
-      uri: '125000/es/11.m4f',
-      number: 11
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/12.m4f',
-      timeline: 0,
-      uri: '125000/es/12.m4f',
-      number: 12
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/13.m4f',
-      timeline: 0,
-      uri: '125000/es/13.m4f',
-      number: 13
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/14.m4f',
-      timeline: 0,
-      uri: '125000/es/14.m4f',
-      number: 14
-    }, {
-      duration: 0.240000000000002,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/15.m4f',
-      timeline: 0,
-      uri: '125000/es/15.m4f',
-      number: 15
-    }]
-  }, {
-    attributes: {
-      NOW,
-      baseUrl: 'https://www.example.com/base',
-      duration: 1.984,
-      lang: 'es',
-      height: 545,
-      id: '125000',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      role: {
-        value: 'main'
-      },
-      segmentAlignment: 'true',
-      sourceDuration: 30,
-      startWithSAP: '1',
-      clientOffset: 0,
-      initialization: {
-        sourceURL: '$RepresentationID$/es/init.m4f'
-      },
-      media: '$RepresentationID$/es/$Number$.m4f',
-      startNumber: 0,
-      timescale: 48000
-    },
-    segments: [{
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/0.m4f',
-      timeline: 0,
-      uri: '125000/es/0.m4f',
-      number: 0
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/1.m4f',
-      timeline: 0,
-      uri: '125000/es/1.m4f',
-      number: 1
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/2.m4f',
-      timeline: 0,
-      uri: '125000/es/2.m4f',
-      number: 2
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/3.m4f',
-      timeline: 0,
-      uri: '125000/es/3.m4f',
-      number: 3
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/4.m4f',
-      timeline: 0,
-      uri: '125000/es/4.m4f',
-      number: 4
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/5.m4f',
-      timeline: 0,
-      uri: '125000/es/5.m4f',
-      number: 5
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/6.m4f',
-      timeline: 0,
-      uri: '125000/es/6.m4f',
-      number: 6
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/7.m4f',
-      timeline: 0,
-      uri: '125000/es/7.m4f',
-      number: 7
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/8.m4f',
-      timeline: 0,
-      uri: '125000/es/8.m4f',
-      number: 8
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/9.m4f',
-      timeline: 0,
-      uri: '125000/es/9.m4f',
-      number: 9
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/10.m4f',
-      timeline: 0,
-      uri: '125000/es/10.m4f',
-      number: 10
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/11.m4f',
-      timeline: 0,
-      uri: '125000/es/11.m4f',
-      number: 11
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/12.m4f',
-      timeline: 0,
-      uri: '125000/es/12.m4f',
-      number: 12
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/13.m4f',
-      timeline: 0,
-      uri: '125000/es/13.m4f',
-      number: 13
-    }, {
-      duration: 1.984,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/14.m4f',
-      timeline: 0,
-      uri: '125000/es/14.m4f',
-      number: 14
-    }, {
-      duration: 0.240000000000002,
-      map: {
-        resolvedUri: 'https://www.example.com/125000/es/init.m4f',
-        uri: '125000/es/init.m4f'
-      },
-      resolvedUri: 'https://www.example.com/125000/es/15.m4f',
-      timeline: 0,
-      uri: '125000/es/15.m4f',
-      number: 15
-    }]
-  }];
+      segments: [{
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/0.m4f',
+        timeline: 0,
+        uri: '125000/es/0.m4f',
+        number: 0
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/1.m4f',
+        timeline: 0,
+        uri: '125000/es/1.m4f',
+        number: 1
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/2.m4f',
+        timeline: 0,
+        uri: '125000/es/2.m4f',
+        number: 2
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/3.m4f',
+        timeline: 0,
+        uri: '125000/es/3.m4f',
+        number: 3
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/4.m4f',
+        timeline: 0,
+        uri: '125000/es/4.m4f',
+        number: 4
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/5.m4f',
+        timeline: 0,
+        uri: '125000/es/5.m4f',
+        number: 5
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/6.m4f',
+        timeline: 0,
+        uri: '125000/es/6.m4f',
+        number: 6
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/7.m4f',
+        timeline: 0,
+        uri: '125000/es/7.m4f',
+        number: 7
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/8.m4f',
+        timeline: 0,
+        uri: '125000/es/8.m4f',
+        number: 8
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/9.m4f',
+        timeline: 0,
+        uri: '125000/es/9.m4f',
+        number: 9
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/10.m4f',
+        timeline: 0,
+        uri: '125000/es/10.m4f',
+        number: 10
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/11.m4f',
+        timeline: 0,
+        uri: '125000/es/11.m4f',
+        number: 11
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/12.m4f',
+        timeline: 0,
+        uri: '125000/es/12.m4f',
+        number: 12
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/13.m4f',
+        timeline: 0,
+        uri: '125000/es/13.m4f',
+        number: 13
+      }, {
+        duration: 1.984,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/14.m4f',
+        timeline: 0,
+        uri: '125000/es/14.m4f',
+        number: 14
+      }, {
+        duration: 0.240000000000002,
+        map: {
+          resolvedUri: 'https://www.example.com/125000/es/init.m4f',
+          uri: '125000/es/init.m4f'
+        },
+        resolvedUri: 'https://www.example.com/125000/es/15.m4f',
+        timeline: 0,
+        uri: '125000/es/15.m4f',
+        number: 15
+      }]
+    }];
 
-  assert.equal(actual.length, 2);
-  assert.deepEqual(actual, expected);
-});
+    assert.equal(actual.length, 2);
+    assert.deepEqual(actual, expected);
+  });
 
 // Although the Spec states that if SegmentTemplate or SegmentList is present on one
 // level of the hierarchy the other one shall not be present on any lower level, this
@@ -1281,7 +1281,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       </Period>
     </MPD>
   `
-), { NOW }));
+  ), { NOW }));
 
   const expected = [{
     attributes: {
@@ -1473,7 +1473,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       number: 15
     }]
   }
-];
+  ];
 
   assert.equal(actual.length, 1);
   assert.deepEqual(actual, expected);

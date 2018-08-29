@@ -148,19 +148,19 @@ export const getSegmentInformation = (adaptationSet) => {
  */
 export const inheritBaseUrls =
 (adaptationSetAttributes, adaptationSetBaseUrls, adaptationSetSegmentInfo) =>
-(representation) => {
-  const repBaseUrlElements = findChildren(representation, 'BaseURL');
-  const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
-  const attributes = merge(adaptationSetAttributes, parseAttributes(representation));
-  const representationSegmentInfo = getSegmentInformation(representation);
+  (representation) => {
+    const repBaseUrlElements = findChildren(representation, 'BaseURL');
+    const repBaseUrls = buildBaseUrls(adaptationSetBaseUrls, repBaseUrlElements);
+    const attributes = merge(adaptationSetAttributes, parseAttributes(representation));
+    const representationSegmentInfo = getSegmentInformation(representation);
 
-  return repBaseUrls.map(baseUrl => {
-    return {
-      segmentInfo: merge(adaptationSetSegmentInfo, representationSegmentInfo),
-      attributes: merge(attributes, { baseUrl })
-    };
-  });
-};
+    return repBaseUrls.map(baseUrl => {
+      return {
+        segmentInfo: merge(adaptationSetSegmentInfo, representationSegmentInfo),
+        attributes: merge(attributes, { baseUrl })
+      };
+    });
+  };
 
 /**
  * Tranforms a series of content protection nodes to
@@ -221,13 +221,13 @@ export const toRepresentations =
 (periodAttributes, periodBaseUrls, periodSegmentInfo) => (adaptationSet) => {
   const adaptationSetAttributes = parseAttributes(adaptationSet);
   const adaptationSetBaseUrls = buildBaseUrls(periodBaseUrls,
-                                              findChildren(adaptationSet, 'BaseURL'));
+    findChildren(adaptationSet, 'BaseURL'));
   const role = findChildren(adaptationSet, 'Role')[0];
   const roleAttributes = { role: parseAttributes(role) };
 
   let attrs = merge(periodAttributes,
-                    adaptationSetAttributes,
-                    roleAttributes);
+    adaptationSetAttributes,
+    roleAttributes);
 
   const contentProtection = generateKeySystemInformation(
     findChildren(adaptationSet, 'ContentProtection'));
