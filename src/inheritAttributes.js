@@ -271,7 +271,9 @@ export const toRepresentations =
  */
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
-  const periodAttributes = merge(mpdAttributes, { periodIndex });
+  const periodAtt = parseAttributes(period);
+  const periodId = parseInt((periodAtt.id || periodIndex), 10);
+  const periodAttributes = merge(mpdAttributes, { periodIndex: periodId });
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
@@ -304,8 +306,7 @@ export const inheritAttributes = (mpd, options = {}) => {
   } = options;
   const periods = findChildren(mpd, 'Period');
 
-  if (periods.length !== 1) {
-    // TODO add support for multiperiod
+  if (!periods.length) {
     throw new Error(errors.INVALID_NUMBER_OF_PERIOD);
   }
 

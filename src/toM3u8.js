@@ -1,3 +1,52 @@
+// Object => Object[]
+const values = o => Object.keys(o).map(k => o[k]);
+
+// Object[] String => Number[]
+const findIndexes = (l, key) => l.reduce((a, e, i) => {
+  if (e[key]) {
+    a.push(i);
+  }
+
+  return a;
+}, []);
+
+const mergeDiscontiguousPlaylists = playlists => {
+  const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
+    // assuming playlist IDs are the same across periods
+    // TODO: handle multiperiod where representation sets are not the same
+    // across periods
+    const name = playlist.attributes.id + (playlist.attributes.lang || '');
+
+    // Periods after first
+    if (acc[name]) {
+      // first segment of subsequent periods signal a discontinuity
+      playlist.segments[0].discontinuity = true;
+      acc[name].segments.push(...playlist.segments);
+
+      // bubble up contentProtection, this assumes all DRM content
+      // has the same contentProtection
+      // TODO: either remove this and make multiple license requests
+      // or refactor how multiperiod is handled
+      if (playlist.attributes.contentProtection) {
+        acc[name].attributes.contentProtection =
+          playlist.attributes.contentProtection;
+      }
+    } else {
+      // first Period
+      acc[name] = playlist;
+    }
+
+    return acc;
+  }, {}));
+
+  return mergedPlaylists.map(playlist => {
+    playlist.discontinuityStarts =
+        findIndexes(playlist.segments, 'discontinuity');
+
+    return playlist;
+  });
+};
+
 export const formatAudioPlaylist = ({ attributes, segments }) => {
   const playlist = {
     attributes: {
@@ -151,8 +200,10 @@ export const toM3u8 = dashPlaylists => {
   const vttOnly = ({ attributes }) =>
     attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
 
-  const videoPlaylists = dashPlaylists.filter(videoOnly).map(formatVideoPlaylist);
-  const audioPlaylists = dashPlaylists.filter(audioOnly);
+  const videoPlaylists = mergeDiscontiguousPlaylists(
+    dashPlaylists.filter(videoOnly)
+  ).map(formatVideoPlaylist);
+  const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
   const vttPlaylists = dashPlaylists.filter(vttOnly);
 
   const master = {
