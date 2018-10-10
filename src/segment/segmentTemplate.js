@@ -117,11 +117,13 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
     }];
   }
 
+  if (segmentTimeline && segmentTimeline.length) {
+    return parseByTimeline(attributes, segmentTimeline);
+  }
+
   if (attributes.duration) {
     return parseByDuration(attributes);
   }
-
-  return parseByTimeline(attributes, segmentTimeline);
 };
 
 /**

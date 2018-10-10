@@ -220,10 +220,11 @@ QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(
     'uses default startNumber and timescale value of 1');
 });
 
-QUnit.test('uses SegmentTimeline info when no @duration attribute', function(assert) {
+QUnit.test('uses SegmentTimeline info and ignores @duration attribute', function(assert) {
   const attributes = {
     startNumber: 0,
     sourceDuration: 16,
+    duration: 16,
     timescale: 1000,
     periodIndex: 1
   };
