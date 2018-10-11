@@ -271,13 +271,7 @@ export const toRepresentations =
  */
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
-  const periodAtt = parseAttributes(period);
   const periodAttributes = merge(mpdAttributes, { periodIndex });
-
-  if (periodAtt.duration) {
-    periodAttributes.periodDuration = periodAtt.duration;
-  }
-
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
