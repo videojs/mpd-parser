@@ -23,3 +23,11 @@ export const from = list => {
 
   return result;
 };
+
+export const findIndexes = (l, key) => l.reduce((a, e, i) => {
+  if (e[key]) {
+    a.push(i);
+  }
+
+  return a;
+}, []);

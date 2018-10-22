@@ -19,3 +19,5 @@ export const merge = (...objects) => {
     return result;
   }, {});
 };
+
+export const values = o => Object.keys(o).map(k => o[k]);

@@ -1,14 +1,5 @@
-// Object => Object[]
-const values = o => Object.keys(o).map(k => o[k]);
-
-// Object[] String => Number[]
-const findIndexes = (l, key) => l.reduce((a, e, i) => {
-  if (e[key]) {
-    a.push(i);
-  }
-
-  return a;
-}, []);
+import { values } from './utils/object';
+import { findIndexes } from './utils/list';
 
 const mergeDiscontiguousPlaylists = playlists => {
   const mergedPlaylists = values(playlists.reduce((acc, playlist) => {

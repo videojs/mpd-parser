@@ -1,6 +1,6 @@
-import { merge } from '../src/utils/object';
+import { merge, values } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
-import { flatten, range, from } from '../src/utils/list';
+import { flatten, range, from, findIndexes } from '../src/utils/list';
 import { findChildren, getContent } from '../src/utils/xml';
 import window from 'global/window';
 import document from 'global/document';
@@ -76,6 +76,16 @@ QUnit.test('Test for checking the merge when segment Information is present at a
   assert.deepEqual(merge(periodInfo, adaptationSetInfo, representationInfo), expected,
     'Merged SegmentBase info');
 
+});
+
+QUnit.module('values');
+
+QUnit.test('empty', function(assert) {
+  assert.deepEqual(values({}), []);
+});
+
+QUnit.test('mixed', function(assert) {
+  assert.deepEqual(values({ a: 1, b: true, c: 'foo'}), [1, true, 'foo']);
 });
 
 QUnit.module('flatten');
@@ -157,6 +167,23 @@ QUnit.test('array-like', function(assert) {
 
   assert.ok(result.map);
   assert.deepEqual(result.length, 2);
+});
+
+QUnit.module('findIndexes');
+
+QUnit.test('index not found', function(assert) {
+  assert.deepEqual(findIndexes([], 'a'), []);
+  assert.deepEqual(findIndexes([], ''), []);
+  assert.deepEqual(findIndexes([{ a: true}], 'b'), []);
+});
+
+QUnit.test('indexes found', function(assert) {
+  assert.deepEqual(findIndexes([{ a: true}], 'a'), [0]);
+  assert.deepEqual(findIndexes([
+    { a: true },
+    { b: true },
+    { b: true, c: true }
+  ], 'b'), [1, 2]);
 });
 
 QUnit.module('xml', {
