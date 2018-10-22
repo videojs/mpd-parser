@@ -1,3 +1,4 @@
+import window from 'global/window';
 import { flatten } from './utils/list';
 import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
@@ -269,11 +270,13 @@ export const toRepresentations =
  * @return {toAdaptationSetsCallback}
  *         Callback map function
  */
-export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
+export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
   const periodAtt = parseAttributes(period);
-  const periodId = parseInt((periodAtt.id || periodIndex), 10);
-  const periodAttributes = merge(mpdAttributes, { periodIndex: periodId });
+  const parsedPeriodId = parseInt(periodAtt.id, 10);
+  // fallback to mapping index if Period@id is not a number
+  const periodIndex = window.isNaN(parsedPeriodId) ? index : parsedPeriodId;
+  const periodAttributes = merge(mpdAttributes, { periodIndex });
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
