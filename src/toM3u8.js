@@ -16,8 +16,6 @@ const mergeDiscontiguousPlaylists = playlists => {
 
       // bubble up contentProtection, this assumes all DRM content
       // has the same contentProtection
-      // TODO: either remove this and make multiple license requests
-      // or refactor how multiperiod is handled
       if (playlist.attributes.contentProtection) {
         acc[name].attributes.contentProtection =
           playlist.attributes.contentProtection;
