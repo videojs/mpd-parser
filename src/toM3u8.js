@@ -1,3 +1,41 @@
+import { values } from './utils/object';
+import { findIndexes } from './utils/list';
+
+const mergeDiscontiguousPlaylists = playlists => {
+  const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
+    // assuming playlist IDs are the same across periods
+    // TODO: handle multiperiod where representation sets are not the same
+    // across periods
+    const name = playlist.attributes.id + (playlist.attributes.lang || '');
+
+    // Periods after first
+    if (acc[name]) {
+      // first segment of subsequent periods signal a discontinuity
+      playlist.segments[0].discontinuity = true;
+      acc[name].segments.push(...playlist.segments);
+
+      // bubble up contentProtection, this assumes all DRM content
+      // has the same contentProtection
+      if (playlist.attributes.contentProtection) {
+        acc[name].attributes.contentProtection =
+          playlist.attributes.contentProtection;
+      }
+    } else {
+      // first Period
+      acc[name] = playlist;
+    }
+
+    return acc;
+  }, {}));
+
+  return mergedPlaylists.map(playlist => {
+    playlist.discontinuityStarts =
+        findIndexes(playlist.segments, 'discontinuity');
+
+    return playlist;
+  });
+};
+
 export const formatAudioPlaylist = ({ attributes, segments }) => {
   const playlist = {
     attributes: {
@@ -151,8 +189,10 @@ export const toM3u8 = dashPlaylists => {
   const vttOnly = ({ attributes }) =>
     attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
 
-  const videoPlaylists = dashPlaylists.filter(videoOnly).map(formatVideoPlaylist);
-  const audioPlaylists = dashPlaylists.filter(audioOnly);
+  const videoPlaylists = mergeDiscontiguousPlaylists(
+    dashPlaylists.filter(videoOnly)
+  ).map(formatVideoPlaylist);
+  const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
   const vttPlaylists = dashPlaylists.filter(vttOnly);
 
   const master = {
