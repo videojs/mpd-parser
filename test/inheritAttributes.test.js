@@ -612,7 +612,6 @@ QUnit.test(' End to End test for checking support of segments in period ',
       attributes: {
         bandwidth: 5000000,
         baseUrl: 'https://www.example.com/base/',
-        duration: 280.414,
         codecs: 'avc1.64001e',
         height: 404,
         id: 'test',
@@ -640,7 +639,6 @@ QUnit.test(' End to End test for checking support of segments in period ',
       attributes: {
         baseUrl: 'https://www.example.com/base/',
         mediaPresentationDuration: 30,
-        duration: 280.414,
         mimeType: 'video/mp4',
         periodIndex: 0,
         height: 545,
@@ -664,7 +662,6 @@ QUnit.test(' End to End test for checking support of segments in period ',
       attributes: {
         bandwidth: 256,
         baseUrl: 'https://example.com/en.vtt',
-        duration: 280.414,
         id: 'en',
         lang: 'en',
         mediaPresentationDuration: 30,
@@ -729,7 +726,6 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
       attributes: {
         bandwidth: 5000000,
         baseUrl: 'https://www.example.com/base/',
-        duration: 280.414,
         codecs: 'avc1.64001e',
         height: 404,
         id: 'test',
@@ -758,7 +754,6 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
       attributes: {
         baseUrl: 'https://www.example.com/base/',
         mediaPresentationDuration: 30,
-        duration: 280.414,
         mimeType: 'video/mp4',
         periodIndex: 0,
         height: 545,
@@ -782,7 +777,6 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
       attributes: {
         bandwidth: 256,
         baseUrl: 'https://example.com/en.vtt',
-        duration: 280.414,
         id: 'en',
         lang: 'en',
         mediaPresentationDuration: 30,

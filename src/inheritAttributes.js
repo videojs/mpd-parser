@@ -1,3 +1,4 @@
+import window from 'global/window';
 import { flatten } from './utils/list';
 import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
@@ -269,10 +270,13 @@ export const toRepresentations =
  * @return {toAdaptationSetsCallback}
  *         Callback map function
  */
-export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, periodIndex) => {
+export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
   const periodAtt = parseAttributes(period);
-  const periodAttributes = merge(mpdAttributes, periodAtt, { periodIndex });
+  const parsedPeriodId = parseInt(periodAtt.id, 10);
+  // fallback to mapping index if Period@id is not a number
+  const periodIndex = window.isNaN(parsedPeriodId) ? index : parsedPeriodId;
+  const periodAttributes = merge(mpdAttributes, { periodIndex });
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
@@ -305,8 +309,7 @@ export const inheritAttributes = (mpd, options = {}) => {
   } = options;
   const periods = findChildren(mpd, 'Period');
 
-  if (periods.length !== 1) {
-    // TODO add support for multiperiod
+  if (!periods.length) {
     throw new Error(errors.INVALID_NUMBER_OF_PERIOD);
   }
 

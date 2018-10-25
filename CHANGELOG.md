@@ -1,3 +1,20 @@
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/videojs/mpd-parser/compare/v0.6.1...v0.7.0) (2018-10-24)
+
+### Features
+
+* limited multiperiod support ([#35](https://github.com/videojs/mpd-parser/issues/35)) ([aee87a0](https://github.com/videojs/mpd-parser/commit/aee87a0))
+
+### Bug Fixes
+
+* fixed segment timeline parsing when duration is present ([#34](https://github.com/videojs/mpd-parser/issues/34)) ([90feb2d](https://github.com/videojs/mpd-parser/commit/90feb2d))
+* Remove the postinstall script to prevent install issues ([#29](https://github.com/videojs/mpd-parser/issues/29)) ([ae458f4](https://github.com/videojs/mpd-parser/commit/ae458f4))
+
+### Chores
+
+* Update to generator-videojs-plugin[@7](https://github.com/7).2.0 ([#28](https://github.com/videojs/mpd-parser/issues/28)) ([909cf08](https://github.com/videojs/mpd-parser/commit/909cf08))
+* **package:** Update dependencies to enable Greenkeeper 🌴 ([#30](https://github.com/videojs/mpd-parser/issues/30)) ([0593c2c](https://github.com/videojs/mpd-parser/commit/0593c2c))
+
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/videojs/mpd-parser/compare/v0.6.0...v0.6.1) (2018-05-17)
 
