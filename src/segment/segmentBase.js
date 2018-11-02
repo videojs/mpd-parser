@@ -32,6 +32,12 @@ export const segmentsFromBase = (attributes) => {
     source: initialization.sourceURL,
     range: initialization.range
   });
+
+  if (indexRange) {
+    // sidx is defined so do not try to parse segments
+    return [];
+  }
+
   const segment = urlTypeConverter({ baseUrl, source: baseUrl, range: indexRange });
 
   segment.map = initSegment;
@@ -54,4 +60,17 @@ export const segmentsFromBase = (attributes) => {
   segment.number = 0;
 
   return [segment];
+};
+
+export const sidxFromBase = (attributes) => {
+  const {
+    baseUrl,
+    indexRange = ''
+  } = attributes;
+
+  if (!indexRange) {
+    return null;
+  }
+
+  return urlTypeConverter({ baseUrl, source: baseUrl, range: indexRange });
 };

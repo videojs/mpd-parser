@@ -141,7 +141,7 @@ export const organizeVttPlaylists = playlists => {
   }, {});
 };
 
-export const formatVideoPlaylist = ({ attributes, segments }) => {
+export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   const playlist = {
     attributes: {
       NAME: attributes.id,
@@ -166,6 +166,10 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
 
   if (attributes.contentProtection) {
     playlist.contentProtection = attributes.contentProtection;
+  }
+
+  if (sidx) {
+    playlist.sidx = sidx;
   }
 
   return playlist;
