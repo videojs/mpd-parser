@@ -1312,7 +1312,7 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
         resolvedUri: 'https://example.com/init.mp4',
         uri: 'init.mp4',
         byterange: {
-          length: 4,
+          length: 5,
           offset: 121
         }
       },
@@ -1327,7 +1327,7 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
         resolvedUri: 'https://example.com/init.mp4',
         uri: 'init.mp4',
         byterange: {
-          length: 4,
+          length: 5,
           offset: 121
         }
       },
@@ -1342,7 +1342,7 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
         resolvedUri: 'https://example.com/init.mp4',
         uri: 'init.mp4',
         byterange: {
-          length: 4,
+          length: 5,
           offset: 121
         }
       },

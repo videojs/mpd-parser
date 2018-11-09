@@ -30,7 +30,7 @@ QUnit.test('returns correct object if given baseUrl, source and range', function
     uri: 'init.fmp4',
     byterange: {
       offset: 101,
-      length: 4
+      length: 5
     }
   });
 });
@@ -44,7 +44,7 @@ QUnit.test('returns correct object if given baseUrl and range', function(assert)
     uri: '',
     byterange: {
       offset: 101,
-      length: 4
+      length: 5
     }
   });
 });

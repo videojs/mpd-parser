@@ -20,7 +20,8 @@ import resolveUrl from '../utils/resolveUrl';
  *
  * @param {string} baseUrl - baseUrl provided by <BaseUrl> nodes
  * @param {string} source - source url for segment
- * @param {string} range - optional range used for range calls, follows
+ * @param {string} range - optional range used for range calls,
+ *   follows  RFC 2616, Clause 14.35.1
  * @return {SingleUri} full segment information transformed into a format similar
  *   to m3u8-parser
  */
@@ -35,8 +36,10 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '' }) => {
     const startRange = parseInt(ranges[0], 10);
     const endRange = parseInt(ranges[1], 10);
 
+    // byterange should be inclusive according to
+    // RFC 2616, Clause 14.35.1
     init.byterange = {
-      length: endRange - startRange,
+      length: endRange - startRange + 1,
       offset: startRange
     };
   }
