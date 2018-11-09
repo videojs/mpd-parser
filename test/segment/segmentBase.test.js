@@ -129,7 +129,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       resolvedUri: 'http://www.example.com/init.fmp4',
       uri: 'http://www.example.com/init.fmp4',
       byterange: {
-        length: 4,
+        length: 5,
         offset: 121
       }
     },

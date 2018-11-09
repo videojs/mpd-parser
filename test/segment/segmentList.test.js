@@ -425,7 +425,7 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
       uri: 'init.fmp4'
     },
     byterange: {
-      length: 200,
+      length: 201,
       offset: 0
     },
     resolvedUri: 'http://example.com/1.fmp4',
@@ -435,7 +435,7 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
   }, {
     duration: 10,
     byterange: {
-      length: 199,
+      length: 200,
       offset: 201
     },
     map: {
@@ -517,7 +517,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       resolvedUri: 'http://example.com/init.fmp4',
       uri: 'init.fmp4',
       byterange: {
-        length: 4,
+        length: 5,
         offset: 121
       }
     },
@@ -531,7 +531,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       resolvedUri: 'http://example.com/init.fmp4',
       uri: 'init.fmp4',
       byterange: {
-        length: 4,
+        length: 5,
         offset: 121
       }
     },
