@@ -1,5 +1,6 @@
 import { values } from './utils/object';
 import { findIndexes } from './utils/list';
+import { segmentsFromBase } from './segment/segmentBase';
 
 const mergeDiscontiguousPlaylists = playlists => {
   const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
@@ -173,6 +174,45 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   }
 
   return playlist;
+};
+
+export const addSegmentInfo = ({ dashPlaylist, sidx }) => {
+  const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
+  const segments = [];
+
+  // debugger;
+
+  // const attributeDuration = dashPlaylist.segments[0].duration;
+  // const originalTimeline = dashPlaylist.segments[0].timeline;
+  const sidxEnd = dashPlaylist.sidx.byterange.offset +
+    dashPlaylist.sidx.byterange.length;
+
+  let startIndex = sidxEnd;
+
+  for (let i = 0; i < mediaReferences.length; i++) {
+    const size = sidx.references[i].referencedSize;
+
+    // TODO double check these
+    const segment = segmentsFromBase({
+      baseUrl: dashPlaylist.resolvedUri,
+      initialization: {},
+      timescale: sidx.timescale
+      // duration: attributeDuration
+    })[0];
+
+    segment.byterange = {
+      length: size,
+      offset: startIndex
+    };
+
+    segments.push(segment);
+
+    startIndex += size;
+  }
+
+  dashPlaylist.segments = segments;
+
+  return dashPlaylist;
 };
 
 export const toM3u8 = dashPlaylists => {

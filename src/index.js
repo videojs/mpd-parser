@@ -1,5 +1,5 @@
 import { version } from '../package.json';
-import { toM3u8 } from './toM3u8';
+import { toM3u8, addSegmentInfo } from './toM3u8';
 import { toPlaylists } from './toPlaylists';
 import { inheritAttributes } from './inheritAttributes';
 import { stringToMpdXml } from './stringToMpdXml';
@@ -20,3 +20,10 @@ export const parse = (manifestString, options) =>
  */
 export const parseUTCTiming = (manifestString) =>
   parseUTCTimingScheme(stringToMpdXml(manifestString));
+
+export const attachSegmentInfoFromSidx = (playlist, sidx) => {
+  return addSegmentInfo({
+    dashPlaylist: playlist,
+    sidx
+  });
+};
