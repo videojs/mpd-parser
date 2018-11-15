@@ -43,11 +43,9 @@ export const segmentsFromBase = (attributes) => {
 
     if (segmentTimeInfo.length) {
       segment.duration = segmentTimeInfo[0].duration;
-      segment.timeline = segmentTimeInfo[0].timeline;
     }
   } else if (sourceDuration) {
     segment.duration = (sourceDuration / timescale);
-    segment.timeline = 0;
   }
 
   // This is used for mediaSequence

@@ -32,7 +32,6 @@ QUnit.test('sets duration based on sourceDuration', function(assert) {
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
     duration: 10,
-    timeline: 0,
     map: {
       resolvedUri: 'http://www.example.com/init.fmp4',
       uri: 'http://www.example.com/init.fmp4'
@@ -53,7 +52,6 @@ QUnit.test('sets duration based on sourceDuration and @timescale', function(asse
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
     duration: 5,
-    timeline: 0,
     map: {
       resolvedUri: 'http://www.example.com/init.fmp4',
       uri: 'http://www.example.com/init.fmp4'
@@ -75,7 +73,6 @@ QUnit.test('sets duration based on @duration', function(assert) {
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
     duration: 10,
-    timeline: 0,
     map: {
       resolvedUri: 'http://www.example.com/init.fmp4',
       uri: 'http://www.example.com/init.fmp4'
@@ -98,7 +95,6 @@ QUnit.test('sets duration based on @duration and @timescale', function(assert) {
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
     duration: 2,
-    timeline: 0,
     map: {
       resolvedUri: 'http://www.example.com/init.fmp4',
       uri: 'http://www.example.com/init.fmp4'
@@ -124,7 +120,6 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
     duration: 2,
-    timeline: 0,
     map: {
       resolvedUri: 'http://www.example.com/init.fmp4',
       uri: 'http://www.example.com/init.fmp4',

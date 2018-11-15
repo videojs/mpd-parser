@@ -17,12 +17,17 @@ export const segmentRange = {
     const {
       duration,
       timescale = 1,
-      sourceDuration
+      startNumber = 1,
+      sourceDuration,
+      periodDuration
     } = attributes;
 
+    const timeRange = typeof periodDuration === 'undefined' ?
+      sourceDuration : periodDuration;
+
     return {
-      start: 0,
-      end: Math.ceil(sourceDuration / (duration / timescale))
+      start: startNumber,
+      end: Math.ceil(timeRange / (duration / timescale)) + startNumber
     };
   },
 
@@ -41,22 +46,56 @@ export const segmentRange = {
       availabilityStartTime,
       timescale = 1,
       duration,
+      periodDuration,
       start = 0,
-      minimumUpdatePeriod = 0,
-      timeShiftBufferDepth = Infinity
+      timeShiftBufferDepth = Infinity,
+      startNumber = 1,
+      endNumber,
+      minBufferTime = duration
     } = attributes;
     const now = (NOW + clientOffset) / 1000;
     const periodStartWC = availabilityStartTime + start;
-    const periodEndWC = now + minimumUpdatePeriod;
-    const periodDuration = periodEndWC - periodStartWC;
-    const segmentCount = Math.ceil(periodDuration * timescale / duration);
-    const availableStart =
-      Math.floor((now - periodStartWC - timeShiftBufferDepth) * timescale / duration);
-    const availableEnd = Math.floor((now - periodStartWC) * timescale / duration);
 
+    if (periodStartWC > now) {
+      // period too far in the future
+      return;
+    }
+    const startTime = Math.max(0, now - start - availabilityStartTime - timeShiftBufferDepth);
+    let startIndex = Math.ceil(startTime / (duration / timescale)) + startNumber;
+
+    startIndex = Math.max(startIndex, startNumber);
+
+    const safeLivePoint = now - start - availabilityStartTime - minBufferTime;
+    let endTime = safeLivePoint;
+
+    if (periodDuration && (periodDuration + start + availabilityStartTime) < now) {
+      endTime = periodDuration;
+    }
+
+    let endIndex = Math.floor(endTime / (duration / timescale)) + startNumber;
+
+    // I'm not sure if this is needed
+    const fractionalTime = endTime - ((endIndex - startNumber) * (duration / timescale));
+
+    if (endTime === periodDuration && fractionalTime >= (1 / 90000)) {
+      // incrementing for fractional time
+      endIndex++;
+    }
+    if (endIndex > endNumber) {
+      // calculated ending index exceeds what it should be
+      endIndex = endNumber;
+    }
+    if (endIndex < startNumber) {
+      // period too far in the future
+      return;
+    }
+    if (startIndex > endNumber) {
+      // period too far in the past
+      return;
+    }
     return {
-      start: Math.max(0, availableStart),
-      end: Math.min(segmentCount, availableEnd)
+      start: startIndex,
+      end: endIndex
     };
   }
 };
@@ -87,15 +126,12 @@ export const segmentRange = {
 export const toSegments = (attributes) => (number, index) => {
   const {
     duration,
-    timescale = 1,
-    periodIndex,
-    startNumber = 1
+    timescale = 1
   } = attributes;
 
   return {
-    number: startNumber + number,
+    number,
     duration: duration / timescale,
-    timeline: periodIndex,
     time: index * duration
   };
 };
@@ -115,17 +151,25 @@ export const parseByDuration = (attributes) => {
     type = 'static',
     duration,
     timescale = 1,
-    sourceDuration
+    sourceDuration,
+    periodDuration
   } = attributes;
 
-  const { start, end } = segmentRange[type](attributes);
+  const nums = segmentRange[type](attributes);
+
+  if (!nums) {
+    return [];
+  }
+
+  const { start, end } = nums;
   const segments = range(start, end).map(toSegments(attributes));
 
   if (type === 'static') {
     const index = segments.length - 1;
 
     // final segment may be less than full segment duration
-    segments[index].duration = sourceDuration - (duration / timescale * index);
+    segments[index].duration = (sourceDuration || periodDuration) -
+      (duration / timescale * index);
   }
 
   return segments;

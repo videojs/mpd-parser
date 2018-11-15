@@ -112,12 +112,11 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
     return [{
       number: attributes.startNumber || 1,
       duration: attributes.sourceDuration,
-      time: 0,
-      timeline: attributes.periodIndex
+      time: 0
     }];
   }
 
-  if (attributes.duration) {
+  if (attributes.duration && (!segmentTimeline || !segmentTimeline.length)) {
     return parseByDuration(attributes);
   }
 
@@ -160,7 +159,6 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
 
     return {
       uri,
-      timeline: segment.timeline,
       duration: segment.duration,
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
       map: mapSegment,

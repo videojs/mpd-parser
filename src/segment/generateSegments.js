@@ -1,7 +1,7 @@
-import { merge } from './utils/object';
-import { segmentsFromTemplate } from './segment/segmentTemplate';
-import { segmentsFromList } from './segment/segmentList';
-import { segmentsFromBase } from './segment/segmentBase';
+import { merge } from '../utils/object';
+import { segmentsFromTemplate } from './segmentTemplate';
+import { segmentsFromList } from './segmentList';
+import { segmentsFromBase } from './segmentBase';
 
 export const generateSegments = ({ attributes, segmentInfo }) => {
   let segmentAttributes;
@@ -32,7 +32,7 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
 
     segmentAttributes.duration = duration / timescale;
   } else if (segments.length) {
-    // if there is no @duration attribute, use the largest segment duration as
+    // if there is no @duration attribute, use the largest segment duration
     // as target duration
     segmentAttributes.duration = segments.reduce((max, segment) => {
       return Math.max(max, Math.ceil(segment.duration));
@@ -41,10 +41,6 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
     segmentAttributes.duration = 0;
   }
 
-  return {
-    attributes: segmentAttributes,
-    segments
-  };
+  return segments;
 };
 
-export const toPlaylists = (representations) => representations.map(generateSegments);

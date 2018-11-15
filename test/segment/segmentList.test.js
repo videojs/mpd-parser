@@ -38,7 +38,6 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -48,7 +47,6 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/2.fmp4',
-    timeline: 0,
     uri: '2.fmp4',
     number: 2
   }, {
@@ -58,7 +56,6 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/3.fmp4',
-    timeline: 0,
     uri: '3.fmp4',
     number: 3
   }, {
@@ -68,7 +65,6 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/4.fmp4',
-    timeline: 0,
     uri: '4.fmp4',
     number: 4
   }, {
@@ -78,7 +74,6 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/5.fmp4',
-    timeline: 0,
     uri: '5.fmp4',
     number: 5
   }]);
@@ -117,7 +112,6 @@ QUnit.test('truncates if segmentTimeline does not apply for all segments',
         uri: 'init.fmp4'
       },
       resolvedUri: 'http://example.com/1.fmp4',
-      timeline: 0,
       uri: '1.fmp4',
       number: 1
     }, {
@@ -127,7 +121,6 @@ QUnit.test('truncates if segmentTimeline does not apply for all segments',
         uri: 'init.fmp4'
       },
       resolvedUri: 'http://example.com/2.fmp4',
-      timeline: 0,
       uri: '2.fmp4',
       number: 2
     }]);
@@ -166,7 +159,6 @@ QUnit.test('if segment timeline is too long does not add extra blank segments',
         uri: 'init.fmp4'
       },
       resolvedUri: 'http://example.com/1.fmp4',
-      timeline: 0,
       uri: '1.fmp4',
       number: 1
     }, {
@@ -176,7 +168,6 @@ QUnit.test('if segment timeline is too long does not add extra blank segments',
         uri: 'init.fmp4'
       },
       resolvedUri: 'http://example.com/2.fmp4',
-      timeline: 0,
       uri: '2.fmp4',
       number: 2
     }, {
@@ -186,7 +177,6 @@ QUnit.test('if segment timeline is too long does not add extra blank segments',
         uri: 'init.fmp4'
       },
       resolvedUri: 'http://example.com/3.fmp4',
-      timeline: 0,
       uri: '3.fmp4',
       number: 3
     }, {
@@ -196,7 +186,6 @@ QUnit.test('if segment timeline is too long does not add extra blank segments',
         uri: 'init.fmp4'
       },
       resolvedUri: 'http://example.com/4.fmp4',
-      timeline: 0,
       uri: '4.fmp4',
       number: 4
     }, {
@@ -206,7 +195,6 @@ QUnit.test('if segment timeline is too long does not add extra blank segments',
         uri: 'init.fmp4'
       },
       resolvedUri: 'http://example.com/5.fmp4',
-      timeline: 0,
       uri: '5.fmp4',
       number: 5
     }]);
@@ -240,7 +228,6 @@ QUnit.test('uses duration to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -250,7 +237,6 @@ QUnit.test('uses duration to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/2.fmp4',
-    timeline: 0,
     uri: '2.fmp4',
     number: 2
   }, {
@@ -260,7 +246,6 @@ QUnit.test('uses duration to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/3.fmp4',
-    timeline: 0,
     uri: '3.fmp4',
     number: 3
   }, {
@@ -270,7 +255,6 @@ QUnit.test('uses duration to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/4.fmp4',
-    timeline: 0,
     uri: '4.fmp4',
     number: 4
   }, {
@@ -280,7 +264,6 @@ QUnit.test('uses duration to set segments', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/5.fmp4',
-    timeline: 0,
     uri: '5.fmp4',
     number: 5
   }]);
@@ -315,7 +298,6 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -325,7 +307,6 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/2.fmp4',
-    timeline: 0,
     uri: '2.fmp4',
     number: 2
   }, {
@@ -335,7 +316,6 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/3.fmp4',
-    timeline: 0,
     uri: '3.fmp4',
     number: 3
   }, {
@@ -345,7 +325,6 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/4.fmp4',
-    timeline: 0,
     uri: '4.fmp4',
     number: 4
   }, {
@@ -355,7 +334,6 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/5.fmp4',
-    timeline: 0,
     uri: '5.fmp4',
     number: 5
   }]);
@@ -384,7 +362,6 @@ QUnit.test('timescale sets duration of last segment correctly', function(assert)
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -394,7 +371,6 @@ QUnit.test('timescale sets duration of last segment correctly', function(assert)
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/2.fmp4',
-    timeline: 0,
     uri: '2.fmp4',
     number: 2
   }]);
@@ -429,7 +405,6 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
       offset: 0
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -443,7 +418,6 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
       uri: 'init.fmp4'
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 2
   }]);
@@ -522,7 +496,6 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       }
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -536,7 +509,6 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       }
     },
     resolvedUri: 'http://example.com/1.fmp4',
-    timeline: 0,
     uri: '1.fmp4',
     number: 2
   }]);

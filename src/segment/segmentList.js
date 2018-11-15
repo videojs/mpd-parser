@@ -76,7 +76,6 @@ export const segmentsFromList = (attributes, segmentTimeline) => {
     if (segmentUrlMap[index]) {
       const segment = segmentUrlMap[index];
 
-      segment.timeline = segmentTime.timeline;
       segment.duration = segmentTime.duration;
       segment.number = segmentTime.number;
       return segment;

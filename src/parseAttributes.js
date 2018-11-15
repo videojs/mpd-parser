@@ -44,6 +44,32 @@ export const parsers = {
   },
 
   /**
+   * Specifies the maximum segment duration for any segment in the MPD. Format is a
+   * duration string as specified in ISO 8601
+   *
+   * @param {string} value
+   *        value of attribute as a string
+   * @return {number}
+   *         The duration in seconds
+   */
+  maxSegmentDuration(value) {
+    return parseDuration(value);
+  },
+
+  /**
+   * Specifies the minimum buffer required by a client under ideal network conditions.
+   * Format is a duration string as specified in ISO 8601
+   *
+   * @param {string} value
+   *        value of attribute as a string
+   * @return {number}
+   *         The duration in seconds
+   */
+  minBufferTime(value) {
+    return parseDuration(value);
+  },
+
+  /**
    * Specifies the duration of the smallest time shifting buffer for any Representation
    * in the MPD. Format is a duration string as specified in ISO 8601
    *
@@ -114,6 +140,18 @@ export const parsers = {
    *         The parsed number
    */
   startNumber(value) {
+    return parseInt(value, 10);
+  },
+
+  /**
+   * Specifies the number of the first Media Segment in this Representation in the Period
+   *
+   * @param {string} value
+   *        value of attribute as a string
+   * @return {number}
+   *         The parsed number
+   */
+  endNumber(value) {
     return parseInt(value, 10);
   },
 

@@ -1,12 +1,11 @@
 import {
-  inheritAttributes,
+  parseMpdTree,
   buildBaseUrls,
   getSegmentInformation
 } from '../src/inheritAttributes';
 import { stringToMpdXml } from '../src/stringToMpdXml';
 import errors from '../src/errors';
 import QUnit from 'qunit';
-import { toPlaylists } from '../src/toPlaylists';
 
 QUnit.module('buildBaseUrls');
 

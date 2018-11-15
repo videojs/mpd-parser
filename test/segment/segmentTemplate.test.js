@@ -5,6 +5,17 @@ import {
   segmentsFromTemplate
 } from '../../src/segment/segmentTemplate';
 
+// custom assertion for checking segment ranges
+QUnit.assert.segmentRange = function(segments, range, message) {
+  const nums = {
+    start: segments.length ? segments[0].number : undefined,
+    end: segments.length ? segments[segments.length - 1].number : undefined
+  };
+  const result = nums.start === range.start && nums.end === range.end;
+
+  this.push(result, nums, range, message);
+};
+
 QUnit.module('segmentTemplate - constructTemplateUrl');
 
 QUnit.test('does not change url with no identifiers', function(assert) {
@@ -116,7 +127,7 @@ QUnit.test('one media segment when no @duration attribute or SegmentTimeline ele
 
     assert.deepEqual(
       parseTemplateInfo(attributes, void 0),
-      [ { number: 3, duration: 42, time: 0, timeline: 1 }],
+      [ { number: 3, duration: 42, time: 0 }],
       'creates segment list of one media segment when no @duration attribute or timeline');
   });
 
@@ -135,19 +146,16 @@ QUnit.test('uses @duration attribute when present', function(assert) {
       {
         number: 0,
         duration: 6,
-        timeline: 1,
         time: 0
       },
       {
         number: 1,
         duration: 6,
-        timeline: 1,
         time: 6000
       },
       {
         number: 2,
         duration: 4,
-        timeline: 1,
         time: 12000
       }
     ],
@@ -169,19 +177,16 @@ QUnit.test('parseByDuration allows non zero startNumber', function(assert) {
       {
         number: 101,
         duration: 6,
-        timeline: 1,
         time: 0
       },
       {
         number: 102,
         duration: 6,
-        timeline: 1,
         time: 6000
       },
       {
         number: 103,
         duration: 4,
-        timeline: 1,
         time: 12000
       }
     ],
@@ -201,19 +206,16 @@ QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(
       {
         number: 1,
         duration: 4,
-        timeline: 1,
         time: 0
       },
       {
         number: 2,
         duration: 4,
-        timeline: 1,
         time: 4
       },
       {
         number: 3,
         duration: 3,
-        timeline: 1,
         time: 8
       }
     ],
@@ -697,14 +699,14 @@ QUnit.test('correctly handles duration', function(assert) {
     media: 'n-$Number$.m4s',
     minimumUpdatePeriod: 0,
     timescale: 1,
-    NOW: 10000,
+    NOW: 12000,
     clientOffset: 0,
     availabilityStartTime: 0,
     startNumber: 1,
-    duration: 2,
-    periodIndex: 1
+    duration: 2
   };
 
+  // 1
   assert.deepEqual(
     segmentsFromTemplate(basicAttributes, []),
     [{
@@ -715,7 +717,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 2,
@@ -725,7 +726,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }, {
       duration: 2,
@@ -735,7 +735,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 3,
       resolvedUri: 'http://www.example.com/n-3.m4s',
-      timeline: 1,
       uri: 'n-3.m4s'
     }, {
       duration: 2,
@@ -745,7 +744,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 4,
       resolvedUri: 'http://www.example.com/n-4.m4s',
-      timeline: 1,
       uri: 'n-4.m4s'
     }, {
       duration: 2,
@@ -755,11 +753,11 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 5,
       resolvedUri: 'http://www.example.com/n-5.m4s',
-      timeline: 1,
       uri: 'n-5.m4s'
     }],
     'segments correctly with basic settings');
 
+  // 2
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes, { startNumber: 10 }), []),
     [{
@@ -770,7 +768,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 10,
       resolvedUri: 'http://www.example.com/n-10.m4s',
-      timeline: 1,
       uri: 'n-10.m4s'
     }, {
       duration: 2,
@@ -780,7 +777,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 11,
       resolvedUri: 'http://www.example.com/n-11.m4s',
-      timeline: 1,
       uri: 'n-11.m4s'
     }, {
       duration: 2,
@@ -790,7 +786,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 12,
       resolvedUri: 'http://www.example.com/n-12.m4s',
-      timeline: 1,
       uri: 'n-12.m4s'
     }, {
       duration: 2,
@@ -800,7 +795,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 13,
       resolvedUri: 'http://www.example.com/n-13.m4s',
-      timeline: 1,
       uri: 'n-13.m4s'
     }, {
       duration: 2,
@@ -810,11 +804,11 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 14,
       resolvedUri: 'http://www.example.com/n-14.m4s',
-      timeline: 1,
       uri: 'n-14.m4s'
     }],
     'segments adjusted correctly based on @startNumber');
 
+  // 3
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes,
       { availabilityStartTime: 4 }), []),
@@ -826,7 +820,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 2,
@@ -836,7 +829,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }, {
       duration: 2,
@@ -846,12 +838,12 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 3,
       resolvedUri: 'http://www.example.com/n-3.m4s',
-      timeline: 1,
       uri: 'n-3.m4s'
     }],
     'segments correct with @availabilityStartTime set'
   );
 
+  // 4
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes,
       { availabilityStartTime: 2, start: 4 }), []),
@@ -863,7 +855,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 2,
@@ -873,14 +864,14 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }],
     'segments correct with @availabilityStartTime and @start set');
 
+  // 5
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes,
-      { timeShiftBufferDepth: 4 }, [])),
+      { timeShiftBufferDepth: 6 }, [])),
     [{
       duration: 2,
       map: {
@@ -889,7 +880,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 4,
       resolvedUri: 'http://www.example.com/n-4.m4s',
-      timeline: 1,
       uri: 'n-4.m4s'
     }, {
       duration: 2,
@@ -899,11 +889,11 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 5,
       resolvedUri: 'http://www.example.com/n-5.m4s',
-      timeline: 1,
       uri: 'n-5.m4s'
     }],
     'segments correct with @timeShiftBufferDepth set');
 
+  // 6
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes,
       { clientOffset: -2000 }, [])),
@@ -915,7 +905,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 2,
@@ -925,7 +914,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }, {
       duration: 2,
@@ -935,7 +923,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 3,
       resolvedUri: 'http://www.example.com/n-3.m4s',
-      timeline: 1,
       uri: 'n-3.m4s'
     }, {
       duration: 2,
@@ -945,7 +932,6 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 4,
       resolvedUri: 'http://www.example.com/n-4.m4s',
-      timeline: 1,
       uri: 'n-4.m4s'
     }],
     'segments correct with given clientOffset');
@@ -987,7 +973,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 2,
@@ -997,7 +982,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }, {
       duration: 2,
@@ -1007,7 +991,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 3,
       resolvedUri: 'http://www.example.com/n-3.m4s',
-      timeline: 1,
       uri: 'n-3.m4s'
     }, {
       duration: 2,
@@ -1017,7 +1000,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 4,
       resolvedUri: 'http://www.example.com/n-4.m4s',
-      timeline: 1,
       uri: 'n-4.m4s'
     }, {
       duration: 2,
@@ -1027,7 +1009,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 5,
       resolvedUri: 'http://www.example.com/n-5.m4s',
-      timeline: 1,
       uri: 'n-5.m4s'
     }],
     'segments should fill until current time when r = -1 and @minimumUpdatePeriod > 0');
@@ -1043,7 +1024,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 2,
@@ -1053,7 +1033,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }, {
       duration: 2,
@@ -1063,7 +1042,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 3,
       resolvedUri: 'http://www.example.com/n-3.m4s',
-      timeline: 1,
       uri: 'n-3.m4s'
     }, {
       duration: 2,
@@ -1073,7 +1051,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 4,
       resolvedUri: 'http://www.example.com/n-4.m4s',
-      timeline: 1,
       uri: 'n-4.m4s'
     }],
     'segments should fill correctly when taking client offset into account');
@@ -1100,7 +1077,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 2,
@@ -1110,7 +1086,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }, {
       duration: 2,
@@ -1120,7 +1095,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 3,
       resolvedUri: 'http://www.example.com/n-3.m4s',
-      timeline: 1,
       uri: 'n-3.m4s'
     }, {
       duration: 2,
@@ -1130,7 +1104,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 4,
       resolvedUri: 'http://www.example.com/n-4.m4s',
-      timeline: 1,
       uri: 'n-4.m4s'
     }],
     'segments take into account different time value for first segment');
@@ -1146,7 +1119,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 1,
       uri: 'n-1.m4s'
     }, {
       duration: 1,
@@ -1156,7 +1128,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 1,
       uri: 'n-2.m4s'
     }, {
       duration: 1,
@@ -1166,7 +1137,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 3,
       resolvedUri: 'http://www.example.com/n-3.m4s',
-      timeline: 1,
       uri: 'n-3.m4s'
     }, {
       duration: 1,
@@ -1176,7 +1146,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 4,
       resolvedUri: 'http://www.example.com/n-4.m4s',
-      timeline: 1,
       uri: 'n-4.m4s'
     }, {
       duration: 1,
@@ -1186,7 +1155,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 5,
       resolvedUri: 'http://www.example.com/n-5.m4s',
-      timeline: 1,
       uri: 'n-5.m4s'
     }, {
       duration: 1,
@@ -1196,7 +1164,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 6,
       resolvedUri: 'http://www.example.com/n-6.m4s',
-      timeline: 1,
       uri: 'n-6.m4s'
     }, {
       duration: 1,
@@ -1206,7 +1173,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 7,
       resolvedUri: 'http://www.example.com/n-7.m4s',
-      timeline: 1,
       uri: 'n-7.m4s'
     }, {
       duration: 1,
@@ -1216,7 +1182,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 8,
       resolvedUri: 'http://www.example.com/n-8.m4s',
-      timeline: 1,
       uri: 'n-8.m4s'
     }, {
       duration: 1,
@@ -1226,7 +1191,6 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       },
       number: 9,
       resolvedUri: 'http://www.example.com/n-9.m4s',
-      timeline: 1,
       uri: 'n-9.m4s'
     }],
     'segments take into account different time value for first segment with timescale');
@@ -1257,7 +1221,6 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
         uri: 'Rep1/100/init.mp4'
       },
       resolvedUri: 'https://example.com/Rep1/100/000-00000.mp4',
-      timeline: 1,
       uri: 'Rep1/100/000-00000.mp4',
       number: 0
     },
@@ -1268,7 +1231,6 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
         uri: 'Rep1/100/init.mp4'
       },
       resolvedUri: 'https://example.com/Rep1/100/001-06000.mp4',
-      timeline: 1,
       uri: 'Rep1/100/001-06000.mp4',
       number: 1
     },
@@ -1279,7 +1241,6 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
         uri: 'Rep1/100/init.mp4'
       },
       resolvedUri: 'https://example.com/Rep1/100/002-12000.mp4',
-      timeline: 1,
       uri: 'Rep1/100/002-12000.mp4',
       number: 2
     }
@@ -1317,7 +1278,6 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
         }
       },
       resolvedUri: 'https://example.com/Rep1/100/000-00000.mp4',
-      timeline: 1,
       uri: 'Rep1/100/000-00000.mp4',
       number: 0
     },
@@ -1332,7 +1292,6 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
         }
       },
       resolvedUri: 'https://example.com/Rep1/100/001-06000.mp4',
-      timeline: 1,
       uri: 'Rep1/100/001-06000.mp4',
       number: 1
     },
@@ -1347,7 +1306,6 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
         }
       },
       resolvedUri: 'https://example.com/Rep1/100/002-12000.mp4',
-      timeline: 1,
       uri: 'Rep1/100/002-12000.mp4',
       number: 2
     }
@@ -1356,3 +1314,86 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
   assert.deepEqual(segmentsFromTemplate(attributes, void 0), segments,
     'creates segments from template');
 });
+
+QUnit.test('constructs multi-period segment list properly, with TSB', function(assert) {
+  const attrs1 = {
+    NOW: 1536857988940,
+    availabilityStartTime: 1535471778,
+    clientOffset: -2,
+    duration: 96256,
+    end: undefined,
+    endNumber: 691261,
+    maxSegmentDuration: 2.00533,
+    minBufferTime: 2.00533,
+    periodDuration: undefined,
+    sourceDuration: 0,
+    start: 1386110.76933,
+    startNumber: 691213,
+    timescale: 48000,
+    timeShiftBufferDepth: 50.13333,
+    type: 'dynamic'
+  };
+  const attrs2 = {
+    NOW: 1536857988940,
+    availabilityStartTime: 1535471778,
+    clientOffset: -2,
+    duration: 96256,
+    end: undefined,
+    endNumber: undefined,
+    maxSegmentDuration: 2.00533,
+    minBufferTime: 2.00533,
+    periodDuration: undefined,
+    sourceDuration: 0,
+    start: 1386206.822,
+    startNumber: 691261,
+    timescale: 48000,
+    timeShiftBufferDepth: 50.13333,
+    type: 'dynamic'
+  };
+  const segs1 = segmentsFromTemplate(attrs1);
+  const segs2 = segmentsFromTemplate(attrs2);
+
+  assert.segmentRange(segs1, {start: 691238, end: 691260}, 'old period success');
+  assert.segmentRange(segs2, {start: 691261, end: 691261}, 'new period success');
+});
+
+QUnit.test('constructs multi-period segment list, no TSB', function(assert) {
+  const attrs1 = {
+    NOW: 1536857988940,
+    availabilityStartTime: 1535471778,
+    clientOffset: -2,
+    duration: 96256,
+    end: undefined,
+    endNumber: 691261,
+    maxSegmentDuration: 2.00533,
+    minBufferTime: 2.00533,
+    periodDuration: undefined,
+    sourceDuration: 0,
+    start: 1386110.76933,
+    startNumber: 691213,
+    timescale: 48000,
+    type: 'dynamic'
+  };
+  const attrs2 = {
+    NOW: 1536857988940,
+    availabilityStartTime: 1535471778,
+    clientOffset: -2,
+    duration: 96256,
+    end: undefined,
+    endNumber: undefined,
+    maxSegmentDuration: 2.00533,
+    minBufferTime: 2.00533,
+    periodDuration: undefined,
+    sourceDuration: 0,
+    start: 1386206.822,
+    startNumber: 691261,
+    timescale: 48000,
+    type: 'dynamic'
+  };
+  const segs1 = segmentsFromTemplate(attrs1);
+  const segs2 = segmentsFromTemplate(attrs2);
+
+  assert.segmentRange(segs1, {start: 691213, end: 691260}, 'old period success');
+  assert.segmentRange(segs2, {start: 691261, end: 691261}, 'new period success');
+});
+
