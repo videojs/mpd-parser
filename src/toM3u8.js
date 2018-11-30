@@ -180,9 +180,6 @@ export const addSegmentInfo = ({ dashPlaylist, sidx }) => {
   const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
   const segments = [];
 
-  // debugger;
-
-  // const attributeDuration = dashPlaylist.segments[0].duration;
   // const originalTimeline = dashPlaylist.segments[0].timeline;
   const sidxEnd = dashPlaylist.sidx.byterange.offset +
     dashPlaylist.sidx.byterange.length;
@@ -190,27 +187,29 @@ export const addSegmentInfo = ({ dashPlaylist, sidx }) => {
   let startIndex = sidxEnd;
 
   for (let i = 0; i < mediaReferences.length; i++) {
-    const size = sidx.references[i].referencedSize;
+    const reference = sidx.references[i];
+    const size = reference.referencedSize;
 
     // TODO double check these
     const segment = segmentsFromBase({
       baseUrl: dashPlaylist.resolvedUri,
       initialization: {},
       timescale: sidx.timescale
-      // duration: attributeDuration
     })[0];
 
     segment.byterange = {
       length: size,
       offset: startIndex
     };
-
+    // TODO check how to do this properly
+    segment.duration = reference.subsegmentDuration;
     segments.push(segment);
-
     startIndex += size;
   }
 
   dashPlaylist.segments = segments;
+  // this isn't needed anymore
+  delete dashPlaylist.sidx;
 
   return dashPlaylist;
 };
