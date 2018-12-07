@@ -21,9 +21,9 @@ export const parse = (manifestString, options) =>
 export const parseUTCTiming = (manifestString) =>
   parseUTCTimingScheme(stringToMpdXml(manifestString));
 
-export const attachSegmentInfoFromSidx = (playlist, sidx) => {
+export const attachSegmentInfoFromSidx = ({ master, sidxMapping}) => {
   return addSegmentInfo({
-    dashPlaylist: playlist,
-    sidx
+    master,
+    sidxMapping
   });
 };

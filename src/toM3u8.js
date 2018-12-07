@@ -176,13 +176,13 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   return playlist;
 };
 
-export const addSegmentInfo = ({ dashPlaylist, sidx }) => {
+const addSegmentsToPlaylist = (playlist, sidx) => {
   const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
   const segments = [];
 
-  // const originalTimeline = dashPlaylist.segments[0].timeline;
-  const sidxEnd = dashPlaylist.sidx.byterange.offset +
-    dashPlaylist.sidx.byterange.length;
+  // const originalTimeline = playlist.segments[0].timeline;
+  const sidxEnd = playlist.sidx.byterange.offset +
+    playlist.sidx.byterange.length;
 
   let startIndex = sidxEnd;
 
@@ -192,7 +192,7 @@ export const addSegmentInfo = ({ dashPlaylist, sidx }) => {
 
     // TODO double check these
     const segment = segmentsFromBase({
-      baseUrl: dashPlaylist.resolvedUri,
+      baseUrl: playlist.resolvedUri,
       initialization: {},
       timescale: sidx.timescale
     })[0];
@@ -207,11 +207,24 @@ export const addSegmentInfo = ({ dashPlaylist, sidx }) => {
     startIndex += size;
   }
 
-  dashPlaylist.segments = segments;
+  playlist.segments = segments;
   // this isn't needed anymore
-  delete dashPlaylist.sidx;
+  delete playlist.sidx;
 
-  return dashPlaylist;
+  return playlist;
+};
+
+export const addSegmentInfo = ({ master, sidxMapping}) => {
+  for (let i = 0; i < master.playlists.length; i++) {
+    const playlist = master.playlists[0];
+    const sidxMatch = sidxMapping[playlist.uri] || sidxMapping[playlist.resolvedUri];
+
+    if (sidxMatch) {
+      addSegmentsToPlaylist(playlist, sidxMatch.sidx);
+    }
+  }
+
+  return master;
 };
 
 export const toM3u8 = dashPlaylists => {
