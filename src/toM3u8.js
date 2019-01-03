@@ -176,7 +176,7 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   return playlist;
 };
 
-const addSegmentsToPlaylist = (playlist, sidx) => {
+const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
   const segments = [];
 
@@ -192,7 +192,7 @@ const addSegmentsToPlaylist = (playlist, sidx) => {
 
     // TODO double check these
     const segment = segmentsFromBase({
-      baseUrl: playlist.resolvedUri,
+      baseUrl,
       initialization: {},
       timescale: sidx.timescale
     })[0];
@@ -216,11 +216,11 @@ const addSegmentsToPlaylist = (playlist, sidx) => {
 
 export const addSegmentInfo = ({ master, sidxMapping}) => {
   for (let i = 0; i < master.playlists.length; i++) {
-    const playlist = master.playlists[0];
+    const playlist = master.playlists[i];
     const sidxMatch = sidxMapping[playlist.uri] || sidxMapping[playlist.resolvedUri];
 
     if (sidxMatch) {
-      addSegmentsToPlaylist(playlist, sidxMatch.sidx);
+      addSegmentsToPlaylist(playlist, sidxMatch.sidx, playlist.sidx.resolvedUri);
     }
   }
 
