@@ -37,7 +37,7 @@ const mergeDiscontiguousPlaylists = playlists => {
   });
 };
 
-export const formatAudioPlaylist = ({ attributes, segments }) => {
+export const formatAudioPlaylist = ({ attributes, segments, sidx }) => {
   const playlist = {
     attributes: {
       NAME: attributes.id,
@@ -56,6 +56,10 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
 
   if (attributes.contentProtection) {
     playlist.contentProtection = attributes.contentProtection;
+  }
+
+  if (sidx) {
+    playlist.sidx = sidx;
   }
 
   return playlist;
@@ -215,11 +219,11 @@ const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
 };
 
 export const addSegmentInfo = ({ master, sidxMapping}) => {
-  for (let i = 0; i < master.playlists.length; i++) {
+  for (const i in master.playlists) {
     const playlist = master.playlists[i];
     const sidxMatch = sidxMapping[playlist.uri] || sidxMapping[playlist.resolvedUri];
 
-    if (sidxMatch) {
+    if (sidxMatch && playlist.sidx) {
       addSegmentsToPlaylist(playlist, sidxMatch.sidx, playlist.sidx.resolvedUri);
     }
   }
