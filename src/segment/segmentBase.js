@@ -12,7 +12,7 @@ import { parseByDuration } from './durationTimeParser';
  *   names as keys
  * @return {Object.<Array>} list of segments
  */
-export const segmentsFromBase = (attributes) => {
+export const segmentsFromBase = (attributes, timeline) => {
   const {
     baseUrl,
     initialization = {},
@@ -32,13 +32,6 @@ export const segmentsFromBase = (attributes) => {
     source: initialization.sourceURL,
     range: initialization.range
   });
-
-  // TODO: if we return here we will lose some attributes and init segment
-
-  // if (indexRange) {
-  //   // sidx is defined so do not try to parse segments
-  //   return [];
-  // }
 
   const segment = urlTypeConverter({ baseUrl, source: baseUrl, range: indexRange });
 

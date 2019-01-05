@@ -181,32 +181,57 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
 };
 
 const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
+  // Retain source duration from initial master manifest parsing
+  const sourceDuration = playlist.segments[0].duration;
+  // Retain source timeline
+  const timeline = playlist.timeline || 1;
+  const sidxByteRange = playlist.sidx.byterange;
+  const sidxEnd = sidxByteRange.offset + sidxByteRange.length;
+  // Retain timescale of the parsed sidx
+  const timescale = sidx.timescale;
+  // referenceType 1 refers to other sidx boxes
   const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
   const segments = [];
 
-  // const originalTimeline = playlist.segments[0].timeline;
-  const sidxEnd = playlist.sidx.byterange.offset +
-    playlist.sidx.byterange.length;
-
-  let startIndex = sidxEnd;
+  // firstOffset is the offset from the end of the sidx box
+  let startIndex = sidxEnd + sidx.firstOffset;
 
   for (let i = 0; i < mediaReferences.length; i++) {
     const reference = sidx.references[i];
+    // size of the referenced (sub)segment
     const size = reference.referencedSize;
+    // duration of the referenced (sub)segment, in  the  timescale
+    // this will be converted to seconds when generating segments
+    const duration = reference.subsegmentDuration;
+    // should be an inclusive range
+    const endIndex = startIndex + size - 1;
+    const indexRange = `${startIndex}-${endIndex}`;
 
-    // TODO double check these
-    const segment = segmentsFromBase({
+    const attributes = {
       baseUrl,
-      initialization: {},
-      timescale: sidx.timescale
-    })[0];
-
-    segment.byterange = {
-      length: size,
-      offset: startIndex
+      timescale,
+      timeline,
+      duration,
+      indexRange
     };
-    // TODO check how to do this properly
-    segment.duration = reference.subsegmentDuration;
+
+    // TODO: is there another way to see if there's an init segment here?
+    if (playlist.map) {
+      attributes.initialization = playlist.map;
+    }
+
+    if (sourceDuration) {
+      attributes.sourceDuration = sourceDuration;
+    }
+
+    const segment = segmentsFromBase(attributes)[0];
+
+    // TODO: maybe it's better to just manually add the byte range here?
+    // segment.byterange = {
+    //   length: size,
+    //   offset: startIndex
+    // };
+
     segments.push(segment);
     startIndex += size;
   }
