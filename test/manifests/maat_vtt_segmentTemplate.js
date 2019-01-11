@@ -76,9 +76,9 @@ export const parsedManifest = {
           }],
           uri: ''
         },
-        ['es (main)']: {
+        ['es']: {
           autoselect: true,
-          default: true,
+          default: false,
           language: 'es',
           playlists: [{
             attributes: {
