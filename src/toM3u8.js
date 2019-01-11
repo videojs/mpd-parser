@@ -95,15 +95,19 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
 };
 
 export const organizeAudioPlaylists = playlists => {
-  return playlists.reduce((a, playlist) => {
+  let mainPlaylist;
+
+  const formattedPlaylists = playlists.reduce((a, playlist) => {
     const role = playlist.attributes.role &&
-      playlist.attributes.role.value || 'main';
+      playlist.attributes.role.value || '';
     const language = playlist.attributes.lang || '';
 
     let label = 'main';
 
     if (language) {
-      label = `${playlist.attributes.lang} (${role})`;
+      const roleLabel = role ? ` (${role})` : '';
+
+      label = `${playlist.attributes.lang}${roleLabel}`;
     }
 
     // skip if we already have the highest quality audio for a language
@@ -121,8 +125,22 @@ export const organizeAudioPlaylists = playlists => {
       uri: ''
     };
 
+    if (typeof mainPlaylist === 'undefined' && role === 'main') {
+      mainPlaylist = playlist;
+      mainPlaylist.default = true;
+    }
+
     return a;
   }, {});
+
+  // if no playlists have role "main", mark the first as main
+  if (!mainPlaylist) {
+    const firstLabel = Object.keys(formattedPlaylists)[0];
+
+    formattedPlaylists[firstLabel].default = true;
+  }
+
+  return formattedPlaylists;
 };
 
 export const organizeVttPlaylists = playlists => {
