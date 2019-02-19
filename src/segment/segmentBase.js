@@ -33,7 +33,7 @@ export const segmentsFromBase = (attributes, timeline) => {
     range: initialization.range
   });
 
-  const segment = urlTypeConverter({ baseUrl, source: baseUrl, range: indexRange });
+  const segment = urlTypeConverter({ baseUrl, source: baseUrl, indexRange });
 
   segment.map = initSegment;
 
@@ -60,12 +60,30 @@ export const segmentsFromBase = (attributes, timeline) => {
 export const sidxFromBase = (attributes) => {
   const {
     baseUrl,
-    indexRange = ''
+    indexRange = '',
+    initialization
   } = attributes;
 
   if (!indexRange) {
     return null;
   }
 
-  return urlTypeConverter({ baseUrl, source: baseUrl, range: indexRange });
+  const sidxSegment = urlTypeConverter({
+    baseUrl,
+    source: baseUrl,
+    indexRange
+  });
+
+  let initSegment;
+
+  if (initialization) {
+    initSegment = urlTypeConverter({
+      baseUrl,
+      source: initialization.sourceURL,
+      range: initialization.range
+    });
+  }
+
+  sidxSegment.map = initSegment;
+  return sidxSegment;
 };

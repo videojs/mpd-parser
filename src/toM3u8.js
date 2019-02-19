@@ -199,6 +199,8 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
 };
 
 const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
+  // Retain init segment information
+  const initSegment = playlist.sidx.map ? playlist.sidx.map : null;
   // Retain source duration from initial master manifest parsing
   const sourceDuration = playlist.segments[0].duration;
   // Retain source timeline
@@ -233,16 +235,15 @@ const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
       indexRange
     };
 
-    // TODO: is there another way to see if there's an init segment here?
-    if (playlist.map) {
-      attributes.initialization = playlist.map;
-    }
-
     if (sourceDuration) {
       attributes.sourceDuration = sourceDuration;
     }
 
     const segment = segmentsFromBase(attributes)[0];
+
+    if (initSegment) {
+      segment.map = initSegment;
+    }
 
     // TODO: maybe it's better to just manually add the byte range here?
     // segment.byterange = {

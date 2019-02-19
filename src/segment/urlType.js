@@ -25,26 +25,27 @@ import resolveUrl from '../utils/resolveUrl';
  * @return {SingleUri} full segment information transformed into a format similar
  *   to m3u8-parser
  */
-export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '' }) => {
-  const init = {
+export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexRange = '' }) => {
+  const segment = {
     uri: source,
     resolvedUri: resolveUrl(baseUrl || '', source)
   };
 
-  if (range) {
-    const ranges = range.split('-');
+  if (range || indexRange) {
+    const rangeStr = range ? range : indexRange;
+    const ranges = rangeStr.split('-');
     const startRange = parseInt(ranges[0], 10);
     const endRange = parseInt(ranges[1], 10);
 
     // byterange should be inclusive according to
     // RFC 2616, Clause 14.35.1
-    init.byterange = {
+    segment.byterange = {
       length: endRange - startRange + 1,
       offset: startRange
     };
   }
 
-  return init;
+  return segment;
 };
 
 export default urlTypeToSegment;
