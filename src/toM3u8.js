@@ -204,7 +204,7 @@ const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   // Retain source duration from initial master manifest parsing
   const sourceDuration = playlist.segments[0].duration;
   // Retain source timeline
-  const timeline = playlist.timeline || 1;
+  const timeline = playlist.timeline || 0;
   const sidxByteRange = playlist.sidx.byterange;
   const sidxEnd = sidxByteRange.offset + sidxByteRange.length;
   // Retain timescale of the parsed sidx
@@ -231,6 +231,8 @@ const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
       baseUrl,
       timescale,
       timeline,
+      // this is used in parseByDuration
+      periodIndex: timeline,
       duration,
       indexRange
     };
