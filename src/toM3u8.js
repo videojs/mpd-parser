@@ -234,6 +234,7 @@ const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
       // this is used in parseByDuration
       periodIndex: timeline,
       duration,
+      sourceDuration,
       indexRange
     };
 
