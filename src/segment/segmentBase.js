@@ -57,33 +57,57 @@ export const segmentsFromBase = (attributes, timeline) => {
   return [segment];
 };
 
-export const sidxFromBase = (attributes) => {
-  const {
-    baseUrl,
-    indexRange = '',
-    initialization
-  } = attributes;
+export const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
+  // Retain init segment information
+  const initSegment = playlist.sidx.map ? playlist.sidx.map : null;
+  // Retain source duration from initial master manifest parsing
+  const sourceDuration = playlist.sidx.duration;
+  // Retain source timeline
+  const timeline = playlist.timeline || 0;
+  const sidxByteRange = playlist.sidx.byterange;
+  const sidxEnd = sidxByteRange.offset + sidxByteRange.length;
+  // Retain timescale of the parsed sidx
+  const timescale = sidx.timescale;
+  // referenceType 1 refers to other sidx boxes
+  const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
+  const segments = [];
 
-  if (!indexRange) {
-    return null;
-  }
+  // firstOffset is the offset from the end of the sidx box
+  let startIndex = sidxEnd + sidx.firstOffset;
 
-  const sidxSegment = urlTypeConverter({
-    baseUrl,
-    source: baseUrl,
-    indexRange
-  });
+  for (let i = 0; i < mediaReferences.length; i++) {
+    const reference = sidx.references[i];
+    // size of the referenced (sub)segment
+    const size = reference.referencedSize;
+    // duration of the referenced (sub)segment, in  the  timescale
+    // this will be converted to seconds when generating segments
+    const duration = reference.subsegmentDuration;
+    // should be an inclusive range
+    const endIndex = startIndex + size - 1;
+    const indexRange = `${startIndex}-${endIndex}`;
 
-  let initSegment;
-
-  if (initialization) {
-    initSegment = urlTypeConverter({
+    const attributes = {
       baseUrl,
-      source: initialization.sourceURL,
-      range: initialization.range
-    });
+      timescale,
+      timeline,
+      // this is used in parseByDuration
+      periodIndex: timeline,
+      duration,
+      sourceDuration,
+      indexRange
+    };
+
+    const segment = segmentsFromBase(attributes)[0];
+
+    if (initSegment) {
+      segment.map = initSegment;
+    }
+
+    segments.push(segment);
+    startIndex += size;
   }
 
-  sidxSegment.map = initSegment;
-  return sidxSegment;
+  playlist.segments = segments;
+
+  return playlist;
 };

@@ -1,6 +1,7 @@
 import { values } from './utils/object';
 import { findIndexes } from './utils/list';
-import { segmentsFromBase } from './segment/segmentBase';
+import { addSegmentsToPlaylist } from './segment/segmentBase';
+import { byteRangeToString } from './segment/urlType';
 
 const mergeDiscontiguousPlaylists = playlists => {
   const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
@@ -35,6 +36,25 @@ const mergeDiscontiguousPlaylists = playlists => {
 
     return playlist;
   });
+};
+
+const addSegmentInfoFromSidx = (playlists, sidxMapping) => {
+  if (!Object.keys(sidxMapping).length) {
+    return playlists;
+  }
+
+  for (const i in playlists) {
+    const playlist = playlists[i];
+    const sidxKey = playlist.sidx.uri + '-' +
+      byteRangeToString(playlist.sidx.byterange);
+    const sidxMatch = sidxMapping[sidxKey];
+
+    if (playlist.sidx && sidxMatch) {
+      addSegmentsToPlaylist(playlist, sidxMatch.sidx, playlist.sidx.resolvedUri);
+    }
+  }
+
+  return playlists;
 };
 
 export const formatAudioPlaylist = ({ attributes, segments, sidx }) => {
@@ -94,7 +114,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   };
 };
 
-export const organizeAudioPlaylists = playlists => {
+export const organizeAudioPlaylists = (playlists, sidxMapping) => {
   let mainPlaylist;
 
   const formattedPlaylists = playlists.reduce((a, playlist) => {
@@ -121,7 +141,10 @@ export const organizeAudioPlaylists = playlists => {
       language,
       autoselect: true,
       default: role === 'main',
-      playlists: [formatAudioPlaylist(playlist)],
+      playlists: addSegmentInfoFromSidx(
+        [formatAudioPlaylist(playlist)],
+        sidxMapping
+      ),
       uri: ''
     };
 
@@ -143,7 +166,7 @@ export const organizeAudioPlaylists = playlists => {
   return formattedPlaylists;
 };
 
-export const organizeVttPlaylists = playlists => {
+export const organizeVttPlaylists = (playlists, sidxMapping) => {
   return playlists.reduce((a, playlist) => {
     const label = playlist.attributes.lang || 'text';
 
@@ -156,7 +179,10 @@ export const organizeVttPlaylists = playlists => {
       language: label,
       default: false,
       autoselect: false,
-      playlists: [formatVttPlaylist(playlist)],
+      playlists: addSegmentInfoFromSidx(
+        [formatVttPlaylist(playlist)],
+        sidxMapping
+      ),
       uri: ''
     };
 
@@ -198,87 +224,7 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   return playlist;
 };
 
-const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
-  // Retain init segment information
-  const initSegment = playlist.sidx.map ? playlist.sidx.map : null;
-  // Retain source duration from initial master manifest parsing
-  const sourceDuration = playlist.segments[0].duration;
-  // Retain source timeline
-  const timeline = playlist.timeline || 0;
-  const sidxByteRange = playlist.sidx.byterange;
-  const sidxEnd = sidxByteRange.offset + sidxByteRange.length;
-  // Retain timescale of the parsed sidx
-  const timescale = sidx.timescale;
-  // referenceType 1 refers to other sidx boxes
-  const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
-  const segments = [];
-
-  // firstOffset is the offset from the end of the sidx box
-  let startIndex = sidxEnd + sidx.firstOffset;
-
-  for (let i = 0; i < mediaReferences.length; i++) {
-    const reference = sidx.references[i];
-    // size of the referenced (sub)segment
-    const size = reference.referencedSize;
-    // duration of the referenced (sub)segment, in  the  timescale
-    // this will be converted to seconds when generating segments
-    const duration = reference.subsegmentDuration;
-    // should be an inclusive range
-    const endIndex = startIndex + size - 1;
-    const indexRange = `${startIndex}-${endIndex}`;
-
-    const attributes = {
-      baseUrl,
-      timescale,
-      timeline,
-      // this is used in parseByDuration
-      periodIndex: timeline,
-      duration,
-      sourceDuration,
-      indexRange
-    };
-
-    if (sourceDuration) {
-      attributes.sourceDuration = sourceDuration;
-    }
-
-    const segment = segmentsFromBase(attributes)[0];
-
-    if (initSegment) {
-      segment.map = initSegment;
-    }
-
-    // TODO: maybe it's better to just manually add the byte range here?
-    // segment.byterange = {
-    //   length: size,
-    //   offset: startIndex
-    // };
-
-    segments.push(segment);
-    startIndex += size;
-  }
-
-  playlist.segments = segments;
-  // this isn't needed anymore
-  delete playlist.sidx;
-
-  return playlist;
-};
-
-export const addSegmentInfo = ({ master, sidxMapping}) => {
-  for (const i in master.playlists) {
-    const playlist = master.playlists[i];
-    const sidxMatch = sidxMapping[playlist.uri] || sidxMapping[playlist.resolvedUri];
-
-    if (sidxMatch && playlist.sidx) {
-      addSegmentsToPlaylist(playlist, sidxMatch.sidx, playlist.sidx.resolvedUri);
-    }
-  }
-
-  return master;
-};
-
-export const toM3u8 = dashPlaylists => {
+export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
   if (!dashPlaylists.length) {
     return {};
   }
@@ -315,16 +261,16 @@ export const toM3u8 = dashPlaylists => {
     },
     uri: '',
     duration,
-    playlists: videoPlaylists,
+    playlists: addSegmentInfoFromSidx(videoPlaylists, sidxMapping),
     minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };
 
   if (audioPlaylists.length) {
-    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists);
+    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping);
   }
 
   if (vttPlaylists.length) {
-    master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists);
+    master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists, sidxMapping);
   }
 
   return master;

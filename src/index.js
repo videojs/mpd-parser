@@ -1,5 +1,5 @@
 import { version } from '../package.json';
-import { toM3u8, addSegmentInfo } from './toM3u8';
+import { toM3u8 } from './toM3u8';
 import { toPlaylists } from './toPlaylists';
 import { inheritAttributes } from './inheritAttributes';
 import { stringToMpdXml } from './stringToMpdXml';
@@ -8,7 +8,7 @@ import { parseUTCTimingScheme } from './parseUTCTimingScheme';
 export const VERSION = version;
 
 export const parse = (manifestString, options) =>
-  toM3u8(toPlaylists(inheritAttributes(stringToMpdXml(manifestString), options)));
+  toM3u8(toPlaylists(inheritAttributes(stringToMpdXml(manifestString), options)), options.sidxMapping);
 
 /**
  * Parses the manifest for a UTCTiming node, returning the nodes attributes if found
@@ -20,10 +20,3 @@ export const parse = (manifestString, options) =>
  */
 export const parseUTCTiming = (manifestString) =>
   parseUTCTimingScheme(stringToMpdXml(manifestString));
-
-export const attachSegmentInfoFromSidx = ({ master, sidxMapping}) => {
-  return addSegmentInfo({
-    master,
-    sidxMapping
-  });
-};

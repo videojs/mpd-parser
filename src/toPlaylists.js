@@ -2,21 +2,18 @@ import { merge } from './utils/object';
 import { segmentsFromTemplate } from './segment/segmentTemplate';
 import { segmentsFromList } from './segment/segmentList';
 import {
-  segmentsFromBase,
-  sidxFromBase
+  segmentsFromBase
 } from './segment/segmentBase';
 
 export const generateSegments = ({ attributes, segmentInfo }) => {
   let segmentAttributes;
   let segmentsFn;
-  let sidxFn;
 
   if (segmentInfo.template) {
     segmentsFn = segmentsFromTemplate;
     segmentAttributes = merge(attributes, segmentInfo.template);
   } else if (segmentInfo.base) {
     segmentsFn = segmentsFromBase;
-    sidxFn = sidxFromBase;
     segmentAttributes = merge(attributes, segmentInfo.base);
   } else if (segmentInfo.list) {
     segmentsFn = segmentsFromList;
@@ -32,11 +29,6 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
   }
 
   const segments = segmentsFn(segmentAttributes, segmentInfo.timeline);
-  let sidx;
-
-  if (sidxFn) {
-    sidx = sidxFn(segmentAttributes);
-  }
 
   // The @duration attribute will be used to determin the playlist's targetDuration which
   // must be in seconds. Since we've generated the segment list, we no longer need
@@ -58,8 +50,10 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
   segmentsInfo.attributes = segmentAttributes;
   segmentsInfo.segments = segments;
 
-  if (sidx) {
-    segmentsInfo.sidx = sidx;
+  // This is a sidx box without actual segment information
+  if (segmentInfo.base && segmentAttributes.indexRange) {
+    segmentsInfo.sidx = segments[0];
+    segmentsInfo.segments = [];
   }
 
   return segmentsInfo;

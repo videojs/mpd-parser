@@ -48,4 +48,10 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexR
   return segment;
 };
 
+export const byteRangeToString = (byterange) => {
+  const endRange = byterange.offset + byterange.length - 1;
+
+  return `${byterange.offset}-${endRange}`;
+};
+
 export default urlTypeToSegment;
