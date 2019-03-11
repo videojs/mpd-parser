@@ -7,7 +7,7 @@ import { parseUTCTimingScheme } from './parseUTCTimingScheme';
 
 export const VERSION = version;
 
-export const parse = (manifestString, options) =>
+export const parse = (manifestString, options = {}) =>
   toM3u8(toPlaylists(inheritAttributes(stringToMpdXml(manifestString), options)), options.sidxMapping);
 
 /**
