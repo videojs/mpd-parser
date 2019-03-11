@@ -71,6 +71,48 @@ QUnit.test('segment base', function(assert) {
   assert.deepEqual(toPlaylists(representations), playlists);
 });
 
+QUnit.test('segment base with sidx', function(assert) {
+  const representations = [{
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      indexRange: '10-19'
+    },
+    segmentInfo: {
+      base: true
+    }
+  }];
+
+  const playlists = [{
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      duration: 2,
+      indexRange: '10-19'
+    },
+    segments: [],
+    sidx: {
+      map: {
+        resolvedUri: 'http://example.com/',
+        uri: ''
+      },
+      resolvedUri: 'http://example.com/',
+      uri: 'http://example.com/',
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      timeline: 0,
+      duration: 2,
+      number: 0
+    }
+  }];
+
+  assert.deepEqual(toPlaylists(representations), playlists);
+});
+
 QUnit.test('segment list', function(assert) {
   const representations = [{
     attributes: {

@@ -12,7 +12,7 @@ import { parseByDuration } from './durationTimeParser';
  *   names as keys
  * @return {Object.<Array>} list of segments
  */
-export const segmentsFromBase = (attributes, timeline) => {
+export const segmentsFromBase = (attributes) => {
   const {
     baseUrl,
     initialization = {},

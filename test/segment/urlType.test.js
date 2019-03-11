@@ -1,5 +1,8 @@
 import QUnit from 'qunit';
-import urlTypeConverter from '../../src/segment/urlType';
+import {
+  urlTypeToSegment as urlTypeConverter,
+  byteRangeToString
+} from '../../src/segment/urlType';
 
 QUnit.module('urlType - urlTypeConverter');
 
@@ -35,6 +38,21 @@ QUnit.test('returns correct object if given baseUrl, source and range', function
   });
 });
 
+QUnit.test('returns correct object if given baseUrl, source and indexRange', function(assert) {
+  assert.deepEqual(urlTypeConverter({
+    baseUrl: 'http://example.com',
+    source: 'sidx.fmp4',
+    indexRange: '101-105'
+  }), {
+    resolvedUri: 'http://example.com/sidx.fmp4',
+    uri: 'sidx.fmp4',
+    byterange: {
+      offset: 101,
+      length: 5
+    }
+  });
+});
+
 QUnit.test('returns correct object if given baseUrl and range', function(assert) {
   assert.deepEqual(urlTypeConverter({
     baseUrl: 'http://example.com',
@@ -47,4 +65,28 @@ QUnit.test('returns correct object if given baseUrl and range', function(assert)
       length: 5
     }
   });
+});
+
+QUnit.test('returns correct object if given baseUrl and indexRange', function(assert) {
+  assert.deepEqual(urlTypeConverter({
+    baseUrl: 'http://example.com',
+    indexRange: '101-105'
+  }), {
+    resolvedUri: 'http://example.com',
+    uri: '',
+    byterange: {
+      offset: 101,
+      length: 5
+    }
+  });
+});
+
+QUnit.module('urlType - byteRangeToString');
+
+QUnit.test('returns correct string representing byterange object', function(assert) {
+  assert.strictEqual(byteRangeToString({
+    offset: 0,
+    length: 100
+  }),
+  '0-99');
 });

@@ -49,6 +49,8 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexR
 };
 
 export const byteRangeToString = (byterange) => {
+  // `endRange` is one less than `offset + length` because the HTTP range
+  // header uses inclusive ranges
   const endRange = byterange.offset + byterange.length - 1;
 
   return `${byterange.offset}-${endRange}`;
