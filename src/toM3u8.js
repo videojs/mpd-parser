@@ -13,7 +13,9 @@ const mergeDiscontiguousPlaylists = playlists => {
     // Periods after first
     if (acc[name]) {
       // first segment of subsequent periods signal a discontinuity
-      playlist.segments[0].discontinuity = true;
+      if (playlist.segments[0]) {
+        playlist.segments[0].discontinuity = true;
+      }
       acc[name].segments.push(...playlist.segments);
 
       // bubble up contentProtection, this assumes all DRM content
