@@ -57,6 +57,17 @@ export const segmentsFromBase = (attributes) => {
   return [segment];
 };
 
+/**
+ * Given a playlist, a sidx box, and a baseUrl, update the segment list of the playlist
+ * according to the sidx information given.
+ *
+ * playlist.sidx has metadadata about the sidx where-as the sidx param
+ * is the parsed sidx box itself.
+ *
+ * @param {Object} playlist the playlist to update the sidx information for
+ * @param {Object} sidx the parsed sidx box
+ * @return {Object} the playlist object with the updated sidx information
+ */
 export const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   // Retain init segment information
   const initSegment = playlist.sidx.map ? playlist.sidx.map : null;
