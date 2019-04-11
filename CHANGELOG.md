@@ -1,3 +1,23 @@
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/videojs/mpd-parser/compare/v0.7.0...v0.8.0) (2019-04-11)
+
+### Features
+
+* add sidx information to segment base playlists ([#41](https://github.com/videojs/mpd-parser/issues/41)) ([1176109](https://github.com/videojs/mpd-parser/commit/1176109))
+
+### Bug Fixes
+
+* make byteRange.length inclusive ([#43](https://github.com/videojs/mpd-parser/issues/43)) ([28d217a](https://github.com/videojs/mpd-parser/commit/28d217a))
+
+### Chores
+
+* add netlify for testing ([#45](https://github.com/videojs/mpd-parser/issues/45)) ([a78a7be](https://github.com/videojs/mpd-parser/commit/a78a7be))
+* Update videojs-generate-karma-config to the latest version 🚀 ([#37](https://github.com/videojs/mpd-parser/issues/37)) ([a18c660](https://github.com/videojs/mpd-parser/commit/a18c660))
+* Update videojs-generate-karma-config to the latest version 🚀 ([#38](https://github.com/videojs/mpd-parser/issues/38)) ([3aaabac](https://github.com/videojs/mpd-parser/commit/3aaabac))
+* Update videojs-generate-rollup-config to the latest version 🚀 ([#36](https://github.com/videojs/mpd-parser/issues/36)) ([3f6ccbd](https://github.com/videojs/mpd-parser/commit/3f6ccbd))
+* **package:** update videojs-generate-karma-config to 5.0.2 ([#54](https://github.com/videojs/mpd-parser/issues/54)) ([fcbabc3](https://github.com/videojs/mpd-parser/commit/fcbabc3))
+* **package:** videojs-generate-karma-config[@4](https://github.com/4).0.0 does not exist ([#44](https://github.com/videojs/mpd-parser/issues/44)) ([bc361b5](https://github.com/videojs/mpd-parser/commit/bc361b5))
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/videojs/mpd-parser/compare/v0.6.1...v0.7.0) (2018-10-24)
 
