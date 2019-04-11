@@ -40,7 +40,7 @@ const mergeDiscontiguousPlaylists = playlists => {
   });
 };
 
-const addSegmentInfoFromSidx = (playlists, sidxMapping) => {
+const addSegmentInfoFromSidx = (playlists, sidxMapping = {}) => {
   if (!Object.keys(sidxMapping).length) {
     return playlists;
   }
@@ -116,7 +116,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   };
 };
 
-export const organizeAudioPlaylists = (playlists, sidxMapping) => {
+export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
   let mainPlaylist;
 
   const formattedPlaylists = playlists.reduce((a, playlist) => {
@@ -168,7 +168,7 @@ export const organizeAudioPlaylists = (playlists, sidxMapping) => {
   return formattedPlaylists;
 };
 
-export const organizeVttPlaylists = (playlists, sidxMapping) => {
+export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
   return playlists.reduce((a, playlist) => {
     const label = playlist.attributes.lang || 'text';
 
