@@ -1,6 +1,7 @@
 import QUnit from 'qunit';
 import {
-  segmentsFromBase
+  segmentsFromBase,
+  addSegmentsToPlaylist
 } from '../../src/segment/segmentBase';
 import errors from '../../src/errors';
 
@@ -141,4 +142,53 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
 
 QUnit.test('errors if no baseUrl exists', function(assert) {
   assert.throws(() => segmentsFromBase({}), new Error(errors.NO_BASE_URL));
+});
+
+QUnit.module('segmentBase - addSegmentsToPlaylist');
+
+QUnit.test('generates playlist from sidx references', function(assert) {
+  const baseUrl = 'http://www.example.com/i.fmp4';
+  const playlist = {
+    sidx: {
+      map: {
+        byterange: {
+          offset: 0,
+          length: 10
+        }
+      },
+      duration: 10,
+      byterange: {
+        offset: 9,
+        length: 11
+      }
+    },
+    segments: []
+  };
+  const sidx = {
+    timescale: 1,
+    firstOffset: 0,
+    references: [{
+      referenceType: 0,
+      referencedSize: 5,
+      subsegmentDuration: 2
+    }]
+  };
+
+  assert.deepEqual(addSegmentsToPlaylist(playlist, sidx, baseUrl).segments, [{
+    map: {
+      byterange: {
+        offset: 0,
+        length: 10
+      }
+    },
+    uri: 'http://www.example.com/i.fmp4',
+    resolvedUri: 'http://www.example.com/i.fmp4',
+    byterange: {
+      offset: 20,
+      length: 5
+    },
+    duration: 2,
+    timeline: 0,
+    number: 0
+  }]);
 });

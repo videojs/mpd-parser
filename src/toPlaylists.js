@@ -18,8 +18,12 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
     segmentAttributes = merge(attributes, segmentInfo.list);
   }
 
+  const segmentsInfo = {
+    attributes
+  };
+
   if (!segmentsFn) {
-    return { attributes };
+    return segmentsInfo;
   }
 
   const segments = segmentsFn(segmentAttributes, segmentInfo.timeline);
@@ -41,10 +45,16 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
     segmentAttributes.duration = 0;
   }
 
-  return {
-    attributes: segmentAttributes,
-    segments
-  };
+  segmentsInfo.attributes = segmentAttributes;
+  segmentsInfo.segments = segments;
+
+  // This is a sidx box without actual segment information
+  if (segmentInfo.base && segmentAttributes.indexRange) {
+    segmentsInfo.sidx = segments[0];
+    segmentsInfo.segments = [];
+  }
+
+  return segmentsInfo;
 };
 
 export const toPlaylists = (representations) => representations.map(generateSegments);

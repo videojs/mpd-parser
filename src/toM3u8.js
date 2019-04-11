@@ -1,5 +1,7 @@
 import { values } from './utils/object';
 import { findIndexes } from './utils/list';
+import { addSegmentsToPlaylist } from './segment/segmentBase';
+import { byteRangeToString } from './segment/urlType';
 
 const mergeDiscontiguousPlaylists = playlists => {
   const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
@@ -11,7 +13,9 @@ const mergeDiscontiguousPlaylists = playlists => {
     // Periods after first
     if (acc[name]) {
       // first segment of subsequent periods signal a discontinuity
-      playlist.segments[0].discontinuity = true;
+      if (playlist.segments[0]) {
+        playlist.segments[0].discontinuity = true;
+      }
       acc[name].segments.push(...playlist.segments);
 
       // bubble up contentProtection, this assumes all DRM content
@@ -36,7 +40,26 @@ const mergeDiscontiguousPlaylists = playlists => {
   });
 };
 
-export const formatAudioPlaylist = ({ attributes, segments }) => {
+const addSegmentInfoFromSidx = (playlists, sidxMapping = {}) => {
+  if (!Object.keys(sidxMapping).length) {
+    return playlists;
+  }
+
+  for (const i in playlists) {
+    const playlist = playlists[i];
+    const sidxKey = playlist.sidx.uri + '-' +
+      byteRangeToString(playlist.sidx.byterange);
+    const sidxMatch = sidxMapping[sidxKey] && sidxMapping[sidxKey].sidx;
+
+    if (playlist.sidx && sidxMatch) {
+      addSegmentsToPlaylist(playlist, sidxMatch, playlist.sidx.resolvedUri);
+    }
+  }
+
+  return playlists;
+};
+
+export const formatAudioPlaylist = ({ attributes, segments, sidx }) => {
   const playlist = {
     attributes: {
       NAME: attributes.id,
@@ -55,6 +78,10 @@ export const formatAudioPlaylist = ({ attributes, segments }) => {
 
   if (attributes.contentProtection) {
     playlist.contentProtection = attributes.contentProtection;
+  }
+
+  if (sidx) {
+    playlist.sidx = sidx;
   }
 
   return playlist;
@@ -89,16 +116,20 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   };
 };
 
-export const organizeAudioPlaylists = playlists => {
-  return playlists.reduce((a, playlist) => {
+export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
+  let mainPlaylist;
+
+  const formattedPlaylists = playlists.reduce((a, playlist) => {
     const role = playlist.attributes.role &&
-      playlist.attributes.role.value || 'main';
+      playlist.attributes.role.value || '';
     const language = playlist.attributes.lang || '';
 
     let label = 'main';
 
     if (language) {
-      label = `${playlist.attributes.lang} (${role})`;
+      const roleLabel = role ? ` (${role})` : '';
+
+      label = `${playlist.attributes.lang}${roleLabel}`;
     }
 
     // skip if we already have the highest quality audio for a language
@@ -112,15 +143,32 @@ export const organizeAudioPlaylists = playlists => {
       language,
       autoselect: true,
       default: role === 'main',
-      playlists: [formatAudioPlaylist(playlist)],
+      playlists: addSegmentInfoFromSidx(
+        [formatAudioPlaylist(playlist)],
+        sidxMapping
+      ),
       uri: ''
     };
 
+    if (typeof mainPlaylist === 'undefined' && role === 'main') {
+      mainPlaylist = playlist;
+      mainPlaylist.default = true;
+    }
+
     return a;
   }, {});
+
+  // if no playlists have role "main", mark the first as main
+  if (!mainPlaylist) {
+    const firstLabel = Object.keys(formattedPlaylists)[0];
+
+    formattedPlaylists[firstLabel].default = true;
+  }
+
+  return formattedPlaylists;
 };
 
-export const organizeVttPlaylists = playlists => {
+export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
   return playlists.reduce((a, playlist) => {
     const label = playlist.attributes.lang || 'text';
 
@@ -133,7 +181,10 @@ export const organizeVttPlaylists = playlists => {
       language: label,
       default: false,
       autoselect: false,
-      playlists: [formatVttPlaylist(playlist)],
+      playlists: addSegmentInfoFromSidx(
+        [formatVttPlaylist(playlist)],
+        sidxMapping
+      ),
       uri: ''
     };
 
@@ -141,7 +192,7 @@ export const organizeVttPlaylists = playlists => {
   }, {});
 };
 
-export const formatVideoPlaylist = ({ attributes, segments }) => {
+export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   const playlist = {
     attributes: {
       NAME: attributes.id,
@@ -168,10 +219,14 @@ export const formatVideoPlaylist = ({ attributes, segments }) => {
     playlist.contentProtection = attributes.contentProtection;
   }
 
+  if (sidx) {
+    playlist.sidx = sidx;
+  }
+
   return playlist;
 };
 
-export const toM3u8 = dashPlaylists => {
+export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
   if (!dashPlaylists.length) {
     return {};
   }
@@ -208,16 +263,16 @@ export const toM3u8 = dashPlaylists => {
     },
     uri: '',
     duration,
-    playlists: videoPlaylists,
+    playlists: addSegmentInfoFromSidx(videoPlaylists, sidxMapping),
     minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };
 
   if (audioPlaylists.length) {
-    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists);
+    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping);
   }
 
   if (vttPlaylists.length) {
-    master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists);
+    master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists, sidxMapping);
   }
 
   return master;

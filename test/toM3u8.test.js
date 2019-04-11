@@ -459,6 +459,94 @@ QUnit.test('playlists with segments', function(assert) {
   assert.deepEqual(toM3u8(input), expected);
 });
 
+QUnit.test('playlists with sidx and sidxMapping', function(assert) {
+  const input = [{
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      width: 800,
+      height: 600,
+      codecs: 'foo;bar',
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'video/mp4'
+    },
+    segments: [],
+    sidx: {
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      uri: 'sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      duration: 10
+    },
+    uri: 'http://example.com/fmp4.mp4'
+  }];
+
+  const mapping = {
+    'sidx.mp4-10-19': {
+      sidx: {
+        timescale: 1,
+        firstOffset: 0,
+        references: [{
+          referenceType: 0,
+          referencedSize: 5,
+          subsegmentDuration: 2
+        }]
+      }
+    }
+  };
+
+  const expected = [{
+    attributes: {
+      AUDIO: 'audio',
+      SUBTITLES: 'subs',
+      BANDWIDTH: 10000,
+      CODECS: 'foo;bar',
+      NAME: '1',
+      ['PROGRAM-ID']: 1,
+      RESOLUTION: {
+        height: 600,
+        width: 800
+      }
+    },
+    sidx: {
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      uri: 'sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      duration: 10
+    },
+    targetDuration: 0,
+    timeline: 1,
+    uri: '',
+    segments: [{
+      map: {
+        resolvedUri: 'http://example.com/sidx.mp4',
+        uri: ''
+      },
+      byterange: {
+        offset: 20,
+        length: 5
+      },
+      uri: 'http://example.com/sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      duration: 2,
+      number: 0,
+      timeline: 1
+    }],
+    endList: true,
+    mediaSequence: 1,
+    resolvedUri: ''
+  }];
+
+  assert.deepEqual(toM3u8(input, mapping).playlists, expected);
+});
+
 QUnit.test('no playlists', function(assert) {
   assert.deepEqual(toM3u8([]), {});
 });
