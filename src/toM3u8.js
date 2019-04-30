@@ -47,6 +47,11 @@ const addSegmentInfoFromSidx = (playlists, sidxMapping = {}) => {
 
   for (const i in playlists) {
     const playlist = playlists[i];
+
+    if (!playlist.sidx) {
+      continue;
+    }
+
     const sidxKey = playlist.sidx.uri + '-' +
       byteRangeToString(playlist.sidx.byterange);
     const sidxMatch = sidxMapping[sidxKey] && sidxMapping[sidxKey].sidx;
