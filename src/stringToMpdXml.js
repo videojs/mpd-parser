@@ -1,4 +1,4 @@
-import window from 'global/window';
+import {DOMParser} from 'xmldom';
 import errors from './errors';
 
 export const stringToMpdXml = (manifestString) => {
@@ -6,7 +6,7 @@ export const stringToMpdXml = (manifestString) => {
     throw new Error(errors.DASH_EMPTY_MANIFEST);
   }
 
-  const parser = new window.DOMParser();
+  const parser = new DOMParser();
   const xml = parser.parseFromString(manifestString, 'application/xml');
   const mpd = xml && xml.documentElement.tagName === 'MPD' ?
     xml.documentElement : null;
