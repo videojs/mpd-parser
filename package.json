@@ -1,6 +1,6 @@
 {
   "name": "mpd-parser",
-  "version": "0.8.1",
+  "version": "0.8.2-0",
   "description": "mpd parser",
   "main": "dist/mpd-parser.cjs.js",
   "module": "dist/mpd-parser.es.js",
@@ -65,7 +65,6 @@
     "videojs-generate-karma-config": "~5.3.0",
     "videojs-generate-rollup-config": "~5.0.1",
     "videojs-generator-verify": "~1.2.0",
-    "videojs-languages": "^2.0.0",
     "videojs-standard": "^8.0.3"
   },
   "generator-videojs-plugin": {
