@@ -470,8 +470,7 @@ export const parsedManifest = {
         resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f'
       },
       number: 19
-    }
-    ],
+    }],
     mediaSequence: 0,
     contentProtection: {
       'com.widevine.alpha': {
@@ -705,8 +704,7 @@ export const parsedManifest = {
         resolvedUri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f'
       },
       number: 19
-    }
-    ],
+    }],
     mediaSequence: 0,
     contentProtection: {
       'com.widevine.alpha': {
@@ -939,8 +937,7 @@ export const parsedManifest = {
         resolvedUri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f'
       },
       number: 19
-    }
-    ],
+    }],
     mediaSequence: 0,
     contentProtection: {
       'com.widevine.alpha': {

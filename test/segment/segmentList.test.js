@@ -84,7 +84,8 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
   }]);
 });
 
-QUnit.test('truncates if segmentTimeline does not apply for all segments',
+QUnit.test(
+  'truncates if segmentTimeline does not apply for all segments',
   function(assert) {
     const inputAttributes = {
       segmentUrls: [{
@@ -131,9 +132,11 @@ QUnit.test('truncates if segmentTimeline does not apply for all segments',
       uri: '2.fmp4',
       number: 2
     }]);
-  });
+  }
+);
 
-QUnit.test('if segment timeline is too long does not add extra blank segments',
+QUnit.test(
+  'if segment timeline is too long does not add extra blank segments',
   function(assert) {
     const inputAttributes = {
       segmentUrls: [{
@@ -210,7 +213,8 @@ QUnit.test('if segment timeline is too long does not add extra blank segments',
       uri: '5.fmp4',
       number: 5
     }]);
-  });
+  }
+);
 
 QUnit.test('uses duration to set segments', function(assert) {
   const inputAttributes = {
@@ -449,7 +453,8 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
   }]);
 });
 
-QUnit.test('throws error if more than 1 segment and no duration or timeline',
+QUnit.test(
+  'throws error if more than 1 segment and no duration or timeline',
   function(assert) {
     const inputAttributes = {
       segmentUrls: [{
@@ -472,9 +477,12 @@ QUnit.test('throws error if more than 1 segment and no duration or timeline',
       r: 4
     }];
 
-    assert.throws(() => segmentsFromList(inputAttributes, inputTimeline),
-      new Error(errors.SEGMENT_TIME_UNSPECIFIED));
-  });
+    assert.throws(
+      () => segmentsFromList(inputAttributes, inputTimeline),
+      new Error(errors.SEGMENT_TIME_UNSPECIFIED)
+    );
+  }
+);
 
 QUnit.test('throws error if timeline and duration are both defined', function(assert) {
   const inputAttributes = {
@@ -491,8 +499,10 @@ QUnit.test('throws error if timeline and duration are both defined', function(as
     baseUrl: 'http://example.com/'
   };
 
-  assert.throws(() => segmentsFromList(inputAttributes),
-    new Error(errors.SEGMENT_TIME_UNSPECIFIED));
+  assert.throws(
+    () => segmentsFromList(inputAttributes),
+    new Error(errors.SEGMENT_TIME_UNSPECIFIED)
+  );
 });
 
 QUnit.test('translates ranges in <Initialization> node', function(assert) {

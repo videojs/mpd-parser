@@ -45,8 +45,7 @@ QUnit.test('replaces each identifier individually', function(assert) {
   ];
 
   cases.forEach(test => {
-    assert.equal(
-      constructTemplateUrl(test.url, values), test.expected, `constructs ${test.url}`);
+    assert.equal(constructTemplateUrl(test.url, values), test.expected, `constructs ${test.url}`);
   });
 });
 
@@ -59,9 +58,11 @@ QUnit.test('replaces multiple identifiers in url', function(assert) {
         Bandwidth: 1000,
         Number: 2,
         Time: 2000
-      }),
+      }
+    ),
     '$2000$$/Rep1/1000/2-2000-segment-2.mp4',
-    'correctly replaces multiple identifiers in single url');
+    'correctly replaces multiple identifiers in single url'
+  );
 });
 
 QUnit.test('does not replace unknown identifiers', function(assert) {
@@ -71,41 +72,50 @@ QUnit.test('does not replace unknown identifiers', function(assert) {
       {
         RepresentationID: 'Rep1',
         Number: 1
-      }),
+      }
+    ),
     '/$UNKNOWN$/Rep1/$UNKOWN2$/1.mp4',
-    'ignores unknown identifiers');
+    'ignores unknown identifiers'
+  );
 });
 
 QUnit.test('honors padding format tag', function(assert) {
   assert.equal(
     constructTemplateUrl(
       '/$Number%03d$/segment.mp4',
-      { Number: 7 }),
+      { Number: 7 }
+    ),
     '/007/segment.mp4',
-    'correctly adds padding when format tag present');
+    'correctly adds padding when format tag present'
+  );
 });
 
 QUnit.test('does not add padding when value is longer than width', function(assert) {
   assert.equal(
     constructTemplateUrl(
       '/$Bandwidth%06d$/segment.mp4',
-      { Bandwidth: 999999999 }),
+      { Bandwidth: 999999999 }
+    ),
     '/999999999/segment.mp4',
-    'no padding when value longer than format width');
+    'no padding when value longer than format width'
+  );
 });
 
 QUnit.test('does not use padding format tag for $RepresentationID$', function(assert) {
   assert.equal(
     constructTemplateUrl(
       '/$RepresentationID%09d$/$Number%03d$/segment.mp4',
-      { RepresentationID: 'Rep1', Number: 7 }),
+      { RepresentationID: 'Rep1', Number: 7 }
+    ),
     '/Rep1/007/segment.mp4',
-    'ignores format tag for $RepresentationID$');
+    'ignores format tag for $RepresentationID$'
+  );
 });
 
 QUnit.module('segmentTemplate - parseTemplateInfo');
 
-QUnit.test('one media segment when no @duration attribute or SegmentTimeline element',
+QUnit.test(
+  'one media segment when no @duration attribute or SegmentTimeline element',
   function(assert) {
     const attributes = {
       startNumber: 3,
@@ -117,8 +127,10 @@ QUnit.test('one media segment when no @duration attribute or SegmentTimeline ele
     assert.deepEqual(
       parseTemplateInfo(attributes, void 0),
       [ { number: 3, duration: 42, time: 0, timeline: 1 }],
-      'creates segment list of one media segment when no @duration attribute or timeline');
-  });
+      'creates segment list of one media segment when no @duration attribute or timeline'
+    );
+  }
+);
 
 QUnit.test('uses @duration attribute when present', function(assert) {
   const attributes = {
@@ -151,7 +163,8 @@ QUnit.test('uses @duration attribute when present', function(assert) {
         time: 12000
       }
     ],
-    'correctly parses segment durations and start times with @duration attribute');
+    'correctly parses segment durations and start times with @duration attribute'
+  );
 });
 
 QUnit.test('parseByDuration allows non zero startNumber', function(assert) {
@@ -185,7 +198,8 @@ QUnit.test('parseByDuration allows non zero startNumber', function(assert) {
         time: 12000
       }
     ],
-    'allows non zero startNumber');
+    'allows non zero startNumber'
+  );
 });
 
 QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(assert) {
@@ -217,7 +231,8 @@ QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(
         time: 8
       }
     ],
-    'uses default startNumber and timescale value of 1');
+    'uses default startNumber and timescale value of 1'
+  );
 });
 
 QUnit.test('uses SegmentTimeline info when no @duration attribute', function(assert) {
@@ -271,7 +286,8 @@ QUnit.test('uses SegmentTimeline info when no @duration attribute', function(ass
         timeline: 1
       }
     ],
-    'correctly calculates segment durations and start times with SegmentTimeline');
+    'correctly calculates segment durations and start times with SegmentTimeline'
+  );
 });
 
 QUnit.test('parseByTimeline allows non zero startNumber', function(assert) {
@@ -325,7 +341,8 @@ QUnit.test('parseByTimeline allows non zero startNumber', function(assert) {
         timeline: 1
       }
     ],
-    'allows non zero startNumber');
+    'allows non zero startNumber'
+  );
 });
 
 QUnit.test('parseByTimeline defaults 1 for startNumber and timescale', function(assert) {
@@ -377,7 +394,8 @@ QUnit.test('parseByTimeline defaults 1 for startNumber and timescale', function(
         timeline: 1
       }
     ],
-    'defaults to 1 for startNumber and timescale');
+    'defaults to 1 for startNumber and timescale'
+  );
 });
 
 QUnit.test('defaults SegmentTimeline.S@t to 0 for first segment', function(assert) {
@@ -430,7 +448,8 @@ QUnit.test('defaults SegmentTimeline.S@t to 0 for first segment', function(asser
         timeline: 1
       }
     ],
-    'uses default value of 0');
+    'uses default value of 0'
+  );
 });
 
 QUnit.test('allows non zero starting SegmentTimeline.S@t value', function(assert) {
@@ -484,7 +503,8 @@ QUnit.test('allows non zero starting SegmentTimeline.S@t value', function(assert
         timeline: 1
       }
     ],
-    'allows non zero SegmentTimeline.S@t start value');
+    'allows non zero SegmentTimeline.S@t start value'
+  );
 });
 
 QUnit.test('honors @r repeat attribute for SegmentTimeline.S', function(assert) {
@@ -557,7 +577,8 @@ QUnit.test('honors @r repeat attribute for SegmentTimeline.S', function(assert) 
         timeline: 1
       }
     ],
-    'correctly uses @r repeat attribute');
+    'correctly uses @r repeat attribute'
+  );
 });
 
 QUnit.test('correctly handles negative @r repeat value', function(assert) {
@@ -631,7 +652,8 @@ QUnit.test('correctly handles negative @r repeat value', function(assert) {
         timeline: 1
       }
     ],
-    'correctly uses negative @r repeat attribute');
+    'correctly uses negative @r repeat attribute'
+  );
 });
 
 QUnit.test('correctly handles negative @r repeat value for last S', function(assert) {
@@ -680,13 +702,16 @@ QUnit.test('correctly handles negative @r repeat value for last S', function(ass
         timeline: 1
       }
     ],
-    'correctly uses negative @r repeat attribute for last S');
+    'correctly uses negative @r repeat attribute for last S'
+  );
 });
 
-QUnit.skip('detects discontinuity when @t time is greater than expected start time',
+QUnit.skip(
+  'detects discontinuity when @t time is greater than expected start time',
   function(assert) {
 
-  });
+  }
+);
 
 QUnit.module('segmentTemplate - type ="dynamic"');
 
@@ -758,7 +783,8 @@ QUnit.test('correctly handles duration', function(assert) {
       timeline: 1,
       uri: 'n-5.m4s'
     }],
-    'segments correctly with basic settings');
+    'segments correctly with basic settings'
+  );
 
   assert.deepEqual(
     segmentsFromTemplate(Object.assign({}, basicAttributes, { startNumber: 10 }), []),
@@ -813,11 +839,14 @@ QUnit.test('correctly handles duration', function(assert) {
       timeline: 1,
       uri: 'n-14.m4s'
     }],
-    'segments adjusted correctly based on @startNumber');
+    'segments adjusted correctly based on @startNumber'
+  );
 
   assert.deepEqual(
-    segmentsFromTemplate(Object.assign({}, basicAttributes,
-      { availabilityStartTime: 4 }), []),
+    segmentsFromTemplate(Object.assign(
+      {}, basicAttributes,
+      { availabilityStartTime: 4 }
+    ), []),
     [{
       duration: 2,
       map: {
@@ -853,8 +882,10 @@ QUnit.test('correctly handles duration', function(assert) {
   );
 
   assert.deepEqual(
-    segmentsFromTemplate(Object.assign({}, basicAttributes,
-      { availabilityStartTime: 2, start: 4 }), []),
+    segmentsFromTemplate(Object.assign(
+      {}, basicAttributes,
+      { availabilityStartTime: 2, start: 4 }
+    ), []),
     [{
       duration: 2,
       map: {
@@ -876,11 +907,14 @@ QUnit.test('correctly handles duration', function(assert) {
       timeline: 1,
       uri: 'n-2.m4s'
     }],
-    'segments correct with @availabilityStartTime and @start set');
+    'segments correct with @availabilityStartTime and @start set'
+  );
 
   assert.deepEqual(
-    segmentsFromTemplate(Object.assign({}, basicAttributes,
-      { timeShiftBufferDepth: 4 }, [])),
+    segmentsFromTemplate(Object.assign(
+      {}, basicAttributes,
+      { timeShiftBufferDepth: 4 }, []
+    )),
     [{
       duration: 2,
       map: {
@@ -902,11 +936,14 @@ QUnit.test('correctly handles duration', function(assert) {
       timeline: 1,
       uri: 'n-5.m4s'
     }],
-    'segments correct with @timeShiftBufferDepth set');
+    'segments correct with @timeShiftBufferDepth set'
+  );
 
   assert.deepEqual(
-    segmentsFromTemplate(Object.assign({}, basicAttributes,
-      { clientOffset: -2000 }, [])),
+    segmentsFromTemplate(Object.assign(
+      {}, basicAttributes,
+      { clientOffset: -2000 }, []
+    )),
     [{
       duration: 2,
       map: {
@@ -948,7 +985,8 @@ QUnit.test('correctly handles duration', function(assert) {
       timeline: 1,
       uri: 'n-4.m4s'
     }],
-    'segments correct with given clientOffset');
+    'segments correct with given clientOffset'
+  );
 });
 
 QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
@@ -1030,11 +1068,11 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       timeline: 1,
       uri: 'n-5.m4s'
     }],
-    'segments should fill until current time when r = -1 and @minimumUpdatePeriod > 0');
+    'segments should fill until current time when r = -1 and @minimumUpdatePeriod > 0'
+  );
 
   assert.deepEqual(
-    segmentsFromTemplate(
-      Object.assign({}, basicAttributes, {clientOffset: -2000}), segmentTimeline),
+    segmentsFromTemplate(Object.assign({}, basicAttributes, {clientOffset: -2000}), segmentTimeline),
     [{
       duration: 2,
       map: {
@@ -1076,7 +1114,8 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       timeline: 1,
       uri: 'n-4.m4s'
     }],
-    'segments should fill correctly when taking client offset into account');
+    'segments should fill correctly when taking client offset into account'
+  );
 
   const segmentTimelineShifted = [
     {
@@ -1133,11 +1172,14 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       timeline: 1,
       uri: 'n-4.m4s'
     }],
-    'segments take into account different time value for first segment');
+    'segments take into account different time value for first segment'
+  );
 
   assert.deepEqual(
-    segmentsFromTemplate(Object.assign({}, basicAttributes, {timescale: 2 }),
-      segmentTimelineShifted),
+    segmentsFromTemplate(
+      Object.assign({}, basicAttributes, {timescale: 2 }),
+      segmentTimelineShifted
+    ),
     [{
       duration: 1,
       map: {
@@ -1229,7 +1271,8 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
       timeline: 1,
       uri: 'n-9.m4s'
     }],
-    'segments take into account different time value for first segment with timescale');
+    'segments take into account different time value for first segment with timescale'
+  );
 });
 
 QUnit.module('segmentTemplate - segmentsFromTemplate');
@@ -1285,8 +1328,10 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
     }
   ];
 
-  assert.deepEqual(segmentsFromTemplate(attributes, void 0), segments,
-    'creates segments from template');
+  assert.deepEqual(
+    segmentsFromTemplate(attributes, void 0), segments,
+    'creates segments from template'
+  );
 });
 
 QUnit.test('constructs simple segment list and with <Initialization> node', function(assert) {
@@ -1353,6 +1398,8 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
     }
   ];
 
-  assert.deepEqual(segmentsFromTemplate(attributes, void 0), segments,
-    'creates segments from template');
+  assert.deepEqual(
+    segmentsFromTemplate(attributes, void 0), segments,
+    'creates segments from template'
+  );
 });

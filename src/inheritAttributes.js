@@ -3,9 +3,8 @@ import { flatten } from './utils/list';
 import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
 import { parseAttributes } from './parseAttributes';
-import resolveUrl from './utils/resolveUrl';
 import errors from './errors';
-import decodeB64ToUint8Array from './utils/decodeB64ToUint8Array';
+import {decodeB64ToUint8Array, resolveUrl} from '@videojs/vhs-utils';
 
 const keySystemsMap = {
   'urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b': 'org.w3.clearkey',
@@ -29,10 +28,7 @@ export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
     return referenceUrls;
   }
 
-  return flatten(
-    referenceUrls.map(
-      reference => baseUrlElements.map(
-        baseUrlElement => resolveUrl(reference, getContent(baseUrlElement)))));
+  return flatten(referenceUrls.map(reference => baseUrlElements.map(baseUrlElement => resolveUrl(reference, getContent(baseUrlElement)))));
 };
 
 /**
@@ -96,11 +92,11 @@ export const getSegmentInformation = (adaptationSet) => {
       {
         segmentUrls,
         initialization: parseAttributes(segmentInitialization)
-      }),
-    base: segmentBase && merge(
-      parseAttributes(segmentBase), {
-        initialization: parseAttributes(segmentInitialization)
-      })
+      }
+    ),
+    base: segmentBase && merge(parseAttributes(segmentBase), {
+      initialization: parseAttributes(segmentInitialization)
+    })
   };
 
   Object.keys(segmentInfo).forEach(key => {
@@ -221,17 +217,20 @@ const generateKeySystemInformation = (contentProtectionNodes) => {
 export const toRepresentations =
 (periodAttributes, periodBaseUrls, periodSegmentInfo) => (adaptationSet) => {
   const adaptationSetAttributes = parseAttributes(adaptationSet);
-  const adaptationSetBaseUrls = buildBaseUrls(periodBaseUrls,
-    findChildren(adaptationSet, 'BaseURL'));
+  const adaptationSetBaseUrls = buildBaseUrls(
+    periodBaseUrls,
+    findChildren(adaptationSet, 'BaseURL')
+  );
   const role = findChildren(adaptationSet, 'Role')[0];
   const roleAttributes = { role: parseAttributes(role) };
 
-  let attrs = merge(periodAttributes,
+  let attrs = merge(
+    periodAttributes,
     adaptationSetAttributes,
-    roleAttributes);
+    roleAttributes
+  );
 
-  const contentProtection = generateKeySystemInformation(
-    findChildren(adaptationSet, 'ContentProtection'));
+  const contentProtection = generateKeySystemInformation(findChildren(adaptationSet, 'ContentProtection'));
 
   if (Object.keys(contentProtection).length) {
     attrs = merge(attrs, { contentProtection });
@@ -241,8 +240,7 @@ export const toRepresentations =
   const representations = findChildren(adaptationSet, 'Representation');
   const adaptationSetSegmentInfo = merge(periodSegmentInfo, segmentInfo);
 
-  return flatten(representations.map(
-    inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));
+  return flatten(representations.map(inheritBaseUrls(attrs, adaptationSetBaseUrls, adaptationSetSegmentInfo)));
 };
 
 /**
@@ -280,8 +278,7 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) 
   const adaptationSets = findChildren(period, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period);
 
-  return flatten(adaptationSets.map(
-    toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
+  return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
 };
 
 /**
