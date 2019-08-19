@@ -4,7 +4,8 @@ import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
 import { parseAttributes } from './parseAttributes';
 import errors from './errors';
-import {decodeB64ToUint8Array, resolveUrl} from '@videojs/vhs-utils';
+import decodeB64ToUint8Array from '@videojs/vhs-utils/dist/decode-b64-to-uint8-array.es.js';
+import resolveUrl from '@videojs/vhs-utils/dist/resolve-url.es.js';
 
 const keySystemsMap = {
   'urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b': 'org.w3.clearkey',

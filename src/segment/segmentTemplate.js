@@ -1,4 +1,4 @@
-import {resolveUrl} from '@videojs/vhs-utils';
+import resolveUrl from '@videojs/vhs-utils/dist/resolve-url.es.js';
 import urlTypeToSegment from './urlType';
 import { parseByTimeline } from './timelineTimeParser';
 import { parseByDuration } from './durationTimeParser';
