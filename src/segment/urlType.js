@@ -1,4 +1,4 @@
-import resolveUrl from '@videojs/vhs-utils/dist/resolve-url.es.js';
+import resolveUrl from '@videojs/vhs-utils/dist/resolve-url';
 
 /**
  * @typedef {Object} SingleUri
