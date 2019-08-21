@@ -29,7 +29,11 @@ export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
     return referenceUrls;
   }
 
-  return flatten(referenceUrls.map(reference => baseUrlElements.map(baseUrlElement => resolveUrl(reference, getContent(baseUrlElement)))));
+  return flatten(referenceUrls.map(function(reference) {
+    return baseUrlElements.map(function(baseUrlElement) {
+      return resolveUrl(reference, getContent(baseUrlElement));
+    });
+  }));
 };
 
 /**
