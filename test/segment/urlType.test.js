@@ -84,9 +84,11 @@ QUnit.test('returns correct object if given baseUrl and indexRange', function(as
 QUnit.module('urlType - byteRangeToString');
 
 QUnit.test('returns correct string representing byterange object', function(assert) {
-  assert.strictEqual(byteRangeToString({
-    offset: 0,
-    length: 100
-  }),
-  '0-99');
+  assert.strictEqual(
+    byteRangeToString({
+      offset: 0,
+      length: 100
+    }),
+    '0-99'
+  );
 });

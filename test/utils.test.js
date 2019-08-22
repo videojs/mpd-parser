@@ -46,8 +46,10 @@ QUnit.test('Test for checking the merge when multiple segment Information are pr
     base: { duration: '25', indexRange: '230-252'}
   };
 
-  assert.deepEqual(merge(adaptationSetInfo, representationInfo), expected,
-    'Merged SegmentBase info');
+  assert.deepEqual(
+    merge(adaptationSetInfo, representationInfo), expected,
+    'Merged SegmentBase info'
+  );
 
 });
 
@@ -73,8 +75,10 @@ QUnit.test('Test for checking the merge when segment Information is present at a
     base: { duration: '10', indexRange: '230-252', initialization: {range: '0-8888'}}
   };
 
-  assert.deepEqual(merge(periodInfo, adaptationSetInfo, representationInfo), expected,
-    'Merged SegmentBase info');
+  assert.deepEqual(
+    merge(periodInfo, adaptationSetInfo, representationInfo), expected,
+    'Merged SegmentBase info'
+  );
 
 });
 

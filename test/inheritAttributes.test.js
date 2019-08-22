@@ -29,8 +29,10 @@ QUnit.test('multiple reference urls with single BaseURL node', function(assert) 
   const node = [{ textContent: 'bar/' }];
   const expected = ['https://example.com/bar/', 'https://foo.com/bar/'];
 
-  assert.deepEqual(buildBaseUrls(reference, node), expected,
-    'base url for each reference url');
+  assert.deepEqual(
+    buildBaseUrls(reference, node), expected,
+    'base url for each reference url'
+  );
 });
 
 QUnit.test('multiple BaseURL nodes with single reference url', function(assert) {
@@ -65,8 +67,10 @@ QUnit.test('absolute BaseURL overwrites reference', function(assert) {
   const node = [{ textContent: 'https://foo.com/bar/' }];
   const expected = ['https://foo.com/bar/'];
 
-  assert.deepEqual(buildBaseUrls(reference, node), expected,
-    'absolute url overwrites reference');
+  assert.deepEqual(
+    buildBaseUrls(reference, node), expected,
+    'absolute url overwrites reference'
+  );
 });
 
 QUnit.module('getSegmentInformation');
@@ -75,8 +79,10 @@ QUnit.test('undefined Segment information when no Segment nodes', function(asser
   const adaptationSet = { childNodes: [] };
   const expected = {};
 
-  assert.deepEqual(getSegmentInformation(adaptationSet), expected,
-    'undefined segment info');
+  assert.deepEqual(
+    getSegmentInformation(adaptationSet), expected,
+    'undefined segment info'
+  );
 });
 
 QUnit.test('gets SegmentTemplate attributes', function(assert) {
@@ -91,8 +97,10 @@ QUnit.test('gets SegmentTemplate attributes', function(assert) {
     template: { media: 'video.mp4' }
   };
 
-  assert.deepEqual(getSegmentInformation(adaptationSet), expected,
-    'SegmentTemplate info');
+  assert.deepEqual(
+    getSegmentInformation(adaptationSet), expected,
+    'SegmentTemplate info'
+  );
 });
 
 QUnit.test('gets SegmentList attributes', function(assert) {
@@ -111,8 +119,10 @@ QUnit.test('gets SegmentList attributes', function(assert) {
     }
   };
 
-  assert.deepEqual(getSegmentInformation(adaptationSet), expected,
-    'SegmentList info');
+  assert.deepEqual(
+    getSegmentInformation(adaptationSet), expected,
+    'SegmentList info'
+  );
 });
 
 QUnit.test('gets SegmentBase attributes', function(assert) {
@@ -127,8 +137,10 @@ QUnit.test('gets SegmentBase attributes', function(assert) {
     base: { duration: 10, initialization: {} }
   };
 
-  assert.deepEqual(getSegmentInformation(adaptationSet), expected,
-    'SegmentBase info');
+  assert.deepEqual(
+    getSegmentInformation(adaptationSet), expected,
+    'SegmentBase info'
+  );
 });
 
 QUnit.test('gets SegmentTemplate and SegmentTimeline attributes', function(assert) {
@@ -156,22 +168,25 @@ QUnit.test('gets SegmentTemplate and SegmentTimeline attributes', function(asser
     timeline: [{ d: 10 }, { d: 5 }, { d: 7 }]
   };
 
-  assert.deepEqual(getSegmentInformation(adaptationSet), expected,
-    'SegmentTemplate and SegmentTimeline info');
+  assert.deepEqual(
+    getSegmentInformation(adaptationSet), expected,
+    'SegmentTemplate and SegmentTimeline info'
+  );
 });
 
 QUnit.module('inheritAttributes');
 
 QUnit.test('needs at least one Period', function(assert) {
-  assert.throws(() => inheritAttributes(stringToMpdXml('<MPD></MPD>')),
-    new RegExp(errors.INVALID_NUMBER_OF_PERIOD));
+  assert.throws(
+    () => inheritAttributes(stringToMpdXml('<MPD></MPD>')),
+    new RegExp(errors.INVALID_NUMBER_OF_PERIOD)
+  );
 });
 
 QUnit.test('end to end - basic', function(assert) {
   const NOW = Date.now();
 
-  const actual = inheritAttributes(stringToMpdXml(
-    `
+  const actual = inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration="PT30S" >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period>
@@ -193,8 +208,7 @@ QUnit.test('end to end - basic', function(assert) {
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-  ), { NOW });
+  `), { NOW });
 
   const expected = [{
     attributes: {
@@ -241,8 +255,7 @@ QUnit.test('end to end - basic', function(assert) {
 QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
   const NOW = Date.now();
 
-  const actual = inheritAttributes(stringToMpdXml(
-    `
+  const actual = inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration="PT30S" >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period>
@@ -267,8 +280,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-  ), { NOW });
+  `), { NOW });
 
   const expected = [{
     attributes: {
@@ -314,8 +326,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
 
 QUnit.test('end to end - alternate BaseURLs', function(assert) {
   const NOW = Date.now();
-  const actual = inheritAttributes(stringToMpdXml(
-    `
+  const actual = inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <BaseURL>https://www.test.com/base/</BaseURL>
@@ -340,8 +351,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-  ), { NOW });
+  `), { NOW });
 
   const expected = [{
     attributes: {
@@ -463,11 +473,11 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test(' End to End test for checking support of segments in representation',
+QUnit.test(
+  ' End to End test for checking support of segments in representation',
   function(assert) {
     const NOW = Date.now();
-    const actual = inheritAttributes(stringToMpdXml(
-      `
+    const actual = inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period>
@@ -499,8 +509,7 @@ QUnit.test(' End to End test for checking support of segments in representation'
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-    ), { NOW });
+  `), { NOW });
 
     const expected = [{
       attributes: {
@@ -571,13 +580,14 @@ QUnit.test(' End to End test for checking support of segments in representation'
 
     assert.equal(actual.length, 3);
     assert.deepEqual(actual, expected);
-  });
+  }
+);
 
-QUnit.test(' End to End test for checking support of segments in period ',
+QUnit.test(
+  ' End to End test for checking support of segments in period ',
   function(assert) {
     const NOW = Date.now();
-    const actual = inheritAttributes(stringToMpdXml(
-      `
+    const actual = inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period duration= "PT0H4M40.414S" >
@@ -605,8 +615,7 @@ QUnit.test(' End to End test for checking support of segments in period ',
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-    ), { NOW });
+  `), { NOW });
 
     const expected = [{
       attributes: {
@@ -685,13 +694,14 @@ QUnit.test(' End to End test for checking support of segments in period ',
 
     assert.equal(actual.length, 3);
     assert.deepEqual(actual, expected);
-  });
+  }
+);
 
-QUnit.test(' End to End test for checking support of Segments in Adaptation set',
+QUnit.test(
+  ' End to End test for checking support of Segments in Adaptation set',
   function(assert) {
     const NOW = Date.now();
-    const actual = inheritAttributes(stringToMpdXml(
-      `
+    const actual = inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
       <Period duration= "PT0H4M40.414S" >
@@ -719,8 +729,7 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-    ), { NOW });
+  `), { NOW });
 
     const expected = [{
       attributes: {
@@ -792,7 +801,8 @@ QUnit.test(' End to End test for checking support of Segments in Adaptation set'
 
     assert.equal(actual.length, 3);
     assert.deepEqual(actual, expected);
-  });
+  }
+);
 
 // Although according to the Spec, at most one set of Segment information should be
 // present at each level, this test would still handle the case and prevent errors if
@@ -802,8 +812,7 @@ QUnit.test(
   'Test for checking use of only one set of Segment Information when multiple are present',
   function(assert) {
     const NOW = Date.now();
-    const actual = toPlaylists(inheritAttributes(stringToMpdXml(
-      `
+    const actual = toPlaylists(inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
       <Period duration= "PT0H4M40.414S" >
@@ -844,8 +853,7 @@ QUnit.test(
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-    ), { NOW }));
+  `), { NOW }));
 
     const expected = [{
       attributes: {
@@ -1226,7 +1234,8 @@ QUnit.test(
 
     assert.equal(actual.length, 2);
     assert.deepEqual(actual, expected);
-  });
+  }
+);
 
 // Although the Spec states that if SegmentTemplate or SegmentList is present on one
 // level of the hierarchy the other one shall not be present on any lower level, this
@@ -1236,8 +1245,7 @@ QUnit.test(
 QUnit.test('Test to check use of either Segment Template or Segment List when both are' +
 ' present in the hierarchy', function(assert) {
   const NOW = Date.now();
-  const actual = toPlaylists(inheritAttributes(stringToMpdXml(
-    `
+  const actual = toPlaylists(inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
       <Period duration= "PT0H4M40.414S" >
@@ -1274,8 +1282,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
         </AdaptationSet>
       </Period>
     </MPD>
-  `
-  ), { NOW }));
+  `), { NOW }));
 
   const expected = [{
     attributes: {
@@ -1466,8 +1473,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       uri: '125000/es/15.m4f',
       number: 15
     }]
-  }
-  ];
+  }];
 
   assert.equal(actual.length, 1);
   assert.deepEqual(actual, expected);

@@ -249,9 +249,7 @@ export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
   const vttOnly = ({ attributes }) =>
     attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
 
-  const videoPlaylists = mergeDiscontiguousPlaylists(
-    dashPlaylists.filter(videoOnly)
-  ).map(formatVideoPlaylist);
+  const videoPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(videoOnly)).map(formatVideoPlaylist);
   const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
   const vttPlaylists = dashPlaylists.filter(vttOnly);
 

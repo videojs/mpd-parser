@@ -14,6 +14,10 @@ const options = {
     defaults.string = string({include: ['test/manifests/*.mpd']});
 
     return defaults;
+  },
+  externals(defaults) {
+    defaults.module.push('@videojs/vhs-utils');
+    return defaults;
   }
 };
 const config = generate(options);
