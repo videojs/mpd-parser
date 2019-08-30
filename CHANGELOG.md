@@ -1,3 +1,10 @@
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/videojs/mpd-parser/compare/v0.8.2...v0.9.0) (2019-08-30)
+
+### Features
+
+* node support ([#75](https://github.com/videojs/mpd-parser/issues/75)) ([58b43b0](https://github.com/videojs/mpd-parser/commit/58b43b0))
+
 <a name="0.8.2"></a>
 ## [0.8.2](https://github.com/videojs/mpd-parser/compare/v0.8.1...v0.8.2) (2019-08-22)
 
