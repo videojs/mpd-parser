@@ -2,9 +2,11 @@ import { merge, values } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
 import { flatten, range, from, findIndexes } from '../src/utils/list';
 import { findChildren, getContent } from '../src/utils/xml';
-import window from 'global/window';
-import document from 'global/document';
+import {DOMParser} from 'xmldom';
+import {JSDOM} from 'jsdom';
 import QUnit from 'qunit';
+
+const document = new JSDOM().window.document;
 
 QUnit.module('utils');
 
@@ -192,7 +194,7 @@ QUnit.test('indexes found', function(assert) {
 
 QUnit.module('xml', {
   beforeEach() {
-    const parser = new window.DOMParser();
+    const parser = new DOMParser();
     const xmlString = `
     <fix>
       <test>foo </test>

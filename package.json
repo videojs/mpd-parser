@@ -20,7 +20,9 @@
     "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose",
     "start": "npm-run-all -p server watch",
     "server": "karma start scripts/karma.conf.js --singleRun=false --auto-watch",
-    "test": "npm-run-all lint build-test && karma start scripts/karma.conf.js",
+    "test": "npm-run-all lint build-test && npm-run-all test:*",
+    "test:browser": "karma start scripts/karma.conf.js",
+    "test:node": "qunit test/dist/bundle-node.js",
     "posttest": "shx cat test/dist/coverage/text.txt",
     "preversion": "npm test",
     "version": "is-prerelease || npm run update-changelog && git add CHANGELOG.md",
@@ -52,11 +54,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@videojs/vhs-utils": "^1.0.0",
-    "global": "^4.3.2"
+    "global": "^4.3.2",
+    "@videojs/vhs-utils": "^1.1.0",
+    "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "@videojs/generator-helpers": "~1.2.0",
+    "jsdom": "^15.1.1",
     "karma": "^4.0.0",
     "rollup": "^1.19.4",
     "rollup-plugin-string": "^2.0.2",

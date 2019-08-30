@@ -5,9 +5,9 @@ import { inheritAttributes } from './inheritAttributes';
 import { stringToMpdXml } from './stringToMpdXml';
 import { parseUTCTimingScheme } from './parseUTCTimingScheme';
 
-export const VERSION = version;
+const VERSION = version;
 
-export const parse = (manifestString, options = {}) =>
+const parse = (manifestString, options = {}) =>
   toM3u8(toPlaylists(inheritAttributes(stringToMpdXml(manifestString), options)), options.sidxMapping);
 
 /**
@@ -18,5 +18,15 @@ export const parse = (manifestString, options = {}) =>
  * @return {Object|null}
  *         Attributes of UTCTiming node specified in the manifest. Null if none found
  */
-export const parseUTCTiming = (manifestString) =>
+const parseUTCTiming = (manifestString) =>
   parseUTCTimingScheme(stringToMpdXml(manifestString));
+
+export {
+  VERSION,
+  parse,
+  parseUTCTiming,
+  stringToMpdXml,
+  inheritAttributes,
+  toPlaylists,
+  toM3u8
+};

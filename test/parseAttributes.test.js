@@ -1,6 +1,8 @@
-import document from 'global/document';
+import {JSDOM} from 'jsdom';
 import QUnit from 'qunit';
 import { parseAttributes } from '../src/parseAttributes';
+
+const document = new JSDOM().window.document;
 
 QUnit.module('parseAttributes');
 
