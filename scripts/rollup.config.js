@@ -33,20 +33,22 @@ const options = {
 };
 const config = generate(options);
 
-config.builds.testNode = config.makeBuild('test', {
-  input: 'test/**/*.test.js',
-  output: [{
-    name: `${config.settings.exportName}Tests`,
-    file: 'test/dist/bundle-node.js',
-    format: 'cjs'
-  }]
-});
+if (config.builds.test) {
+  config.builds.testNode = config.makeBuild('test', {
+    input: 'test/**/*.test.js',
+    output: [{
+      name: `${config.settings.exportName}Tests`,
+      file: 'test/dist/bundle-node.js',
+      format: 'cjs'
+    }]
+  });
 
-config.builds.testNode.output[0].globals = {};
-config.builds.testNode.external = [].concat(config.settings.externals.module).concat([
-  'jsdom',
-  'qunit'
-]);
+  config.builds.testNode.output[0].globals = {};
+  config.builds.testNode.external = [].concat(config.settings.externals.module).concat([
+    'jsdom',
+    'qunit'
+  ]);
+}
 
 // Add additonal builds/customization here!
 
