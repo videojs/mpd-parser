@@ -6,6 +6,7 @@ import maatVttSegmentTemplate from './manifests/maat_vtt_segmentTemplate.mpd';
 import segmentBaseTemplate from './manifests/segmentBase.mpd';
 import segmentListTemplate from './manifests/segmentList.mpd';
 import multiperiod from './manifests/multiperiod.mpd';
+import webmsegments from './manifests/webmsegments.mpd';
 import {
   parsedManifest as maatVttSegmentTemplateManifest
 } from './manifests/maat_vtt_segmentTemplate.js';
@@ -18,6 +19,9 @@ import {
 import {
   parsedManifest as multiperiodManifest
 } from './manifests/multiperiod.js';
+import {
+  parsedManifest as webmsegmentsManifest
+} from './manifests/webmsegments.js';
 
 QUnit.module('mpd-parser');
 
@@ -45,6 +49,10 @@ QUnit.test('has parse', function(assert) {
   name: 'multiperiod',
   input: multiperiod,
   expected: multiperiodManifest
+}, {
+  name: 'webmsegments',
+  input: webmsegments,
+  expected: webmsegmentsManifest
 }].forEach(({ name, input, expected }) => {
   QUnit.test(`${name} test manifest`, function(assert) {
     const actual = parse(input);
