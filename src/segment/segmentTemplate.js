@@ -158,7 +158,7 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
 
     const uri = constructTemplateUrl(attributes.media || '', templateValues);
 
-    return {
+    const map = {
       uri,
       timeline: segment.timeline,
       duration: segment.duration,
@@ -166,5 +166,11 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
       map: mapSegment,
       number: segment.number
     };
+
+    if (attributes.presentationTimeOffset) {
+      map.presentationTimeOffset = attributes.presentationTimeOffset;
+    }
+
+    return map;
   });
 };

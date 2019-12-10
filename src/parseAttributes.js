@@ -156,6 +156,19 @@ export const parsers = {
   },
 
   /**
+   * Specifies the presentationTimeOffset.
+   *
+   * @param {string} value
+   *        value of the attribute as a string
+   *
+   * @return {number}
+   *         The aprsed presentationTimeOffset
+   */
+  presentationTimeOffset(value) {
+    return parseInt(value, 10);
+  },
+
+  /**
    * Specifies the constant approximate Segment duration
    * NOTE: The <Period> element also contains an @duration attribute. This duration
    *       specifies the duration of the Period. This attribute is currently not
