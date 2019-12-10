@@ -239,6 +239,8 @@ export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
   // grab all master attributes
   const {
     sourceDuration: duration,
+    type = 'static',
+    suggestedPresentationDelay = 0,
     minimumUpdatePeriod = 0
   } = dashPlaylists[0].attributes;
 
@@ -269,6 +271,10 @@ export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
     playlists: addSegmentInfoFromSidx(videoPlaylists, sidxMapping),
     minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };
+
+  if (type === 'dynamic') {
+    master.suggestedPresentationDelay = suggestedPresentationDelay;
+  }
 
   if (audioPlaylists.length) {
     master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping);
