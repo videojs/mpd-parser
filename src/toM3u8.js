@@ -240,7 +240,7 @@ export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
   const {
     sourceDuration: duration,
     type = 'static',
-    suggestedPresentationDelay = 0,
+    suggestedPresentationDelay,
     minimumUpdatePeriod = 0
   } = dashPlaylists[0].attributes;
 
