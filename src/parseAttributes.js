@@ -44,6 +44,32 @@ export const parsers = {
   },
 
   /**
+   * Specifies the suggested presentation delay. Format is a
+   * duration string as specified in ISO 8601
+   *
+   * @param {string} value
+   *        value of attribute as a string
+   * @return {number}
+   *         The duration in seconds
+   */
+  suggestedPresentationDelay(value) {
+    return parseDuration(value);
+  },
+
+  /**
+   * specifices the type of mpd. Can be either "static" or "dynamic"
+   *
+   * @param {string} value
+   *        value of attribute as a string
+   *
+   * @return {string}
+   *         The type as a string
+   */
+  type(value) {
+    return value;
+  },
+
+  /**
    * Specifies the duration of the smallest time shifting buffer for any Representation
    * in the MPD. Format is a duration string as specified in ISO 8601
    *
