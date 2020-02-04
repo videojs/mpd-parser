@@ -1,3 +1,10 @@
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/videojs/mpd-parser/compare/v0.9.0...v0.10.0) (2020-02-04)
+
+### Features
+
+* expose suggestPresentationDelay if the type is dynamic ([#82](https://github.com/videojs/mpd-parser/issues/82)) ([cd27003](https://github.com/videojs/mpd-parser/commit/cd27003))
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/videojs/mpd-parser/compare/v0.8.2...v0.9.0) (2019-08-30)
 
