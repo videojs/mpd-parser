@@ -550,3 +550,67 @@ QUnit.test('playlists with sidx and sidxMapping', function(assert) {
 QUnit.test('no playlists', function(assert) {
   assert.deepEqual(toM3u8([]), {});
 });
+
+QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert) {
+  const input = [{
+    attributes: {
+      id: '1',
+      codecs: 'foo;bar',
+      sourceDuration: 100,
+      duration: 0,
+      bandwidth: 20000,
+      periodIndex: 1,
+      mimeType: 'audio/mp4',
+      type: 'dynamic',
+      suggestedPresentationDelay: 18
+    },
+    segments: []
+  }, {
+    attributes: {
+      id: '2',
+      codecs: 'foo;bar',
+      sourceDuration: 100,
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'audio/mp4'
+    },
+    segments: []
+  }, {
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      width: 800,
+      height: 600,
+      codecs: 'foo;bar',
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'video/mp4'
+    },
+    segments: []
+  }, {
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      bandwidth: 20000,
+      periodIndex: 1,
+      mimeType: 'text/vtt',
+      baseUrl: 'https://www.example.com/vtt'
+    }
+  }, {
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'text/vtt',
+      baseUrl: 'https://www.example.com/vtt'
+    }
+  }];
+
+  const output = toM3u8(input);
+
+  assert.ok('suggestedPresentationDelay' in output);
+  assert.deepEqual(output.suggestedPresentationDelay, 18);
+});
