@@ -17,7 +17,6 @@ export const segmentsFromBase = (attributes) => {
     baseUrl,
     initialization = {},
     sourceDuration,
-    timescale = 1,
     indexRange = '',
     duration
   } = attributes;
@@ -47,7 +46,7 @@ export const segmentsFromBase = (attributes) => {
       segment.timeline = segmentTimeInfo[0].timeline;
     }
   } else if (sourceDuration) {
-    segment.duration = (sourceDuration / timescale);
+    segment.duration = sourceDuration;
     segment.timeline = 0;
   }
 
