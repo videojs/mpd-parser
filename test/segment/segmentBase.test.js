@@ -44,7 +44,14 @@ QUnit.test('sets duration based on sourceDuration', function(assert) {
   }]);
 });
 
-QUnit.test('sets duration based on sourceDuration and @timescale', function(assert) {
+// sourceDuration comes from mediaPresentationDuration. The DASH spec defines the type of
+// mediaPresentationDuration as xs:duration, which follows ISO 8601. It does not need to
+// be adjusted based on timescale.
+//
+// References:
+// https://www.w3.org/TR/xmlschema-2/#duration
+// https://en.wikipedia.org/wiki/ISO_8601
+QUnit.test('sets duration based on sourceDuration and not @timescale', function(assert) {
   const inputAttributes = {
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
@@ -53,7 +60,7 @@ QUnit.test('sets duration based on sourceDuration and @timescale', function(asse
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
-    duration: 5,
+    duration: 10,
     timeline: 0,
     map: {
       resolvedUri: 'http://www.example.com/init.fmp4',
