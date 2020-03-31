@@ -1,3 +1,10 @@
+<a name="0.10.1"></a>
+## [0.10.1](https://github.com/videojs/mpd-parser/compare/v0.10.0...v0.10.1) (2020-03-31)
+
+### Bug Fixes
+
+* don't adjust mediaPresentationDuration by timescale for segment duration when using SegmentBase ([#94](https://github.com/videojs/mpd-parser/issues/94)) ([40cdd00](https://github.com/videojs/mpd-parser/commit/40cdd00))
+
 <a name="0.10.0"></a>
 # [0.10.0](https://github.com/videojs/mpd-parser/compare/v0.9.0...v0.10.0) (2020-02-04)
 
