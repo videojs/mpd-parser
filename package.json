@@ -61,7 +61,7 @@
   "devDependencies": {
     "@videojs/generator-helpers": "~1.2.0",
     "jsdom": "^15.1.1",
-    "karma": "^4.0.0",
+    "karma": "^5.0.0",
     "rollup": "^1.19.4",
     "rollup-plugin-string": "^2.0.2",
     "sinon": "^7.2.2",
