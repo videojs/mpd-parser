@@ -231,7 +231,7 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   return playlist;
 };
 
-export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
+export const toM3u8 = (dashPlaylists, location, sidxMapping = {}) => {
   if (!dashPlaylists.length) {
     return {};
   }
@@ -268,6 +268,7 @@ export const toM3u8 = (dashPlaylists, sidxMapping = {}) => {
     },
     uri: '',
     duration,
+    location,
     playlists: addSegmentInfoFromSidx(videoPlaylists, sidxMapping),
     minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };

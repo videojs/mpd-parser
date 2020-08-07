@@ -7,8 +7,12 @@ import { parseUTCTimingScheme } from './parseUTCTimingScheme';
 
 const VERSION = version;
 
-const parse = (manifestString, options = {}) =>
-  toM3u8(toPlaylists(inheritAttributes(stringToMpdXml(manifestString), options)), options.sidxMapping);
+const parse = (manifestString, options = {}) => {
+  const parsedManifestInfo = inheritAttributes(stringToMpdXml(manifestString), options);
+  const playlists = toPlaylists(parsedManifestInfo.representationInfo);
+
+  return toM3u8(playlists, parsedManifestInfo.location, options.sidxMapping);
+};
 
 /**
  * Parses the manifest for a UTCTiming node, returning the nodes attributes if found
