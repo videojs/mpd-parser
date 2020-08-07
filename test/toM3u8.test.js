@@ -544,7 +544,7 @@ QUnit.test('playlists with sidx and sidxMapping', function(assert) {
     resolvedUri: ''
   }];
 
-  assert.deepEqual(toM3u8(input, mapping).playlists, expected);
+  assert.deepEqual(toM3u8(input, null, mapping).playlists, expected);
 });
 
 QUnit.test('no playlists', function(assert) {
