@@ -268,10 +268,13 @@ export const toM3u8 = (dashPlaylists, location, sidxMapping = {}) => {
     },
     uri: '',
     duration,
-    location,
     playlists: addSegmentInfoFromSidx(videoPlaylists, sidxMapping),
     minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };
+
+  if (location) {
+    master.location = location;
+  }
 
   if (type === 'dynamic') {
     master.suggestedPresentationDelay = suggestedPresentationDelay;
