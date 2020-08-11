@@ -211,7 +211,7 @@ QUnit.test('end to end - basic', function(assert) {
   `), { NOW });
 
   const expected = {
-    location: undefined,
+    locations: undefined,
     representationInfo: [{
       attributes: {
         bandwidth: 5000000,
@@ -286,7 +286,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
   `), { NOW });
 
   const expected = {
-    location: undefined,
+    locations: undefined,
     representationInfo: [{
       attributes: {
         bandwidth: 5000000,
@@ -360,7 +360,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
   `), { NOW });
 
   const expected = {
-    location: undefined,
+    locations: undefined,
     representationInfo: [{
       attributes: {
         bandwidth: 5000000,
@@ -521,7 +521,7 @@ QUnit.test(
   `), { NOW });
 
     const expected = {
-      location: undefined,
+      locations: undefined,
       representationInfo: [{
         attributes: {
           bandwidth: 5000000,
@@ -630,7 +630,7 @@ QUnit.test(
   `), { NOW });
 
     const expected = {
-      location: undefined,
+      locations: undefined,
       representationInfo: [{
         attributes: {
           bandwidth: 5000000,
@@ -747,7 +747,7 @@ QUnit.test(
   `), { NOW });
 
     const expected = {
-      location: undefined,
+      locations: undefined,
       representationInfo: [{
         attributes: {
           bandwidth: 5000000,

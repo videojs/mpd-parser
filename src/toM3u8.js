@@ -231,7 +231,7 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   return playlist;
 };
 
-export const toM3u8 = (dashPlaylists, location, sidxMapping = {}) => {
+export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   if (!dashPlaylists.length) {
     return {};
   }
@@ -272,8 +272,8 @@ export const toM3u8 = (dashPlaylists, location, sidxMapping = {}) => {
     minimumUpdatePeriod: minimumUpdatePeriod * 1000
   };
 
-  if (location) {
-    master.location = location;
+  if (locations) {
+    master.locations = locations;
   }
 
   if (type === 'dynamic') {

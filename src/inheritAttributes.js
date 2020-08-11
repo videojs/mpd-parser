@@ -325,11 +325,11 @@ export const inheritAttributes = (mpd, options = {}) => {
   mpdAttributes.clientOffset = clientOffset;
 
   if (locations.length) {
-    mpdAttributes.location = getContent(locations[0]);
+    mpdAttributes.locations = locations.map(getContent);
   }
 
   return {
-    location: mpdAttributes.location,
+    locations: mpdAttributes.locations,
     representationInfo: flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls)))
   };
 };

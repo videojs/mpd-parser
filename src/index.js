@@ -11,7 +11,7 @@ const parse = (manifestString, options = {}) => {
   const parsedManifestInfo = inheritAttributes(stringToMpdXml(manifestString), options);
   const playlists = toPlaylists(parsedManifestInfo.representationInfo);
 
-  return toM3u8(playlists, parsedManifestInfo.location, options.sidxMapping);
+  return toM3u8(playlists, parsedManifestInfo.locations, options.sidxMapping);
 };
 
 /**

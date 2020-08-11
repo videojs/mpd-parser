@@ -1,6 +1,7 @@
 export const parsedManifest = {
   locations: [
-    'https://www.example.com/updates'
+    'https://www.example.com/updates',
+    'https://www.example.com/updates2'
   ],
   allowCache: true,
   discontinuityStarts: [],
