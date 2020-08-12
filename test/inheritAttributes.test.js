@@ -210,45 +210,48 @@ QUnit.test('end to end - basic', function(assert) {
     </MPD>
   `), { NOW });
 
-  const expected = [{
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base/',
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+  const expected = {
+    locations: undefined,
+    representationInfo: [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      template: {}
-    }
-  }, {
-    attributes: {
-      bandwidth: 256,
-      baseUrl: 'https://example.com/en.vtt',
-      id: 'en',
-      lang: 'en',
-      mediaPresentationDuration: 30,
-      mimeType: 'text/vtt',
-      periodIndex: 0,
-      role: {},
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {}
-  }];
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {}
+    }]
+  };
 
-  assert.equal(actual.length, 2);
+  assert.equal(actual.representationInfo.length, 2);
   assert.deepEqual(actual, expected);
 });
 
@@ -282,45 +285,48 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
     </MPD>
   `), { NOW });
 
-  const expected = [{
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base/foo/bar/buzz/',
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+  const expected = {
+    locations: undefined,
+    representationInfo: [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/foo/bar/buzz/',
+        clientOffset: 0,
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      template: {}
-    }
-  }, {
-    attributes: {
-      bandwidth: 256,
-      baseUrl: 'https://example.com/en.vtt',
-      id: 'en',
-      lang: 'en',
-      mediaPresentationDuration: 30,
-      mimeType: 'text/vtt',
-      periodIndex: 0,
-      role: {},
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: { }
-  }];
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: { }
+    }]
+  };
 
-  assert.equal(actual.length, 2);
+  assert.equal(actual.representationInfo.length, 2);
   assert.deepEqual(actual, expected);
 });
 
@@ -353,123 +359,126 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
     </MPD>
   `), { NOW });
 
-  const expected = [{
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base/segments/',
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+  const expected = {
+    locations: undefined,
+    representationInfo: [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/segments/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      template: {}
-    }
-  }, {
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.example.com/base/media/',
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/media/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      template: {}
-    }
-  }, {
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.test.com/base/segments/',
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.test.com/base/segments/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      template: {}
-    }
-  }, {
-    attributes: {
-      bandwidth: 5000000,
-      baseUrl: 'https://www.test.com/base/media/',
-      codecs: 'avc1.64001e',
-      height: 404,
-      id: 'test',
-      mediaPresentationDuration: 30,
-      mimeType: 'video/mp4',
-      periodIndex: 0,
-      role: {
-        value: 'main'
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.test.com/base/media/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        width: 720,
+        NOW,
+        clientOffset: 0
       },
-      sourceDuration: 30,
-      width: 720,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {
-      template: {}
-    }
-  }, {
-    attributes: {
-      bandwidth: 256,
-      baseUrl: 'https://example.com/en.vtt',
-      id: 'en',
-      lang: 'en',
-      mediaPresentationDuration: 30,
-      mimeType: 'text/vtt',
-      periodIndex: 0,
-      role: {},
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {}
-  }, {
-    attributes: {
-      bandwidth: 256,
-      baseUrl: 'https://example.com/en.vtt',
-      id: 'en',
-      lang: 'en',
-      mediaPresentationDuration: 30,
-      mimeType: 'text/vtt',
-      periodIndex: 0,
-      role: {},
-      sourceDuration: 30,
-      NOW,
-      clientOffset: 0
-    },
-    segmentInfo: {}
-  }];
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {}
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 30,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {}
+    }]
+  };
 
-  assert.equal(actual.length, 6);
+  assert.equal(actual.representationInfo.length, 6);
   assert.deepEqual(actual, expected);
 });
 
@@ -511,74 +520,77 @@ QUnit.test(
     </MPD>
   `), { NOW });
 
-    const expected = [{
-      attributes: {
-        bandwidth: 5000000,
-        baseUrl: 'https://www.example.com/base/',
-        codecs: 'avc1.64001e',
-        height: 404,
-        id: 'test',
-        mediaPresentationDuration: 30,
-        mimeType: 'video/mp6',
-        periodIndex: 0,
-        role: {
-          value: 'main'
+    const expected = {
+      locations: undefined,
+      representationInfo: [{
+        attributes: {
+          bandwidth: 5000000,
+          baseUrl: 'https://www.example.com/base/',
+          codecs: 'avc1.64001e',
+          height: 404,
+          id: 'test',
+          mediaPresentationDuration: 30,
+          mimeType: 'video/mp6',
+          periodIndex: 0,
+          role: {
+            value: 'main'
+          },
+          sourceDuration: 30,
+          width: 720,
+          NOW,
+          clientOffset: 0
         },
-        sourceDuration: 30,
-        width: 720,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {
-        base: {
-          indexRange: '820-2087',
-          indexRangeExact: 'true',
-          initialization: {
-            range: '0-567'
+        segmentInfo: {
+          base: {
+            indexRange: '820-2087',
+            indexRangeExact: 'true',
+            initialization: {
+              range: '0-567'
+            }
           }
         }
-      }
-    }, {
-      attributes: {
-        baseUrl: 'https://www.example.com/base/',
-        mediaPresentationDuration: 30,
-        mimeType: 'video/mp4',
-        periodIndex: 0,
-        height: 545,
-        role: {
-          value: 'main'
+      }, {
+        attributes: {
+          baseUrl: 'https://www.example.com/base/',
+          mediaPresentationDuration: 30,
+          mimeType: 'video/mp4',
+          periodIndex: 0,
+          height: 545,
+          role: {
+            value: 'main'
+          },
+          sourceDuration: 30,
+          NOW,
+          clientOffset: 0
         },
-        sourceDuration: 30,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {
-        base: {
-          indexRange: '820-2087',
-          indexRangeExact: 'true',
-          initialization: {
-            range: '0-987'
+        segmentInfo: {
+          base: {
+            indexRange: '820-2087',
+            indexRangeExact: 'true',
+            initialization: {
+              range: '0-987'
+            }
           }
         }
-      }
-    }, {
-      attributes: {
-        bandwidth: 256,
-        baseUrl: 'https://example.com/en.vtt',
-        id: 'en',
-        lang: 'en',
-        mediaPresentationDuration: 30,
-        mimeType: 'text/vtt',
-        periodIndex: 0,
-        role: {},
-        sourceDuration: 30,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {}
-    }];
+      }, {
+        attributes: {
+          bandwidth: 256,
+          baseUrl: 'https://example.com/en.vtt',
+          id: 'en',
+          lang: 'en',
+          mediaPresentationDuration: 30,
+          mimeType: 'text/vtt',
+          periodIndex: 0,
+          role: {},
+          sourceDuration: 30,
+          NOW,
+          clientOffset: 0
+        },
+        segmentInfo: {}
+      }]
+    };
 
-    assert.equal(actual.length, 3);
+    assert.equal(actual.representationInfo.length, 3);
     assert.deepEqual(actual, expected);
   }
 );
@@ -617,82 +629,85 @@ QUnit.test(
     </MPD>
   `), { NOW });
 
-    const expected = [{
-      attributes: {
-        bandwidth: 5000000,
-        baseUrl: 'https://www.example.com/base/',
-        codecs: 'avc1.64001e',
-        height: 404,
-        id: 'test',
-        mediaPresentationDuration: 30,
-        mimeType: 'video/mp6',
-        periodIndex: 0,
-        role: {
-          value: 'main'
+    const expected = {
+      locations: undefined,
+      representationInfo: [{
+        attributes: {
+          bandwidth: 5000000,
+          baseUrl: 'https://www.example.com/base/',
+          codecs: 'avc1.64001e',
+          height: 404,
+          id: 'test',
+          mediaPresentationDuration: 30,
+          mimeType: 'video/mp6',
+          periodIndex: 0,
+          role: {
+            value: 'main'
+          },
+          sourceDuration: 30,
+          width: 720,
+          NOW,
+          clientOffset: 0
         },
-        sourceDuration: 30,
-        width: 720,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {
-        base: {
-          indexRange: '9999',
-          indexRangeExact: 'false',
-          initialization: {
-            range: '0-1111'
+        segmentInfo: {
+          base: {
+            indexRange: '9999',
+            indexRangeExact: 'false',
+            initialization: {
+              range: '0-1111'
+            }
           }
         }
-      }
-    }, {
-      attributes: {
-        baseUrl: 'https://www.example.com/base/',
-        mediaPresentationDuration: 30,
-        mimeType: 'video/mp4',
-        periodIndex: 0,
-        height: 545,
-        role: {
-          value: 'main'
+      }, {
+        attributes: {
+          baseUrl: 'https://www.example.com/base/',
+          mediaPresentationDuration: 30,
+          mimeType: 'video/mp4',
+          periodIndex: 0,
+          height: 545,
+          role: {
+            value: 'main'
+          },
+          sourceDuration: 30,
+          NOW,
+          clientOffset: 0
         },
-        sourceDuration: 30,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {
-        base: {
-          indexRange: '9999',
-          indexRangeExact: 'false',
-          initialization: {
-            range: '0-1111'
+        segmentInfo: {
+          base: {
+            indexRange: '9999',
+            indexRangeExact: 'false',
+            initialization: {
+              range: '0-1111'
+            }
           }
         }
-      }
-    }, {
-      attributes: {
-        bandwidth: 256,
-        baseUrl: 'https://example.com/en.vtt',
-        id: 'en',
-        lang: 'en',
-        mediaPresentationDuration: 30,
-        mimeType: 'text/vtt',
-        periodIndex: 0,
-        role: {},
-        sourceDuration: 30,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {
-        base: {
-          indexRange: '9999',
-          indexRangeExact: 'false',
-          initialization: {
-            range: '0-1111'
+      }, {
+        attributes: {
+          bandwidth: 256,
+          baseUrl: 'https://example.com/en.vtt',
+          id: 'en',
+          lang: 'en',
+          mediaPresentationDuration: 30,
+          mimeType: 'text/vtt',
+          periodIndex: 0,
+          role: {},
+          sourceDuration: 30,
+          NOW,
+          clientOffset: 0
+        },
+        segmentInfo: {
+          base: {
+            indexRange: '9999',
+            indexRangeExact: 'false',
+            initialization: {
+              range: '0-1111'
+            }
           }
         }
-      }
-    }];
+      }]
+    };
 
-    assert.equal(actual.length, 3);
+    assert.equal(actual.representationInfo.length, 3);
     assert.deepEqual(actual, expected);
   }
 );
@@ -731,75 +746,78 @@ QUnit.test(
     </MPD>
   `), { NOW });
 
-    const expected = [{
-      attributes: {
-        bandwidth: 5000000,
-        baseUrl: 'https://www.example.com/base/',
-        codecs: 'avc1.64001e',
-        height: 404,
-        id: 'test',
-        mediaPresentationDuration: 30,
-        mimeType: 'video/mp6',
-        periodIndex: 0,
-        role: {
-          value: 'main'
+    const expected = {
+      locations: undefined,
+      representationInfo: [{
+        attributes: {
+          bandwidth: 5000000,
+          baseUrl: 'https://www.example.com/base/',
+          codecs: 'avc1.64001e',
+          height: 404,
+          id: 'test',
+          mediaPresentationDuration: 30,
+          mimeType: 'video/mp6',
+          periodIndex: 0,
+          role: {
+            value: 'main'
+          },
+          sourceDuration: 30,
+          width: 720,
+          NOW,
+          clientOffset: 0
         },
-        sourceDuration: 30,
-        width: 720,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {
-        base: {
-          indexRange: '1212',
-          indexRangeExact: 'true',
-          initialization: {
-            range: '0-8888'
+        segmentInfo: {
+          base: {
+            indexRange: '1212',
+            indexRangeExact: 'true',
+            initialization: {
+              range: '0-8888'
 
+            }
           }
         }
-      }
-    }, {
-      attributes: {
-        baseUrl: 'https://www.example.com/base/',
-        mediaPresentationDuration: 30,
-        mimeType: 'video/mp4',
-        periodIndex: 0,
-        height: 545,
-        role: {
-          value: 'main'
+      }, {
+        attributes: {
+          baseUrl: 'https://www.example.com/base/',
+          mediaPresentationDuration: 30,
+          mimeType: 'video/mp4',
+          periodIndex: 0,
+          height: 545,
+          role: {
+            value: 'main'
+          },
+          sourceDuration: 30,
+          NOW,
+          clientOffset: 0
         },
-        sourceDuration: 30,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {
-        base: {
-          indexRange: '1212',
-          indexRangeExact: 'true',
-          initialization: {
-            range: '0-8888'
+        segmentInfo: {
+          base: {
+            indexRange: '1212',
+            indexRangeExact: 'true',
+            initialization: {
+              range: '0-8888'
+            }
           }
         }
-      }
-    }, {
-      attributes: {
-        bandwidth: 256,
-        baseUrl: 'https://example.com/en.vtt',
-        id: 'en',
-        lang: 'en',
-        mediaPresentationDuration: 30,
-        mimeType: 'text/vtt',
-        periodIndex: 0,
-        role: {},
-        sourceDuration: 30,
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {}
-    }];
+      }, {
+        attributes: {
+          bandwidth: 256,
+          baseUrl: 'https://example.com/en.vtt',
+          id: 'en',
+          lang: 'en',
+          mediaPresentationDuration: 30,
+          mimeType: 'text/vtt',
+          periodIndex: 0,
+          role: {},
+          sourceDuration: 30,
+          NOW,
+          clientOffset: 0
+        },
+        segmentInfo: {}
+      }]
+    };
 
-    assert.equal(actual.length, 3);
+    assert.equal(actual.representationInfo.length, 3);
     assert.deepEqual(actual, expected);
   }
 );
@@ -853,7 +871,7 @@ QUnit.test(
         </AdaptationSet>
       </Period>
     </MPD>
-  `), { NOW }));
+  `), { NOW }).representationInfo);
 
     const expected = [{
       attributes: {
@@ -1282,7 +1300,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
         </AdaptationSet>
       </Period>
     </MPD>
-  `), { NOW }));
+  `), { NOW }).representationInfo);
 
   const expected = [{
     attributes: {
