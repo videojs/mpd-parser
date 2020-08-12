@@ -1,3 +1,10 @@
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/videojs/mpd-parser/compare/v0.10.1...v0.11.0) (2020-08-12)
+
+### Features
+
+* parse out Location elements ([#102](https://github.com/videojs/mpd-parser/issues/102)) ([967e5e6](https://github.com/videojs/mpd-parser/commit/967e5e6))
+
 <a name="0.10.1"></a>
 ## [0.10.1](https://github.com/videojs/mpd-parser/compare/v0.10.0...v0.10.1) (2020-03-31)
 
