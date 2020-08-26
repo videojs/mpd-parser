@@ -3,7 +3,6 @@ export const parsedManifest = {
   discontinuityStarts: [],
   duration: 6,
   endList: true,
-  minimumUpdatePeriod: 0,
   mediaGroups: {
     AUDIO: {
       audio: {

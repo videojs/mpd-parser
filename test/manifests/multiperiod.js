@@ -947,6 +947,5 @@ export const parsedManifest = {
         pssh: new Uint8Array([181, 235, 45])
       }
     }
-  }],
-  minimumUpdatePeriod: 0
+  }]
 };

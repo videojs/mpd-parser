@@ -64,7 +64,6 @@ QUnit.test('playlists', function(assert) {
     discontinuityStarts: [],
     duration: 100,
     endList: true,
-    minimumUpdatePeriod: 0,
     mediaGroups: {
       AUDIO: {
         audio: {
@@ -317,7 +316,6 @@ QUnit.test('playlists with segments', function(assert) {
     discontinuityStarts: [],
     duration: 100,
     endList: true,
-    minimumUpdatePeriod: 0,
     mediaGroups: {
       AUDIO: {
         audio: {
@@ -545,6 +543,95 @@ QUnit.test('playlists with sidx and sidxMapping', function(assert) {
   }];
 
   assert.deepEqual(toM3u8(input, null, mapping).playlists, expected);
+});
+
+QUnit.test('playlists without minimumUpdatePeriod dont assign default value', function(assert) {
+  const input = [{
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      width: 800,
+      height: 600,
+      codecs: 'foo;bar',
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'video/mp4'
+    },
+    segments: [],
+    sidx: {
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      uri: 'sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      duration: 10
+    },
+    uri: 'http://example.com/fmp4.mp4'
+  }];
+
+  assert.deepEqual(toM3u8(input).minimumUpdatePeriod, undefined);
+});
+
+QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
+  const input = [{
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      width: 800,
+      height: 600,
+      codecs: 'foo;bar',
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'video/mp4',
+      minimumUpdatePeriod: 0
+    },
+    segments: [],
+    sidx: {
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      uri: 'sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      duration: 10
+    },
+    uri: 'http://example.com/fmp4.mp4'
+  }];
+
+  assert.deepEqual(toM3u8(input).minimumUpdatePeriod, 0);
+});
+
+QUnit.test('playlists with integer value for minimumUpdatePeriod', function(assert) {
+  const input = [{
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      width: 800,
+      height: 600,
+      codecs: 'foo;bar',
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'video/mp4',
+      minimumUpdatePeriod: 2
+    },
+    segments: [],
+    sidx: {
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      uri: 'sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      duration: 10
+    },
+    uri: 'http://example.com/fmp4.mp4'
+  }];
+
+  assert.deepEqual(toM3u8(input).minimumUpdatePeriod, 2000, 'converts update period to ms');
 });
 
 QUnit.test('no playlists', function(assert) {
