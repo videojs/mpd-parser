@@ -571,7 +571,7 @@ QUnit.test('playlists without minimumUpdatePeriod dont assign default value', fu
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.deepEqual(toM3u8(input).minimumUpdatePeriod, undefined);
+  assert.equal(toM3u8(input).minimumUpdatePeriod, undefined);
 });
 
 QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
@@ -601,7 +601,7 @@ QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.deepEqual(toM3u8(input).minimumUpdatePeriod, 0);
+  assert.equal(toM3u8(input).minimumUpdatePeriod, 0);
 });
 
 QUnit.test('playlists with integer value for minimumUpdatePeriod', function(assert) {
@@ -631,7 +631,7 @@ QUnit.test('playlists with integer value for minimumUpdatePeriod', function(asse
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.deepEqual(toM3u8(input).minimumUpdatePeriod, 2000, 'converts update period to ms');
+  assert.equal(toM3u8(input).minimumUpdatePeriod, 2000, 'converts update period to ms');
 });
 
 QUnit.test('no playlists', function(assert) {
