@@ -1,3 +1,15 @@
+<a name="0.12.0"></a>
+# [0.12.0](https://github.com/videojs/mpd-parser/compare/v0.11.0...v0.12.0) (2020-09-03)
+
+### Features
+
+* remove default value of 0 for minimumUpdatePeriod ([#103](https://github.com/videojs/mpd-parser/issues/103)) ([38ca9ad](https://github.com/videojs/mpd-parser/commit/38ca9ad))
+
+
+### BREAKING CHANGES
+
+* The minimumUpdatePeriod property is now omitted from parsed output if it is not present in the manifest, rather than using a default value of 0. This is to allow differentiation between cases when a value of 0 is present in the manifest and when no value is provided.
+
 <a name="0.11.0"></a>
 # [0.11.0](https://github.com/videojs/mpd-parser/compare/v0.10.1...v0.11.0) (2020-08-12)
 
