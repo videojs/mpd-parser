@@ -948,6 +948,5 @@ export const parsedManifest = {
       }
     }
   }],
-  minimumUpdatePeriod: 0,
   suggestedPresentationDelay: 18
 };
