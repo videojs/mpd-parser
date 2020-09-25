@@ -105,13 +105,18 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
     // targetDuration should be the same duration as the only segment
     attributes.duration = attributes.sourceDuration;
   }
+
+  const m3u8Attributes = {
+    NAME: attributes.id,
+    BANDWIDTH: attributes.bandwidth,
+    ['PROGRAM-ID']: 1
+  };
+
+  if (attributes.codecs) {
+    m3u8Attributes.CODECS = attributes.codecs;
+  }
   return {
-    attributes: {
-      NAME: attributes.id,
-      BANDWIDTH: attributes.bandwidth,
-      CODECS: attributes.codecs,
-      ['PROGRAM-ID']: 1
-    },
+    attributes: m3u8Attributes,
     uri: '',
     endList: (attributes.type || 'static') === 'static',
     timeline: attributes.periodIndex,
