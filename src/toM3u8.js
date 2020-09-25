@@ -109,6 +109,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
     attributes: {
       NAME: attributes.id,
       BANDWIDTH: attributes.bandwidth,
+      CODECS: attributes.codecs,
       ['PROGRAM-ID']: 1
     },
     uri: '',
