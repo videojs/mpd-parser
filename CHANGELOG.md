@@ -1,3 +1,10 @@
+<a name="0.13.0"></a>
+# [0.13.0](https://github.com/videojs/mpd-parser/compare/v0.12.0...v0.13.0) (2020-09-29)
+
+### Features
+
+* add CODECS attribute to subtitle playlists if it exists ([#106](https://github.com/videojs/mpd-parser/issues/106)) ([bc0872a](https://github.com/videojs/mpd-parser/commit/bc0872a))
+
 <a name="0.12.0"></a>
 # [0.12.0](https://github.com/videojs/mpd-parser/compare/v0.11.0...v0.12.0) (2020-09-03)
 
