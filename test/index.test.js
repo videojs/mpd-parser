@@ -1,7 +1,10 @@
 import { parse, VERSION } from '../src';
 import QUnit from 'qunit';
 
+QUnit.dump.maxDepth = Infinity;
+
 // manifests
+import vttCodecsTemplate from './manifests/vtt_codecs.mpd';
 import maatVttSegmentTemplate from './manifests/maat_vtt_segmentTemplate.mpd';
 import segmentBaseTemplate from './manifests/segmentBase.mpd';
 import segmentListTemplate from './manifests/segmentList.mpd';
@@ -30,6 +33,10 @@ import {
 import {
   parsedManifest as locationsManifest
 } from './manifests/locations.js';
+
+import {
+  parsedManifest as vttCodecsManifest
+} from './manifests/vtt_codecs.js';
 
 QUnit.module('mpd-parser');
 
@@ -69,6 +76,10 @@ QUnit.test('has parse', function(assert) {
   name: 'locations',
   input: locationsTemplate,
   expected: locationsManifest
+}, {
+  name: 'vtt_codecs',
+  input: vttCodecsTemplate,
+  expected: vttCodecsManifest
 }].forEach(({ name, input, expected }) => {
   QUnit.test(`${name} test manifest`, function(assert) {
     const actual = parse(input);
