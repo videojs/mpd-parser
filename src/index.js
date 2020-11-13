@@ -4,6 +4,7 @@ import { toPlaylists } from './toPlaylists';
 import { inheritAttributes } from './inheritAttributes';
 import { stringToMpdXml } from './stringToMpdXml';
 import { parseUTCTimingScheme } from './parseUTCTimingScheme';
+import {addSegmentsToPlaylist} from './segment/segmentBase.js';
 
 const VERSION = version;
 
@@ -25,6 +26,8 @@ const parse = (manifestString, options = {}) => {
 const parseUTCTiming = (manifestString) =>
   parseUTCTimingScheme(stringToMpdXml(manifestString));
 
+const addSidxSegmentsToPlaylist = addSegmentsToPlaylist;
+
 export {
   VERSION,
   parse,
@@ -32,5 +35,6 @@ export {
   stringToMpdXml,
   inheritAttributes,
   toPlaylists,
-  toM3u8
+  toM3u8,
+  addSidxSegmentsToPlaylist
 };
