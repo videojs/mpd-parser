@@ -1,3 +1,23 @@
+<a name="0.15.0"></a>
+# [0.15.0](https://github.com/videojs/mpd-parser/compare/v0.14.0...v0.15.0) (2020-11-17)
+
+### Features
+
+* expose add addSidxSegmentsToPlaylist ([#109](https://github.com/videojs/mpd-parser/issues/109)) ([880c139](https://github.com/videojs/mpd-parser/commit/880c139))
+* recognize webm segments as video ([#79](https://github.com/videojs/mpd-parser/issues/79)) ([aa1bbf1](https://github.com/videojs/mpd-parser/commit/aa1bbf1))
+
+### Bug Fixes
+
+* edge case error handling on ie 11 ([#112](https://github.com/videojs/mpd-parser/issues/112)) ([23040c1](https://github.com/videojs/mpd-parser/commit/23040c1))
+
+### Chores
+
+* switch from travis ci to github ci ([#111](https://github.com/videojs/mpd-parser/issues/111)) ([1dc9090](https://github.com/videojs/mpd-parser/commit/1dc9090))
+
+### Tests
+
+* fix tests introduced in [#79](https://github.com/videojs/mpd-parser/issues/79) that was not rebased on [#103](https://github.com/videojs/mpd-parser/issues/103) ([#110](https://github.com/videojs/mpd-parser/issues/110)) ([1a6abbf](https://github.com/videojs/mpd-parser/commit/1a6abbf))
+
 <a name="0.14.0"></a>
 # [0.14.0](https://github.com/videojs/mpd-parser/compare/v0.13.0...v0.14.0) (2020-11-03)
 
