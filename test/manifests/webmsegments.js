@@ -149,6 +149,5 @@ export const parsedManifest = {
       ],
       mediaSequence: 0
     }
-  ],
-  minimumUpdatePeriod: 0
+  ]
 };
