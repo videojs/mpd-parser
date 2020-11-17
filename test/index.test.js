@@ -11,6 +11,7 @@ import segmentListTemplate from './manifests/segmentList.mpd';
 import locationTemplate from './manifests/location.mpd';
 import locationsTemplate from './manifests/locations.mpd';
 import multiperiod from './manifests/multiperiod.mpd';
+import webmsegments from './manifests/webmsegments.mpd';
 import multiperiodDynamic from './manifests/multiperiod-dynamic.mpd';
 import {
   parsedManifest as maatVttSegmentTemplateManifest
@@ -24,6 +25,9 @@ import {
 import {
   parsedManifest as multiperiodManifest
 } from './manifests/multiperiod.js';
+import {
+  parsedManifest as webmsegmentsManifest
+} from './manifests/webmsegments.js';
 import {
   parsedManifest as multiperiodDynamicManifest
 } from './manifests/multiperiod-dynamic.js';
@@ -64,6 +68,10 @@ QUnit.test('has parse', function(assert) {
   name: 'multiperiod',
   input: multiperiod,
   expected: multiperiodManifest
+}, {
+  name: 'webmsegments',
+  input: webmsegments,
+  expected: webmsegmentsManifest
 }, {
   name: 'multiperiod_dynamic',
   input: multiperiodDynamic,

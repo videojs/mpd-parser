@@ -251,9 +251,9 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   } = dashPlaylists[0].attributes;
 
   const videoOnly = ({ attributes }) =>
-    attributes.mimeType === 'video/mp4' || attributes.contentType === 'video';
+    attributes.mimeType === 'video/mp4' || attributes.mimeType === 'video/webm' || attributes.contentType === 'video';
   const audioOnly = ({ attributes }) =>
-    attributes.mimeType === 'audio/mp4' || attributes.contentType === 'audio';
+    attributes.mimeType === 'audio/mp4' || attributes.mimeType === 'audio/webm' || attributes.contentType === 'audio';
   const vttOnly = ({ attributes }) =>
     attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
 
