@@ -7,9 +7,16 @@ export const stringToMpdXml = (manifestString) => {
   }
 
   const parser = new DOMParser();
-  const xml = parser.parseFromString(manifestString, 'application/xml');
-  const mpd = xml && xml.documentElement.tagName === 'MPD' ?
-    xml.documentElement : null;
+  let xml;
+  let mpd;
+
+  try {
+    xml = parser.parseFromString(manifestString, 'application/xml');
+    mpd = xml && xml.documentElement.tagName === 'MPD' ?
+      xml.documentElement : null;
+  } catch (e) {
+    // ie 11 throwsw on invalid xml
+  }
 
   if (!mpd || mpd &&
       mpd.getElementsByTagName('parsererror').length > 0) {

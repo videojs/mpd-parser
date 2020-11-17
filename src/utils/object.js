@@ -6,6 +6,10 @@ export const merge = (...objects) => {
 
   return objects.reduce((result, source) => {
 
+    if (typeof source !== 'object') {
+      return result;
+    }
+
     Object.keys(source).forEach(key => {
 
       if (Array.isArray(result[key]) && Array.isArray(source[key])) {
