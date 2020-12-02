@@ -135,9 +135,9 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
       playlist.attributes.role.value || '';
     const language = playlist.attributes.lang || '';
 
-    let label = 'main';
+    let label = playlist.attributes.label || 'main';
 
-    if (language) {
+    if (language && !playlist.attributes.label) {
       const roleLabel = role ? ` (${role})` : '';
 
       label = `${playlist.attributes.lang}${roleLabel}`;

@@ -235,6 +235,14 @@ export const toRepresentations =
     roleAttributes
   );
 
+  const label = findChildren(adaptationSet, 'Label')[0];
+
+  if (label && label.childNodes.length) {
+    const labelVal = label.childNodes[0].nodeValue.trim();
+
+    attrs = merge(attrs, { label: labelVal });
+  }
+
   const contentProtection = generateKeySystemInformation(findChildren(adaptationSet, 'ContentProtection'));
 
   if (Object.keys(contentProtection).length) {

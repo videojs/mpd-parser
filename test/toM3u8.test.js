@@ -701,3 +701,48 @@ QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert)
   assert.ok('suggestedPresentationDelay' in output);
   assert.deepEqual(output.suggestedPresentationDelay, 18);
 });
+
+QUnit.test('playlists with label', function(assert) {
+  const label = 'English with commentary';
+  const input = [{
+    attributes: {
+      id: '1',
+      codecs: 'foo;bar',
+      sourceDuration: 100,
+      duration: 0,
+      bandwidth: 20000,
+      periodIndex: 1,
+      mimeType: 'audio/mp4',
+      type: 'dynamic',
+      label
+    },
+    segments: []
+  }, {
+    attributes: {
+      id: '2',
+      codecs: 'foo;bar',
+      sourceDuration: 100,
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'audio/mp4'
+    },
+    segments: []
+  }, {
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      width: 800,
+      height: 600,
+      codecs: 'foo;bar',
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'video/mp4'
+    },
+    segments: []
+  }];
+  const output = toM3u8(input);
+
+  assert.ok(label in output.mediaGroups.AUDIO.audio, 'label exists');
+});
