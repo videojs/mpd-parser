@@ -1,7 +1,7 @@
-import { values } from './utils/object';
-import { findIndexes } from './utils/list';
 import { addSegmentsToPlaylist } from './segment/segmentBase';
 import { byteRangeToString } from './segment/urlType';
+import { findIndexes } from './utils/list';
+import { values } from './utils/object';
 
 const mergeDiscontiguousPlaylists = playlists => {
   const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
@@ -129,9 +129,9 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
       playlist.attributes.role.value || '';
     const language = playlist.attributes.lang || '';
 
-    let label = 'main';
+    let label = playlist.attributes.label || 'main';
 
-    if (language) {
+    if (language && !playlist.attributes.label) {
       const roleLabel = role ? ` (${role})` : '';
 
       label = `${playlist.attributes.lang}${roleLabel}`;

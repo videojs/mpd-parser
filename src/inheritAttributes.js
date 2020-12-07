@@ -1,11 +1,11 @@
+import decodeB64ToUint8Array from '@videojs/vhs-utils/dist/decode-b64-to-uint8-array';
+import resolveUrl from '@videojs/vhs-utils/dist/resolve-url';
 import window from 'global/window';
+import errors from './errors';
+import { parseAttributes } from './parseAttributes';
 import { flatten } from './utils/list';
 import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
-import { parseAttributes } from './parseAttributes';
-import errors from './errors';
-import resolveUrl from '@videojs/vhs-utils/dist/resolve-url';
-import decodeB64ToUint8Array from '@videojs/vhs-utils/dist/decode-b64-to-uint8-array';
 
 const keySystemsMap = {
   'urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b': 'org.w3.clearkey',
@@ -234,6 +234,14 @@ export const toRepresentations =
     adaptationSetAttributes,
     roleAttributes
   );
+
+  const label = findChildren(adaptationSet, 'Label')[0];
+
+  if (label && label.childNodes.length) {
+    const labelVal = label.childNodes[0].nodeValue.trim();
+
+    attrs = merge(attrs, { label: labelVal });
+  }
 
   const contentProtection = generateKeySystemInformation(findChildren(adaptationSet, 'ContentProtection'));
 
