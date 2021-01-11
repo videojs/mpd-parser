@@ -1,3 +1,10 @@
+<a name="0.15.1"></a>
+## [0.15.1](https://github.com/videojs/mpd-parser/compare/v0.15.0...v0.15.1) (2021-01-11)
+
+### Chores
+
+* update to vhs-utils[@3](https://github.com/3) ([#115](https://github.com/videojs/mpd-parser/issues/115)) ([3240031](https://github.com/videojs/mpd-parser/commit/3240031))
+
 <a name="0.15.0"></a>
 # [0.15.0](https://github.com/videojs/mpd-parser/compare/v0.14.0...v0.15.0) (2020-11-17)
 
