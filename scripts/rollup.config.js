@@ -1,5 +1,6 @@
 const generate = require('videojs-generate-rollup-config');
-const string = require('rollup-plugin-string');
+const string = require('rollup-plugin-string').string;
+const replace = require('@rollup/plugin-replace');
 
 // see https://github.com/videojs/videojs-generate-rollup-config
 // for options
@@ -7,11 +8,20 @@ const options = {
   input: 'src/index.js',
   plugins(defaults) {
     defaults.test.unshift('string');
+    defaults.module.unshift('replace');
 
     return defaults;
   },
   primedPlugins(defaults) {
     defaults.string = string({include: ['test/manifests/*.mpd']});
+    // when using "require" rather than import
+    // require cjs module
+    defaults.replace = replace({
+      // single quote replace
+      "require('@videojs/vhs-utils/es": "require('@videojs/vhs-utils/cjs",
+      // double quote replace
+      'require("@videojs/vhs-utils/es': 'require("@videojs/vhs-utils/cjs'
+    });
 
     return defaults;
   },
