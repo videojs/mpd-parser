@@ -1,3 +1,10 @@
+<a name="0.15.2"></a>
+## [0.15.2](https://github.com/videojs/mpd-parser/compare/v0.15.1...v0.15.2) (2021-01-12)
+
+### Bug Fixes
+
+* cjs dist should only import cjs ([#118](https://github.com/videojs/mpd-parser/issues/118)) ([0529e62](https://github.com/videojs/mpd-parser/commit/0529e62))
+
 <a name="0.15.1"></a>
 ## [0.15.1](https://github.com/videojs/mpd-parser/compare/v0.15.0...v0.15.1) (2021-01-11)
 
