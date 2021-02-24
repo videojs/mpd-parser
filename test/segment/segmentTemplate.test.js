@@ -235,6 +235,34 @@ QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(
   );
 });
 
+QUnit.test('parseByDuration uses endNumber and has correct duration', function(assert) {
+  const attributes = {
+    sourceDuration: 11,
+    duration: '4',
+    periodIndex: 1,
+    endNumber: '2'
+  };
+
+  assert.deepEqual(
+    parseTemplateInfo(attributes, []),
+    [
+      {
+        number: 1,
+        duration: 4,
+        timeline: 1,
+        time: 0
+      },
+      {
+        number: 2,
+        duration: 7,
+        timeline: 1,
+        time: 4
+      }
+    ],
+    'uses default startNumber and timescale value of 1'
+  );
+});
+
 QUnit.test('uses SegmentTimeline info when no @duration attribute', function(assert) {
   const attributes = {
     startNumber: 0,
@@ -986,6 +1014,55 @@ QUnit.test('correctly handles duration', function(assert) {
       uri: 'n-4.m4s'
     }],
     'segments correct with given clientOffset'
+  );
+
+  assert.deepEqual(
+    segmentsFromTemplate(Object.assign(
+      {}, basicAttributes,
+      { endNumber: '4' }, []
+    )),
+    [{
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 1,
+      resolvedUri: 'http://www.example.com/n-1.m4s',
+      timeline: 1,
+      uri: 'n-1.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 2,
+      resolvedUri: 'http://www.example.com/n-2.m4s',
+      timeline: 1,
+      uri: 'n-2.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 3,
+      resolvedUri: 'http://www.example.com/n-3.m4s',
+      timeline: 1,
+      uri: 'n-3.m4s'
+    }, {
+      duration: 2,
+      map: {
+        resolvedUri: 'http://www.example.com/',
+        uri: ''
+      },
+      number: 4,
+      resolvedUri: 'http://www.example.com/n-4.m4s',
+      timeline: 1,
+      uri: 'n-4.m4s'
+    }],
+    'segments correct with endNumber'
   );
 });
 
