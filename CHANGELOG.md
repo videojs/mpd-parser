@@ -1,3 +1,7 @@
+<a name="0.15.4"></a>
+## [0.15.4](https://github.com/videojs/mpd-parser/compare/v0.15.3...v0.15.4) (2021-02-24)
+An accidental republish of 0.15.3 with no changes.
+
 <a name="0.15.3"></a>
 ## [0.15.3](https://github.com/videojs/mpd-parser/compare/v0.15.2...v0.15.3) (2021-02-24)
 
