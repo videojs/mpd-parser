@@ -1,6 +1,28 @@
 import { range } from '../utils/list';
 
 /**
+ * parse the end number attribue that can be a string
+ * number, or undefined.
+ *
+ * @param {string|number|undefined} endNumber
+ *        The end number attribute.
+ *
+ * @return {number|null}
+ *          The result of parsing the end number.
+ */
+const parseEndNumber = (endNumber) => {
+  if (endNumber && typeof endNumber !== 'number') {
+    endNumber = parseInt(endNumber, 10);
+  }
+
+  if (isNaN(endNumber)) {
+    return null;
+  }
+
+  return endNumber;
+};
+
+/**
  * Functions for calculating the range of available segments in static and dynamic
  * manifests.
  */
@@ -19,10 +41,11 @@ export const segmentRange = {
       timescale = 1,
       sourceDuration
     } = attributes;
+    const endNumber = parseEndNumber(attributes.endNumber);
 
     return {
       start: 0,
-      end: Math.ceil(sourceDuration / (duration / timescale))
+      end: typeof endNumber === 'number' ? endNumber : Math.ceil(sourceDuration / (duration / timescale))
     };
   },
 
@@ -45,6 +68,7 @@ export const segmentRange = {
       minimumUpdatePeriod = 0,
       timeShiftBufferDepth = Infinity
     } = attributes;
+    const endNumber = parseEndNumber(attributes.endNumber);
     const now = (NOW + clientOffset) / 1000;
     const periodStartWC = availabilityStartTime + start;
     const periodEndWC = now + minimumUpdatePeriod;
@@ -56,7 +80,7 @@ export const segmentRange = {
 
     return {
       start: Math.max(0, availableStart),
-      end: Math.min(segmentCount, availableEnd)
+      end: typeof endNumber === 'number' ? endNumber : Math.min(segmentCount, availableEnd)
     };
   }
 };
