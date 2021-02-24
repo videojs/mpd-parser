@@ -1,3 +1,10 @@
+<a name="0.15.3"></a>
+## [0.15.3](https://github.com/videojs/mpd-parser/compare/v0.15.2...v0.15.3) (2021-02-24)
+
+### Features
+
+* add support for endNumber in template duration parsing ([#120](https://github.com/videojs/mpd-parser/issues/120)) ([0a75d62](https://github.com/videojs/mpd-parser/commit/0a75d62))
+
 <a name="0.15.2"></a>
 ## [0.15.2](https://github.com/videojs/mpd-parser/compare/v0.15.1...v0.15.2) (2021-01-12)
 
