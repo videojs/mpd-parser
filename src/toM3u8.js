@@ -64,7 +64,7 @@ const addSegmentInfoFromSidx = (playlists, sidxMapping = {}) => {
   return playlists;
 };
 
-export const formatAudioPlaylist = ({ attributes, segments, sidx }) => {
+export const formatAudioPlaylist = ({ attributes, segments, sidx }, isAudioOnly) => {
   const playlist = {
     attributes: {
       NAME: attributes.id,
@@ -87,6 +87,11 @@ export const formatAudioPlaylist = ({ attributes, segments, sidx }) => {
 
   if (sidx) {
     playlist.sidx = sidx;
+  }
+
+  if (isAudioOnly) {
+    playlist.attributes.AUDIO = 'audio';
+    playlist.attributes.SUBTITLES = 'subs';
   }
 
   return playlist;
@@ -127,7 +132,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   };
 };
 
-export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
+export const organizeAudioPlaylists = (playlists, sidxMapping = {}, isAudioOnly = false) => {
   let mainPlaylist;
 
   const formattedPlaylists = playlists.reduce((a, playlist) => {
@@ -155,7 +160,7 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
       autoselect: true,
       default: role === 'main',
       playlists: addSegmentInfoFromSidx(
-        [formatAudioPlaylist(playlist)],
+        [formatAudioPlaylist(playlist, isAudioOnly)],
         sidxMapping
       ),
       uri: ''
@@ -289,8 +294,10 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
     master.suggestedPresentationDelay = suggestedPresentationDelay;
   }
 
+  const isAudioOnly = master.playlists.length === 0;
+
   if (audioPlaylists.length) {
-    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping);
+    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping, isAudioOnly);
   }
 
   if (vttPlaylists.length) {
