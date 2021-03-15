@@ -1,4 +1,4 @@
-import { toM3u8 } from '../src/toM3u8';
+import { toM3u8, generateSidxKey } from '../src/toM3u8';
 import QUnit from 'qunit';
 
 QUnit.module('toM3u8');
@@ -746,3 +746,22 @@ QUnit.test('playlists with label', function(assert) {
 
   assert.ok(label in output.mediaGroups.AUDIO.audio, 'label exists');
 });
+
+QUnit.module('generateSidxKey');
+
+QUnit.test('generates correct key', function(assert) {
+  const sidxInfo = {
+    byterange: {
+      offset: 1,
+      length: 5
+    },
+    uri: 'uri'
+  };
+
+  assert.strictEqual(
+    generateSidxKey(sidxInfo),
+    'uri-1-5',
+    'the key byterange should have a inclusive end'
+  );
+});
+

@@ -1,7 +1,10 @@
 import { values } from './utils/object';
 import { findIndexes } from './utils/list';
-import { addSegmentsToPlaylist } from './segment/segmentBase';
+import { addSidxSegmentsToPlaylist as addSidxSegmentsToPlaylist_ } from './segment/segmentBase';
 import { byteRangeToString } from './segment/urlType';
+
+export const generateSidxKey = (sidx) => sidx &&
+  sidx.uri + '-' + byteRangeToString(sidx.byterange);
 
 const mergeDiscontiguousPlaylists = playlists => {
   const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
@@ -40,25 +43,24 @@ const mergeDiscontiguousPlaylists = playlists => {
   });
 };
 
-const addSegmentInfoFromSidx = (playlists, sidxMapping = {}) => {
+export const addSidxSegmentsToPlaylist = (playlist, sidxMapping) => {
+  const sidxKey = generateSidxKey(playlist.sidx);
+  const sidxMatch = sidxKey && sidxMapping[sidxKey] && sidxMapping[sidxKey].sidx;
+
+  if (sidxMatch) {
+    addSidxSegmentsToPlaylist_(playlist, sidxMatch, playlist.sidx.resolvedUri);
+  }
+
+  return playlist;
+};
+
+export const addSidxSegmentsToPlaylists = (playlists, sidxMapping = {}) => {
   if (!Object.keys(sidxMapping).length) {
     return playlists;
   }
 
   for (const i in playlists) {
-    const playlist = playlists[i];
-
-    if (!playlist.sidx) {
-      continue;
-    }
-
-    const sidxKey = playlist.sidx.uri + '-' +
-      byteRangeToString(playlist.sidx.byterange);
-    const sidxMatch = sidxMapping[sidxKey] && sidxMapping[sidxKey].sidx;
-
-    if (playlist.sidx && sidxMatch) {
-      addSegmentsToPlaylist(playlist, sidxMatch, playlist.sidx.resolvedUri);
-    }
+    playlists[i] = addSidxSegmentsToPlaylist(playlists[i], sidxMapping);
   }
 
   return playlists;
@@ -143,23 +145,17 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
       label = `${playlist.attributes.lang}${roleLabel}`;
     }
 
-    // skip if we already have the highest quality audio for a language
-    if (a[label] &&
-      a[label].playlists[0].attributes.BANDWIDTH >
-      playlist.attributes.bandwidth) {
-      return a;
+    if (!a[label]) {
+      a[label] = {
+        language,
+        autoselect: true,
+        default: role === 'main',
+        playlists: [],
+        uri: ''
+      };
     }
 
-    a[label] = {
-      language,
-      autoselect: true,
-      default: role === 'main',
-      playlists: addSegmentInfoFromSidx(
-        [formatAudioPlaylist(playlist)],
-        sidxMapping
-      ),
-      uri: ''
-    };
+    a[label].playlists.push(addSidxSegmentsToPlaylist(formatAudioPlaylist(playlist), sidxMapping));
 
     if (typeof mainPlaylist === 'undefined' && role === 'main') {
       mainPlaylist = playlist;
@@ -183,21 +179,16 @@ export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
   return playlists.reduce((a, playlist) => {
     const label = playlist.attributes.lang || 'text';
 
-    // skip if we already have subtitles
-    if (a[label]) {
-      return a;
+    if (!a[label]) {
+      a[label] = {
+        language: label,
+        default: false,
+        autoselect: false,
+        playlists: [],
+        uri: ''
+      };
     }
-
-    a[label] = {
-      language: label,
-      default: false,
-      autoselect: false,
-      playlists: addSegmentInfoFromSidx(
-        [formatVttPlaylist(playlist)],
-        sidxMapping
-      ),
-      uri: ''
-    };
+    a[label].playlists.push(addSidxSegmentsToPlaylist(formatVttPlaylist(playlist), sidxMapping));
 
     return a;
   }, {});
@@ -237,6 +228,13 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   return playlist;
 };
 
+const videoOnly = ({ attributes }) =>
+  attributes.mimeType === 'video/mp4' || attributes.mimeType === 'video/webm' || attributes.contentType === 'video';
+const audioOnly = ({ attributes }) =>
+  attributes.mimeType === 'audio/mp4' || attributes.mimeType === 'audio/webm' || attributes.contentType === 'audio';
+const vttOnly = ({ attributes }) =>
+  attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
+
 export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   if (!dashPlaylists.length) {
     return {};
@@ -249,13 +247,6 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
     suggestedPresentationDelay,
     minimumUpdatePeriod
   } = dashPlaylists[0].attributes;
-
-  const videoOnly = ({ attributes }) =>
-    attributes.mimeType === 'video/mp4' || attributes.mimeType === 'video/webm' || attributes.contentType === 'video';
-  const audioOnly = ({ attributes }) =>
-    attributes.mimeType === 'audio/mp4' || attributes.mimeType === 'audio/webm' || attributes.contentType === 'audio';
-  const vttOnly = ({ attributes }) =>
-    attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
 
   const videoPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(videoOnly)).map(formatVideoPlaylist);
   const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
@@ -274,7 +265,7 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
     },
     uri: '',
     duration,
-    playlists: addSegmentInfoFromSidx(videoPlaylists, sidxMapping)
+    playlists: addSidxSegmentsToPlaylists(videoPlaylists, sidxMapping)
   };
 
   if (minimumUpdatePeriod >= 0) {
