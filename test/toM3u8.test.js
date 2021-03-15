@@ -85,6 +85,21 @@ QUnit.test('playlists', function(assert) {
               timeline: 1,
               uri: '',
               targetDuration: 0
+            }, {
+              attributes: {
+                BANDWIDTH: 10000,
+                CODECS: 'foo;bar',
+                NAME: '2',
+                ['PROGRAM-ID']: 1
+              },
+              mediaSequence: 1,
+              endList: true,
+              resolvedUri: '',
+              segments: [],
+              timeline: 1,
+              uri: '',
+              targetDuration: 0
+
             }],
             uri: ''
           }
@@ -100,6 +115,25 @@ QUnit.test('playlists', function(assert) {
             playlists: [{
               attributes: {
                 BANDWIDTH: 20000,
+                NAME: '1',
+                ['PROGRAM-ID']: 1
+              },
+              mediaSequence: 0,
+              targetDuration: 100,
+              endList: true,
+              resolvedUri: 'https://www.example.com/vtt',
+              segments: [{
+                duration: 100,
+                resolvedUri: 'https://www.example.com/vtt',
+                timeline: 1,
+                uri: 'https://www.example.com/vtt',
+                number: 0
+              }],
+              timeline: 1,
+              uri: ''
+            }, {
+              attributes: {
+                BANDWIDTH: 10000,
                 NAME: '1',
                 ['PROGRAM-ID']: 1
               },
@@ -282,7 +316,7 @@ QUnit.test('playlists with segments', function(assert) {
     attributes: {
       sourceDuration: 100,
       duration: 2,
-      id: '1',
+      id: '2',
       bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'text/vtt',
@@ -357,6 +391,40 @@ QUnit.test('playlists with segments', function(assert) {
               }],
               timeline: 1,
               uri: ''
+            }, {
+              attributes: {
+                BANDWIDTH: 10000,
+                CODECS: 'foo;bar',
+                NAME: '2',
+                ['PROGRAM-ID']: 1
+              },
+              targetDuration: 2,
+              mediaSequence: 1,
+              endList: true,
+              resolvedUri: '',
+              segments: [{
+                uri: '',
+                timeline: 1,
+                duration: 2,
+                resolvedUri: '',
+                map: {
+                  uri: '',
+                  resolvedUri: ''
+                },
+                number: 1
+              }, {
+                uri: '',
+                timeline: 1,
+                duration: 2,
+                resolvedUri: '',
+                map: {
+                  uri: '',
+                  resolvedUri: ''
+                },
+                number: 2
+              }],
+              timeline: 1,
+              uri: ''
             }],
             uri: ''
           }
@@ -373,6 +441,39 @@ QUnit.test('playlists with segments', function(assert) {
               attributes: {
                 BANDWIDTH: 20000,
                 NAME: '1',
+                ['PROGRAM-ID']: 1
+              },
+              endList: true,
+              targetDuration: 2,
+              mediaSequence: 1,
+              resolvedUri: 'https://www.example.com/vtt',
+              segments: [{
+                uri: '',
+                timeline: 1,
+                duration: 2,
+                resolvedUri: '',
+                map: {
+                  uri: '',
+                  resolvedUri: ''
+                },
+                number: 1
+              }, {
+                uri: '',
+                timeline: 1,
+                duration: 2,
+                resolvedUri: '',
+                map: {
+                  uri: '',
+                  resolvedUri: ''
+                },
+                number: 2
+              }],
+              timeline: 1,
+              uri: ''
+            }, {
+              attributes: {
+                BANDWIDTH: 10000,
+                NAME: '2',
                 ['PROGRAM-ID']: 1
               },
               endList: true,
