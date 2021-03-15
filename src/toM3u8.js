@@ -66,7 +66,7 @@ export const addSidxSegmentsToPlaylists = (playlists, sidxMapping = {}) => {
   return playlists;
 };
 
-export const formatAudioPlaylist = ({ attributes, segments, sidx }) => {
+export const formatAudioPlaylist = ({ attributes, segments, sidx }, isAudioOnly) => {
   const playlist = {
     attributes: {
       NAME: attributes.id,
@@ -89,6 +89,11 @@ export const formatAudioPlaylist = ({ attributes, segments, sidx }) => {
 
   if (sidx) {
     playlist.sidx = sidx;
+  }
+
+  if (isAudioOnly) {
+    playlist.attributes.AUDIO = 'audio';
+    playlist.attributes.SUBTITLES = 'subs';
   }
 
   return playlist;
@@ -129,7 +134,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   };
 };
 
-export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
+export const organizeAudioPlaylists = (playlists, sidxMapping = {}, isAudioOnly = false) => {
   let mainPlaylist;
 
   const formattedPlaylists = playlists.reduce((a, playlist) => {
@@ -155,7 +160,9 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}) => {
       };
     }
 
-    a[label].playlists.push(addSidxSegmentsToPlaylist(formatAudioPlaylist(playlist), sidxMapping));
+    const formatted = addSidxSegmentsToPlaylist(formatAudioPlaylist(playlist, isAudioOnly), sidxMapping);
+
+    a[label].playlists.push(formatted);
 
     if (typeof mainPlaylist === 'undefined' && role === 'main') {
       mainPlaylist = playlist;
@@ -280,8 +287,10 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
     master.suggestedPresentationDelay = suggestedPresentationDelay;
   }
 
+  const isAudioOnly = master.playlists.length === 0;
+
   if (audioPlaylists.length) {
-    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping);
+    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping, isAudioOnly);
   }
 
   if (vttPlaylists.length) {
