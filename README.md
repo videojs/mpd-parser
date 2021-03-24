@@ -39,12 +39,15 @@ bower install  --save mpd-parser
 ## Usage
 
 ```js
-var manifest = [
-  '<>',
-  '<>',
-].join('\n');
+// get your manifest in whatever way works best
+// for example, by reading the file from the filesystem in node
+// or using fetch in a browser like so:
 
-var parsedManifest = mpdParser.parse(manifest, manifestUrl);
+const manifestUri = 'https://example.com/dash.xml';
+const res = await fetch(manifestUri);
+const manifest = await res.text();
+
+var parsedManifest = mpdParser.parse(manifest, { manifestUri });
 ```
 
 ### Parsed Output
