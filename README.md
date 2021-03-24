@@ -30,12 +30,6 @@ mpd parser
 npm install --save mpd-parser
 ```
 
-The npm installation is preferred, but Bower works, too.
-
-```sh
-bower install  --save mpd-parser
-```
-
 ## Usage
 
 ```js
