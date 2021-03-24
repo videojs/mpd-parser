@@ -31,7 +31,9 @@
             console.log('Original ->');
             console.log(body);
 
-            var parsedMpd = mpdParser.parse(body, url.value);
+            var parsedMpd = mpdParser.parse(body, {
+              manifestUri: url.value
+            });
             console.log('Parsed ->');
             console.log(parsedMpd);
           }).catch(error => console.error(error));
