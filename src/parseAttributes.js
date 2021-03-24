@@ -149,7 +149,7 @@ export const parsers = {
    * @param {string} value
    *        value of attribute as a string
    * @return {number}
-   *         The aprsed timescale
+   *         The parsed timescale
    */
   timescale(value) {
     return parseInt(value, 10);
