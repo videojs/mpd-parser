@@ -168,6 +168,7 @@ export const parsedManifest = {
               uri: 'https://example.com/default_audio128_2/segment14.m4f',
               timeline: 3,
               duration: 1.1609977324263039,
+              presentationTimeOffset: 4.85297052154195,
               resolvedUri: 'https://example.com/default_audio128_2/segment14.m4f',
               map: {
                 uri: 'https://example.com/default_audio128_2/init3.m4f',
@@ -179,6 +180,7 @@ export const parsedManifest = {
               uri: 'https://example.com/default_audio128_2/segment15.m4f',
               timeline: 3,
               duration: 1.9969160997732427,
+              presentationTimeOffset: 4.85297052154195,
               resolvedUri: 'https://example.com/default_audio128_2/segment15.m4f',
               map: {
                 uri: 'https://example.com/default_audio128_2/init3.m4f',
@@ -402,6 +404,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video2000_0_1280x720/segment13.m4f',
       timeline: 3,
       duration: 0.9676333333333333,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment13.m4f',
       map: {
         uri: 'https://example.com/default_video2000_0_1280x720/init3.m4f',
@@ -413,6 +416,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video2000_0_1280x720/segment14.m4f',
       timeline: 3,
       duration: 1.9352666666666667,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment14.m4f',
       map: {
         uri: 'https://example.com/default_video2000_0_1280x720/init3.m4f',
@@ -423,6 +427,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video2000_0_1280x720/segment15.m4f',
       timeline: 3,
       duration: 0.26693333333333336,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment15.m4f',
       map: {
         uri: 'https://example.com/default_video2000_0_1280x720/init3.m4f',
@@ -636,6 +641,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video1200_1_960x540/segment13.m4f',
       timeline: 3,
       duration: 0.9676333333333333,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video1200_1_960x540/segment13.m4f',
       map: {
         uri: 'https://example.com/default_video1200_1_960x540/init3.m4f',
@@ -647,6 +653,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video1200_1_960x540/segment14.m4f',
       timeline: 3,
       duration: 1.9352666666666667,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video1200_1_960x540/segment14.m4f',
       map: {
         uri: 'https://example.com/default_video1200_1_960x540/init3.m4f',
@@ -657,6 +664,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video1200_1_960x540/segment15.m4f',
       timeline: 3,
       duration: 0.26693333333333336,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video1200_1_960x540/segment15.m4f',
       map: {
         uri: 'https://example.com/default_video1200_1_960x540/init3.m4f',
@@ -869,6 +877,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video900_1_640x360/segment13.m4f',
       timeline: 3,
       duration: 0.9676333333333333,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video900_1_640x360/segment13.m4f',
       map: {
         uri: 'https://example.com/default_video900_1_640x360/init3.m4f',
@@ -880,6 +889,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video900_1_640x360/segment14.m4f',
       timeline: 3,
       duration: 1.9352666666666667,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video900_1_640x360/segment14.m4f',
       map: {
         uri: 'https://example.com/default_video900_1_640x360/init3.m4f',
@@ -890,6 +900,7 @@ export const parsedManifest = {
       uri: 'https://example.com/default_video900_1_640x360/segment15.m4f',
       timeline: 3,
       duration: 0.26693333333333336,
+      presentationTimeOffset: 4.838166666666667,
       resolvedUri: 'https://example.com/default_video900_1_640x360/segment15.m4f',
       map: {
         uri: 'https://example.com/default_video900_1_640x360/init3.m4f',
