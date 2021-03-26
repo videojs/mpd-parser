@@ -16,6 +16,10 @@ Refer to the [video.js plugin conventions][conventions] for more detail on best 
 
 When you've made your changes, push your commit(s) to your fork and issue a pull request against the original repository.
 
+#### Updating test expecations
+
+You can regenerate the JS manifest files by running `mpd-to-m3u8-json` binary (or via the web page) but you'll need to update the `pssh` properties to be converted into a `new Uint8Array`.
+
 ### Running Tests
 
 Testing is a crucial part of any software project. For all but the most trivial changes (typos, etc) test cases are expected. Tests are run in actual browsers using [Karma][karma].
