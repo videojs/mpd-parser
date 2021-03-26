@@ -1,3 +1,26 @@
+<a name="0.16.0"></a>
+# [0.16.0](https://github.com/videojs/mpd-parser/compare/v0.15.4...v0.16.0) (2021-03-26)
+
+### Features
+
+* add a binary to convert mpd to m3u8 json in node ([#129](https://github.com/videojs/mpd-parser/issues/129)) ([608aa9d](https://github.com/videojs/mpd-parser/commit/608aa9d))
+* expose presentationTimeOffset on segments that have it ([#81](https://github.com/videojs/mpd-parser/issues/81)) ([8b58b39](https://github.com/videojs/mpd-parser/commit/8b58b39))
+* parse Label element and use as m3u8 group label ([#113](https://github.com/videojs/mpd-parser/issues/113)) ([5dde0e9](https://github.com/videojs/mpd-parser/commit/5dde0e9))
+
+### Bug Fixes
+
+* bump xmldom to prevent npm security issue ([#122](https://github.com/videojs/mpd-parser/issues/122)) ([e132e40](https://github.com/videojs/mpd-parser/commit/e132e40))
+* support multiple audio/subtitle playlists and export generateSidxKey ([#123](https://github.com/videojs/mpd-parser/issues/123)) ([f7105d8](https://github.com/videojs/mpd-parser/commit/f7105d8))
+
+### Chores
+
+* fix publish, add bin to files, update vjsverify ([cb4d772](https://github.com/videojs/mpd-parser/commit/cb4d772))
+
+### Documentation
+
+* better explain how to update the JS manifest files ([#130](https://github.com/videojs/mpd-parser/issues/130)) ([21aa91c](https://github.com/videojs/mpd-parser/commit/21aa91c))
+* update usage example in README ([#127](https://github.com/videojs/mpd-parser/issues/127)) ([f0da2cc](https://github.com/videojs/mpd-parser/commit/f0da2cc))
+
 <a name="0.15.4"></a>
 ## [0.15.4](https://github.com/videojs/mpd-parser/compare/v0.15.3...v0.15.4) (2021-02-24)
 An accidental republish of 0.15.3 with no changes.
