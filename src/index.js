@@ -1,10 +1,10 @@
 import { version } from '../package.json';
-import { toM3u8 } from './toM3u8';
+import { toM3u8, generateSidxKey } from './toM3u8';
 import { toPlaylists } from './toPlaylists';
 import { inheritAttributes } from './inheritAttributes';
 import { stringToMpdXml } from './stringToMpdXml';
 import { parseUTCTimingScheme } from './parseUTCTimingScheme';
-import {addSegmentsToPlaylist} from './segment/segmentBase.js';
+import {addSidxSegmentsToPlaylist} from './segment/segmentBase.js';
 
 const VERSION = version;
 
@@ -26,8 +26,6 @@ const parse = (manifestString, options = {}) => {
 const parseUTCTiming = (manifestString) =>
   parseUTCTimingScheme(stringToMpdXml(manifestString));
 
-const addSidxSegmentsToPlaylist = addSegmentsToPlaylist;
-
 export {
   VERSION,
   parse,
@@ -36,5 +34,6 @@ export {
   inheritAttributes,
   toPlaylists,
   toM3u8,
-  addSidxSegmentsToPlaylist
+  addSidxSegmentsToPlaylist,
+  generateSidxKey
 };

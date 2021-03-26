@@ -13,6 +13,7 @@ import locationsTemplate from './manifests/locations.mpd';
 import multiperiod from './manifests/multiperiod.mpd';
 import webmsegments from './manifests/webmsegments.mpd';
 import multiperiodDynamic from './manifests/multiperiod-dynamic.mpd';
+import audioOnly from './manifests/audio-only.mpd';
 import {
   parsedManifest as maatVttSegmentTemplateManifest
 } from './manifests/maat_vtt_segmentTemplate.js';
@@ -41,6 +42,10 @@ import {
 import {
   parsedManifest as vttCodecsManifest
 } from './manifests/vtt_codecs.js';
+
+import {
+  parsedManifest as audioOnlyManifest
+} from './manifests/audio-only.js';
 
 QUnit.module('mpd-parser');
 
@@ -88,6 +93,10 @@ QUnit.test('has parse', function(assert) {
   name: 'vtt_codecs',
   input: vttCodecsTemplate,
   expected: vttCodecsManifest
+}, {
+  name: 'audio-only',
+  input: audioOnly,
+  expected: audioOnlyManifest
 }].forEach(({ name, input, expected }) => {
   QUnit.test(`${name} test manifest`, function(assert) {
     const actual = parse(input);
