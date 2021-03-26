@@ -67,7 +67,7 @@ export const segmentsFromBase = (attributes) => {
  * @param {Object} sidx the parsed sidx box
  * @return {Object} the playlist object with the updated sidx information
  */
-export const addSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
+export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   // Retain init segment information
   const initSegment = playlist.sidx.map ? playlist.sidx.map : null;
   // Retain source duration from initial master manifest parsing
