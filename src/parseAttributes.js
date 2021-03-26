@@ -162,7 +162,7 @@ export const parsers = {
    *        value of the attribute as a string
    *
    * @return {number}
-   *         The aprsed presentationTimeOffset
+   *         The parsed presentationTimeOffset
    */
   presentationTimeOffset(value) {
     return parseInt(value, 10);
