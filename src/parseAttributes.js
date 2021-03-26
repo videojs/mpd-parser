@@ -149,9 +149,22 @@ export const parsers = {
    * @param {string} value
    *        value of attribute as a string
    * @return {number}
-   *         The aprsed timescale
+   *         The parsed timescale
    */
   timescale(value) {
+    return parseInt(value, 10);
+  },
+
+  /**
+   * Specifies the presentationTimeOffset.
+   *
+   * @param {string} value
+   *        value of the attribute as a string
+   *
+   * @return {number}
+   *         The parsed presentationTimeOffset
+   */
+  presentationTimeOffset(value) {
     return parseInt(value, 10);
   },
 

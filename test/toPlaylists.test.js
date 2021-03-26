@@ -169,3 +169,43 @@ QUnit.test('segment list', function(assert) {
 
   assert.deepEqual(toPlaylists(representations), playlists);
 });
+
+QUnit.test('presentationTimeOffset', function(assert) {
+  const representations = [{
+    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
+    segmentInfo: {
+      template: {
+        presentationTimeOffset: 100,
+        timescale: 4
+      }
+    }
+  }];
+
+  // the presentationTimeOffset output should be the value in the template
+  // divided by the timescale in the template.
+  // It should be available on segments
+  const playlists = [{
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      duration: 2,
+      presentationTimeOffset: 25,
+      timescale: 4
+    },
+    segments: [{
+      uri: '',
+      timeline: 0,
+      duration: 2,
+      presentationTimeOffset: 25,
+      resolvedUri: 'http://example.com/',
+      map: {
+        uri: '',
+        resolvedUri: 'http://example.com/'
+      },
+      number: 1
+    }]
+  }];
+
+  assert.deepEqual(toPlaylists(representations), playlists);
+});

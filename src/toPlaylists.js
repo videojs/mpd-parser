@@ -10,6 +10,12 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
   if (segmentInfo.template) {
     segmentsFn = segmentsFromTemplate;
     segmentAttributes = merge(attributes, segmentInfo.template);
+
+    if (segmentInfo.template.presentationTimeOffset) {
+      segmentAttributes.presentationTimeOffset =
+        segmentInfo.template.presentationTimeOffset / segmentInfo.template.timescale;
+    }
+
   } else if (segmentInfo.base) {
     segmentsFn = segmentsFromBase;
     segmentAttributes = merge(attributes, segmentInfo.base);
