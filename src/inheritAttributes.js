@@ -195,6 +195,27 @@ const generateKeySystemInformation = (contentProtectionNodes) => {
   }, {});
 };
 
+// defined in ANSI_SCTE 214-1 2016
+const parseCaptionServiceMetadata = (service) => {
+  // 608 captions
+  if (service.schemeIdUri === 'urn:scte:dash:cc:cea-608:2015') {
+    const values = service.value.split(';');
+
+    return values.map((value) => {
+      let channel; let language;
+
+      // default langauge to value
+      language = value;
+
+      if (/^CC\d=/.test(value)) {
+        [channel, language] = value.split('=');
+      }
+
+      return {channel, language};
+    });
+  }
+};
+
 /**
  * Maps an AdaptationSet node to a list of Representation information objects
  *
@@ -229,10 +250,17 @@ export const toRepresentations =
   const role = findChildren(adaptationSet, 'Role')[0];
   const roleAttributes = { role: parseAttributes(role) };
 
+  const accessibility = findChildren(adaptationSet, 'Accessibility')[0];
+
+  const accessibilityAttributes = {
+    captionServices: parseCaptionServiceMetadata(parseAttributes(accessibility))
+  };
+
   let attrs = merge(
     periodAttributes,
     adaptationSetAttributes,
-    roleAttributes
+    roleAttributes,
+    accessibilityAttributes
   );
 
   const label = findChildren(adaptationSet, 'Label')[0];

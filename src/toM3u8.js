@@ -201,6 +201,23 @@ export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
   }, {});
 };
 
+const organizeCaptionServices = (captionServices) => captionServices.reduce((svcObj, svc) => {
+  if (!svc) {
+    return svcObj;
+  }
+
+  svc.forEach(({channel, language}) => {
+    svcObj[language] = {
+      autoselect: false,
+      default: false,
+      instreamId: channel,
+      language
+    };
+  });
+
+  return svcObj;
+}, {});
+
 export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
   const playlist = {
     attributes: {
@@ -258,6 +275,7 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   const videoPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(videoOnly)).map(formatVideoPlaylist);
   const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
   const vttPlaylists = dashPlaylists.filter(vttOnly);
+  const captions = dashPlaylists.map((playlist) => playlist.attributes.captionServices);
 
   const master = {
     allowCache: true,
@@ -295,6 +313,10 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
 
   if (vttPlaylists.length) {
     master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists, sidxMapping);
+  }
+
+  if (captions.length) {
+    master.mediaGroups['CLOSED-CAPTIONS'].cc = organizeCaptionServices(captions);
   }
 
   return master;
