@@ -1,6 +1,7 @@
 import {
   inheritAttributes,
   buildBaseUrls,
+  parseCaptionServiceMetadata,
   getSegmentInformation
 } from '../src/inheritAttributes';
 import { stringToMpdXml } from '../src/stringToMpdXml';
@@ -172,6 +173,62 @@ QUnit.test('gets SegmentTemplate and SegmentTimeline attributes', function(asser
     getSegmentInformation(adaptationSet), expected,
     'SegmentTemplate and SegmentTimeline info'
   );
+});
+
+QUnit.module('caption service metadata');
+
+QUnit.test('parsed 608 metadata', function(assert) {
+  const getmd = (value) => ({
+    schemeIdUri: 'urn:scte:dash:cc:cea-608:2015',
+    value
+  });
+
+  const assertServices = (services, expected, message) => {
+    services.forEach((service, i) => {
+      assert.deepEqual(service, expected[i], message);
+    });
+  };
+
+  assertServices(parseCaptionServiceMetadata(getmd('CC1')), [{
+    channel: 'CC1',
+    language: 'CC1'
+  }], 'CC1');
+  assertServices(parseCaptionServiceMetadata(getmd('CC2')), [{
+    channel: 'CC2',
+    language: 'CC2'
+  }], 'CC2');
+  assertServices(parseCaptionServiceMetadata(getmd('English')), [{
+    channel: undefined,
+    language: 'English'
+  }], 'English');
+  assertServices(parseCaptionServiceMetadata(getmd('CC1;CC2')), [{
+    channel: 'CC1',
+    language: 'CC1'
+  }, {
+    channel: 'CC2',
+    language: 'CC2'
+  }], 'CC1;CC2');
+  assertServices(parseCaptionServiceMetadata(getmd('CC1=eng;CC3=swe')), [{
+    channel: 'CC1',
+    language: 'eng'
+  }, {
+    channel: 'CC3',
+    language: 'swe'
+  }], 'CC1=eng;CC3=swe');
+  assertServices(parseCaptionServiceMetadata(getmd('CC1=Hello;CC3=World')), [{
+    channel: 'CC1',
+    language: 'Hello'
+  }, {
+    channel: 'CC3',
+    language: 'World'
+  }], 'CC1=Hello;CC3=World');
+  assertServices(parseCaptionServiceMetadata(getmd('eng;swe')), [{
+    channel: undefined,
+    language: 'eng'
+  }, {
+    channel: undefined,
+    language: 'swe'
+  }], 'eng;CC3');
 });
 
 QUnit.module('inheritAttributes');
