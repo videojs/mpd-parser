@@ -252,18 +252,18 @@ export const toRepresentations =
   const role = findChildren(adaptationSet, 'Role')[0];
   const roleAttributes = { role: parseAttributes(role) };
 
-  const accessibility = findChildren(adaptationSet, 'Accessibility')[0];
-
-  const accessibilityAttributes = {
-    captionServices: parseCaptionServiceMetadata(parseAttributes(accessibility))
-  };
-
   let attrs = merge(
     periodAttributes,
     adaptationSetAttributes,
     roleAttributes,
-    accessibilityAttributes
   );
+
+  const accessibility = findChildren(adaptationSet, 'Accessibility')[0];
+  const captionServices = parseCaptionServiceMetadata(parseAttributes(accessibility));
+
+  if (captionServices) {
+    attrs = merge(attrs, { captionServices });
+  }
 
   const label = findChildren(adaptationSet, 'Label')[0];
 

@@ -275,7 +275,7 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   const videoPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(videoOnly)).map(formatVideoPlaylist);
   const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
   const vttPlaylists = dashPlaylists.filter(vttOnly);
-  const captions = dashPlaylists.map((playlist) => playlist.attributes.captionServices);
+  const captions = dashPlaylists.map((playlist) => playlist.attributes.captionServices).filter(Boolean);
 
   const master = {
     allowCache: true,
