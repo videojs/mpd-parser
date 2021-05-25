@@ -196,7 +196,7 @@ const generateKeySystemInformation = (contentProtectionNodes) => {
 };
 
 // defined in ANSI_SCTE 214-1 2016
-const parseCaptionServiceMetadata = (service) => {
+export const parseCaptionServiceMetadata = (service) => {
   // 608 captions
   if (service.schemeIdUri === 'urn:scte:dash:cc:cea-608:2015') {
     const values = service.value.split(';');
@@ -209,6 +209,8 @@ const parseCaptionServiceMetadata = (service) => {
 
       if (/^CC\d=/.test(value)) {
         [channel, language] = value.split('=');
+      } else if (/^CC\d$/.test(value)) {
+        channel = value;
       }
 
       return {channel, language};
