@@ -195,7 +195,7 @@ QUnit.test('parsed 608 metadata', function(assert) {
   };
 
   assertServices(parseCaptionServiceMetadata({
-    schemeIdUri: 'urn:scte:dash:cc:cea-708:2015',
+    schemeIdUri: 'random scheme',
     value: 'CC1'
   }), undefined, 'dont parse incorrect scheme ID for 608');
   assertServices(parseCaptionServiceMetadata(getmd('CC1')), [{

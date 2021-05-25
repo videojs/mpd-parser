@@ -204,7 +204,7 @@ export const parseCaptionServiceMetadata = (service) => {
     return values.map((value) => {
       let channel; let language;
 
-      // default langauge to value
+      // default language to value
       language = value;
 
       if (/^CC\d=/.test(value)) {
