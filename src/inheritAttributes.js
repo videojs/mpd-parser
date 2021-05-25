@@ -202,7 +202,8 @@ export const parseCaptionServiceMetadata = (service) => {
     const values = service.value.split(';');
 
     return values.map((value) => {
-      let channel; let language;
+      let channel;
+      let language;
 
       // default language to value
       language = value;
@@ -214,6 +215,64 @@ export const parseCaptionServiceMetadata = (service) => {
       }
 
       return {channel, language};
+    });
+  } else if (service.schemeIdUri === 'urn:scte:dash:cc:cea-708:2015') {
+    const values = service.value.split(';');
+
+    return values.map((value) => {
+      // service or channel number 1-63
+      let channel;
+      // language is a 3ALPHA per ISO 639.2/B
+      // field is required
+      let language;
+      // BIT 1/0 or ?
+      // default value is 1, meaning 16:9 aspect ratio, 0 is 4:3, ? is unknown
+      let aspectRatio = 1;
+      // BIT 1/0
+      // easy reader flag indicated the text is tailed to the needs of beginning readers
+      // default 0, or off
+      let easyReader = 0;
+      // BIT 1/0
+      // If 3d metadata is present (CEA-708.1) then 1
+      // default 0
+      let threed = 0;
+
+      if (/=/.test(value)) {
+        let opts;
+
+        [channel, opts = ''] = value.split('=');
+
+        language = value;
+
+        opts.split(',').forEach((opt) => {
+          const [name, val] = opt.split(':');
+
+          if (name === 'lang') {
+            language = val;
+
+          // er for easyReadery
+          } else if (name === 'er') {
+            easyReader = Number(val);
+
+          // war for wide aspect ratio
+          } else if (name === 'war') {
+            aspectRatio = Number(val);
+
+          } else if (name === '3D') {
+            threed = Number(val);
+          }
+        });
+      } else {
+        language = value;
+      }
+
+      return {
+        channel,
+        language,
+        aspectRatio,
+        easyReader,
+        '3D': threed
+      };
     });
   }
 };
