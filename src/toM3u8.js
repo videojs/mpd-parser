@@ -206,13 +206,29 @@ const organizeCaptionServices = (captionServices) => captionServices.reduce((svc
     return svcObj;
   }
 
-  svc.forEach(({channel, language}) => {
+  svc.forEach((service) => {
+    const {
+      channel,
+      language
+    } = service;
+
     svcObj[language] = {
       autoselect: false,
       default: false,
       instreamId: channel,
       language
     };
+
+    if (service.hasOwnProperty('aspectRatio')) {
+      svcObj[language].aspectRatio = service.aspectRatio;
+    }
+    if (service.hasOwnProperty('easyReader')) {
+      svcObj[language].easyReader = service.easyReader;
+    }
+    if (service.hasOwnProperty('3D')) {
+      svcObj[language]['3D'] = service['3D'];
+    }
+
   });
 
   return svcObj;
