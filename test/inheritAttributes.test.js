@@ -184,11 +184,20 @@ QUnit.test('parsed 608 metadata', function(assert) {
   });
 
   const assertServices = (services, expected, message) => {
+    if (!services) {
+      assert.notOk(expected, message);
+      return;
+    }
+
     services.forEach((service, i) => {
       assert.deepEqual(service, expected[i], message);
     });
   };
 
+  assertServices(parseCaptionServiceMetadata({
+    schemeIdUri: 'urn:scte:dash:cc:cea-708:2015',
+    value: 'CC1'
+  }), undefined, 'dont parse incorrect scheme ID for 608');
   assertServices(parseCaptionServiceMetadata(getmd('CC1')), [{
     channel: 'CC1',
     language: 'CC1'
