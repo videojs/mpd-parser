@@ -20,7 +20,7 @@ export const parsedManifest = {
         eng: {
           'autoselect': false,
           'default': false,
-          'instreamId': '2',
+          'instreamId': 'SERVICE2',
           'language': 'eng',
           'aspectRatio': 1,
           'easyReader': 1,

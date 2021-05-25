@@ -285,13 +285,13 @@ QUnit.test('parsed 708 metadata', function(assert) {
   }], 'eng;swe');
 
   assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng;2=lang:swe')), [{
-    'channel': '1',
+    'channel': 'SERVICE1',
     'language': 'eng',
     'aspectRatio': 1,
     'easyReader': 0,
     '3D': 0
   }, {
-    'channel': '2',
+    'channel': 'SERVICE2',
     'language': 'swe',
     'aspectRatio': 1,
     'easyReader': 0,
@@ -299,7 +299,7 @@ QUnit.test('parsed 708 metadata', function(assert) {
   }], '1=lang:eng;2=lang:swe');
 
   assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng;swe')), [{
-    'channel': '1',
+    'channel': 'SERVICE1',
     'language': 'eng',
     'aspectRatio': 1,
     'easyReader': 0,
@@ -313,13 +313,13 @@ QUnit.test('parsed 708 metadata', function(assert) {
   }], 'mixed 1=lang:eng;swe');
 
   assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng;2=lang:eng,war:1,er:1')), [{
-    'channel': '1',
+    'channel': 'SERVICE1',
     'language': 'eng',
     'aspectRatio': 1,
     'easyReader': 0,
     '3D': 0
   }, {
-    'channel': '2',
+    'channel': 'SERVICE2',
     'language': 'eng',
     'aspectRatio': 1,
     'easyReader': 1,
@@ -327,13 +327,13 @@ QUnit.test('parsed 708 metadata', function(assert) {
   }], '1=lang:eng;2=lang:eng,war:1,er:1');
 
   assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng,war:0;2=lang:eng,3D:1,er:1')), [{
-    'channel': '1',
+    'channel': 'SERVICE1',
     'language': 'eng',
     'aspectRatio': 0,
     'easyReader': 0,
     '3D': 0
   }, {
-    'channel': '2',
+    'channel': 'SERVICE2',
     'language': 'eng',
     'aspectRatio': 1,
     'easyReader': 1,

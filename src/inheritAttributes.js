@@ -266,6 +266,10 @@ export const parseCaptionServiceMetadata = (service) => {
         language = value;
       }
 
+      if (channel) {
+        channel = 'SERVICE' + channel;
+      }
+
       return {
         channel,
         language,
