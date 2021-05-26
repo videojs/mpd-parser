@@ -220,63 +220,63 @@ export const parseCaptionServiceMetadata = (service) => {
     const values = service.value.split(';');
 
     return values.map((value) => {
-      // service or channel number 1-63
-      let channel;
-      // language is a 3ALPHA per ISO 639.2/B
-      // field is required
-      let language;
-      // BIT 1/0 or ?
-      // default value is 1, meaning 16:9 aspect ratio, 0 is 4:3, ? is unknown
-      let aspectRatio = 1;
-      // BIT 1/0
-      // easy reader flag indicated the text is tailed to the needs of beginning readers
-      // default 0, or off
-      let easyReader = 0;
-      // BIT 1/0
-      // If 3d metadata is present (CEA-708.1) then 1
-      // default 0
-      let threed = 0;
+      const flags = {
+        // service or channel number 1-63
+        'channel': undefined,
+
+        // language is a 3ALPHA per ISO 639.2/B
+        // field is required
+        'language': undefined,
+
+        // BIT 1/0 or ?
+        // default value is 1, meaning 16:9 aspect ratio, 0 is 4:3, ? is unknown
+        'aspectRatio': 1,
+
+        // BIT 1/0
+        // easy reader flag indicated the text is tailed to the needs of beginning readers
+        // default 0, or off
+        'easyReader': 0,
+
+        // BIT 1/0
+        // If 3d metadata is present (CEA-708.1) then 1
+        // default 0
+        '3D': 0
+      };
 
       if (/=/.test(value)) {
-        let opts;
 
-        [channel, opts = ''] = value.split('=');
+        const [channel, opts = ''] = value.split('=');
 
-        language = value;
+        flags.channel = channel;
+        flags.language = value;
 
         opts.split(',').forEach((opt) => {
           const [name, val] = opt.split(':');
 
           if (name === 'lang') {
-            language = val;
+            flags.language = val;
 
           // er for easyReadery
           } else if (name === 'er') {
-            easyReader = Number(val);
+            flags.easyReader = Number(val);
 
           // war for wide aspect ratio
           } else if (name === 'war') {
-            aspectRatio = Number(val);
+            flags.aspectRatio = Number(val);
 
           } else if (name === '3D') {
-            threed = Number(val);
+            flags['3D'] = Number(val);
           }
         });
       } else {
-        language = value;
+        flags.language = value;
       }
 
-      if (channel) {
-        channel = 'SERVICE' + channel;
+      if (flags.channel) {
+        flags.channel = 'SERVICE' + flags.channel;
       }
 
-      return {
-        channel,
-        language,
-        aspectRatio,
-        easyReader,
-        '3D': threed
-      };
+      return flags;
     });
   }
 };
