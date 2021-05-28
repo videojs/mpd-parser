@@ -9,6 +9,7 @@ import maatVttSegmentTemplate from './manifests/maat_vtt_segmentTemplate.mpd';
 import segmentBaseTemplate from './manifests/segmentBase.mpd';
 import segmentListTemplate from './manifests/segmentList.mpd';
 import cc608CaptionsTemplate from './manifests/608-captions.mpd';
+import cc708CaptionsTemplate from './manifests/708-captions.mpd';
 import locationTemplate from './manifests/location.mpd';
 import locationsTemplate from './manifests/locations.mpd';
 import multiperiod from './manifests/multiperiod.mpd';
@@ -27,6 +28,9 @@ import {
 import {
   parsedManifest as cc608CaptionsManifest
 } from './manifests/608-captions.js';
+import {
+  parsedManifest as cc708CaptionsManifest
+} from './manifests/708-captions.js';
 import {
   parsedManifest as multiperiodManifest
 } from './manifests/multiperiod.js';
@@ -77,6 +81,10 @@ QUnit.test('has parse', function(assert) {
   name: '608-captions',
   input: cc608CaptionsTemplate,
   expected: cc608CaptionsManifest
+}, {
+  name: '708-captions',
+  input: cc708CaptionsTemplate,
+  expected: cc708CaptionsManifest
 }, {
   name: 'multiperiod',
   input: multiperiod,

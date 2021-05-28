@@ -202,7 +202,8 @@ export const parseCaptionServiceMetadata = (service) => {
     const values = service.value.split(';');
 
     return values.map((value) => {
-      let channel; let language;
+      let channel;
+      let language;
 
       // default language to value
       language = value;
@@ -214,6 +215,68 @@ export const parseCaptionServiceMetadata = (service) => {
       }
 
       return {channel, language};
+    });
+  } else if (service.schemeIdUri === 'urn:scte:dash:cc:cea-708:2015') {
+    const values = service.value.split(';');
+
+    return values.map((value) => {
+      const flags = {
+        // service or channel number 1-63
+        'channel': undefined,
+
+        // language is a 3ALPHA per ISO 639.2/B
+        // field is required
+        'language': undefined,
+
+        // BIT 1/0 or ?
+        // default value is 1, meaning 16:9 aspect ratio, 0 is 4:3, ? is unknown
+        'aspectRatio': 1,
+
+        // BIT 1/0
+        // easy reader flag indicated the text is tailed to the needs of beginning readers
+        // default 0, or off
+        'easyReader': 0,
+
+        // BIT 1/0
+        // If 3d metadata is present (CEA-708.1) then 1
+        // default 0
+        '3D': 0
+      };
+
+      if (/=/.test(value)) {
+
+        const [channel, opts = ''] = value.split('=');
+
+        flags.channel = channel;
+        flags.language = value;
+
+        opts.split(',').forEach((opt) => {
+          const [name, val] = opt.split(':');
+
+          if (name === 'lang') {
+            flags.language = val;
+
+          // er for easyReadery
+          } else if (name === 'er') {
+            flags.easyReader = Number(val);
+
+          // war for wide aspect ratio
+          } else if (name === 'war') {
+            flags.aspectRatio = Number(val);
+
+          } else if (name === '3D') {
+            flags['3D'] = Number(val);
+          }
+        });
+      } else {
+        flags.language = value;
+      }
+
+      if (flags.channel) {
+        flags.channel = 'SERVICE' + flags.channel;
+      }
+
+      return flags;
     });
   }
 };

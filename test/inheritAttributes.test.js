@@ -240,6 +240,199 @@ QUnit.test('parsed 608 metadata', function(assert) {
   }], 'eng;CC3');
 });
 
+QUnit.test('parsed 708 metadata', function(assert) {
+  const getmd = (value) => ({
+    schemeIdUri: 'urn:scte:dash:cc:cea-708:2015',
+    value
+  });
+
+  const assertServices = (services, expected, message) => {
+    if (!services) {
+      assert.notOk(expected, message);
+      return;
+    }
+
+    services.forEach((service, i) => {
+      assert.deepEqual(service, expected[i], message);
+    });
+  };
+
+  assertServices(parseCaptionServiceMetadata({
+    schemeIdUri: 'random scheme',
+    value: 'eng'
+  }), undefined, 'dont parse incorrect scheme for 708');
+
+  assertServices(parseCaptionServiceMetadata(getmd('eng')), [{
+    'channel': undefined,
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }], 'simple eng');
+
+  assertServices(parseCaptionServiceMetadata(getmd('eng;swe')), [{
+    'channel': undefined,
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'swe',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }], 'eng;swe');
+
+  assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng;2=lang:swe')), [{
+    'channel': 'SERVICE1',
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': 'SERVICE2',
+    'language': 'swe',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }], '1=lang:eng;2=lang:swe');
+
+  assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng;swe')), [{
+    'channel': 'SERVICE1',
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'swe',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }], 'mixed 1=lang:eng;swe');
+
+  assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng;2=lang:eng,war:1,er:1')), [{
+    'channel': 'SERVICE1',
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': 'SERVICE2',
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 1,
+    '3D': 0
+  }], '1=lang:eng;2=lang:eng,war:1,er:1');
+
+  assertServices(parseCaptionServiceMetadata(getmd('1=lang:eng,war:0;2=lang:eng,3D:1,er:1')), [{
+    'channel': 'SERVICE1',
+    'language': 'eng',
+    'aspectRatio': 0,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': 'SERVICE2',
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 1,
+    '3D': 1
+  }], '1=lang:eng,war:0;2=lang:eng,3D:1,er:1');
+
+  assertServices(parseCaptionServiceMetadata(getmd('eng;fre;spa;jpn;deu;swe;kor;lat;zho;heb;rus;ara;hin;por;tur')), [{
+    'channel': undefined,
+    'language': 'eng',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'fre',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'spa',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'jpn',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'deu',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'swe',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'kor',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'lat',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'zho',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'heb',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'rus',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'ara',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'hin',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'por',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }, {
+    'channel': undefined,
+    'language': 'tur',
+    'aspectRatio': 1,
+    'easyReader': 0,
+    '3D': 0
+  }], 'make sure that parsing 15 services works');
+});
+
 QUnit.module('inheritAttributes');
 
 QUnit.test('needs at least one Period', function(assert) {
