@@ -848,6 +848,73 @@ QUnit.test('playlists with label', function(assert) {
   assert.ok(label in output.mediaGroups.AUDIO.audio, 'label exists');
 });
 
+QUnit.test('608 captions', function(assert) {
+  const input = [{
+    attributes: {
+      captionServices: [{
+        channel: 'CC1',
+        language: 'CC1'
+      }, {
+        channel: 'CC2',
+        language: 'CC2'
+      }, {
+        channel: undefined,
+        language: 'English'
+      }, {
+        channel: 'CC4',
+        language: 'eng'
+      }],
+      id: '1',
+      codecs: 'foo;bar',
+      sourceDuration: 100,
+      duration: 0,
+      bandwidth: 20000,
+      periodIndex: 1,
+      mimeType: 'audio/mp4',
+      type: 'dynamic'
+    },
+    segments: []
+  }, {
+    attributes: {
+      id: '2',
+      codecs: 'foo;bar',
+      sourceDuration: 100,
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'audio/mp4'
+    },
+    segments: []
+  }, {
+    attributes: {
+      sourceDuration: 100,
+      id: '1',
+      width: 800,
+      height: 600,
+      codecs: 'foo;bar',
+      duration: 0,
+      bandwidth: 10000,
+      periodIndex: 1,
+      mimeType: 'video/mp4'
+    },
+    segments: []
+  }];
+  const output = toM3u8(input);
+
+  const cc = output.mediaGroups['CLOSED-CAPTIONS'].cc;
+
+  Object.keys(cc).forEach((key) => {
+    assert.notOk(cc[key].autoselect, 'no autoselect');
+    assert.notOk(cc[key].default, 'no default');
+  });
+
+  assert.deepEqual(Object.keys(cc), ['CC1', 'CC2', 'English', 'eng'], 'we have 4 channels');
+  assert.equal(cc.CC1.instreamId, 'CC1', 'CC1 has an instreamId of CC1');
+  assert.equal(cc.CC2.instreamId, 'CC2', 'CC2 has an instreamId of CC1');
+  assert.equal(cc.English.instreamId, undefined, 'English captions dont have an instreamId');
+  assert.equal(cc.eng.instreamId, 'CC4', 'eng captions have an instreamId of CC4');
+});
+
 QUnit.module('generateSidxKey');
 
 QUnit.test('generates correct key', function(assert) {
