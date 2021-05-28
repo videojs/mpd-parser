@@ -7,7 +7,7 @@ import {
 QUnit.module('urlType - urlTypeConverter');
 
 QUnit.test('returns correct object if given baseUrl only', function(assert) {
-  assert.deepEqual(urlTypeConverter({ baseUrl: 'http://example.com' }), {
+  assert.deepEqual(urlTypeConverter({ baseUrl: 'http://example.com/' }), {
     resolvedUri: 'http://example.com/',
     uri: ''
   });
@@ -55,7 +55,7 @@ QUnit.test('returns correct object if given baseUrl, source and indexRange', fun
 
 QUnit.test('returns correct object if given baseUrl and range', function(assert) {
   assert.deepEqual(urlTypeConverter({
-    baseUrl: 'http://example.com',
+    baseUrl: 'http://example.com/',
     range: '101-105'
   }), {
     resolvedUri: 'http://example.com/',
@@ -69,7 +69,7 @@ QUnit.test('returns correct object if given baseUrl and range', function(assert)
 
 QUnit.test('returns correct object if given baseUrl and indexRange', function(assert) {
   assert.deepEqual(urlTypeConverter({
-    baseUrl: 'http://example.com',
+    baseUrl: 'http://example.com/',
     indexRange: '101-105'
   }), {
     resolvedUri: 'http://example.com/',
