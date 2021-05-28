@@ -1,4 +1,5 @@
 import resolveUrl from '@videojs/vhs-utils/es/resolve-url';
+import window from 'global/window';
 
 /**
  * @typedef {Object} SingleUri
@@ -37,21 +38,24 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexR
     let startRange = parseInt(ranges[0], 10);
     let endRange = parseInt(ranges[1], 10);
 
-    if (startRange > Number.MAX_SAFE_INTEGER) {
-      startRange = global.BigInt(ranges[0]);
+    if (startRange > Number.MAX_SAFE_INTEGER && window.BigInt) {
+      startRange = window.BigInt(ranges[0]);
     }
 
-    if (endRange > Number.MAX_SAFE_INTEGER) {
-      endRange = global.BigInt(ranges[1]);
+    if (endRange > Number.MAX_SAFE_INTEGER && window.BigInt) {
+      endRange = window.BigInt(ranges[1]);
     }
 
     let length;
 
-    // eslint-disable-next-line
-    if (typeof endRange === 'bigint' || typeof startRange === 'bigInt') {
-      length = global.BigInt(endRange) - global.BigInt(startRange) - global.BigInt(1);
+    if (typeof endRange === 'bigint' || typeof startRange === 'bigint') {
+      length = window.BigInt(endRange) - window.BigInt(startRange) + window.BigInt(1);
     } else {
-      length = endRange - startRange - 1;
+      length = endRange - startRange + 1;
+    }
+
+    if (typeof length === 'bigint' && length < Number.MAX_SAFE_INTEGER) {
+      length = Number(length);
     }
 
     // byterange should be inclusive according to
@@ -70,9 +74,8 @@ export const byteRangeToString = (byterange) => {
   // header uses inclusive ranges
   let endRange;
 
-  // eslint-disable-next-line
   if (typeof byterange.offset === 'bigint' || typeof byterange.length === 'bigint') {
-    endRange = global.BigInt(byterange.offset) + global.BigInt(byterange.length) - global.BigInt(1);
+    endRange = window.BigInt(byterange.offset) + window.BigInt(byterange.length) - window.BigInt(1);
   } else {
     endRange = byterange.offset + byterange.length - 1;
   }
