@@ -83,7 +83,14 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   const segments = [];
 
   // firstOffset is the offset from the end of the sidx box
-  let startIndex = sidxEnd + sidx.firstOffset;
+  let startIndex;
+
+  // eslint-disable-next-line
+  if (typeof sidx.firstOffset === 'bigint') {
+    startIndex = global.BigInt(sidxEnd) + sidx.firstOffset;
+  } else {
+    startIndex = sidxEnd + sidx.firstOffset;
+  }
 
   for (let i = 0; i < mediaReferences.length; i++) {
     const reference = sidx.references[i];
@@ -93,7 +100,14 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
     // this will be converted to seconds when generating segments
     const duration = reference.subsegmentDuration;
     // should be an inclusive range
-    const endIndex = startIndex + size - 1;
+    let endIndex;
+
+    // eslint-disable-next-line
+    if (typeof startIndex === 'bigint') {
+      endIndex = startIndex + global.BigInt(size) - global.BigInt(1);
+    } else {
+      endIndex = startIndex + size - 1;
+    }
     const indexRange = `${startIndex}-${endIndex}`;
 
     const attributes = {

@@ -34,13 +34,30 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexR
   if (range || indexRange) {
     const rangeStr = range ? range : indexRange;
     const ranges = rangeStr.split('-');
-    const startRange = parseInt(ranges[0], 10);
-    const endRange = parseInt(ranges[1], 10);
+    let startRange = parseInt(ranges[0], 10);
+    let endRange = parseInt(ranges[1], 10);
+
+    if (startRange > Number.MAX_SAFE_INTEGER) {
+      startRange = global.BigInt(ranges[0]);
+    }
+
+    if (endRange > Number.MAX_SAFE_INTEGER) {
+      endRange = global.BigInt(ranges[1]);
+    }
+
+    let length;
+
+    // eslint-disable-next-line
+    if (typeof endRange === 'bigint' || typeof startRange === 'bigInt') {
+      length = global.BigInt(endRange) - global.BigInt(startRange) - global.BigInt(1);
+    } else {
+      length = endRange - startRange - 1;
+    }
 
     // byterange should be inclusive according to
     // RFC 2616, Clause 14.35.1
     segment.byterange = {
-      length: endRange - startRange + 1,
+      length,
       offset: startRange
     };
   }
@@ -51,7 +68,14 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexR
 export const byteRangeToString = (byterange) => {
   // `endRange` is one less than `offset + length` because the HTTP range
   // header uses inclusive ranges
-  const endRange = byterange.offset + byterange.length - 1;
+  let endRange;
+
+  // eslint-disable-next-line
+  if (typeof byterange.offset === 'bigint' || typeof byterange.length === 'bigint') {
+    endRange = global.BigInt(byterange.offset) + global.BigInt(byterange.length) - global.BigInt(1);
+  } else {
+    endRange = byterange.offset + byterange.length - 1;
+  }
 
   return `${byterange.offset}-${endRange}`;
 };
