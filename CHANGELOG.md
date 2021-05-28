@@ -1,3 +1,14 @@
+<a name="0.17.0"></a>
+# [0.17.0](https://github.com/videojs/mpd-parser/compare/v0.16.0...v0.17.0) (2021-05-28)
+
+### Features
+
+* caption services metadata support ([#131](https://github.com/videojs/mpd-parser/issues/131)) ([75ecbc2](https://github.com/videojs/mpd-parser/commit/75ecbc2))
+
+### Chores
+
+* **package:** update to vhs-utils[@3](https://github.com/3).0.2 ([#134](https://github.com/videojs/mpd-parser/issues/134)) ([744142d](https://github.com/videojs/mpd-parser/commit/744142d))
+
 <a name="0.16.0"></a>
 # [0.16.0](https://github.com/videojs/mpd-parser/compare/v0.15.4...v0.16.0) (2021-03-26)
 
