@@ -195,6 +195,92 @@ const generateKeySystemInformation = (contentProtectionNodes) => {
   }, {});
 };
 
+// defined in ANSI_SCTE 214-1 2016
+export const parseCaptionServiceMetadata = (service) => {
+  // 608 captions
+  if (service.schemeIdUri === 'urn:scte:dash:cc:cea-608:2015') {
+    const values = service.value.split(';');
+
+    return values.map((value) => {
+      let channel;
+      let language;
+
+      // default language to value
+      language = value;
+
+      if (/^CC\d=/.test(value)) {
+        [channel, language] = value.split('=');
+      } else if (/^CC\d$/.test(value)) {
+        channel = value;
+      }
+
+      return {channel, language};
+    });
+  } else if (service.schemeIdUri === 'urn:scte:dash:cc:cea-708:2015') {
+    const values = service.value.split(';');
+
+    return values.map((value) => {
+      const flags = {
+        // service or channel number 1-63
+        'channel': undefined,
+
+        // language is a 3ALPHA per ISO 639.2/B
+        // field is required
+        'language': undefined,
+
+        // BIT 1/0 or ?
+        // default value is 1, meaning 16:9 aspect ratio, 0 is 4:3, ? is unknown
+        'aspectRatio': 1,
+
+        // BIT 1/0
+        // easy reader flag indicated the text is tailed to the needs of beginning readers
+        // default 0, or off
+        'easyReader': 0,
+
+        // BIT 1/0
+        // If 3d metadata is present (CEA-708.1) then 1
+        // default 0
+        '3D': 0
+      };
+
+      if (/=/.test(value)) {
+
+        const [channel, opts = ''] = value.split('=');
+
+        flags.channel = channel;
+        flags.language = value;
+
+        opts.split(',').forEach((opt) => {
+          const [name, val] = opt.split(':');
+
+          if (name === 'lang') {
+            flags.language = val;
+
+          // er for easyReadery
+          } else if (name === 'er') {
+            flags.easyReader = Number(val);
+
+          // war for wide aspect ratio
+          } else if (name === 'war') {
+            flags.aspectRatio = Number(val);
+
+          } else if (name === '3D') {
+            flags['3D'] = Number(val);
+          }
+        });
+      } else {
+        flags.language = value;
+      }
+
+      if (flags.channel) {
+        flags.channel = 'SERVICE' + flags.channel;
+      }
+
+      return flags;
+    });
+  }
+};
+
 /**
  * Maps an AdaptationSet node to a list of Representation information objects
  *
@@ -232,8 +318,15 @@ export const toRepresentations =
   let attrs = merge(
     periodAttributes,
     adaptationSetAttributes,
-    roleAttributes
+    roleAttributes,
   );
+
+  const accessibility = findChildren(adaptationSet, 'Accessibility')[0];
+  const captionServices = parseCaptionServiceMetadata(parseAttributes(accessibility));
+
+  if (captionServices) {
+    attrs = merge(attrs, { captionServices });
+  }
 
   const label = findChildren(adaptationSet, 'Label')[0];
 
