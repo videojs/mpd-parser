@@ -4,6 +4,7 @@ import {
   addSidxSegmentsToPlaylist
 } from '../../src/segment/segmentBase';
 import errors from '../../src/errors';
+import window from 'global/window';
 
 QUnit.module('segmentBase - segmentsFromBase');
 
@@ -199,3 +200,61 @@ QUnit.test('generates playlist from sidx references', function(assert) {
     number: 0
   }]);
 });
+
+if (window.BigInt) {
+  const BigInt = window.BigInt;
+
+  QUnit.test('generates playlist from sidx references with BigInt', function(assert) {
+    const baseUrl = 'http://www.example.com/i.fmp4';
+    const playlist = {
+      sidx: {
+        map: {
+          byterange: {
+            offset: 0,
+            length: 10
+          }
+        },
+        duration: 10,
+        byterange: {
+          offset: 9,
+          length: 11
+        }
+      },
+      segments: []
+    };
+    const offset = BigInt(Number.MAX_SAFE_INTEGER) + BigInt(10);
+    const sidx = {
+      timescale: 1,
+      firstOffset: offset,
+      references: [{
+        referenceType: 0,
+        referencedSize: 5,
+        subsegmentDuration: 2
+      }]
+    };
+
+    const segments = addSidxSegmentsToPlaylist(playlist, sidx, baseUrl).segments;
+
+    assert.equal(typeof segments[0].byterange.offset, 'bigint', 'bigint offset');
+    segments[0].byterange.offset = segments[0].byterange.offset.toString();
+
+    assert.deepEqual(segments, [{
+      map: {
+        byterange: {
+          offset: 0,
+          length: 10
+        }
+      },
+      uri: 'http://www.example.com/i.fmp4',
+      resolvedUri: 'http://www.example.com/i.fmp4',
+      byterange: {
+        // sidx byterange offset + length = 20
+        offset: (window.BigInt(20) + offset).toString(),
+        length: 5
+      },
+      duration: 2,
+      timeline: 0,
+      number: 0
+    }]);
+  });
+}

@@ -138,3 +138,20 @@ QUnit.test('returns correct string representing byterange object', function(asse
     '0-99'
   );
 });
+
+if (window.BigInt) {
+  const BigInt = window.BigInt;
+
+  QUnit.test('can handle bigint numbers', function(assert) {
+    const offset = BigInt(Number.MAX_SAFE_INTEGER) + BigInt(10);
+    const length = BigInt(Number.MAX_SAFE_INTEGER) + BigInt(5);
+
+    assert.strictEqual(
+      byteRangeToString({
+        offset,
+        length
+      }),
+      `${offset}-${offset + length - BigInt(1)}`
+    );
+  });
+}

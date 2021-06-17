@@ -1,6 +1,7 @@
 import errors from '../errors';
 import urlTypeConverter from './urlType';
 import { parseByDuration } from './durationTimeParser';
+import window from 'global/window';
 
 /**
  * Translates SegmentBase into a set of segments.
@@ -87,7 +88,7 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
 
   // eslint-disable-next-line
   if (typeof sidx.firstOffset === 'bigint') {
-    startIndex = global.BigInt(sidxEnd) + sidx.firstOffset;
+    startIndex = window.BigInt(sidxEnd) + sidx.firstOffset;
   } else {
     startIndex = sidxEnd + sidx.firstOffset;
   }
@@ -104,7 +105,7 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
 
     // eslint-disable-next-line
     if (typeof startIndex === 'bigint') {
-      endIndex = startIndex + global.BigInt(size) - global.BigInt(1);
+      endIndex = startIndex + window.BigInt(size) - window.BigInt(1);
     } else {
       endIndex = startIndex + size - 1;
     }
@@ -128,7 +129,12 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
     }
 
     segments.push(segment);
-    startIndex += size;
+    if (typeof startIndex === 'bigint') {
+      startIndex += window.BigInt(size);
+
+    } else {
+      startIndex += size;
+    }
   }
 
   playlist.segments = segments;
