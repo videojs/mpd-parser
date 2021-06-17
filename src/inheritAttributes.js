@@ -318,7 +318,7 @@ export const toRepresentations =
   let attrs = merge(
     periodAttributes,
     adaptationSetAttributes,
-    roleAttributes,
+    roleAttributes
   );
 
   const accessibility = findChildren(adaptationSet, 'Accessibility')[0];
