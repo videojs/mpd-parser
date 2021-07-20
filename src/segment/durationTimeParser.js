@@ -136,7 +136,7 @@ export const toSegments = (attributes) => (number, index) => {
  */
 export const parseByDuration = (attributes) => {
   const {
-    type = 'static',
+    type,
     duration,
     timescale = 1,
     sourceDuration

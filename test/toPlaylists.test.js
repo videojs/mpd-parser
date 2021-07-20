@@ -11,7 +11,12 @@ QUnit.test('no representations', function(assert) {
 
 QUnit.test('pretty simple', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      type: 'static'
+    },
     segmentInfo: {
       template: { }
     }
@@ -22,7 +27,8 @@ QUnit.test('pretty simple', function(assert) {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       sourceDuration: 2,
-      duration: 2
+      duration: 2,
+      type: 'static'
     },
     segments: [{
       uri: '',
@@ -42,7 +48,12 @@ QUnit.test('pretty simple', function(assert) {
 
 QUnit.test('segment base', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      type: 'static'
+    },
     segmentInfo: {
       base: true
     }
@@ -53,7 +64,8 @@ QUnit.test('segment base', function(assert) {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       sourceDuration: 2,
-      duration: 2
+      duration: 2,
+      type: 'static'
     },
     segments: [{
       map: {
@@ -77,7 +89,8 @@ QUnit.test('segment base with sidx', function(assert) {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       sourceDuration: 2,
-      indexRange: '10-19'
+      indexRange: '10-19',
+      type: 'static'
     },
     segmentInfo: {
       base: true
@@ -90,7 +103,8 @@ QUnit.test('segment base with sidx', function(assert) {
       periodIndex: 0,
       sourceDuration: 2,
       duration: 2,
-      indexRange: '10-19'
+      indexRange: '10-19',
+      type: 'static'
     },
     segments: [],
     sidx: {
@@ -119,7 +133,8 @@ QUnit.test('segment list', function(assert) {
       baseUrl: 'http://example.com/',
       duration: 10,
       sourceDuration: 11,
-      periodIndex: 0
+      periodIndex: 0,
+      type: 'static'
     },
     segmentInfo: {
       list: {
@@ -142,7 +157,8 @@ QUnit.test('segment list', function(assert) {
       }, {
         media: '2.fmp4'
       }],
-      periodIndex: 0
+      periodIndex: 0,
+      type: 'static'
     },
     segments: [{
       duration: 10,
@@ -172,7 +188,12 @@ QUnit.test('segment list', function(assert) {
 
 QUnit.test('presentationTimeOffset', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      type: 'static'
+    },
     segmentInfo: {
       template: {
         presentationTimeOffset: 100,
@@ -191,7 +212,8 @@ QUnit.test('presentationTimeOffset', function(assert) {
       sourceDuration: 2,
       duration: 2,
       presentationTimeOffset: 25,
-      timescale: 4
+      timescale: 4,
+      type: 'static'
     },
     segments: [{
       uri: '',

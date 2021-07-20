@@ -121,7 +121,8 @@ QUnit.test(
       startNumber: 3,
       timescale: 1000,
       sourceDuration: 42,
-      periodIndex: 1
+      periodIndex: 1,
+      type: 'static'
     };
 
     assert.deepEqual(
@@ -138,7 +139,8 @@ QUnit.test('uses @duration attribute when present', function(assert) {
     timescale: 1000,
     sourceDuration: 16,
     duration: 6000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
 
   assert.deepEqual(
@@ -173,7 +175,8 @@ QUnit.test('parseByDuration allows non zero startNumber', function(assert) {
     timescale: 1000,
     sourceDuration: 16,
     duration: 6000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
 
   assert.deepEqual(
@@ -206,7 +209,8 @@ QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(
   const attributes = {
     sourceDuration: 11,
     duration: '4',
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
 
   assert.deepEqual(
@@ -240,7 +244,8 @@ QUnit.test('parseByDuration uses endNumber and has correct duration', function(a
     sourceDuration: 11,
     duration: '4',
     periodIndex: 1,
-    endNumber: '2'
+    endNumber: '2',
+    type: 'static'
   };
 
   assert.deepEqual(
@@ -268,7 +273,8 @@ QUnit.test('uses SegmentTimeline info when no @duration attribute', function(ass
     startNumber: 0,
     sourceDuration: 16,
     timescale: 1000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -323,7 +329,8 @@ QUnit.test('parseByTimeline allows non zero startNumber', function(assert) {
     startNumber: 101,
     sourceDuration: 16,
     timescale: 1000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -376,7 +383,8 @@ QUnit.test('parseByTimeline allows non zero startNumber', function(assert) {
 QUnit.test('parseByTimeline defaults 1 for startNumber and timescale', function(assert) {
   const attributes = {
     sourceDuration: 11,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -431,7 +439,8 @@ QUnit.test('defaults SegmentTimeline.S@t to 0 for first segment', function(asser
     startNumber: 0,
     sourceDuration: 16,
     timescale: 1000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -485,7 +494,8 @@ QUnit.test('allows non zero starting SegmentTimeline.S@t value', function(assert
     startNumber: 0,
     sourceDuration: 16,
     timescale: 1000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -540,7 +550,8 @@ QUnit.test('honors @r repeat attribute for SegmentTimeline.S', function(assert) 
     startNumber: 0,
     sourceDuration: 16,
     timescale: 1000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -614,7 +625,8 @@ QUnit.test('correctly handles negative @r repeat value', function(assert) {
     startNumber: 0,
     sourceDuration: 16,
     timescale: 1000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -689,7 +701,8 @@ QUnit.test('correctly handles negative @r repeat value for last S', function(ass
     startNumber: 0,
     sourceDuration: 15,
     timescale: 1000,
-    periodIndex: 1
+    periodIndex: 1,
+    type: 'static'
   };
   const segmentTimeline = [
     {
@@ -1367,7 +1380,8 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
     },
     media: '$RepresentationID$/$Bandwidth$/$Number%03d$-$Time%05d$.mp4',
     periodIndex: 1,
-    baseUrl: 'https://example.com/'
+    baseUrl: 'https://example.com/',
+    type: 'static'
   };
   const segments = [
     {
@@ -1425,7 +1439,8 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
     },
     media: '$RepresentationID$/$Bandwidth$/$Number%03d$-$Time%05d$.mp4',
     periodIndex: 1,
-    baseUrl: 'https://example.com/'
+    baseUrl: 'https://example.com/',
+    type: 'static'
   };
   const segments = [
     {

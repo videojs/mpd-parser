@@ -75,7 +75,7 @@ export const formatAudioPlaylist = ({ attributes, segments, sidx }, isAudioOnly)
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: (attributes.type || 'static') === 'static',
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
@@ -125,7 +125,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   return {
     attributes: m3u8Attributes,
     uri: '',
-    endList: (attributes.type || 'static') === 'static',
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
     targetDuration: attributes.duration,
@@ -249,7 +249,7 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: (attributes.type || 'static') === 'static',
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
@@ -283,7 +283,7 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   // grab all master attributes
   const {
     sourceDuration: duration,
-    type = 'static',
+    type,
     suggestedPresentationDelay,
     minimumUpdatePeriod
   } = dashPlaylists[0].attributes;

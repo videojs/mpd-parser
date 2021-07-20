@@ -22,7 +22,8 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     initialization: { sourceURL: 'init.fmp4' },
     periodIndex: 0,
     startNumber: 1,
-    baseUrl: 'http://example.com/'
+    baseUrl: 'http://example.com/',
+    type: 'static'
   };
 
   const inputTimeline = [{
@@ -102,7 +103,8 @@ QUnit.test(
       initialization: { sourceURL: 'init.fmp4' },
       periodIndex: 0,
       startNumber: 1,
-      baseUrl: 'http://example.com/'
+      baseUrl: 'http://example.com/',
+      type: 'static'
     };
 
     const inputTimeline = [{
@@ -153,7 +155,8 @@ QUnit.test(
       initialization: { sourceURL: 'init.fmp4' },
       periodIndex: 0,
       startNumber: 1,
-      baseUrl: 'http://example.com/'
+      baseUrl: 'http://example.com/',
+      type: 'static'
     };
 
     const inputTimeline = [{
@@ -234,7 +237,8 @@ QUnit.test('uses duration to set segments', function(assert) {
     periodIndex: 0,
     startNumber: 1,
     sourceDuration: 50,
-    baseUrl: 'http://example.com/'
+    baseUrl: 'http://example.com/',
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromList(inputAttributes), [{
@@ -309,7 +313,8 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     periodIndex: 0,
     startNumber: 1,
     sourceDuration: 25,
-    baseUrl: 'http://example.com/'
+    baseUrl: 'http://example.com/',
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromList(inputAttributes), [{
@@ -378,7 +383,8 @@ QUnit.test('timescale sets duration of last segment correctly', function(assert)
     periodIndex: 0,
     startNumber: 1,
     sourceDuration: 15,
-    baseUrl: 'http://example.com/'
+    baseUrl: 'http://example.com/',
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromList(inputAttributes), [{
@@ -419,7 +425,8 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
     periodIndex: 0,
     startNumber: 1,
     sourceDuration: 20,
-    baseUrl: 'http://example.com/'
+    baseUrl: 'http://example.com/',
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromList(inputAttributes), [{
@@ -468,7 +475,8 @@ QUnit.test(
       periodIndex: 0,
       startNumber: 1,
       sourceDuration: 20,
-      baseUrl: 'http://example.com/'
+      baseUrl: 'http://example.com/',
+      type: 'static'
     };
 
     const inputTimeline = [{
@@ -496,7 +504,8 @@ QUnit.test('throws error if timeline and duration are both defined', function(as
     periodIndex: 0,
     startNumber: 1,
     sourceDuration: 20,
-    baseUrl: 'http://example.com/'
+    baseUrl: 'http://example.com/',
+    type: 'static'
   };
 
   assert.throws(
@@ -518,7 +527,8 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
     periodIndex: 0,
     startNumber: 1,
     sourceDuration: 20,
-    baseUrl: 'http://example.com/'
+    baseUrl: 'http://example.com/',
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromList(inputAttributes), [{
