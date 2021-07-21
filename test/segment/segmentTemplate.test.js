@@ -122,7 +122,8 @@ QUnit.test(
       timescale: 1000,
       sourceDuration: 42,
       periodIndex: 1,
-      type: 'static'
+      type: 'static',
+      periodStart: 0
     };
 
     assert.deepEqual(
@@ -140,7 +141,8 @@ QUnit.test('uses @duration attribute when present', function(assert) {
     sourceDuration: 16,
     duration: 6000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
 
   assert.deepEqual(
@@ -176,7 +178,8 @@ QUnit.test('parseByDuration allows non zero startNumber', function(assert) {
     sourceDuration: 16,
     duration: 6000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
 
   assert.deepEqual(
@@ -210,7 +213,8 @@ QUnit.test('parseByDuration defaults 1 for startNumber and timescale', function(
     sourceDuration: 11,
     duration: '4',
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
 
   assert.deepEqual(
@@ -245,7 +249,8 @@ QUnit.test('parseByDuration uses endNumber and has correct duration', function(a
     duration: '4',
     periodIndex: 1,
     endNumber: '2',
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
 
   assert.deepEqual(
@@ -274,7 +279,8 @@ QUnit.test('uses SegmentTimeline info when no @duration attribute', function(ass
     sourceDuration: 16,
     timescale: 1000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -330,7 +336,8 @@ QUnit.test('parseByTimeline allows non zero startNumber', function(assert) {
     sourceDuration: 16,
     timescale: 1000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -384,7 +391,8 @@ QUnit.test('parseByTimeline defaults 1 for startNumber and timescale', function(
   const attributes = {
     sourceDuration: 11,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -440,7 +448,8 @@ QUnit.test('defaults SegmentTimeline.S@t to 0 for first segment', function(asser
     sourceDuration: 16,
     timescale: 1000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -495,7 +504,8 @@ QUnit.test('allows non zero starting SegmentTimeline.S@t value', function(assert
     sourceDuration: 16,
     timescale: 1000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -551,7 +561,8 @@ QUnit.test('honors @r repeat attribute for SegmentTimeline.S', function(assert) 
     sourceDuration: 16,
     timescale: 1000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -626,7 +637,8 @@ QUnit.test('correctly handles negative @r repeat value', function(assert) {
     sourceDuration: 16,
     timescale: 1000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -702,7 +714,8 @@ QUnit.test('correctly handles negative @r repeat value for last S', function(ass
     sourceDuration: 15,
     timescale: 1000,
     periodIndex: 1,
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segmentTimeline = [
     {
@@ -768,7 +781,8 @@ QUnit.test('correctly handles duration', function(assert) {
     availabilityStartTime: 0,
     startNumber: 1,
     duration: 2,
-    periodIndex: 1
+    periodIndex: 1,
+    periodStart: 0
   };
 
   assert.deepEqual(
@@ -1090,7 +1104,8 @@ QUnit.test('correctly handles duration with segmentTimeline', function(assert) {
     clientOffset: 0,
     availabilityStartTime: 0,
     startNumber: 1,
-    periodIndex: 1
+    periodIndex: 1,
+    periodStart: 0
   };
 
   const segmentTimeline = [
@@ -1381,7 +1396,8 @@ QUnit.test('constructs simple segment list and resolves uris', function(assert) 
     media: '$RepresentationID$/$Bandwidth$/$Number%03d$-$Time%05d$.mp4',
     periodIndex: 1,
     baseUrl: 'https://example.com/',
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segments = [
     {
@@ -1440,7 +1456,8 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
     media: '$RepresentationID$/$Bandwidth$/$Number%03d$-$Time%05d$.mp4',
     periodIndex: 1,
     baseUrl: 'https://example.com/',
-    type: 'static'
+    type: 'static',
+    periodStart: 0
   };
   const segments = [
     {

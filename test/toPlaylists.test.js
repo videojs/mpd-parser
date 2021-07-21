@@ -15,7 +15,8 @@ QUnit.test('pretty simple', function(assert) {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       sourceDuration: 2,
-      type: 'static'
+      type: 'static',
+      periodStart: 0
     },
     segmentInfo: {
       template: { }
@@ -26,6 +27,7 @@ QUnit.test('pretty simple', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 0,
       sourceDuration: 2,
       duration: 2,
       type: 'static'
@@ -192,7 +194,8 @@ QUnit.test('presentationTimeOffset', function(assert) {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       sourceDuration: 2,
-      type: 'static'
+      type: 'static',
+      periodStart: 25
     },
     segmentInfo: {
       template: {
@@ -209,6 +212,7 @@ QUnit.test('presentationTimeOffset', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 25,
       sourceDuration: 2,
       duration: 2,
       presentationTimeOffset: 25,
