@@ -485,6 +485,7 @@ QUnit.test('end to end - basic', function(assert) {
           value: 'main'
         },
         sourceDuration: 30,
+        type: 'static',
         width: 720,
         NOW,
         clientOffset: 0
@@ -503,6 +504,79 @@ QUnit.test('end to end - basic', function(assert) {
         periodIndex: 0,
         role: {},
         sourceDuration: 30,
+        type: 'static',
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {}
+    }]
+  };
+
+  assert.equal(actual.representationInfo.length, 2);
+  assert.deepEqual(actual, expected);
+});
+
+QUnit.test('end to end - basic dynamic', function(assert) {
+  const NOW = Date.now();
+
+  const actual = inheritAttributes(stringToMpdXml(`
+    <MPD type="dyanmic">
+      <BaseURL>https://www.example.com/base/</BaseURL>
+      <Period>
+        <AdaptationSet mimeType="video/mp4">
+          <Role value="main"></Role>
+          <SegmentTemplate></SegmentTemplate>
+          <Representation
+            bandwidth="5000000"
+            codecs="avc1.64001e"
+            height="404"
+            id="test"
+            width="720">
+          </Representation>
+        </AdaptationSet>
+        <AdaptationSet mimeType="text/vtt" lang="en">
+          <Representation bandwidth="256" id="en">
+            <BaseURL>https://example.com/en.vtt</BaseURL>
+          </Representation>
+        </AdaptationSet>
+      </Period>
+    </MPD>
+  `), { NOW });
+
+  const expected = {
+    locations: undefined,
+    representationInfo: [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 0,
+        type: 'dyanmic',
+        width: 720,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        id: 'en',
+        lang: 'en',
+        mimeType: 'text/vtt',
+        periodIndex: 0,
+        role: {},
+        sourceDuration: 0,
+        type: 'dyanmic',
         NOW,
         clientOffset: 0
       },
@@ -561,6 +635,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
           value: 'main'
         },
         sourceDuration: 30,
+        type: 'static',
         width: 720,
         NOW
       },
@@ -578,6 +653,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
         periodIndex: 0,
         role: {},
         sourceDuration: 30,
+        type: 'static',
         NOW,
         clientOffset: 0
       },
@@ -634,6 +710,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
           value: 'main'
         },
         sourceDuration: 30,
+        type: 'static',
         width: 720,
         NOW,
         clientOffset: 0
@@ -655,6 +732,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
           value: 'main'
         },
         sourceDuration: 30,
+        type: 'static',
         width: 720,
         NOW,
         clientOffset: 0
@@ -676,6 +754,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
           value: 'main'
         },
         sourceDuration: 30,
+        type: 'static',
         width: 720,
         NOW,
         clientOffset: 0
@@ -697,6 +776,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
           value: 'main'
         },
         sourceDuration: 30,
+        type: 'static',
         width: 720,
         NOW,
         clientOffset: 0
@@ -715,6 +795,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         periodIndex: 0,
         role: {},
         sourceDuration: 30,
+        type: 'static',
         NOW,
         clientOffset: 0
       },
@@ -730,6 +811,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         periodIndex: 0,
         role: {},
         sourceDuration: 30,
+        type: 'static',
         NOW,
         clientOffset: 0
       },
@@ -795,6 +877,7 @@ QUnit.test(
             value: 'main'
           },
           sourceDuration: 30,
+          type: 'static',
           width: 720,
           NOW,
           clientOffset: 0
@@ -819,6 +902,7 @@ QUnit.test(
             value: 'main'
           },
           sourceDuration: 30,
+          type: 'static',
           NOW,
           clientOffset: 0
         },
@@ -842,6 +926,7 @@ QUnit.test(
           periodIndex: 0,
           role: {},
           sourceDuration: 30,
+          type: 'static',
           NOW,
           clientOffset: 0
         },
@@ -904,6 +989,7 @@ QUnit.test(
             value: 'main'
           },
           sourceDuration: 30,
+          type: 'static',
           width: 720,
           NOW,
           clientOffset: 0
@@ -928,6 +1014,7 @@ QUnit.test(
             value: 'main'
           },
           sourceDuration: 30,
+          type: 'static',
           NOW,
           clientOffset: 0
         },
@@ -951,6 +1038,7 @@ QUnit.test(
           periodIndex: 0,
           role: {},
           sourceDuration: 30,
+          type: 'static',
           NOW,
           clientOffset: 0
         },
@@ -1021,6 +1109,7 @@ QUnit.test(
             value: 'main'
           },
           sourceDuration: 30,
+          type: 'static',
           width: 720,
           NOW,
           clientOffset: 0
@@ -1046,6 +1135,7 @@ QUnit.test(
             value: 'main'
           },
           sourceDuration: 30,
+          type: 'static',
           NOW,
           clientOffset: 0
         },
@@ -1069,6 +1159,7 @@ QUnit.test(
           periodIndex: 0,
           role: {},
           sourceDuration: 30,
+          type: 'static',
           NOW,
           clientOffset: 0
         },
@@ -1157,6 +1248,7 @@ QUnit.test(
         media: '$RepresentationID$/es/$Number$.m4f',
         segmentAlignment: 'true',
         sourceDuration: 30,
+        type: 'static',
         width: 720,
         startWithSAP: '1'
       },
@@ -1337,6 +1429,7 @@ QUnit.test(
         },
         segmentAlignment: 'true',
         sourceDuration: 30,
+        type: 'static',
         startWithSAP: '1',
         clientOffset: 0,
         initialization: {
@@ -1584,6 +1677,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       },
       segmentAlignment: 'true',
       sourceDuration: 30,
+      type: 'static',
       width: 720,
       startWithSAP: '1',
       startNumber: 0,

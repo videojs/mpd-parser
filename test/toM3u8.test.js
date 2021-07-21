@@ -12,7 +12,8 @@ QUnit.test('playlists', function(assert) {
       duration: 0,
       bandwidth: 20000,
       periodIndex: 1,
-      mimeType: 'audio/mp4'
+      mimeType: 'audio/mp4',
+      type: 'static'
     },
     segments: []
   }, {
@@ -23,7 +24,8 @@ QUnit.test('playlists', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'audio/mp4'
+      mimeType: 'audio/mp4',
+      type: 'static'
     },
     segments: []
   }, {
@@ -36,7 +38,8 @@ QUnit.test('playlists', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'video/mp4'
+      mimeType: 'video/mp4',
+      type: 'static'
     },
     segments: []
   }, {
@@ -46,6 +49,7 @@ QUnit.test('playlists', function(assert) {
       bandwidth: 20000,
       periodIndex: 1,
       mimeType: 'text/vtt',
+      type: 'static',
       baseUrl: 'https://www.example.com/vtt'
     }
   }, {
@@ -55,6 +59,7 @@ QUnit.test('playlists', function(assert) {
       bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'text/vtt',
+      type: 'static',
       baseUrl: 'https://www.example.com/vtt'
     }
   }];
@@ -194,7 +199,8 @@ QUnit.test('playlists with segments', function(assert) {
       sourceDuration: 100,
       bandwidth: 20000,
       periodIndex: 1,
-      mimeType: 'audio/mp4'
+      mimeType: 'audio/mp4',
+      type: 'static'
     },
     segments: [{
       uri: '',
@@ -225,7 +231,8 @@ QUnit.test('playlists with segments', function(assert) {
       duration: 2,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'audio/mp4'
+      mimeType: 'audio/mp4',
+      type: 'static'
     },
     segments: [{
       uri: '',
@@ -258,7 +265,8 @@ QUnit.test('playlists with segments', function(assert) {
       codecs: 'foo;bar',
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'video/mp4'
+      mimeType: 'video/mp4',
+      type: 'static'
     },
     segments: [{
       uri: '',
@@ -289,6 +297,7 @@ QUnit.test('playlists with segments', function(assert) {
       bandwidth: 20000,
       periodIndex: 1,
       mimeType: 'text/vtt',
+      type: 'static',
       baseUrl: 'https://www.example.com/vtt'
     },
     segments: [{
@@ -320,6 +329,7 @@ QUnit.test('playlists with segments', function(assert) {
       bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'text/vtt',
+      type: 'static',
       baseUrl: 'https://www.example.com/vtt'
     },
     segments: [{
@@ -569,7 +579,8 @@ QUnit.test('playlists with sidx and sidxMapping', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'video/mp4'
+      mimeType: 'video/mp4',
+      type: 'static'
     },
     segments: [],
     sidx: {
@@ -657,7 +668,8 @@ QUnit.test('playlists without minimumUpdatePeriod dont assign default value', fu
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'video/mp4'
+      mimeType: 'video/mp4',
+      type: 'static'
     },
     segments: [],
     sidx: {
@@ -687,6 +699,7 @@ QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
       bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'video/mp4',
+      type: 'static',
       minimumUpdatePeriod: 0
     },
     segments: [],
@@ -717,6 +730,7 @@ QUnit.test('playlists with integer value for minimumUpdatePeriod', function(asse
       bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'video/mp4',
+      type: 'static',
       minimumUpdatePeriod: 2
     },
     segments: [],
@@ -761,7 +775,8 @@ QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert)
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'audio/mp4'
+      mimeType: 'audio/mp4',
+      type: 'static'
     },
     segments: []
   }, {
@@ -774,7 +789,8 @@ QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert)
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'video/mp4'
+      mimeType: 'video/mp4',
+      type: 'static'
     },
     segments: []
   }, {
@@ -784,6 +800,7 @@ QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert)
       bandwidth: 20000,
       periodIndex: 1,
       mimeType: 'text/vtt',
+      type: 'static',
       baseUrl: 'https://www.example.com/vtt'
     }
   }, {
@@ -793,6 +810,7 @@ QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert)
       bandwidth: 10000,
       periodIndex: 1,
       mimeType: 'text/vtt',
+      type: 'static',
       baseUrl: 'https://www.example.com/vtt'
     }
   }];
@@ -826,7 +844,8 @@ QUnit.test('playlists with label', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'audio/mp4'
+      mimeType: 'audio/mp4',
+      type: 'static'
     },
     segments: []
   }, {
@@ -839,7 +858,8 @@ QUnit.test('playlists with label', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'video/mp4'
+      mimeType: 'video/mp4',
+      type: 'static'
     },
     segments: []
   }];
@@ -882,7 +902,8 @@ QUnit.test('608 captions', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'audio/mp4'
+      mimeType: 'audio/mp4',
+      type: 'static'
     },
     segments: []
   }, {
@@ -895,7 +916,8 @@ QUnit.test('608 captions', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
-      mimeType: 'video/mp4'
+      mimeType: 'video/mp4',
+      type: 'static'
     },
     segments: []
   }];

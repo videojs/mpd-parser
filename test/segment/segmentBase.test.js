@@ -10,7 +10,8 @@ QUnit.module('segmentBase - segmentsFromBase');
 QUnit.test('sets segment to baseUrl', function(assert) {
   const inputAttributes = {
     baseUrl: 'http://www.example.com/i.fmp4',
-    initialization: { sourceURL: 'http://www.example.com/init.fmp4' }
+    initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -28,7 +29,8 @@ QUnit.test('sets duration based on sourceDuration', function(assert) {
   const inputAttributes = {
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
-    sourceDuration: 10
+    sourceDuration: 10,
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -56,7 +58,8 @@ QUnit.test('sets duration based on sourceDuration and not @timescale', function(
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
     sourceDuration: 10,
-    timescale: 2
+    timescale: 2,
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -78,7 +81,8 @@ QUnit.test('sets duration based on @duration', function(assert) {
     sourceDuration: 20,
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
-    periodIndex: 0
+    periodIndex: 0,
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -101,7 +105,8 @@ QUnit.test('sets duration based on @duration and @timescale', function(assert) {
     timescale: 5,
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
-    periodIndex: 0
+    periodIndex: 0,
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -127,7 +132,8 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       sourceURL: 'http://www.example.com/init.fmp4',
       range: '121-125'
     },
-    periodIndex: 0
+    periodIndex: 0,
+    type: 'static'
   };
 
   assert.deepEqual(segmentsFromBase(inputAttributes), [{
@@ -169,7 +175,8 @@ QUnit.test('generates playlist from sidx references', function(assert) {
         length: 11
       }
     },
-    segments: []
+    segments: [],
+    endList: true
   };
   const sidx = {
     timescale: 1,

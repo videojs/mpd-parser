@@ -421,6 +421,8 @@ export const inheritAttributes = (mpd, options = {}) => {
   const mpdAttributes = parseAttributes(mpd);
   const mpdBaseUrls = buildBaseUrls([ manifestUri ], findChildren(mpd, 'BaseURL'));
 
+  // See DASH spec section 5.3.1.2, Semantics of MPD element. Default type to 'static'.
+  mpdAttributes.type = mpdAttributes.type || 'static';
   mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration || 0;
   mpdAttributes.NOW = NOW;
   mpdAttributes.clientOffset = clientOffset;
