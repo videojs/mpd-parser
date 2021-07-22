@@ -1453,7 +1453,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/0.m4f',
         timeline: 0,
         uri: '125000/es/0.m4f',
-        number: 0
+        number: 0,
+        presentationTime: 0
       }, {
         duration: 1.984,
         map: {
@@ -1463,7 +1464,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/1.m4f',
         timeline: 0,
         uri: '125000/es/1.m4f',
-        number: 1
+        number: 1,
+        presentationTime: 1.984
       }, {
         duration: 1.984,
         map: {
@@ -1473,7 +1475,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/2.m4f',
         timeline: 0,
         uri: '125000/es/2.m4f',
-        number: 2
+        number: 2,
+        presentationTime: 3.968
       }, {
         duration: 1.984,
         map: {
@@ -1483,7 +1486,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/3.m4f',
         timeline: 0,
         uri: '125000/es/3.m4f',
-        number: 3
+        number: 3,
+        presentationTime: 5.952
       }, {
         duration: 1.984,
         map: {
@@ -1493,7 +1497,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/4.m4f',
         timeline: 0,
         uri: '125000/es/4.m4f',
-        number: 4
+        number: 4,
+        presentationTime: 7.936
       }, {
         duration: 1.984,
         map: {
@@ -1503,7 +1508,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/5.m4f',
         timeline: 0,
         uri: '125000/es/5.m4f',
-        number: 5
+        number: 5,
+        presentationTime: 9.92
       }, {
         duration: 1.984,
         map: {
@@ -1513,7 +1519,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/6.m4f',
         timeline: 0,
         uri: '125000/es/6.m4f',
-        number: 6
+        number: 6,
+        presentationTime: 11.904
       }, {
         duration: 1.984,
         map: {
@@ -1523,7 +1530,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/7.m4f',
         timeline: 0,
         uri: '125000/es/7.m4f',
-        number: 7
+        number: 7,
+        presentationTime: 13.888
       }, {
         duration: 1.984,
         map: {
@@ -1533,7 +1541,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/8.m4f',
         timeline: 0,
         uri: '125000/es/8.m4f',
-        number: 8
+        number: 8,
+        presentationTime: 15.872
       }, {
         duration: 1.984,
         map: {
@@ -1543,7 +1552,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/9.m4f',
         timeline: 0,
         uri: '125000/es/9.m4f',
-        number: 9
+        number: 9,
+        presentationTime: 17.856
       }, {
         duration: 1.984,
         map: {
@@ -1553,7 +1563,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/10.m4f',
         timeline: 0,
         uri: '125000/es/10.m4f',
-        number: 10
+        number: 10,
+        presentationTime: 19.84
       }, {
         duration: 1.984,
         map: {
@@ -1563,7 +1574,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/11.m4f',
         timeline: 0,
         uri: '125000/es/11.m4f',
-        number: 11
+        number: 11,
+        presentationTime: 21.824
       }, {
         duration: 1.984,
         map: {
@@ -1573,7 +1585,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/12.m4f',
         timeline: 0,
         uri: '125000/es/12.m4f',
-        number: 12
+        number: 12,
+        presentationTime: 23.808
       }, {
         duration: 1.984,
         map: {
@@ -1583,7 +1596,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/13.m4f',
         timeline: 0,
         uri: '125000/es/13.m4f',
-        number: 13
+        number: 13,
+        presentationTime: 25.792
       }, {
         duration: 1.984,
         map: {
@@ -1593,7 +1607,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/14.m4f',
         timeline: 0,
         uri: '125000/es/14.m4f',
-        number: 14
+        number: 14,
+        presentationTime: 27.776
       }, {
         duration: 0.240000000000002,
         map: {
@@ -1603,7 +1618,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/15.m4f',
         timeline: 0,
         uri: '125000/es/15.m4f',
-        number: 15
+        number: 15,
+        presentationTime: 29.76
       }]
     }, {
       attributes: {
@@ -1641,7 +1657,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/0.m4f',
         timeline: 0,
         uri: '125000/es/0.m4f',
-        number: 0
+        number: 0,
+        presentationTime: 0
       }, {
         duration: 1.984,
         map: {
@@ -1651,7 +1668,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/1.m4f',
         timeline: 0,
         uri: '125000/es/1.m4f',
-        number: 1
+        number: 1,
+        presentationTime: 1.984
       }, {
         duration: 1.984,
         map: {
@@ -1661,7 +1679,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/2.m4f',
         timeline: 0,
         uri: '125000/es/2.m4f',
-        number: 2
+        number: 2,
+        presentationTime: 3.968
       }, {
         duration: 1.984,
         map: {
@@ -1671,7 +1690,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/3.m4f',
         timeline: 0,
         uri: '125000/es/3.m4f',
-        number: 3
+        number: 3,
+        presentationTime: 5.952
       }, {
         duration: 1.984,
         map: {
@@ -1681,7 +1701,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/4.m4f',
         timeline: 0,
         uri: '125000/es/4.m4f',
-        number: 4
+        number: 4,
+        presentationTime: 7.936
       }, {
         duration: 1.984,
         map: {
@@ -1691,7 +1712,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/5.m4f',
         timeline: 0,
         uri: '125000/es/5.m4f',
-        number: 5
+        number: 5,
+        presentationTime: 9.92
       }, {
         duration: 1.984,
         map: {
@@ -1701,7 +1723,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/6.m4f',
         timeline: 0,
         uri: '125000/es/6.m4f',
-        number: 6
+        number: 6,
+        presentationTime: 11.904
       }, {
         duration: 1.984,
         map: {
@@ -1711,7 +1734,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/7.m4f',
         timeline: 0,
         uri: '125000/es/7.m4f',
-        number: 7
+        number: 7,
+        presentationTime: 13.888
       }, {
         duration: 1.984,
         map: {
@@ -1721,7 +1745,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/8.m4f',
         timeline: 0,
         uri: '125000/es/8.m4f',
-        number: 8
+        number: 8,
+        presentationTime: 15.872
       }, {
         duration: 1.984,
         map: {
@@ -1731,7 +1756,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/9.m4f',
         timeline: 0,
         uri: '125000/es/9.m4f',
-        number: 9
+        number: 9,
+        presentationTime: 17.856
       }, {
         duration: 1.984,
         map: {
@@ -1741,7 +1767,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/10.m4f',
         timeline: 0,
         uri: '125000/es/10.m4f',
-        number: 10
+        number: 10,
+        presentationTime: 19.84
       }, {
         duration: 1.984,
         map: {
@@ -1751,7 +1778,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/11.m4f',
         timeline: 0,
         uri: '125000/es/11.m4f',
-        number: 11
+        number: 11,
+        presentationTime: 21.824
       }, {
         duration: 1.984,
         map: {
@@ -1761,7 +1789,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/12.m4f',
         timeline: 0,
         uri: '125000/es/12.m4f',
-        number: 12
+        number: 12,
+        presentationTime: 23.808
       }, {
         duration: 1.984,
         map: {
@@ -1771,7 +1800,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/13.m4f',
         timeline: 0,
         uri: '125000/es/13.m4f',
-        number: 13
+        number: 13,
+        presentationTime: 25.792
       }, {
         duration: 1.984,
         map: {
@@ -1781,7 +1811,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/14.m4f',
         timeline: 0,
         uri: '125000/es/14.m4f',
-        number: 14
+        number: 14,
+        presentationTime: 27.776
       }, {
         duration: 0.240000000000002,
         map: {
@@ -1791,7 +1822,8 @@ QUnit.test(
         resolvedUri: 'https://www.example.com/125000/es/15.m4f',
         timeline: 0,
         uri: '125000/es/15.m4f',
-        number: 15
+        number: 15,
+        presentationTime: 29.76
       }]
     }];
 
@@ -1886,7 +1918,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/0.m4f',
       timeline: 0,
       uri: '125000/es/0.m4f',
-      number: 0
+      number: 0,
+      presentationTime: 0
     }, {
       duration: 1.984,
       map: {
@@ -1896,7 +1929,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/1.m4f',
       timeline: 0,
       uri: '125000/es/1.m4f',
-      number: 1
+      number: 1,
+      presentationTime: 1.984
     }, {
       duration: 1.984,
       map: {
@@ -1906,7 +1940,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/2.m4f',
       timeline: 0,
       uri: '125000/es/2.m4f',
-      number: 2
+      number: 2,
+      presentationTime: 3.968
     }, {
       duration: 1.984,
       map: {
@@ -1916,7 +1951,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/3.m4f',
       timeline: 0,
       uri: '125000/es/3.m4f',
-      number: 3
+      number: 3,
+      presentationTime: 5.952
     }, {
       duration: 1.984,
       map: {
@@ -1926,7 +1962,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/4.m4f',
       timeline: 0,
       uri: '125000/es/4.m4f',
-      number: 4
+      number: 4,
+      presentationTime: 7.936
     }, {
       duration: 1.984,
       map: {
@@ -1936,7 +1973,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/5.m4f',
       timeline: 0,
       uri: '125000/es/5.m4f',
-      number: 5
+      number: 5,
+      presentationTime: 9.92
     }, {
       duration: 1.984,
       map: {
@@ -1946,7 +1984,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/6.m4f',
       timeline: 0,
       uri: '125000/es/6.m4f',
-      number: 6
+      number: 6,
+      presentationTime: 11.904
     }, {
       duration: 1.984,
       map: {
@@ -1956,7 +1995,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/7.m4f',
       timeline: 0,
       uri: '125000/es/7.m4f',
-      number: 7
+      number: 7,
+      presentationTime: 13.888
     }, {
       duration: 1.984,
       map: {
@@ -1966,7 +2006,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/8.m4f',
       timeline: 0,
       uri: '125000/es/8.m4f',
-      number: 8
+      number: 8,
+      presentationTime: 15.872
     }, {
       duration: 1.984,
       map: {
@@ -1976,7 +2017,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/9.m4f',
       timeline: 0,
       uri: '125000/es/9.m4f',
-      number: 9
+      number: 9,
+      presentationTime: 17.856
     }, {
       duration: 1.984,
       map: {
@@ -1986,7 +2028,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/10.m4f',
       timeline: 0,
       uri: '125000/es/10.m4f',
-      number: 10
+      number: 10,
+      presentationTime: 19.84
     }, {
       duration: 1.984,
       map: {
@@ -1996,7 +2039,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/11.m4f',
       timeline: 0,
       uri: '125000/es/11.m4f',
-      number: 11
+      number: 11,
+      presentationTime: 21.824
     }, {
       duration: 1.984,
       map: {
@@ -2006,7 +2050,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/12.m4f',
       timeline: 0,
       uri: '125000/es/12.m4f',
-      number: 12
+      number: 12,
+      presentationTime: 23.808
     }, {
       duration: 1.984,
       map: {
@@ -2016,7 +2061,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/13.m4f',
       timeline: 0,
       uri: '125000/es/13.m4f',
-      number: 13
+      number: 13,
+      presentationTime: 25.792
     }, {
       duration: 1.984,
       map: {
@@ -2026,7 +2072,8 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/14.m4f',
       timeline: 0,
       uri: '125000/es/14.m4f',
-      number: 14
+      number: 14,
+      presentationTime: 27.776
     }, {
       duration: 0.240000000000002,
       map: {
@@ -2036,11 +2083,11 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       resolvedUri: 'https://www.example.com/125000/es/15.m4f',
       timeline: 0,
       uri: '125000/es/15.m4f',
-      number: 15
+      number: 15,
+      presentationTime: 29.76
     }]
   }];
 
   assert.equal(actual.length, 1);
   assert.deepEqual(actual, expected);
 });
-

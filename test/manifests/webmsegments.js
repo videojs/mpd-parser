@@ -33,7 +33,8 @@ export const parsedManifest = {
                     uri: 'audio/init.hdr',
                     resolvedUri: 'https://www.example.com/audio/init.hdr'
                   },
-                  number: 0
+                  number: 0,
+                  presentationTime: 0
                 },
                 {
                   uri: 'audio/segment_1.chk',
@@ -44,7 +45,8 @@ export const parsedManifest = {
                     uri: 'audio/init.hdr',
                     resolvedUri: 'https://www.example.com/audio/init.hdr'
                   },
-                  number: 1
+                  number: 1,
+                  presentationTime: 4
                 },
                 {
                   uri: 'audio/segment_2.chk',
@@ -55,7 +57,8 @@ export const parsedManifest = {
                     uri: 'audio/init.hdr',
                     resolvedUri: 'https://www.example.com/audio/init.hdr'
                   },
-                  number: 2
+                  number: 2,
+                  presentationTime: 8
                 },
                 {
                   uri: 'audio/segment_3.chk',
@@ -66,7 +69,8 @@ export const parsedManifest = {
                     uri: 'audio/init.hdr',
                     resolvedUri: 'https://www.example.com/audio/init.hdr'
                   },
-                  number: 3
+                  number: 3,
+                  presentationTime: 12
                 }
               ],
               mediaSequence: 0
@@ -111,7 +115,8 @@ export const parsedManifest = {
             uri: 'video/init.hdr',
             resolvedUri: 'https://www.example.com/video/init.hdr'
           },
-          number: 0
+          number: 0,
+          presentationTime: 0
         },
         {
           uri: 'video/segment_1.chk',
@@ -122,7 +127,8 @@ export const parsedManifest = {
             uri: 'video/init.hdr',
             resolvedUri: 'https://www.example.com/video/init.hdr'
           },
-          number: 1
+          number: 1,
+          presentationTime: 4
         },
         {
           uri: 'video/segment_2.chk',
@@ -133,7 +139,8 @@ export const parsedManifest = {
             uri: 'video/init.hdr',
             resolvedUri: 'https://www.example.com/video/init.hdr'
           },
-          number: 2
+          number: 2,
+          presentationTime: 8
         },
         {
           uri: 'video/segment_3.chk',
@@ -144,7 +151,8 @@ export const parsedManifest = {
             uri: 'video/init.hdr',
             resolvedUri: 'https://www.example.com/video/init.hdr'
           },
-          number: 3
+          number: 3,
+          presentationTime: 12
         }
       ],
       mediaSequence: 0
