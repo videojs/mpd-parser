@@ -404,16 +404,16 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) 
  *
  * @param {Object} options
  *        Options object
- * @param {PeriodInformation} options.period
- *        Period object containing necessary period information
- * @param {PeriodInformation} [options.priorPeriod]
- *        Prior period object containing necessary period information (if available)
+ * @param {Object} options.attributes
+ *        Period attributes
+ * @param {Object} [options.priorPeriodAttributes]
+ *        Prior period attributes (if prior period is available)
  * @param {string} options.mpdType
  *        The MPD@type these periods came from
  * @return {number|null}
  *         The period start, or null if it's an early available period or error
  */
-export const getPeriodStart = ({ period, priorPeriod, mpdType }) => {
+export const getPeriodStart = ({ attributes, priorPeriodAttributes, mpdType }) => {
   // Summary of period start time calculation from DASH spec section 5.3.2.1
   //
   // A period's start is the first period's start + time elapsed after playing all
@@ -427,7 +427,6 @@ export const getPeriodStart = ({ period, priorPeriod, mpdType }) => {
   // 3. if this is first period and MPD@type is 'static': 0
   // 4. in all other cases, consider the period an "early available period" (note: not
   //    currently supported)
-  const attributes = period.attributes;
 
   // (1)
   if (typeof attributes.start === 'number') {
@@ -435,14 +434,14 @@ export const getPeriodStart = ({ period, priorPeriod, mpdType }) => {
   }
 
   // (2)
-  if (priorPeriod &&
-      typeof priorPeriod.attributes.start === 'number' &&
-      typeof priorPeriod.attributes.duration === 'number') {
-    return priorPeriod.attributes.start + priorPeriod.attributes.duration;
+  if (priorPeriodAttributes &&
+      typeof priorPeriodAttributes.start === 'number' &&
+      typeof priorPeriodAttributes.duration === 'number') {
+    return priorPeriodAttributes.start + priorPeriodAttributes.duration;
   }
 
   // (3)
-  if (!priorPeriod && mpdType === 'static') {
+  if (!priorPeriodAttributes && mpdType === 'static') {
     return 0;
   }
 
@@ -500,35 +499,32 @@ export const inheritAttributes = (mpd, options = {}) => {
     mpdAttributes.locations = locations.map(getContent);
   }
 
-  // Convert to PeriodInformation objects since missing attributes will be added, and it
-  // is better to add them to attributes than to add them to the Node to be parsed later.
-  const periods = periodNodes.map((node) => {
-    return {
-      node,
-      attributes: parseAttributes(node)
-    };
-  });
-  // Since toAdaptationSets acts on individual period objects right now, the simplest
-  // approach to adding properties that require looking at prior periods is to add them
-  // before toAdaptationSets is called. If more such properties are added, it may be
-  // better to refactor toAdaptationSets.
-  const periodsPlusMissingAttributes = [];
+  const periods = [];
 
-  periods.forEach((period, index) => {
+  // Since toAdaptationSets acts on individual periods right now, the simplest approach to
+  // adding properties that require looking at prior periods is to parse attributes and add
+  // missing ones before toAdaptationSets is called. If more such properties are added, it
+  // may be better to refactor toAdaptationSets.
+  periodNodes.forEach((node, index) => {
+    const attributes = parseAttributes(node);
     // Use the last modified prior period, as it may contain added information necessary
     // for this period.
-    const priorPeriod = periodsPlusMissingAttributes[index - 1];
+    const priorPeriod = periods[index - 1];
 
-    periodsPlusMissingAttributes.push({
-      node: period.node,
-      attributes: merge(period.attributes, {
-        start: getPeriodStart({ period, priorPeriod, mpdType: mpdAttributes.type })
-      })
+    attributes.start = getPeriodStart({
+      attributes,
+      priorPeriodAttributes: priorPeriod ? priorPeriod.attributes : null,
+      mpdType: mpdAttributes.type
+    });
+
+    periods.push({
+      node,
+      attributes
     });
   });
 
   return {
     locations: mpdAttributes.locations,
-    representationInfo: flatten(periodsPlusMissingAttributes.map(toAdaptationSets(mpdAttributes, mpdBaseUrls)))
+    representationInfo: flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls)))
   };
 };

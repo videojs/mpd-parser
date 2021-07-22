@@ -80,8 +80,8 @@ QUnit.module('getPeriodStart');
 QUnit.test('gets period start when available', function(assert) {
   assert.equal(
     getPeriodStart({
-      period: { attributes: { start: 11 } },
-      priorPeriod: void 0,
+      attributes: { start: 11 },
+      priorPeriodAttributes: null,
       mpdType: 'static'
     }),
     11,
@@ -92,13 +92,8 @@ QUnit.test('gets period start when available', function(assert) {
 QUnit.test('gets period start when prior period and duration', function(assert) {
   assert.equal(
     getPeriodStart({
-      period: { attributes: {} },
-      priorPeriod: {
-        attributes: {
-          start: 11,
-          duration: 20
-        }
-      },
+      attributes: {},
+      priorPeriodAttributes: { start: 11, duration: 20 },
       mpdType: 'static'
     }),
     31,
@@ -109,8 +104,8 @@ QUnit.test('gets period start when prior period and duration', function(assert) 
 QUnit.test('gets period start when no prior period and static', function(assert) {
   assert.equal(
     getPeriodStart({
-      period: { attributes: {} },
-      priorPeriod: void 0,
+      attributes: {},
+      priorPeriodAttributes: null,
       mpdType: 'static'
     }),
     0,
@@ -121,8 +116,8 @@ QUnit.test('gets period start when no prior period and static', function(assert)
 QUnit.test('null when static and prior period but missing attributes', function(assert) {
   assert.equal(
     getPeriodStart({
-      period: { attributes: {} },
-      priorPeriod: { attributes: { start: 11 } },
+      attributes: {},
+      priorPeriodAttributes: { start: 11 },
       mpdType: 'static'
     }),
     null,
@@ -131,8 +126,8 @@ QUnit.test('null when static and prior period but missing attributes', function(
 
   assert.equal(
     getPeriodStart({
-      period: { attributes: {} },
-      priorPeriod: { attributes: { duration: 20 } },
+      attributes: {},
+      priorPeriodAttributes: { duration: 20 },
       mpdType: 'static'
     }),
     null,
@@ -143,8 +138,8 @@ QUnit.test('null when static and prior period but missing attributes', function(
 QUnit.test('null when dynamic, no prior period, and no start attribute', function(assert) {
   assert.equal(
     getPeriodStart({
-      period: { attributes: {} },
-      priorPeriod: void 0,
+      attributes: {},
+      priorPeriodAttributes: null,
       mpdType: 'dyanmic'
     }),
     null,
