@@ -350,13 +350,23 @@ export const toRepresentations =
 };
 
 /**
- * Maps an Period node to a list of Representation inforamtion objects for all
- * AdaptationSet nodes contained within the Period
+ * Contains all period information for mapping nodes onto adaptation sets.
+ *
+ * @typedef {Object} PeriodInformation
+ * @property {Node} period.node
+ *           Period node from the mpd
+ * @property {Object} period.attributes
+ *           Parsed period attributes from node plus any added
+ */
+
+/**
+ * Maps a PeriodInformation object to a list of Representation information objects for all
+ * AdaptationSet nodes contained within the Period.
  *
  * @name toAdaptationSetsCallback
  * @function
- * @param {Node} period
- *        Period node from the mpd
+ * @param {PeriodInformation} period
+ *        Period object containing necessary period information
  * @param {number} periodIndex
  *        Index of the Period within the mpd
  * @return {RepresentationInformation[]}
@@ -375,16 +385,74 @@ export const toRepresentations =
  *         Callback map function
  */
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) => {
-  const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period, 'BaseURL'));
-  const periodAtt = parseAttributes(period);
-  const parsedPeriodId = parseInt(periodAtt.id, 10);
+  const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period.node, 'BaseURL'));
+  const parsedPeriodId = parseInt(period.attributes.id, 10);
   // fallback to mapping index if Period@id is not a number
   const periodIndex = window.isNaN(parsedPeriodId) ? index : parsedPeriodId;
-  const periodAttributes = merge(mpdAttributes, { periodIndex });
-  const adaptationSets = findChildren(period, 'AdaptationSet');
-  const periodSegmentInfo = getSegmentInformation(period);
+  const periodAttributes = merge(mpdAttributes, {
+    periodIndex,
+    periodStart: period.attributes.start
+  });
+  const adaptationSets = findChildren(period.node, 'AdaptationSet');
+  const periodSegmentInfo = getSegmentInformation(period.node);
 
   return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
+};
+
+/**
+ * Gets Period@start property for a given period.
+ *
+ * @param {Object} options
+ *        Options object
+ * @param {Object} options.attributes
+ *        Period attributes
+ * @param {Object} [options.priorPeriodAttributes]
+ *        Prior period attributes (if prior period is available)
+ * @param {string} options.mpdType
+ *        The MPD@type these periods came from
+ * @return {number|null}
+ *         The period start, or null if it's an early available period or error
+ */
+export const getPeriodStart = ({ attributes, priorPeriodAttributes, mpdType }) => {
+  // Summary of period start time calculation from DASH spec section 5.3.2.1
+  //
+  // A period's start is the first period's start + time elapsed after playing all
+  // prior periods to this one. Periods continue one after the other in time (without
+  // gaps) until the end of the presentation.
+  //
+  // The value of Period@start should be:
+  // 1. if Period@start is present: value of Period@start
+  // 2. if previous period exists and it has @duration: previous Period@start +
+  //    previous Period@duration
+  // 3. if this is first period and MPD@type is 'static': 0
+  // 4. in all other cases, consider the period an "early available period" (note: not
+  //    currently supported)
+
+  // (1)
+  if (typeof attributes.start === 'number') {
+    return attributes.start;
+  }
+
+  // (2)
+  if (priorPeriodAttributes &&
+      typeof priorPeriodAttributes.start === 'number' &&
+      typeof priorPeriodAttributes.duration === 'number') {
+    return priorPeriodAttributes.start + priorPeriodAttributes.duration;
+  }
+
+  // (3)
+  if (!priorPeriodAttributes && mpdType === 'static') {
+    return 0;
+  }
+
+  // (4)
+  // There is currently no logic for calculating the Period@start value if there is
+  // no Period@start or prior Period@start and Period@duration available. This is not made
+  // explicit by the DASH interop guidelines or the DASH spec, however, since there's
+  // nothing about any other resolution strategies, it's implied. Thus, this case should
+  // be considered an early available period, or error, and null should suffice for both
+  // of those cases.
+  return null;
 };
 
 /**
@@ -410,9 +478,9 @@ export const inheritAttributes = (mpd, options = {}) => {
     NOW = Date.now(),
     clientOffset = 0
   } = options;
-  const periods = findChildren(mpd, 'Period');
+  const periodNodes = findChildren(mpd, 'Period');
 
-  if (!periods.length) {
+  if (!periodNodes.length) {
     throw new Error(errors.INVALID_NUMBER_OF_PERIOD);
   }
 
@@ -430,6 +498,30 @@ export const inheritAttributes = (mpd, options = {}) => {
   if (locations.length) {
     mpdAttributes.locations = locations.map(getContent);
   }
+
+  const periods = [];
+
+  // Since toAdaptationSets acts on individual periods right now, the simplest approach to
+  // adding properties that require looking at prior periods is to parse attributes and add
+  // missing ones before toAdaptationSets is called. If more such properties are added, it
+  // may be better to refactor toAdaptationSets.
+  periodNodes.forEach((node, index) => {
+    const attributes = parseAttributes(node);
+    // Use the last modified prior period, as it may contain added information necessary
+    // for this period.
+    const priorPeriod = periods[index - 1];
+
+    attributes.start = getPeriodStart({
+      attributes,
+      priorPeriodAttributes: priorPeriod ? priorPeriod.attributes : null,
+      mpdType: mpdAttributes.type
+    });
+
+    periods.push({
+      node,
+      attributes
+    });
+  });
 
   return {
     locations: mpdAttributes.locations,

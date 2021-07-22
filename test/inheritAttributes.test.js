@@ -2,7 +2,8 @@ import {
   inheritAttributes,
   buildBaseUrls,
   parseCaptionServiceMetadata,
-  getSegmentInformation
+  getSegmentInformation,
+  getPeriodStart
 } from '../src/inheritAttributes';
 import { stringToMpdXml } from '../src/stringToMpdXml';
 import errors from '../src/errors';
@@ -71,6 +72,78 @@ QUnit.test('absolute BaseURL overwrites reference', function(assert) {
   assert.deepEqual(
     buildBaseUrls(reference, node), expected,
     'absolute url overwrites reference'
+  );
+});
+
+QUnit.module('getPeriodStart');
+
+QUnit.test('gets period start when available', function(assert) {
+  assert.equal(
+    getPeriodStart({
+      attributes: { start: 11 },
+      priorPeriodAttributes: null,
+      mpdType: 'static'
+    }),
+    11,
+    'returned period start value'
+  );
+});
+
+QUnit.test('gets period start when prior period and duration', function(assert) {
+  assert.equal(
+    getPeriodStart({
+      attributes: {},
+      priorPeriodAttributes: { start: 11, duration: 20 },
+      mpdType: 'static'
+    }),
+    31,
+    'returned correct period start value'
+  );
+});
+
+QUnit.test('gets period start when no prior period and static', function(assert) {
+  assert.equal(
+    getPeriodStart({
+      attributes: {},
+      priorPeriodAttributes: null,
+      mpdType: 'static'
+    }),
+    0,
+    'returned correct period start value'
+  );
+});
+
+QUnit.test('null when static and prior period but missing attributes', function(assert) {
+  assert.equal(
+    getPeriodStart({
+      attributes: {},
+      priorPeriodAttributes: { start: 11 },
+      mpdType: 'static'
+    }),
+    null,
+    'null when no duration in prior period'
+  );
+
+  assert.equal(
+    getPeriodStart({
+      attributes: {},
+      priorPeriodAttributes: { duration: 20 },
+      mpdType: 'static'
+    }),
+    null,
+    'null when no start in prior period'
+  );
+});
+
+QUnit.test('null when dynamic, no prior period, and no start attribute', function(assert) {
+  assert.equal(
+    getPeriodStart({
+      attributes: {},
+      priorPeriodAttributes: null,
+      mpdType: 'dyanmic'
+    }),
+    null,
+    'null when no dynamic, no start attribute, and no prior period'
   );
 });
 
@@ -481,6 +554,7 @@ QUnit.test('end to end - basic', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -502,6 +576,7 @@ QUnit.test('end to end - basic', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
         periodIndex: 0,
+        periodStart: 0,
         role: {},
         sourceDuration: 30,
         type: 'static',
@@ -522,7 +597,7 @@ QUnit.test('end to end - basic dynamic', function(assert) {
   const actual = inheritAttributes(stringToMpdXml(`
     <MPD type="dyanmic">
       <BaseURL>https://www.example.com/base/</BaseURL>
-      <Period>
+      <Period start="PT0S">
         <AdaptationSet mimeType="video/mp4">
           <Role value="main"></Role>
           <SegmentTemplate></SegmentTemplate>
@@ -554,6 +629,7 @@ QUnit.test('end to end - basic dynamic', function(assert) {
         id: 'test',
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -574,6 +650,7 @@ QUnit.test('end to end - basic dynamic', function(assert) {
         lang: 'en',
         mimeType: 'text/vtt',
         periodIndex: 0,
+        periodStart: 0,
         role: {},
         sourceDuration: 0,
         type: 'dyanmic',
@@ -581,6 +658,99 @@ QUnit.test('end to end - basic dynamic', function(assert) {
         clientOffset: 0
       },
       segmentInfo: {}
+    }]
+  };
+
+  assert.equal(actual.representationInfo.length, 2);
+  assert.deepEqual(actual, expected);
+});
+
+QUnit.test('end to end - basic multiperiod', function(assert) {
+  const NOW = Date.now();
+
+  // no start time attributes on either period, should be inferred
+  const actual = inheritAttributes(stringToMpdXml(`
+    <MPD mediaPresentationDuration="PT60S" >
+      <BaseURL>https://www.example.com/base/</BaseURL>
+      <Period duration="PT30S">
+        <AdaptationSet mimeType="video/mp4" >
+          <Role value="main"></Role>
+          <SegmentTemplate></SegmentTemplate>
+          <Representation
+            bandwidth="5000000"
+            codecs="avc1.64001e"
+            height="404"
+            id="test"
+            width="720">
+          </Representation>
+        </AdaptationSet>
+      </Period>
+      <Period>
+        <AdaptationSet mimeType="video/mp4" >
+          <Role value="main"></Role>
+          <SegmentTemplate></SegmentTemplate>
+          <Representation
+            bandwidth="5000000"
+            codecs="avc1.64001e"
+            height="404"
+            id="test"
+            width="720">
+          </Representation>
+        </AdaptationSet>
+      </Period>
+    </MPD>
+  `), { NOW });
+
+  const expected = {
+    locations: undefined,
+    representationInfo: [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 60,
+        mimeType: 'video/mp4',
+        periodIndex: 0,
+        // inferred start
+        periodStart: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 60,
+        type: 'static',
+        width: 720,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.example.com/base/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 60,
+        mimeType: 'video/mp4',
+        periodIndex: 1,
+        // inferred start
+        periodStart: 30,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 60,
+        type: 'static',
+        width: 720,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {
+        template: {}
+      }
     }]
   };
 
@@ -631,6 +801,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -651,6 +822,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
         periodIndex: 0,
+        periodStart: 0,
         role: {},
         sourceDuration: 30,
         type: 'static',
@@ -706,6 +878,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -728,6 +901,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -750,6 +924,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -772,6 +947,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -793,6 +969,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
         periodIndex: 0,
+        periodStart: 0,
         role: {},
         sourceDuration: 30,
         type: 'static',
@@ -809,6 +986,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
         periodIndex: 0,
+        periodStart: 0,
         role: {},
         sourceDuration: 30,
         type: 'static',
@@ -873,6 +1051,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp6',
           periodIndex: 0,
+          periodStart: 0,
           role: {
             value: 'main'
           },
@@ -897,6 +1076,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp4',
           periodIndex: 0,
+          periodStart: 0,
           height: 545,
           role: {
             value: 'main'
@@ -924,6 +1104,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'text/vtt',
           periodIndex: 0,
+          periodStart: 0,
           role: {},
           sourceDuration: 30,
           type: 'static',
@@ -985,6 +1166,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp6',
           periodIndex: 0,
+          periodStart: 0,
           role: {
             value: 'main'
           },
@@ -1009,6 +1191,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp4',
           periodIndex: 0,
+          periodStart: 0,
           height: 545,
           role: {
             value: 'main'
@@ -1036,6 +1219,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'text/vtt',
           periodIndex: 0,
+          periodStart: 0,
           role: {},
           sourceDuration: 30,
           type: 'static',
@@ -1105,6 +1289,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp6',
           periodIndex: 0,
+          periodStart: 0,
           role: {
             value: 'main'
           },
@@ -1130,6 +1315,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp4',
           periodIndex: 0,
+          periodStart: 0,
           height: 545,
           role: {
             value: 'main'
@@ -1157,6 +1343,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'text/vtt',
           periodIndex: 0,
+          periodStart: 0,
           role: {},
           sourceDuration: 30,
           type: 'static',
@@ -1236,6 +1423,7 @@ QUnit.test(
         mediaPresentationDuration: 30,
         mimeType: 'video/mp6',
         periodIndex: 0,
+        periodStart: 0,
         startNumber: 0,
         timescale: 48000,
         role: {
@@ -1424,6 +1612,7 @@ QUnit.test(
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodStart: 0,
         role: {
           value: 'main'
         },
@@ -1672,6 +1861,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       mediaPresentationDuration: 30,
       mimeType: 'video/mp6',
       periodIndex: 0,
+      periodStart: 0,
       role: {
         value: 'main'
       },
