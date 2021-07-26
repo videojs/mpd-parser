@@ -713,6 +713,7 @@ QUnit.test('end to end - basic multiperiod', function(assert) {
         mediaPresentationDuration: 60,
         mimeType: 'video/mp4',
         periodIndex: 0,
+        periodDuration: 30,
         // inferred start
         periodStart: 0,
         role: {
@@ -1166,6 +1167,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp6',
           periodIndex: 0,
+          periodDuration: 280.414,
           periodStart: 0,
           role: {
             value: 'main'
@@ -1191,6 +1193,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'video/mp4',
           periodIndex: 0,
+          periodDuration: 280.414,
           periodStart: 0,
           height: 545,
           role: {
@@ -1219,6 +1222,7 @@ QUnit.test(
           mediaPresentationDuration: 30,
           mimeType: 'text/vtt',
           periodIndex: 0,
+          periodDuration: 280.414,
           periodStart: 0,
           role: {},
           sourceDuration: 30,
@@ -1250,7 +1254,7 @@ QUnit.test(
     const actual = inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base/</BaseURL>
-      <Period duration= "PT0H4M40.414S" >
+      <Period>
         <AdaptationSet mimeType= "video/mp4"  >
           <Role value= "main" ></Role>
           <SegmentBase indexRange= "1212"  indexRangeExact= "true" >
@@ -1370,7 +1374,7 @@ QUnit.test(
     const actual = toPlaylists(inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
-      <Period duration= "PT0H4M40.414S" >
+      <Period>
         <AdaptationSet
           mimeType= "video/mp4"
           segmentAlignment= "true"
@@ -1807,7 +1811,7 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
   const actual = toPlaylists(inheritAttributes(stringToMpdXml(`
     <MPD mediaPresentationDuration= "PT30S"  >
       <BaseURL>https://www.example.com/base</BaseURL>
-      <Period duration= "PT0H4M40.414S" >
+      <Period>
         <AdaptationSet
           mimeType= "video/mp4"
           segmentAlignment= "true"

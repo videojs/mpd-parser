@@ -393,6 +393,10 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) 
     periodIndex,
     periodStart: period.attributes.start
   });
+
+  if (typeof period.attributes.duration === 'number') {
+    periodAttributes.periodDuration = period.attributes.duration;
+  }
   const adaptationSets = findChildren(period.node, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period.node);
 

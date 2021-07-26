@@ -1512,3 +1512,42 @@ QUnit.test('constructs simple segment list and with <Initialization> node', func
     'creates segments from template'
   );
 });
+
+QUnit.test('multiperiod uses periodDuration when available', function(assert) {
+  const attributes = {
+    startNumber: 0,
+    duration: 6000,
+    sourceDuration: 12,
+    timescale: 1000,
+    bandwidth: 100,
+    id: 'Rep1',
+    initialization: {
+      sourceURL: '$RepresentationID$/$Bandwidth$/init.mp4'
+    },
+    media: '$RepresentationID$/$Bandwidth$/$Number%03d$-$Time%05d$.mp4',
+    periodIndex: 1,
+    // 6 second period should mean a single 6 second segment
+    periodDuration: 6,
+    baseUrl: 'https://example.com/',
+    type: 'static',
+    periodStart: 0
+  };
+  const segments = [
+    {
+      duration: 6,
+      map: {
+        resolvedUri: 'https://example.com/Rep1/100/init.mp4',
+        uri: 'Rep1/100/init.mp4'
+      },
+      resolvedUri: 'https://example.com/Rep1/100/000-00000.mp4',
+      timeline: 1,
+      uri: 'Rep1/100/000-00000.mp4',
+      number: 0
+    }
+  ];
+
+  assert.deepEqual(
+    segmentsFromTemplate(attributes, void 0), segments,
+    'creates segments from template'
+  );
+});
