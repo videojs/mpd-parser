@@ -239,7 +239,7 @@ QUnit.test('gets SegmentTemplate and SegmentTimeline attributes', function(asser
   };
   const expected = {
     template: { media: 'video.mp4' },
-    timeline: [{ d: 10 }, { d: 5 }, { d: 7 }]
+    segmentTimeline: [{ d: 10 }, { d: 5 }, { d: 7 }]
   };
 
   assert.deepEqual(

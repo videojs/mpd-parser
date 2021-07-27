@@ -42,7 +42,7 @@ export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
  * @typedef {Object} SegmentInformation
  * @property {Object|undefined} template
  *           Contains the attributes for the SegmentTemplate node
- * @property {Object[]|undefined} timeline
+ * @property {Object[]|undefined} segmentTimeline
  *           Contains a list of atrributes for each S node within the SegmentTimeline node
  * @property {Object|undefined} list
  *           Contains the attributes for the SegmentList node
@@ -90,7 +90,7 @@ export const getSegmentInformation = (adaptationSet) => {
 
   const segmentInfo = {
     template,
-    timeline: segmentTimeline &&
+    segmentTimeline: segmentTimeline &&
       findChildren(segmentTimeline, 'S').map(s => parseAttributes(s)),
     list: segmentList && merge(
       parseAttributes(segmentList),
