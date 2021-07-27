@@ -32,7 +32,7 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
     return segmentsInfo;
   }
 
-  const segments = segmentsFn(segmentAttributes, segmentInfo.timeline);
+  const segments = segmentsFn(segmentAttributes, segmentInfo.segmentTimeline);
 
   // The @duration attribute will be used to determin the playlist's targetDuration which
   // must be in seconds. Since we've generated the segment list, we no longer need
