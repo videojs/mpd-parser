@@ -35,7 +35,8 @@ export const parsedManifest = {
                     uri: 'audio/init.m4f',
                     resolvedUri: 'https://www.example.com/audio/init.m4f'
                   },
-                  number: 0
+                  number: 0,
+                  presentationTime: 0
                 },
                 {
                   uri: 'audio/segment_1.m4f',
@@ -46,7 +47,8 @@ export const parsedManifest = {
                     uri: 'audio/init.m4f',
                     resolvedUri: 'https://www.example.com/audio/init.m4f'
                   },
-                  number: 1
+                  number: 1,
+                  presentationTime: 5
                 },
                 {
                   uri: 'audio/segment_2.m4f',
@@ -57,7 +59,8 @@ export const parsedManifest = {
                     uri: 'audio/init.m4f',
                     resolvedUri: 'https://www.example.com/audio/init.m4f'
                   },
-                  number: 2
+                  number: 2,
+                  presentationTime: 10
                 },
                 {
                   discontinuity: true,
@@ -69,7 +72,8 @@ export const parsedManifest = {
                     uri: 'audio/init.m4f',
                     resolvedUri: 'https://www.example.com/audio/init.m4f'
                   },
-                  number: 0
+                  number: 0,
+                  presentationTime: 15
                 },
                 {
                   uri: 'audio/segment_1.m4f',
@@ -80,7 +84,8 @@ export const parsedManifest = {
                     uri: 'audio/init.m4f',
                     resolvedUri: 'https://www.example.com/audio/init.m4f'
                   },
-                  number: 1
+                  number: 1,
+                  presentationTime: 20
                 },
                 {
                   uri: 'audio/segment_2.m4f',
@@ -91,7 +96,8 @@ export const parsedManifest = {
                     uri: 'audio/init.m4f',
                     resolvedUri: 'https://www.example.com/audio/init.m4f'
                   },
-                  number: 2
+                  number: 2,
+                  presentationTime: 25
                 }
               ],
               mediaSequence: 0
@@ -134,7 +140,8 @@ export const parsedManifest = {
             uri: 'video/init.m4f',
             resolvedUri: 'https://www.example.com/video/init.m4f'
           },
-          number: 0
+          number: 0,
+          presentationTime: 0
         },
         {
           uri: 'video/segment_1.m4f',
@@ -145,7 +152,8 @@ export const parsedManifest = {
             uri: 'video/init.m4f',
             resolvedUri: 'https://www.example.com/video/init.m4f'
           },
-          number: 1
+          number: 1,
+          presentationTime: 5
         },
         {
           uri: 'video/segment_2.m4f',
@@ -156,7 +164,8 @@ export const parsedManifest = {
             uri: 'video/init.m4f',
             resolvedUri: 'https://www.example.com/video/init.m4f'
           },
-          number: 2
+          number: 2,
+          presentationTime: 10
         },
         {
           discontinuity: true,
@@ -168,7 +177,8 @@ export const parsedManifest = {
             uri: 'video/init.m4f',
             resolvedUri: 'https://www.example.com/video/init.m4f'
           },
-          number: 0
+          number: 0,
+          presentationTime: 15
         },
         {
           uri: 'video/segment_1.m4f',
@@ -179,7 +189,8 @@ export const parsedManifest = {
             uri: 'video/init.m4f',
             resolvedUri: 'https://www.example.com/video/init.m4f'
           },
-          number: 1
+          number: 1,
+          presentationTime: 20
         },
         {
           uri: 'video/segment_2.m4f',
@@ -190,7 +201,8 @@ export const parsedManifest = {
             uri: 'video/init.m4f',
             resolvedUri: 'https://www.example.com/video/init.m4f'
           },
-          number: 2
+          number: 2,
+          presentationTime: 25
         }
       ],
       mediaSequence: 0

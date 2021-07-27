@@ -41,7 +41,8 @@ QUnit.test('pretty simple', function(assert) {
         uri: '',
         resolvedUri: 'http://example.com/'
       },
-      number: 1
+      number: 1,
+      presentationTime: 0
     }]
   }];
 
@@ -223,6 +224,7 @@ QUnit.test('presentationTimeOffset', function(assert) {
       uri: '',
       timeline: 0,
       duration: 2,
+      presentationTime: 0,
       presentationTimeOffset: 25,
       resolvedUri: 'http://example.com/',
       map: {

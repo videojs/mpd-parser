@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MPD xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:cenc="urn:mpeg:cenc:2013" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="dynamic" mediaPresentationDuration="PT36.269S" minBufferTime="PT2.000S" suggestedPresentationDelay="PT18S">
-  <Period id="0" duration="PT5.972633333S">
+  <Period id="0" start="PT0S" duration="PT5.972633333S">
     <AdaptationSet mimeType="audio/mp4" segmentAlignment="true" startWithSAP="1" lang="en">
       <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"></Role>
       <SegmentTemplate initialization="https://example.com/$RepresentationID$/init0.m4f" media="https://example.com/$RepresentationID$/segment$Number$.m4f" startNumber="0" timescale="44100">

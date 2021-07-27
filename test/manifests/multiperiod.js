@@ -33,6 +33,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init0.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init0.m4f'
                   },
+                  presentationTime: 0,
                   number: 0
                 },
                 {
@@ -44,6 +45,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init0.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init0.m4f'
                   },
+                  presentationTime: 1.9969160997732427,
                   number: 1
                 },
                 {
@@ -55,6 +57,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init0.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init0.m4f'
                   },
+                  presentationTime: 3.9938321995464854,
                   number: 2
                 },
                 {
@@ -66,6 +69,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init1.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init1.m4f'
                   },
+                  presentationTime: 5.972633333,
                   number: 3,
                   discontinuity: true
                 },
@@ -78,6 +82,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init1.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init1.m4f'
                   },
+                  presentationTime: 7.969549432773243,
                   number: 4
                 },
                 {
@@ -89,6 +94,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init1.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init1.m4f'
                   },
+                  presentationTime: 9.966465532546486,
                   number: 5
                 },
                 {
@@ -100,6 +106,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 10.810799998,
                   number: 6,
                   discontinuity: true
                 },
@@ -112,6 +119,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 12.807716097773243,
                   number: 7
                 },
                 {
@@ -123,6 +131,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 14.804632197546486,
                   number: 8
                 },
                 {
@@ -134,6 +143,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 16.801548297319727,
                   number: 9
                 },
                 {
@@ -145,6 +155,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 18.79846439709297,
                   number: 10
                 },
                 {
@@ -156,6 +167,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 20.795380496866215,
                   number: 11
                 },
                 {
@@ -167,6 +179,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 22.792296596639456,
                   number: 12
                 },
                 {
@@ -178,6 +191,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init2.m4f'
                   },
+                  presentationTime: 24.789212696412697,
                   number: 13
                 },
                 {
@@ -189,6 +203,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init3.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init3.m4f'
                   },
+                  presentationTime: 19.938462809458052,
                   number: 14,
                   presentationTimeOffset: 4.85297052154195,
                   discontinuity: true
@@ -202,6 +217,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/init3.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/init3.m4f'
                   },
+                  presentationTime: 21.099460541884355,
                   number: 15,
                   presentationTimeOffset: 4.85297052154195
                 },
@@ -214,6 +230,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/segment$Number$.m4f'
                   },
+                  presentationTime: 27.949347162000002,
                   number: 16,
                   discontinuity: true
                 },
@@ -226,6 +243,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/segment$Number$.m4f'
                   },
+                  presentationTime: 29.946263261773247,
                   number: 17
                 },
                 {
@@ -237,6 +255,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/segment$Number$.m4f'
                   },
+                  presentationTime: 31.943179361546488,
                   number: 18
                 },
                 {
@@ -248,6 +267,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio128_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio128_2/segment$Number$.m4f'
                   },
+                  presentationTime: 33.94009546131973,
                   number: 19
                 }
               ],
@@ -283,6 +303,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init0.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init0.m4f'
                   },
+                  presentationTime: 0,
                   number: 0
                 },
                 {
@@ -294,6 +315,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init0.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init0.m4f'
                   },
+                  presentationTime: 1.9969160997732427,
                   number: 1
                 },
                 {
@@ -305,6 +327,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init0.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init0.m4f'
                   },
+                  presentationTime: 3.9938321995464854,
                   number: 2
                 },
                 {
@@ -316,6 +339,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init1.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init1.m4f'
                   },
+                  presentationTime: 5.972633333,
                   number: 3,
                   discontinuity: true
                 },
@@ -328,6 +352,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init1.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init1.m4f'
                   },
+                  presentationTime: 7.969549432773243,
                   number: 4
                 },
                 {
@@ -339,6 +364,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init1.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init1.m4f'
                   },
+                  presentationTime: 9.966465532546486,
                   number: 5
                 },
                 {
@@ -350,6 +376,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 10.810799998,
                   number: 6,
                   discontinuity: true
                 },
@@ -362,6 +389,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 12.807716097773243,
                   number: 7
                 },
                 {
@@ -373,6 +401,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 14.804632197546486,
                   number: 8
                 },
                 {
@@ -384,6 +413,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 16.801548297319727,
                   number: 9
                 },
                 {
@@ -395,6 +425,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 18.79846439709297,
                   number: 10
                 },
                 {
@@ -406,6 +437,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 20.795380496866215,
                   number: 11
                 },
                 {
@@ -417,6 +449,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 22.792296596639456,
                   number: 12
                 },
                 {
@@ -428,6 +461,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init2.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init2.m4f'
                   },
+                  presentationTime: 24.789212696412697,
                   number: 13
                 },
                 {
@@ -439,6 +473,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init3.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init3.m4f'
                   },
+                  presentationTime: 19.938462809458052,
                   number: 14,
                   presentationTimeOffset: 4.85297052154195,
                   discontinuity: true
@@ -452,6 +487,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/init3.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/init3.m4f'
                   },
+                  presentationTime: 21.099460541884355,
                   number: 15,
                   presentationTimeOffset: 4.85297052154195
                 },
@@ -464,6 +500,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/segment$Number$.m4f'
                   },
+                  presentationTime: 27.949347162000002,
                   number: 16,
                   discontinuity: true
                 },
@@ -476,6 +513,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/segment$Number$.m4f'
                   },
+                  presentationTime: 29.946263261773247,
                   number: 17
                 },
                 {
@@ -487,6 +525,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/segment$Number$.m4f'
                   },
+                  presentationTime: 31.943179361546488,
                   number: 18
                 },
                 {
@@ -498,6 +537,7 @@ export const parsedManifest = {
                     uri: 'https://example.com/default_audio96_2/segment$Number$.m4f',
                     resolvedUri: 'https://example.com/default_audio96_2/segment$Number$.m4f'
                   },
+                  presentationTime: 33.94009546131973,
                   number: 19
                 }
               ],
@@ -551,6 +591,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init0.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init0.m4f'
           },
+          presentationTime: 0,
           number: 0
         },
         {
@@ -562,6 +603,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init0.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init0.m4f'
           },
+          presentationTime: 2.002,
           number: 1
         },
         {
@@ -573,6 +615,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init0.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init0.m4f'
           },
+          presentationTime: 4.004,
           number: 2
         },
         {
@@ -584,6 +627,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init1.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init1.m4f'
           },
+          presentationTime: 5.972633333,
           number: 3,
           discontinuity: true
         },
@@ -596,6 +640,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init1.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init1.m4f'
           },
+          presentationTime: 7.907899999666666,
           number: 4
         },
         {
@@ -607,6 +652,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init1.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init1.m4f'
           },
+          presentationTime: 9.843166666333333,
           number: 5
         },
         {
@@ -618,6 +664,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init2.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init2.m4f'
           },
+          presentationTime: 10.810799998,
           number: 6,
           discontinuity: true
         },
@@ -630,6 +677,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init2.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init2.m4f'
           },
+          presentationTime: 12.812799998,
           number: 7
         },
         {
@@ -641,6 +689,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init2.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init2.m4f'
           },
+          presentationTime: 14.814799998,
           number: 8
         },
         {
@@ -652,6 +701,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init2.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init2.m4f'
           },
+          presentationTime: 16.816799998,
           number: 9
         },
         {
@@ -663,6 +713,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init2.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init2.m4f'
           },
+          presentationTime: 18.818799998,
           number: 10
         },
         {
@@ -674,6 +725,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init2.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init2.m4f'
           },
+          presentationTime: 20.820799998,
           number: 11
         },
         {
@@ -685,6 +737,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init2.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init2.m4f'
           },
+          presentationTime: 22.822799998,
           number: 12
         },
         {
@@ -696,6 +749,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init3.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init3.m4f'
           },
+          presentationTime: 19.953266664333334,
           number: 13,
           presentationTimeOffset: 4.838166666666667,
           discontinuity: true
@@ -709,6 +763,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init3.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init3.m4f'
           },
+          presentationTime: 20.920899997666666,
           number: 14,
           presentationTimeOffset: 4.838166666666667
         },
@@ -721,6 +776,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/init3.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/init3.m4f'
           },
+          presentationTime: 22.856166664333333,
           number: 15,
           presentationTimeOffset: 4.838166666666667
         },
@@ -733,6 +789,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f'
           },
+          presentationTime: 27.949347162000002,
           number: 16,
           discontinuity: true
         },
@@ -745,6 +802,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f'
           },
+          presentationTime: 29.951347162,
           number: 17
         },
         {
@@ -756,6 +814,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f'
           },
+          presentationTime: 31.953347162,
           number: 18
         },
         {
@@ -767,6 +826,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video2000_0_1280x720/segment$Number$.m4f'
           },
+          presentationTime: 33.955347162,
           number: 19
         }
       ],
@@ -808,6 +868,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init0.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init0.m4f'
           },
+          presentationTime: 0,
           number: 0
         },
         {
@@ -819,6 +880,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init0.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init0.m4f'
           },
+          presentationTime: 2.002,
           number: 1
         },
         {
@@ -830,6 +892,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init0.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init0.m4f'
           },
+          presentationTime: 4.004,
           number: 2
         },
         {
@@ -841,6 +904,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init1.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init1.m4f'
           },
+          presentationTime: 5.972633333,
           number: 3,
           discontinuity: true
         },
@@ -853,6 +917,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init1.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init1.m4f'
           },
+          presentationTime: 7.907899999666666,
           number: 4
         },
         {
@@ -864,6 +929,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init1.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init1.m4f'
           },
+          presentationTime: 9.843166666333333,
           number: 5
         },
         {
@@ -875,6 +941,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init2.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init2.m4f'
           },
+          presentationTime: 10.810799998,
           number: 6,
           discontinuity: true
         },
@@ -887,6 +954,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init2.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init2.m4f'
           },
+          presentationTime: 12.812799998,
           number: 7
         },
         {
@@ -898,6 +966,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init2.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init2.m4f'
           },
+          presentationTime: 14.814799998,
           number: 8
         },
         {
@@ -909,6 +978,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init2.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init2.m4f'
           },
+          presentationTime: 16.816799998,
           number: 9
         },
         {
@@ -920,6 +990,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init2.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init2.m4f'
           },
+          presentationTime: 18.818799998,
           number: 10
         },
         {
@@ -931,6 +1002,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init2.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init2.m4f'
           },
+          presentationTime: 20.820799998,
           number: 11
         },
         {
@@ -942,6 +1014,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init2.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init2.m4f'
           },
+          presentationTime: 22.822799998,
           number: 12
         },
         {
@@ -953,6 +1026,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init3.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init3.m4f'
           },
+          presentationTime: 19.953266664333334,
           number: 13,
           presentationTimeOffset: 4.838166666666667,
           discontinuity: true
@@ -966,6 +1040,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init3.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init3.m4f'
           },
+          presentationTime: 20.920899997666666,
           number: 14,
           presentationTimeOffset: 4.838166666666667
         },
@@ -978,6 +1053,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/init3.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/init3.m4f'
           },
+          presentationTime: 22.856166664333333,
           number: 15,
           presentationTimeOffset: 4.838166666666667
         },
@@ -990,6 +1066,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f'
           },
+          presentationTime: 27.949347162000002,
           number: 16,
           discontinuity: true
         },
@@ -1002,6 +1079,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f'
           },
+          presentationTime: 29.951347162,
           number: 17
         },
         {
@@ -1013,6 +1091,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f'
           },
+          presentationTime: 31.953347162,
           number: 18
         },
         {
@@ -1024,6 +1103,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video1200_1_960x540/segment$Number$.m4f'
           },
+          presentationTime: 33.955347162,
           number: 19
         }
       ],
@@ -1065,6 +1145,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init0.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init0.m4f'
           },
+          presentationTime: 0,
           number: 0
         },
         {
@@ -1076,6 +1157,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init0.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init0.m4f'
           },
+          presentationTime: 2.002,
           number: 1
         },
         {
@@ -1087,6 +1169,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init0.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init0.m4f'
           },
+          presentationTime: 4.004,
           number: 2
         },
         {
@@ -1098,6 +1181,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init1.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init1.m4f'
           },
+          presentationTime: 5.972633333,
           number: 3,
           discontinuity: true
         },
@@ -1110,6 +1194,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init1.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init1.m4f'
           },
+          presentationTime: 7.907899999666666,
           number: 4
         },
         {
@@ -1121,6 +1206,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init1.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init1.m4f'
           },
+          presentationTime: 9.843166666333333,
           number: 5
         },
         {
@@ -1132,6 +1218,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init2.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init2.m4f'
           },
+          presentationTime: 10.810799998,
           number: 6,
           discontinuity: true
         },
@@ -1144,6 +1231,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init2.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init2.m4f'
           },
+          presentationTime: 12.812799998,
           number: 7
         },
         {
@@ -1155,6 +1243,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init2.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init2.m4f'
           },
+          presentationTime: 14.814799998,
           number: 8
         },
         {
@@ -1166,6 +1255,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init2.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init2.m4f'
           },
+          presentationTime: 16.816799998,
           number: 9
         },
         {
@@ -1177,6 +1267,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init2.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init2.m4f'
           },
+          presentationTime: 18.818799998,
           number: 10
         },
         {
@@ -1188,6 +1279,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init2.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init2.m4f'
           },
+          presentationTime: 20.820799998,
           number: 11
         },
         {
@@ -1199,6 +1291,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init2.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init2.m4f'
           },
+          presentationTime: 22.822799998,
           number: 12
         },
         {
@@ -1210,6 +1303,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init3.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init3.m4f'
           },
+          presentationTime: 19.953266664333334,
           number: 13,
           presentationTimeOffset: 4.838166666666667,
           discontinuity: true
@@ -1223,6 +1317,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init3.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init3.m4f'
           },
+          presentationTime: 20.920899997666666,
           number: 14,
           presentationTimeOffset: 4.838166666666667
         },
@@ -1235,6 +1330,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/init3.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/init3.m4f'
           },
+          presentationTime: 22.856166664333333,
           number: 15,
           presentationTimeOffset: 4.838166666666667
         },
@@ -1247,6 +1343,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f'
           },
+          presentationTime: 27.949347162000002,
           number: 16,
           discontinuity: true
         },
@@ -1259,6 +1356,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f'
           },
+          presentationTime: 29.951347162,
           number: 17
         },
         {
@@ -1270,6 +1368,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f'
           },
+          presentationTime: 31.953347162,
           number: 18
         },
         {
@@ -1281,6 +1380,7 @@ export const parsedManifest = {
             uri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f',
             resolvedUri: 'https://example.com/default_video900_1_640x360/segment$Number$.m4f'
           },
+          presentationTime: 33.955347162,
           number: 19
         }
       ],
