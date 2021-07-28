@@ -1,3 +1,21 @@
+<a name="0.18.0"></a>
+# [0.18.0](https://github.com/videojs/mpd-parser/compare/v0.17.0...v0.18.0) (2021-07-28)
+
+### Features
+
+* add Period[@start](https://github.com/start) attribute when missing ([#137](https://github.com/videojs/mpd-parser/issues/137)) ([f118a8b](https://github.com/videojs/mpd-parser/commit/f118a8b))
+* add presentationTime as an attribute on each SegmentTemplate segment ([#139](https://github.com/videojs/mpd-parser/issues/139)) ([a972b8c](https://github.com/videojs/mpd-parser/commit/a972b8c))
+
+### Bug Fixes
+
+* generate proper number of segments for multiperiod content that uses segment template ([#138](https://github.com/videojs/mpd-parser/issues/138)) ([39109d0](https://github.com/videojs/mpd-parser/commit/39109d0))
+
+### Code Refactoring
+
+* default MPD[@type](https://github.com/type) to static when missing ([#136](https://github.com/videojs/mpd-parser/issues/136)) ([281e035](https://github.com/videojs/mpd-parser/commit/281e035))
+* rename master manifest to main manifest ([#141](https://github.com/videojs/mpd-parser/issues/141)) ([5720fbd](https://github.com/videojs/mpd-parser/commit/5720fbd))
+* rename SegmentInfo property from timeline to segmentTimeline ([#140](https://github.com/videojs/mpd-parser/issues/140)) ([1601467](https://github.com/videojs/mpd-parser/commit/1601467))
+
 <a name="0.17.0"></a>
 # [0.17.0](https://github.com/videojs/mpd-parser/compare/v0.16.0...v0.17.0) (2021-05-28)
 
