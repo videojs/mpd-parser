@@ -21,6 +21,7 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     }],
     initialization: { sourceURL: 'init.fmp4' },
     periodIndex: 0,
+    periodStart: 0,
     startNumber: 1,
     baseUrl: 'http://example.com/',
     type: 'static'
@@ -40,6 +41,7 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 1000,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -50,6 +52,7 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/2.fmp4',
     timeline: 0,
+    presentationTime: 2000,
     uri: '2.fmp4',
     number: 2
   }, {
@@ -60,6 +63,7 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/3.fmp4',
     timeline: 0,
+    presentationTime: 3000,
     uri: '3.fmp4',
     number: 3
   }, {
@@ -70,6 +74,7 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/4.fmp4',
     timeline: 0,
+    presentationTime: 4000,
     uri: '4.fmp4',
     number: 4
   }, {
@@ -80,6 +85,7 @@ QUnit.test('uses segmentTimeline to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/5.fmp4',
     timeline: 0,
+    presentationTime: 5000,
     uri: '5.fmp4',
     number: 5
   }]);
@@ -102,6 +108,7 @@ QUnit.test(
       }],
       initialization: { sourceURL: 'init.fmp4' },
       periodIndex: 0,
+      periodStart: 0,
       startNumber: 1,
       baseUrl: 'http://example.com/',
       type: 'static'
@@ -121,6 +128,7 @@ QUnit.test(
       },
       resolvedUri: 'http://example.com/1.fmp4',
       timeline: 0,
+      presentationTime: 1000,
       uri: '1.fmp4',
       number: 1
     }, {
@@ -131,6 +139,7 @@ QUnit.test(
       },
       resolvedUri: 'http://example.com/2.fmp4',
       timeline: 0,
+      presentationTime: 2000,
       uri: '2.fmp4',
       number: 2
     }]);
@@ -154,6 +163,7 @@ QUnit.test(
       }],
       initialization: { sourceURL: 'init.fmp4' },
       periodIndex: 0,
+      periodStart: 0,
       startNumber: 1,
       baseUrl: 'http://example.com/',
       type: 'static'
@@ -173,6 +183,7 @@ QUnit.test(
       },
       resolvedUri: 'http://example.com/1.fmp4',
       timeline: 0,
+      presentationTime: 1000,
       uri: '1.fmp4',
       number: 1
     }, {
@@ -183,6 +194,7 @@ QUnit.test(
       },
       resolvedUri: 'http://example.com/2.fmp4',
       timeline: 0,
+      presentationTime: 2000,
       uri: '2.fmp4',
       number: 2
     }, {
@@ -193,6 +205,7 @@ QUnit.test(
       },
       resolvedUri: 'http://example.com/3.fmp4',
       timeline: 0,
+      presentationTime: 3000,
       uri: '3.fmp4',
       number: 3
     }, {
@@ -203,6 +216,7 @@ QUnit.test(
       },
       resolvedUri: 'http://example.com/4.fmp4',
       timeline: 0,
+      presentationTime: 4000,
       uri: '4.fmp4',
       number: 4
     }, {
@@ -213,6 +227,7 @@ QUnit.test(
       },
       resolvedUri: 'http://example.com/5.fmp4',
       timeline: 0,
+      presentationTime: 5000,
       uri: '5.fmp4',
       number: 5
     }]);
@@ -235,6 +250,7 @@ QUnit.test('uses duration to set segments', function(assert) {
     initialization: { sourceURL: 'init.fmp4' },
     duration: 10,
     periodIndex: 0,
+    periodStart: 0,
     startNumber: 1,
     sourceDuration: 50,
     baseUrl: 'http://example.com/',
@@ -249,6 +265,7 @@ QUnit.test('uses duration to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -259,6 +276,7 @@ QUnit.test('uses duration to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/2.fmp4',
     timeline: 0,
+    presentationTime: 10,
     uri: '2.fmp4',
     number: 2
   }, {
@@ -269,6 +287,7 @@ QUnit.test('uses duration to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/3.fmp4',
     timeline: 0,
+    presentationTime: 20,
     uri: '3.fmp4',
     number: 3
   }, {
@@ -279,6 +298,7 @@ QUnit.test('uses duration to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/4.fmp4',
     timeline: 0,
+    presentationTime: 30,
     uri: '4.fmp4',
     number: 4
   }, {
@@ -289,6 +309,7 @@ QUnit.test('uses duration to set segments', function(assert) {
     },
     resolvedUri: 'http://example.com/5.fmp4',
     timeline: 0,
+    presentationTime: 40,
     uri: '5.fmp4',
     number: 5
   }]);
@@ -311,6 +332,7 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     duration: 10,
     timescale: 2,
     periodIndex: 0,
+    periodStart: 0,
     startNumber: 1,
     sourceDuration: 25,
     baseUrl: 'http://example.com/',
@@ -325,6 +347,7 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -335,6 +358,7 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     },
     resolvedUri: 'http://example.com/2.fmp4',
     timeline: 0,
+    presentationTime: 5,
     uri: '2.fmp4',
     number: 2
   }, {
@@ -345,6 +369,7 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     },
     resolvedUri: 'http://example.com/3.fmp4',
     timeline: 0,
+    presentationTime: 10,
     uri: '3.fmp4',
     number: 3
   }, {
@@ -355,6 +380,7 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     },
     resolvedUri: 'http://example.com/4.fmp4',
     timeline: 0,
+    presentationTime: 15,
     uri: '4.fmp4',
     number: 4
   }, {
@@ -365,6 +391,7 @@ QUnit.test('uses timescale to set segment duration', function(assert) {
     },
     resolvedUri: 'http://example.com/5.fmp4',
     timeline: 0,
+    presentationTime: 20,
     uri: '5.fmp4',
     number: 5
   }]);
@@ -381,6 +408,7 @@ QUnit.test('timescale sets duration of last segment correctly', function(assert)
     duration: 10,
     timescale: 1,
     periodIndex: 0,
+    periodStart: 0,
     startNumber: 1,
     sourceDuration: 15,
     baseUrl: 'http://example.com/',
@@ -395,6 +423,7 @@ QUnit.test('timescale sets duration of last segment correctly', function(assert)
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -405,6 +434,7 @@ QUnit.test('timescale sets duration of last segment correctly', function(assert)
     },
     resolvedUri: 'http://example.com/2.fmp4',
     timeline: 0,
+    presentationTime: 10,
     uri: '2.fmp4',
     number: 2
   }]);
@@ -423,6 +453,7 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
     duration: 10,
     timescale: 1,
     periodIndex: 0,
+    periodStart: 0,
     startNumber: 1,
     sourceDuration: 20,
     baseUrl: 'http://example.com/',
@@ -441,6 +472,7 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -455,6 +487,7 @@ QUnit.test('segmentUrl translates ranges correctly', function(assert) {
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 10,
     uri: '1.fmp4',
     number: 2
   }]);
@@ -525,6 +558,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
     duration: 10,
     timescale: 1,
     periodIndex: 0,
+    periodStart: 0,
     startNumber: 1,
     sourceDuration: 20,
     baseUrl: 'http://example.com/',
@@ -543,6 +577,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 0,
     uri: '1.fmp4',
     number: 1
   }, {
@@ -557,6 +592,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
     },
     resolvedUri: 'http://example.com/1.fmp4',
     timeline: 0,
+    presentationTime: 10,
     uri: '1.fmp4',
     number: 2
   }]);

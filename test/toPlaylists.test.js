@@ -137,6 +137,7 @@ QUnit.test('segment list', function(assert) {
       duration: 10,
       sourceDuration: 11,
       periodIndex: 0,
+      periodStart: 0,
       type: 'static'
     },
     segmentInfo: {
@@ -161,6 +162,7 @@ QUnit.test('segment list', function(assert) {
         media: '2.fmp4'
       }],
       periodIndex: 0,
+      periodStart: 0,
       type: 'static'
     },
     segments: [{
@@ -171,6 +173,7 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/1.fmp4',
       timeline: 0,
+      presentationTime: 0,
       uri: '1.fmp4',
       number: 1
     }, {
@@ -181,6 +184,7 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/2.fmp4',
       timeline: 0,
+      presentationTime: 10,
       uri: '2.fmp4',
       number: 2
     }]
