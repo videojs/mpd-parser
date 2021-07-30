@@ -86,7 +86,7 @@ export const segmentsFromList = (attributes, segmentTimeline) => {
       segment.duration = segmentTime.duration;
       segment.number = segmentTime.number;
       segment.presentationTime =
-        periodStart + (segmentTime.time / timescale) - presentationTimeOffset;
+        periodStart + ((segmentTime.time - presentationTimeOffset) / timescale);
 
       return segment;
     }
