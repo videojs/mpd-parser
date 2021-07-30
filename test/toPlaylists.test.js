@@ -215,6 +215,7 @@ QUnit.test('presentationTime accounts for presentationTimeOffset', function(asse
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       periodStart: 25,
+      presentationTimeOffset: 100,
       sourceDuration: 2,
       duration: 2,
       timescale: 4,
