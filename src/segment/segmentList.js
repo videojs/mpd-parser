@@ -50,7 +50,8 @@ const SegmentURLToSegmentObject = (attributes, segmentUrl) => {
 export const segmentsFromList = (attributes, segmentTimeline) => {
   const {
     duration,
-    segmentUrls = []
+    segmentUrls = [],
+    periodStart
   } = attributes;
 
   // Per spec (5.3.9.2.1) no way to determine segment duration OR
@@ -75,10 +76,18 @@ export const segmentsFromList = (attributes, segmentTimeline) => {
   const segments = segmentTimeInfo.map((segmentTime, index) => {
     if (segmentUrlMap[index]) {
       const segment = segmentUrlMap[index];
+      // See DASH spec section 5.3.9.2.2
+      // - if timescale isn't present on any level, default to 1.
+      const timescale = attributes.timescale || 1;
+      // - if presentationTimeOffset isn't present on any level, default to 0
+      const presentationTimeOffset = attributes.presentationTimeOffset || 0;
 
       segment.timeline = segmentTime.timeline;
       segment.duration = segmentTime.duration;
       segment.number = segmentTime.number;
+      segment.presentationTime =
+        periodStart + ((segmentTime.time - presentationTimeOffset) / timescale);
+
       return segment;
     }
     // Since we're mapping we should get rid of any blank segments (in case

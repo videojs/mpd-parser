@@ -137,6 +137,7 @@ QUnit.test('segment list', function(assert) {
       duration: 10,
       sourceDuration: 11,
       periodIndex: 0,
+      periodStart: 0,
       type: 'static'
     },
     segmentInfo: {
@@ -161,6 +162,7 @@ QUnit.test('segment list', function(assert) {
         media: '2.fmp4'
       }],
       periodIndex: 0,
+      periodStart: 0,
       type: 'static'
     },
     segments: [{
@@ -171,6 +173,7 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/1.fmp4',
       timeline: 0,
+      presentationTime: 0,
       uri: '1.fmp4',
       number: 1
     }, {
@@ -181,6 +184,7 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/2.fmp4',
       timeline: 0,
+      presentationTime: 10,
       uri: '2.fmp4',
       number: 2
     }]
@@ -189,7 +193,7 @@ QUnit.test('segment list', function(assert) {
   assert.deepEqual(toPlaylists(representations), playlists);
 });
 
-QUnit.test('presentationTimeOffset', function(assert) {
+QUnit.test('presentationTime accounts for presentationTimeOffset', function(assert) {
   const representations = [{
     attributes: {
       baseUrl: 'http://example.com/',
@@ -206,17 +210,14 @@ QUnit.test('presentationTimeOffset', function(assert) {
     }
   }];
 
-  // the presentationTimeOffset output should be the value in the template
-  // divided by the timescale in the template.
-  // It should be available on segments
   const playlists = [{
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       periodStart: 25,
+      presentationTimeOffset: 100,
       sourceDuration: 2,
       duration: 2,
-      presentationTimeOffset: 25,
       timescale: 4,
       type: 'static'
     },
@@ -224,8 +225,9 @@ QUnit.test('presentationTimeOffset', function(assert) {
       uri: '',
       timeline: 0,
       duration: 2,
+      // The presentationTime value should be adjusted based on the presentationTimeOffset
+      // and its timescale.
       presentationTime: 0,
-      presentationTimeOffset: 25,
       resolvedUri: 'http://example.com/',
       map: {
         uri: '',
