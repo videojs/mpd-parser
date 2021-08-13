@@ -270,6 +270,7 @@ export const parsedManifest = {
                 }
               ],
               mediaSequence: 0,
+              discontinuitySequence: 0,
               contentProtection: {
                 'com.widevine.alpha': {
                   attributes: {
@@ -538,6 +539,7 @@ export const parsedManifest = {
                 }
               ],
               mediaSequence: 0,
+              discontinuitySequence: 0,
               contentProtection: {
                 'com.widevine.alpha': {
                   attributes: {
@@ -824,6 +826,7 @@ export const parsedManifest = {
         }
       ],
       mediaSequence: 0,
+      discontinuitySequence: 0,
       contentProtection: {
         'com.widevine.alpha': {
           attributes: {
@@ -1098,6 +1101,7 @@ export const parsedManifest = {
         }
       ],
       mediaSequence: 0,
+      discontinuitySequence: 0,
       contentProtection: {
         'com.widevine.alpha': {
           attributes: {
@@ -1372,6 +1376,7 @@ export const parsedManifest = {
         }
       ],
       mediaSequence: 0,
+      discontinuitySequence: 0,
       contentProtection: {
         'com.widevine.alpha': {
           attributes: {

@@ -18,7 +18,8 @@ export const segmentsFromBase = (attributes) => {
     initialization = {},
     sourceDuration,
     indexRange = '',
-    duration
+    duration,
+    periodStart
   } = attributes;
 
   // base url is required for SegmentBase to work, per spec (Section 5.3.9.2.1)
@@ -50,7 +51,9 @@ export const segmentsFromBase = (attributes) => {
     segment.timeline = 0;
   }
 
-  // This is used for mediaSequence
+  // Since there's only one segment in the period, the segment's presentation time is
+  // the same as the period start.
+  segment.presentationTime = periodStart;
   segment.number = 0;
 
   return [segment];
@@ -82,6 +85,10 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
   const segments = [];
   const type = playlist.endList ? 'static' : 'dynamic';
+  // Right now we don't support multiperiod sidx, so we can assume the presentation time
+  // starts at 0. In the future, when multiperiod sidx is handled, the presentation time
+  // will need to account for each period start.
+  let presentationTime = 0;
 
   // firstOffset is the offset from the end of the sidx box
   let startIndex = sidxEnd + sidx.firstOffset;
@@ -103,6 +110,10 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
       timeline,
       // this is used in parseByDuration
       periodIndex: timeline,
+      // Technically the presentationTime isn't the period start, but is instead the
+      // current presentation time for each segment that is added. The segmentsFromBase
+      // function expects period start, so it's renamed to match.
+      periodStart: presentationTime,
       duration,
       sourceDuration,
       indexRange,
@@ -117,6 +128,7 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
 
     segments.push(segment);
     startIndex += size;
+    presentationTime += duration / timescale;
   }
 
   playlist.segments = segments;

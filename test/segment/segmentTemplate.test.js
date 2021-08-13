@@ -248,9 +248,9 @@ QUnit.test('parseByDuration uses endNumber and has correct duration', function(a
     sourceDuration: 11,
     duration: '4',
     periodIndex: 1,
-    endNumber: '2',
     type: 'static',
-    periodStart: 0
+    periodStart: 0,
+    endNumber: '2'
   };
 
   assert.deepEqual(

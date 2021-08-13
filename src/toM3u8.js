@@ -2,6 +2,7 @@ import { values } from './utils/object';
 import { findIndexes } from './utils/list';
 import { addSidxSegmentsToPlaylist as addSidxSegmentsToPlaylist_ } from './segment/segmentBase';
 import { byteRangeToString } from './segment/urlType';
+import { positionManifestOnTimeline } from './playlist-merge';
 
 export const generateSidxKey = (sidx) => sidx &&
   sidx.uri + '-' + byteRangeToString(sidx.byterange);
@@ -66,7 +67,13 @@ export const addSidxSegmentsToPlaylists = (playlists, sidxMapping = {}) => {
   return playlists;
 };
 
-export const formatAudioPlaylist = ({ attributes, segments, sidx }, isAudioOnly) => {
+export const formatAudioPlaylist = ({
+  attributes,
+  segments,
+  sidx,
+  mediaSequence,
+  discontinuitySequence
+}, isAudioOnly) => {
   const playlist = {
     attributes: {
       NAME: attributes.id,
@@ -79,8 +86,9 @@ export const formatAudioPlaylist = ({ attributes, segments, sidx }, isAudioOnly)
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
-    segments,
-    mediaSequence: segments.length ? segments[0].number : 1
+    discontinuitySequence,
+    mediaSequence,
+    segments
   };
 
   if (attributes.contentProtection) {
@@ -99,7 +107,12 @@ export const formatAudioPlaylist = ({ attributes, segments, sidx }, isAudioOnly)
   return playlist;
 };
 
-export const formatVttPlaylist = ({ attributes, segments }) => {
+export const formatVttPlaylist = ({
+  attributes,
+  segments,
+  mediaSequence,
+  discontinuitySequence
+}) => {
   if (typeof segments === 'undefined') {
     // vtt tracks may use single file in BaseURL
     segments = [{
@@ -107,6 +120,18 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
       timeline: attributes.periodIndex,
       resolvedUri: attributes.baseUrl || '',
       duration: attributes.sourceDuration,
+      // From DASH IOP v4.3 section 6.4.5:
+      //
+      //   Only one file for the full period is permitted, practically limiting this use
+      //   case to non-live content.
+      //
+      //   Such external files are assumed to have a timeline aligned with the Period,
+      //   so that TTML time 00:00:00.000 corresponds to the start of the Period. The
+      //   presentation time offset is expected to be not presented, and if present,
+      //   expected to be ignored by the DASH client.
+      //
+      //   The same applies to side-loaded WebVTT files.
+      presentationTime: attributes.periodStart,
       number: 0
     }];
     // targetDuration should be the same duration as the only segment
@@ -129,8 +154,9 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
     targetDuration: attributes.duration,
-    segments,
-    mediaSequence: segments.length ? segments[0].number : 1
+    discontinuitySequence,
+    mediaSequence,
+    segments
   };
 };
 
@@ -253,8 +279,7 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
-    segments,
-    mediaSequence: segments.length ? segments[0].number : 1
+    segments
   };
 
   if (attributes.contentProtection) {
@@ -275,9 +300,43 @@ const audioOnly = ({ attributes }) =>
 const vttOnly = ({ attributes }) =>
   attributes.mimeType === 'text/vtt' || attributes.contentType === 'text';
 
-export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
+/**
+ * Adds appropriate media and discontinuity sequence values to the segments and playlists.
+ *
+ * Throughout mpd-parser, the `number` attribute is used in relation to `startNumber`, a
+ * DASH specific attribute used in constructing segment URI's from templates. However, from
+ * an HLS perspective, the `number` attribute on a segment would be its `mediaSequence`
+ * value, which should start at the original media sequence value (or 0) and increment by 1
+ * for each segment thereafter. Since DASH's `startNumber` values are independent per
+ * period, it doesn't make sense to use it for `number`. Instead, assume everything starts
+ * from a 0 mediaSequence value and increment from there.
+ *
+ * Note that VHS currently doesn't use the `number` property, but it can be helpful for
+ * debugging and making sense of the manifest.
+ *
+ * For live playlists, to account for values increasing in manifests when periods are
+ * removed on refreshes, merging logic should be used to update the numbers to their
+ * appropriate values (to ensure they're sequential and increasing).
+ */
+export const addMediaSequenceValues = (playlists) => {
+  // increment all segments sequentially
+  playlists.forEach((playlist) => {
+    playlist.mediaSequence = 0;
+    playlist.discontinuitySequence = 0;
+
+    if (!playlist.segments) {
+      return;
+    }
+
+    for (let i = 0; i < playlist.segments.length; i++) {
+      playlist.segments[i].number = i;
+    }
+  });
+};
+
+export const toM3u8 = ({ dashPlaylists, locations, sidxMapping = {}, lastMpd }) => {
   if (!dashPlaylists.length) {
-    return {};
+    return { manifest: {} };
   }
 
   // grab all main manifest attributes
@@ -292,6 +351,8 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
   const vttPlaylists = dashPlaylists.filter(vttOnly);
   const captions = dashPlaylists.map((playlist) => playlist.attributes.captionServices).filter(Boolean);
+
+  [videoPlaylists, audioPlaylists, vttPlaylists].forEach(addMediaSequenceValues);
 
   const manifest = {
     allowCache: true,
@@ -336,5 +397,12 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
     manifest.mediaGroups['CLOSED-CAPTIONS'].cc = organizeCaptionServices(captions);
   }
 
-  return manifest;
+  if (lastMpd) {
+    return positionManifestOnTimeline({
+      oldManifest: lastMpd,
+      newManifest: manifest
+    });
+  }
+
+  return { manifest };
 };

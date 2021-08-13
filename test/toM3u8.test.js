@@ -12,6 +12,7 @@ QUnit.test('playlists', function(assert) {
       duration: 0,
       bandwidth: 20000,
       periodIndex: 1,
+      periodStart: 0,
       mimeType: 'audio/mp4',
       type: 'static'
     },
@@ -24,6 +25,7 @@ QUnit.test('playlists', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
+      periodStart: 0,
       mimeType: 'audio/mp4',
       type: 'static'
     },
@@ -38,6 +40,7 @@ QUnit.test('playlists', function(assert) {
       duration: 0,
       bandwidth: 10000,
       periodIndex: 1,
+      periodStart: 0,
       mimeType: 'video/mp4',
       type: 'static'
     },
@@ -48,6 +51,7 @@ QUnit.test('playlists', function(assert) {
       id: '1',
       bandwidth: 20000,
       periodIndex: 1,
+      periodStart: 0,
       mimeType: 'text/vtt',
       type: 'static',
       baseUrl: 'https://www.example.com/vtt'
@@ -58,6 +62,7 @@ QUnit.test('playlists', function(assert) {
       id: '1',
       bandwidth: 10000,
       periodIndex: 1,
+      periodStart: 0,
       mimeType: 'text/vtt',
       type: 'static',
       baseUrl: 'https://www.example.com/vtt'
@@ -83,7 +88,8 @@ QUnit.test('playlists', function(assert) {
                 NAME: '1',
                 ['PROGRAM-ID']: 1
               },
-              mediaSequence: 1,
+              mediaSequence: 0,
+              discontinuitySequence: 0,
               endList: true,
               resolvedUri: '',
               segments: [],
@@ -97,7 +103,8 @@ QUnit.test('playlists', function(assert) {
                 NAME: '2',
                 ['PROGRAM-ID']: 1
               },
-              mediaSequence: 1,
+              mediaSequence: 0,
+              discontinuitySequence: 0,
               endList: true,
               resolvedUri: '',
               segments: [],
@@ -124,6 +131,7 @@ QUnit.test('playlists', function(assert) {
                 ['PROGRAM-ID']: 1
               },
               mediaSequence: 0,
+              discontinuitySequence: 0,
               targetDuration: 100,
               endList: true,
               resolvedUri: 'https://www.example.com/vtt',
@@ -132,6 +140,7 @@ QUnit.test('playlists', function(assert) {
                 resolvedUri: 'https://www.example.com/vtt',
                 timeline: 1,
                 uri: 'https://www.example.com/vtt',
+                presentationTime: 0,
                 number: 0
               }],
               timeline: 1,
@@ -143,6 +152,7 @@ QUnit.test('playlists', function(assert) {
                 ['PROGRAM-ID']: 1
               },
               mediaSequence: 0,
+              discontinuitySequence: 0,
               targetDuration: 100,
               endList: true,
               resolvedUri: 'https://www.example.com/vtt',
@@ -151,6 +161,7 @@ QUnit.test('playlists', function(assert) {
                 resolvedUri: 'https://www.example.com/vtt',
                 timeline: 1,
                 uri: 'https://www.example.com/vtt',
+                presentationTime: 0,
                 number: 0
               }],
               timeline: 1,
@@ -176,7 +187,8 @@ QUnit.test('playlists', function(assert) {
         }
       },
       endList: true,
-      mediaSequence: 1,
+      mediaSequence: 0,
+      discontinuitySequence: 0,
       targetDuration: 0,
       resolvedUri: '',
       segments: [],
@@ -187,7 +199,7 @@ QUnit.test('playlists', function(assert) {
     uri: ''
   };
 
-  assert.deepEqual(toM3u8(input), expected);
+  assert.deepEqual(toM3u8({ dashPlaylists: input }).manifest, expected);
 });
 
 QUnit.test('playlists with segments', function(assert) {
@@ -375,7 +387,8 @@ QUnit.test('playlists with segments', function(assert) {
                 ['PROGRAM-ID']: 1
               },
               targetDuration: 2,
-              mediaSequence: 1,
+              mediaSequence: 0,
+              discontinuitySequence: 0,
               endList: true,
               resolvedUri: '',
               segments: [{
@@ -387,7 +400,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 1
+                number: 0
               }, {
                 uri: '',
                 timeline: 1,
@@ -397,7 +410,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 2
+                number: 1
               }],
               timeline: 1,
               uri: ''
@@ -409,7 +422,8 @@ QUnit.test('playlists with segments', function(assert) {
                 ['PROGRAM-ID']: 1
               },
               targetDuration: 2,
-              mediaSequence: 1,
+              mediaSequence: 0,
+              discontinuitySequence: 0,
               endList: true,
               resolvedUri: '',
               segments: [{
@@ -421,7 +435,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 1
+                number: 0
               }, {
                 uri: '',
                 timeline: 1,
@@ -431,7 +445,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 2
+                number: 1
               }],
               timeline: 1,
               uri: ''
@@ -455,7 +469,8 @@ QUnit.test('playlists with segments', function(assert) {
               },
               endList: true,
               targetDuration: 2,
-              mediaSequence: 1,
+              mediaSequence: 0,
+              discontinuitySequence: 0,
               resolvedUri: 'https://www.example.com/vtt',
               segments: [{
                 uri: '',
@@ -466,7 +481,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 1
+                number: 0
               }, {
                 uri: '',
                 timeline: 1,
@@ -476,7 +491,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 2
+                number: 1
               }],
               timeline: 1,
               uri: ''
@@ -488,7 +503,8 @@ QUnit.test('playlists with segments', function(assert) {
               },
               endList: true,
               targetDuration: 2,
-              mediaSequence: 1,
+              mediaSequence: 0,
+              discontinuitySequence: 0,
               resolvedUri: 'https://www.example.com/vtt',
               segments: [{
                 uri: '',
@@ -499,7 +515,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 1
+                number: 0
               }, {
                 uri: '',
                 timeline: 1,
@@ -509,7 +525,7 @@ QUnit.test('playlists with segments', function(assert) {
                   uri: '',
                   resolvedUri: ''
                 },
-                number: 2
+                number: 1
               }],
               timeline: 1,
               uri: ''
@@ -535,7 +551,8 @@ QUnit.test('playlists with segments', function(assert) {
       },
       endList: true,
       resolvedUri: '',
-      mediaSequence: 1,
+      mediaSequence: 0,
+      discontinuitySequence: 0,
       targetDuration: 2,
       segments: [{
         uri: '',
@@ -546,7 +563,7 @@ QUnit.test('playlists with segments', function(assert) {
           uri: '',
           resolvedUri: ''
         },
-        number: 1
+        number: 0
       }, {
         uri: '',
         timeline: 1,
@@ -556,7 +573,7 @@ QUnit.test('playlists with segments', function(assert) {
           uri: '',
           resolvedUri: ''
         },
-        number: 2
+        number: 1
       }],
       timeline: 1,
       uri: ''
@@ -565,7 +582,7 @@ QUnit.test('playlists with segments', function(assert) {
     uri: ''
   };
 
-  assert.deepEqual(toM3u8(input), expected);
+  assert.deepEqual(toM3u8({ dashPlaylists: input }).manifest, expected);
 });
 
 QUnit.test('playlists with sidx and sidxMapping', function(assert) {
@@ -647,14 +664,23 @@ QUnit.test('playlists with sidx and sidxMapping', function(assert) {
       resolvedUri: 'http://example.com/sidx.mp4',
       duration: 2,
       number: 0,
+      presentationTime: 0,
       timeline: 1
     }],
     endList: true,
-    mediaSequence: 1,
+    mediaSequence: 0,
+    discontinuitySequence: 0,
     resolvedUri: ''
   }];
 
-  assert.deepEqual(toM3u8(input, null, mapping).playlists, expected);
+  assert.deepEqual(
+    toM3u8({
+      dashPlaylists: input,
+      locations: null,
+      sidxMapping: mapping
+    }).manifest.playlists,
+    expected
+  );
 });
 
 QUnit.test('playlists without minimumUpdatePeriod dont assign default value', function(assert) {
@@ -684,7 +710,7 @@ QUnit.test('playlists without minimumUpdatePeriod dont assign default value', fu
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.equal(toM3u8(input).minimumUpdatePeriod, undefined);
+  assert.equal(toM3u8({ dashPlaylists: input }).manifest.minimumUpdatePeriod, undefined);
 });
 
 QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
@@ -715,7 +741,7 @@ QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.equal(toM3u8(input).minimumUpdatePeriod, 0);
+  assert.equal(toM3u8({ dashPlaylists: input }).manifest.minimumUpdatePeriod, 0);
 });
 
 QUnit.test('playlists with integer value for minimumUpdatePeriod', function(assert) {
@@ -746,11 +772,15 @@ QUnit.test('playlists with integer value for minimumUpdatePeriod', function(asse
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.equal(toM3u8(input).minimumUpdatePeriod, 2000, 'converts update period to ms');
+  assert.equal(
+    toM3u8({ dashPlaylists: input }).manifest.minimumUpdatePeriod,
+    2000,
+    'converts update period to ms'
+  );
 });
 
 QUnit.test('no playlists', function(assert) {
-  assert.deepEqual(toM3u8([]), {});
+  assert.deepEqual(toM3u8({ dashPlaylists: [] }).manifest, {});
 });
 
 QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert) {
@@ -815,7 +845,7 @@ QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert)
     }
   }];
 
-  const output = toM3u8(input);
+  const output = toM3u8({ dashPlaylists: input }).manifest;
 
   assert.ok('suggestedPresentationDelay' in output);
   assert.deepEqual(output.suggestedPresentationDelay, 18);
@@ -863,7 +893,7 @@ QUnit.test('playlists with label', function(assert) {
     },
     segments: []
   }];
-  const output = toM3u8(input);
+  const output = toM3u8({ dashPlaylists: input }).manifest;
 
   assert.ok(label in output.mediaGroups.AUDIO.audio, 'label exists');
 });
@@ -921,9 +951,9 @@ QUnit.test('608 captions', function(assert) {
     },
     segments: []
   }];
-  const output = toM3u8(input);
+  const output = toM3u8({ dashPlaylists: input });
 
-  const cc = output.mediaGroups['CLOSED-CAPTIONS'].cc;
+  const cc = output.manifest.mediaGroups['CLOSED-CAPTIONS'].cc;
 
   Object.keys(cc).forEach((key) => {
     assert.notOk(cc[key].autoselect, 'no autoselect');

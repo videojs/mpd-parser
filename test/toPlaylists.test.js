@@ -54,6 +54,7 @@ QUnit.test('segment base', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 0,
       sourceDuration: 2,
       type: 'static'
     },
@@ -66,6 +67,7 @@ QUnit.test('segment base', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 0,
       sourceDuration: 2,
       duration: 2,
       type: 'static'
@@ -79,6 +81,7 @@ QUnit.test('segment base', function(assert) {
       uri: 'http://example.com/',
       timeline: 0,
       duration: 2,
+      presentationTime: 0,
       number: 0
     }]
   }];
@@ -91,6 +94,7 @@ QUnit.test('segment base with sidx', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 0,
       sourceDuration: 2,
       indexRange: '10-19',
       type: 'static'
@@ -104,6 +108,7 @@ QUnit.test('segment base with sidx', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 0,
       sourceDuration: 2,
       duration: 2,
       indexRange: '10-19',
@@ -123,6 +128,7 @@ QUnit.test('segment base with sidx', function(assert) {
       },
       timeline: 0,
       duration: 2,
+      presentationTime: 0,
       number: 0
     }
   }];

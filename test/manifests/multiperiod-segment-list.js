@@ -24,7 +24,8 @@ export const parsedManifest = {
         'SUBTITLES': 'subs'
       },
       endList: true,
-      mediaSequence: 1,
+      mediaSequence: 0,
+      discontinuitySequence: 0,
       targetDuration: 3,
       resolvedUri: '',
       segments: [
@@ -38,7 +39,7 @@ export const parsedManifest = {
           timeline: 0,
           presentationTime: 0,
           uri: 'low/segment-1.ts',
-          number: 1
+          number: 0
         },
         {
           duration: 3,
@@ -50,7 +51,7 @@ export const parsedManifest = {
           timeline: 0,
           presentationTime: 3,
           uri: 'low/segment-2.ts',
-          number: 2
+          number: 1
         },
         {
           discontinuity: true,
@@ -63,7 +64,7 @@ export const parsedManifest = {
           timeline: 1,
           presentationTime: 6,
           uri: 'low/segment-1.ts',
-          number: 1
+          number: 2
         },
         {
           duration: 3,
@@ -75,7 +76,7 @@ export const parsedManifest = {
           timeline: 1,
           presentationTime: 9,
           uri: 'low/segment-2.ts',
-          number: 2
+          number: 3
         }
       ],
       timeline: 0,

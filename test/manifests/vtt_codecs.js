@@ -74,6 +74,7 @@ export const parsedManifest = {
                 }
               ],
               mediaSequence: 0,
+              discontinuitySequence: 0,
               contentProtection: {
                 'com.widevine.alpha': {
                   attributes: {
@@ -146,6 +147,7 @@ export const parsedManifest = {
                 }
               ],
               mediaSequence: 0,
+              discontinuitySequence: 0,
               contentProtection: {
                 'com.widevine.alpha': {
                   attributes: {
@@ -226,6 +228,7 @@ export const parsedManifest = {
                 }
               ],
               mediaSequence: 0,
+              discontinuitySequence: 0,
               contentProtection: {
                 'com.widevine.alpha': {
                   attributes: {
@@ -298,6 +301,7 @@ export const parsedManifest = {
                 }
               ],
               mediaSequence: 0,
+              discontinuitySequence: 0,
               contentProtection: {
                 'com.widevine.alpha': {
                   attributes: {
@@ -339,10 +343,12 @@ export const parsedManifest = {
                   timeline: 0,
                   resolvedUri: 'https://example.com/en.dash',
                   duration: 6,
+                  presentationTime: 0,
                   number: 0
                 }
               ],
-              mediaSequence: 0
+              mediaSequence: 0,
+              discontinuitySequence: 0
             }
           ],
           uri: ''
@@ -369,10 +375,12 @@ export const parsedManifest = {
                   timeline: 0,
                   resolvedUri: 'https://example.com/es.vtt',
                   duration: 6,
+                  presentationTime: 0,
                   number: 0
                 }
               ],
-              mediaSequence: 0
+              mediaSequence: 0,
+              discontinuitySequence: 0
             }
           ],
           uri: ''
@@ -452,6 +460,7 @@ export const parsedManifest = {
         }
       ],
       mediaSequence: 0,
+      discontinuitySequence: 0,
       contentProtection: {
         'com.widevine.alpha': {
           attributes: {
@@ -530,6 +539,7 @@ export const parsedManifest = {
         }
       ],
       mediaSequence: 0,
+      discontinuitySequence: 0,
       contentProtection: {
         'com.widevine.alpha': {
           attributes: {

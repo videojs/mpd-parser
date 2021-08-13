@@ -1,4 +1,3 @@
-import window from 'global/window';
 import { flatten } from './utils/list';
 import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
@@ -386,9 +385,20 @@ export const toRepresentations =
  */
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period.node, 'BaseURL'));
-  const parsedPeriodId = parseInt(period.attributes.id, 10);
-  // fallback to mapping index if Period@id is not a number
-  const periodIndex = window.isNaN(parsedPeriodId) ? index : parsedPeriodId;
+  // periodIndex used to always use Period@id, and was used as the period's timeline (the
+  // discontinuity sequence for the manifest). This helped address dynamic playlists, as
+  // Period@id was often a number, and it often increased. However, the DASH specification
+  // states that Period@id is a string, and says nothing about increasing values. This led
+  // to problems with dynamic playlists where the Period@id would not be a number and
+  // would not increase for each added period. In addition, when it was a number, it
+  // potentially increased dramatically, making the manifest object harder to understand.
+  //
+  // Now, the index of the period is used, and for overlapping values on refreshes, the
+  // playlist merging logic should handle any increase. This should handle all the
+  // necessary cases we used to support, but may be problematic when it comes time to
+  // handle multiperiod live playlists with SIDX segments (using SegmentBase), as the
+  // merging logic can't yet handle that case. This should be a TODO for the future.
+  const periodIndex = index;
   const periodAttributes = merge(mpdAttributes, {
     periodIndex,
     periodStart: period.attributes.start

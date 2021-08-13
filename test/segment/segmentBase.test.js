@@ -11,6 +11,7 @@ QUnit.test('sets segment to baseUrl', function(assert) {
   const inputAttributes = {
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
+    periodStart: 0,
     type: 'static'
   };
 
@@ -21,6 +22,7 @@ QUnit.test('sets segment to baseUrl', function(assert) {
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
     uri: 'http://www.example.com/i.fmp4',
+    presentationTime: 0,
     number: 0
   }]);
 });
@@ -30,6 +32,7 @@ QUnit.test('sets duration based on sourceDuration', function(assert) {
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
     sourceDuration: 10,
+    periodStart: 0,
     type: 'static'
   };
 
@@ -42,6 +45,7 @@ QUnit.test('sets duration based on sourceDuration', function(assert) {
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
     uri: 'http://www.example.com/i.fmp4',
+    presentationTime: 0,
     number: 0
   }]);
 });
@@ -59,6 +63,7 @@ QUnit.test('sets duration based on sourceDuration and not @timescale', function(
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
     sourceDuration: 10,
     timescale: 2,
+    periodStart: 0,
     type: 'static'
   };
 
@@ -71,6 +76,7 @@ QUnit.test('sets duration based on sourceDuration and not @timescale', function(
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
     uri: 'http://www.example.com/i.fmp4',
+    presentationTime: 0,
     number: 0
   }]);
 });
@@ -82,6 +88,7 @@ QUnit.test('sets duration based on @duration', function(assert) {
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
     periodIndex: 0,
+    periodStart: 0,
     type: 'static'
   };
 
@@ -94,6 +101,7 @@ QUnit.test('sets duration based on @duration', function(assert) {
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
     uri: 'http://www.example.com/i.fmp4',
+    presentationTime: 0,
     number: 0
   }]);
 });
@@ -106,6 +114,7 @@ QUnit.test('sets duration based on @duration and @timescale', function(assert) {
     baseUrl: 'http://www.example.com/i.fmp4',
     initialization: { sourceURL: 'http://www.example.com/init.fmp4' },
     periodIndex: 0,
+    periodStart: 0,
     type: 'static'
   };
 
@@ -118,6 +127,7 @@ QUnit.test('sets duration based on @duration and @timescale', function(assert) {
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
     uri: 'http://www.example.com/i.fmp4',
+    presentationTime: 0,
     number: 0
   }]);
 });
@@ -133,6 +143,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
       range: '121-125'
     },
     periodIndex: 0,
+    periodStart: 0,
     type: 'static'
   };
 
@@ -149,6 +160,7 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
     },
     resolvedUri: 'http://www.example.com/i.fmp4',
     uri: 'http://www.example.com/i.fmp4',
+    presentationTime: 0,
     number: 0
   }]);
 });
@@ -203,6 +215,7 @@ QUnit.test('generates playlist from sidx references', function(assert) {
     },
     duration: 2,
     timeline: 0,
+    presentationTime: 0,
     number: 0
   }]);
 });
