@@ -1,3 +1,20 @@
+<a name="0.19.0"></a>
+# [0.19.0](https://github.com/videojs/mpd-parser/compare/v0.18.0...v0.19.0) (2021-08-24)
+
+### Features
+
+* add presentationTime as an attribute on each SegmentList segment ([#142](https://github.com/videojs/mpd-parser/issues/142)) ([478abb0](https://github.com/videojs/mpd-parser/commit/478abb0))
+
+### Chores
+
+* change from the xmldom package to [@xmldom](https://github.com/xmldom)/xmldom ([#146](https://github.com/videojs/mpd-parser/issues/146)) ([a2f5cb8](https://github.com/videojs/mpd-parser/commit/a2f5cb8))
+* update release ci and add github-release ([#147](https://github.com/videojs/mpd-parser/issues/147)) ([23ae57e](https://github.com/videojs/mpd-parser/commit/23ae57e))
+
+
+### BREAKING CHANGES
+
+* the presentationTimeOffset attribute has been removed from output
+
 <a name="0.18.0"></a>
 # [0.18.0](https://github.com/videojs/mpd-parser/compare/v0.17.0...v0.18.0) (2021-07-28)
 
