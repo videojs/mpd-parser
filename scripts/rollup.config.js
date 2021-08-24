@@ -27,15 +27,15 @@ const options = {
   },
   externals(defaults) {
     defaults.module.push('@videojs/vhs-utils');
-    defaults.module.push('xmldom');
+    defaults.module.push('@xmldom/xmldom');
     defaults.module.push('atob');
     defaults.module.push('url-toolkit');
     return defaults;
   },
   globals(defaults) {
-    defaults.browser.xmldom = 'window';
+    defaults.browser['@xmldom/xmldom'] = 'window';
     defaults.browser.atob = 'window.atob';
-    defaults.test.xmldom = 'window';
+    defaults.test['@xmldom/xmldom'] = 'window';
     defaults.test.atob = 'window.atob';
     defaults.test.jsdom = '{JSDOM: function() { return {window: window}; }}';
     return defaults;
