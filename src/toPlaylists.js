@@ -10,7 +10,7 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
   if (segmentInfo.template) {
     segmentsFn = segmentsFromTemplate;
     segmentAttributes = merge(attributes, segmentInfo.template);
-    // TODO Decide if SegmentList be chosen ahead of SegmentBase.
+    // TODO: Decide if SegmentList be chosen ahead of SegmentBase.
     //
     // Judging by the specification (see the 2012 specification, section 5.3.9.2),
     // SegmentBase seems to only be used as the strategy if there's no SegmentTemplate or

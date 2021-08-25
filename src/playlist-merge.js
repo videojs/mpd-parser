@@ -1,5 +1,9 @@
 import { forEachMediaGroup } from '@videojs/vhs-utils/es/media-groups';
-import { findIndexes } from './utils/list';
+import {
+  findIndex,
+  findIndexes,
+  includes
+} from './utils/list';
 
 const SUPPORTED_MEDIA_TYPES = ['AUDIO', 'SUBTITLES'];
 
@@ -24,7 +28,7 @@ export const findPlaylistWithName = (playlists, name) => {
 /**
  * Finds the media group playlist with the matching NAME attribute.
  *
- * @param {Object} config
+ * @param {Object} config options object
  * @param {string} config.playlistName the playlist NAME attribute to search for
  * @param {string} config.type the media group type
  * @param {string} config.group the media group...group
@@ -54,7 +58,7 @@ export const findMediaGroupPlaylistWithName = ({
 /**
  * Returns any old playlists that are no longer available in the new playlists.
  *
- * @param {Object} config
+ * @param {Object} config options object
  * @param {Array} config.oldPlaylists the old playlists to search within
  * @param {Array} config.newPlaylists the new playlists to check for
  *
@@ -88,7 +92,7 @@ export const getRemovedPlaylists = ({ oldPlaylists, newPlaylists }) => {
  * Returns any old media group playlists that are no longer available in the new media
  * group playlists.
  *
- * @param {Object} config
+ * @param {Object} config options object
  * @param {Object} config.oldManifest the old main manifest object
  * @param {Object} config.newManifest the new main manifest object
  *
@@ -193,7 +197,7 @@ export const getMediaGroupPlaylists = (manifest) => {
  * Given a list of playlists and a manifest object, returns an array of objects with all
  * of the necessary media group properties to identify it within a manifest.
  *
- * @param {Object} config
+ * @param {Object} config options object
  * @param {Array} config.playlists the playlist objects
  * @param {Object} config.manifest the main manifest object
  *
@@ -209,7 +213,7 @@ export const getMediaGroupPlaylistIdentificationObjects = ({ playlists, manifest
 
   forEachMediaGroup(manifest, SUPPORTED_MEDIA_TYPES, (properties, type, group, label) => {
     properties.playlists.forEach((playlist) => {
-      if (playlists.includes(playlist)) {
+      if (includes(playlists, playlist)) {
         idObjects.push({
           type,
           group,
@@ -227,7 +231,7 @@ export const getMediaGroupPlaylistIdentificationObjects = ({ playlists, manifest
  * Goes through the provided segments and updates the appropriate sequence and timeline
  * related attributes.
  *
- * @param {Object} config
+ * @param {Object} config options object
  * @param {Array} config.segments the segments to update
  * @param {number} config.mediaSequenceStart the mediaSequence number to start with
  * @param {string} config.timelineStart the timeline number to start with
@@ -319,7 +323,7 @@ export const positionPlaylistOnTimeline = (oldPlaylist, newPlaylist) => {
   // a segment with a matching presentation time. These values should not change on
   // refreshes.
   const firstNewSegment = newSegments[0];
-  const oldMatchingSegmentIndex = oldSegments.findIndex((oldSegment) =>
+  const oldMatchingSegmentIndex = findIndex(oldSegments, (oldSegment) =>
     // allow one 60fps frame as leniency (arbitrarily chosen)
     Math.abs(oldSegment.presentationTime - firstNewSegment.presentationTime) < (1 / 60));
   const lastOldSegment = oldSegments[oldSegments.length - 1];
@@ -526,8 +530,8 @@ export const positionManifestOnTimeline = ({ oldManifest, newManifest }) => {
     newManifest: oldManifest
   });
 
-  // TODO handle (instead of remove) playlists that only exist for specific timelines
-  //      (i.e., incomplete)
+  // TODO: handle (instead of remove) playlists that only exist for specific timelines
+  //       (i.e., incomplete)
   //
   // Playlists can be removed from the manifest on period boundaries. For now, we don't
   // have a good way of handling playlists that exist for only part of a stream. Due to
@@ -540,7 +544,7 @@ export const positionManifestOnTimeline = ({ oldManifest, newManifest }) => {
   // and the new playlist exists for periods/timelines after a certain point) then it will
   // be available once it is no longer incomplete.
   newManifest.playlists =
-    newManifest.playlists.filter((playlist) => !incompletePlaylists.includes(playlist));
+    newManifest.playlists.filter((playlist) => !includes(incompletePlaylists, playlist));
   removeMediaGroupPlaylists({
     manifest: newManifest,
     playlists: incompleteMediaGroupPlaylists
@@ -553,7 +557,7 @@ export const positionManifestOnTimeline = ({ oldManifest, newManifest }) => {
   // break if a stream ever removes all playlists and then starts up again adding new
   // playlists.
   if (oldMediaGroupPlaylists.length > 0 || oldPlaylists.length > 0) {
-    // TODO handle (instead of remove) playlists that are added
+    // TODO: handle (instead of remove) playlists that are added
     //
     // Right now, if a playlist is added, it is simply removed from the returned manifest
     // object. This keeps the merging logic simple, as if there isn't an old playlist to
@@ -561,7 +565,7 @@ export const positionManifestOnTimeline = ({ oldManifest, newManifest }) => {
     // matching presentation times in another playlist (or matching presentation time
     // ranges within timelines) and sequencing from there.
     newManifest.playlists =
-      newManifest.playlists.filter((playlist) => !addedPlaylists.includes(playlist));
+      newManifest.playlists.filter((playlist) => !includes(addedPlaylists, playlist));
     removeMediaGroupPlaylists({
       manifest: newManifest,
       playlists: addedMediaGroupPlaylists.map((idObject) => idObject.playlist)

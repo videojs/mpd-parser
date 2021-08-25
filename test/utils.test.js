@@ -1,6 +1,13 @@
 import { merge, values } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
-import { flatten, range, from, findIndexes } from '../src/utils/list';
+import {
+  flatten,
+  range,
+  from,
+  findIndex,
+  findIndexes,
+  includes
+} from '../src/utils/list';
 import { findChildren, getContent } from '../src/utils/xml';
 import {DOMParser} from 'xmldom';
 import {JSDOM} from 'jsdom';
@@ -175,6 +182,24 @@ QUnit.test('array-like', function(assert) {
   assert.deepEqual(result.length, 2);
 });
 
+QUnit.module('findIndex');
+
+QUnit.test('returns first index that passes matching function', function(assert) {
+  assert.equal(
+    findIndex([1, { foo: 'bar' }, 1.5, 0, [], 3], (e) => e > 1),
+    2,
+    'returned correct index'
+  );
+});
+
+QUnit.test('returns -1 when nothing passes matching function', function(assert) {
+  assert.equal(
+    findIndex([1, { foo: 'bar' }, 1.5, 0, [], 3], (e) => e > 3),
+    -1,
+    'returned -1 for no match'
+  );
+});
+
 QUnit.module('findIndexes');
 
 QUnit.test('index not found', function(assert) {
@@ -190,6 +215,23 @@ QUnit.test('indexes found', function(assert) {
     { b: true },
     { b: true, c: true }
   ], 'b'), [1, 2]);
+});
+
+QUnit.module('includes');
+
+QUnit.test('returns true if element is found', function(assert) {
+  const element = { foo: 'bar' };
+
+  assert.ok(includes([1, {}, element], element), 'true if element is included');
+});
+
+QUnit.test('returns false if element is not found', function(assert) {
+  const element = { foo: 'bar' };
+
+  assert.notOk(
+    includes([1, {}, { foo: 'bar' }], element),
+    'false if element is not included'
+  );
 });
 
 QUnit.module('xml', {
