@@ -8,17 +8,6 @@ import { addSidxSegmentsToPlaylist } from './segment/segmentBase.js';
 
 const VERSION = version;
 
-/**
- * @typedef {Object} ParsedResult
- * @property {Object} manifest - the parsed manifest object
- * @property {Array} playlistsToExclude
- *                   For live content, any playlists which are no longer included in the
- *                   latest manifest refresh.
- * @property {MediaGroupPlaylistIdentificationObject[]} mediaGroupPlaylistsToExclude
- *                   For live content, any media group playlists which are no longer
- *                   included in the latest manifest refresh.
- */
-
 /*
  * Given a DASH manifest string and options, parses the DASH manifest into a manifest
  * object.
@@ -30,7 +19,7 @@ const VERSION = version;
  * @param {string} manifestString - the DASH manifest as a string
  * @param {options} [options] - any options
  *
- * @return {ParsedResult} the manifest object and any playlists to exclude
+ * @return {Object} the manifest object
  */
 const parse = (manifestString, options = {}) => {
   const parsedManifestInfo = inheritAttributes(stringToMpdXml(manifestString), options);

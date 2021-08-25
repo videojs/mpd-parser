@@ -1360,18 +1360,16 @@ QUnit.test('returns manifest unchanged if no new playlists', function(assert) {
       // should exclude the old playlist
       playlistsToExclude: [playlist],
       mediaGroupPlaylistsToExclude: [],
-      manifest: {
-        mediaGroups: {
-          AUDIO: {
-            audio: {
-              en: {
-                playlists: []
-              }
+      mediaGroups: {
+        AUDIO: {
+          audio: {
+            en: {
+              playlists: []
             }
           }
-        },
-        playlists: []
-      }
+        }
+      },
+      playlists: []
     },
     'returns manifest unchanged if no playlists'
   );
@@ -1415,18 +1413,16 @@ QUnit.test('returns manifest unchanged if no old playlists', function(assert) {
     {
       playlistsToExclude: [],
       mediaGroupPlaylistsToExclude: [],
-      manifest: {
-        mediaGroups: {
-          AUDIO: {
-            audio: {
-              en: {
-                playlists: []
-              }
+      mediaGroups: {
+        AUDIO: {
+          audio: {
+            en: {
+              playlists: []
             }
           }
-        },
-        playlists: [playlist]
-      }
+        }
+      },
+      playlists: [playlist]
     },
     'returns manifest unchanged if no playlists'
   );
@@ -1605,55 +1601,53 @@ QUnit.test('returns updated manifest and playlists to exclude', function(assert)
         type: 'AUDIO',
         playlist: newPlaylistF
       }],
-      manifest: {
-        mediaGroups: {
-          AUDIO: {
-            audio: {
-              en: {
-                // no playlists D or F
-                playlists: [{
-                  attributes: { NAME: 'B' },
-                  // increased mediaSequence to account for segment that fell off
-                  mediaSequence: 9,
-                  discontinuitySequence: 2,
-                  discontinuityStarts: [1],
-                  // same timeline as old
+      mediaGroups: {
+        AUDIO: {
+          audio: {
+            en: {
+              // no playlists D or F
+              playlists: [{
+                attributes: { NAME: 'B' },
+                // increased mediaSequence to account for segment that fell off
+                mediaSequence: 9,
+                discontinuitySequence: 2,
+                discontinuityStarts: [1],
+                // same timeline as old
+                timeline: 3,
+                segments: [{
+                  number: 9,
                   timeline: 3,
-                  segments: [{
-                    number: 9,
-                    timeline: 3,
-                    presentationTime: 102
-                  }, {
-                    discontinuity: true,
-                    number: 10,
-                    timeline: 4,
-                    presentationTime: 104
-                  }]
+                  presentationTime: 102
+                }, {
+                  discontinuity: true,
+                  number: 10,
+                  timeline: 4,
+                  presentationTime: 104
                 }]
-              }
+              }]
             }
           }
-        },
-        // no playlists C or E
-        playlists: [{
-          attributes: { NAME: 'A' },
-          mediaSequence: 9,
-          discontinuitySequence: 2,
-          discontinuityStarts: [1],
-          // increased timeline
+        }
+      },
+      // no playlists C or E
+      playlists: [{
+        attributes: { NAME: 'A' },
+        mediaSequence: 9,
+        discontinuitySequence: 2,
+        discontinuityStarts: [1],
+        // increased timeline
+        timeline: 3,
+        segments: [{
+          number: 9,
           timeline: 3,
-          segments: [{
-            number: 9,
-            timeline: 3,
-            presentationTime: 102
-          }, {
-            discontinuity: true,
-            number: 10,
-            timeline: 4,
-            presentationTime: 104
-          }]
+          presentationTime: 102
+        }, {
+          discontinuity: true,
+          number: 10,
+          timeline: 4,
+          presentationTime: 104
         }]
-      }
+      }]
     },
     'returns excluded playlist and updated manifest, removed incomplete playlist'
   );
@@ -1723,27 +1717,25 @@ QUnit.test('returns updated audio only manifest and playlists to exclude', funct
         type: 'AUDIO',
         playlist: oldPlaylistC
       }],
-      manifest: {
-        mediaGroups: {
-          AUDIO: {
-            audio: {
-              en: {
-                playlists: [{
-                  attributes: { NAME: 'B' },
-                  // increased mediaSequence to account for segment that fell off
-                  mediaSequence: 10,
-                  discontinuitySequence: 2,
-                  discontinuityStarts: [],
-                  // same timeline as old
-                  timeline: 3,
-                  segments: []
-                }]
-              }
+      mediaGroups: {
+        AUDIO: {
+          audio: {
+            en: {
+              playlists: [{
+                attributes: { NAME: 'B' },
+                // increased mediaSequence to account for segment that fell off
+                mediaSequence: 10,
+                discontinuitySequence: 2,
+                discontinuityStarts: [],
+                // same timeline as old
+                timeline: 3,
+                segments: []
+              }]
             }
           }
-        },
-        playlists: []
-      }
+        }
+      },
+      playlists: []
     },
     'returns excluded playlist and updated audio only manifest'
   );
@@ -1808,30 +1800,28 @@ QUnit.test('exludes playlists not seen before', function(assert) {
     {
       playlistsToExclude: [],
       mediaGroupPlaylistsToExclude: [],
-      manifest: {
-        mediaGroups: {},
-        // no playlist B
-        playlists: [{
-          attributes: { NAME: 'A' },
-          mediaSequence: 10,
-          discontinuitySequence: 2,
-          discontinuityStarts: [0, 1],
-          // increased timeline
+      mediaGroups: {},
+      // no playlist B
+      playlists: [{
+        attributes: { NAME: 'A' },
+        mediaSequence: 10,
+        discontinuitySequence: 2,
+        discontinuityStarts: [0, 1],
+        // increased timeline
+        timeline: 4,
+        segments: [{
+          // added discontinuity
+          discontinuity: true,
+          number: 10,
           timeline: 4,
-          segments: [{
-            // added discontinuity
-            discontinuity: true,
-            number: 10,
-            timeline: 4,
-            presentationTime: 102
-          }, {
-            discontinuity: true,
-            number: 11,
-            timeline: 5,
-            presentationTime: 104
-          }]
+          presentationTime: 102
+        }, {
+          discontinuity: true,
+          number: 11,
+          timeline: 5,
+          presentationTime: 104
         }]
-      }
+      }]
     },
     'returns playlist and updated manifest, removed new playlist'
   );
@@ -1910,40 +1900,38 @@ QUnit.test('does not include media group playlists not seen before', function(as
   assert.deepEqual(
     positionManifestOnTimeline({ oldManifest, newManifest }),
     {
-      playlistsToExclude: [],
-      mediaGroupPlaylistsToExclude: [],
-      manifest: {
-        mediaGroups: {
-          AUDIO: {
-            audio: {
-              en: {
-                // no playlist B
-                playlists: [{
-                  attributes: { NAME: 'A' },
-                  mediaSequence: 10,
-                  discontinuitySequence: 2,
-                  discontinuityStarts: [0, 1],
-                  // increased timeline
+      mediaGroups: {
+        AUDIO: {
+          audio: {
+            en: {
+              // no playlist B
+              playlists: [{
+                attributes: { NAME: 'A' },
+                mediaSequence: 10,
+                discontinuitySequence: 2,
+                discontinuityStarts: [0, 1],
+                // increased timeline
+                timeline: 4,
+                segments: [{
+                  // added discontinuity
+                  discontinuity: true,
+                  number: 10,
                   timeline: 4,
-                  segments: [{
-                    // added discontinuity
-                    discontinuity: true,
-                    number: 10,
-                    timeline: 4,
-                    presentationTime: 102
-                  }, {
-                    discontinuity: true,
-                    number: 11,
-                    timeline: 5,
-                    presentationTime: 104
-                  }]
+                  presentationTime: 102
+                }, {
+                  discontinuity: true,
+                  number: 11,
+                  timeline: 5,
+                  presentationTime: 104
                 }]
-              }
+              }]
             }
           }
-        },
-        playlists: []
-      }
+        }
+      },
+      playlists: [],
+      playlistsToExclude: [],
+      mediaGroupPlaylistsToExclude: []
     },
     'returns updated manifest, removed new media group playlist'
   );

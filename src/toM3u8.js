@@ -336,7 +336,7 @@ export const addMediaSequenceValues = (playlists) => {
 
 export const toM3u8 = ({ dashPlaylists, locations, sidxMapping = {}, lastMpd }) => {
   if (!dashPlaylists.length) {
-    return { manifest: {} };
+    return {};
   }
 
   // grab all main manifest attributes
@@ -404,5 +404,5 @@ export const toM3u8 = ({ dashPlaylists, locations, sidxMapping = {}, lastMpd }) 
     });
   }
 
-  return { manifest };
+  return manifest;
 };

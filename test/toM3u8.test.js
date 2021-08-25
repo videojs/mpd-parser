@@ -199,7 +199,7 @@ QUnit.test('playlists', function(assert) {
     uri: ''
   };
 
-  assert.deepEqual(toM3u8({ dashPlaylists: input }).manifest, expected);
+  assert.deepEqual(toM3u8({ dashPlaylists: input }), expected);
 });
 
 QUnit.test('playlists with segments', function(assert) {
@@ -582,7 +582,7 @@ QUnit.test('playlists with segments', function(assert) {
     uri: ''
   };
 
-  assert.deepEqual(toM3u8({ dashPlaylists: input }).manifest, expected);
+  assert.deepEqual(toM3u8({ dashPlaylists: input }), expected);
 });
 
 QUnit.test('playlists with sidx and sidxMapping', function(assert) {
@@ -678,7 +678,7 @@ QUnit.test('playlists with sidx and sidxMapping', function(assert) {
       dashPlaylists: input,
       locations: null,
       sidxMapping: mapping
-    }).manifest.playlists,
+    }).playlists,
     expected
   );
 });
@@ -710,7 +710,7 @@ QUnit.test('playlists without minimumUpdatePeriod dont assign default value', fu
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.equal(toM3u8({ dashPlaylists: input }).manifest.minimumUpdatePeriod, undefined);
+  assert.equal(toM3u8({ dashPlaylists: input }).minimumUpdatePeriod, undefined);
 });
 
 QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
@@ -741,7 +741,7 @@ QUnit.test('playlists with minimumUpdatePeriod = 0', function(assert) {
     uri: 'http://example.com/fmp4.mp4'
   }];
 
-  assert.equal(toM3u8({ dashPlaylists: input }).manifest.minimumUpdatePeriod, 0);
+  assert.equal(toM3u8({ dashPlaylists: input }).minimumUpdatePeriod, 0);
 });
 
 QUnit.test('playlists with integer value for minimumUpdatePeriod', function(assert) {
@@ -773,14 +773,14 @@ QUnit.test('playlists with integer value for minimumUpdatePeriod', function(asse
   }];
 
   assert.equal(
-    toM3u8({ dashPlaylists: input }).manifest.minimumUpdatePeriod,
+    toM3u8({ dashPlaylists: input }).minimumUpdatePeriod,
     2000,
     'converts update period to ms'
   );
 });
 
 QUnit.test('no playlists', function(assert) {
-  assert.deepEqual(toM3u8({ dashPlaylists: [] }).manifest, {});
+  assert.deepEqual(toM3u8({ dashPlaylists: [] }), {});
 });
 
 QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert) {
@@ -845,7 +845,7 @@ QUnit.test('dynamic playlists with suggestedPresentationDelay', function(assert)
     }
   }];
 
-  const output = toM3u8({ dashPlaylists: input }).manifest;
+  const output = toM3u8({ dashPlaylists: input });
 
   assert.ok('suggestedPresentationDelay' in output);
   assert.deepEqual(output.suggestedPresentationDelay, 18);
@@ -893,7 +893,7 @@ QUnit.test('playlists with label', function(assert) {
     },
     segments: []
   }];
-  const output = toM3u8({ dashPlaylists: input }).manifest;
+  const output = toM3u8({ dashPlaylists: input });
 
   assert.ok(label in output.mediaGroups.AUDIO.audio, 'label exists');
 });
@@ -951,9 +951,9 @@ QUnit.test('608 captions', function(assert) {
     },
     segments: []
   }];
-  const output = toM3u8({ dashPlaylists: input });
+  const manifest = toM3u8({ dashPlaylists: input });
 
-  const cc = output.manifest.mediaGroups['CLOSED-CAPTIONS'].cc;
+  const cc = manifest.mediaGroups['CLOSED-CAPTIONS'].cc;
 
   Object.keys(cc).forEach((key) => {
     assert.notOk(cc[key].autoselect, 'no autoselect');

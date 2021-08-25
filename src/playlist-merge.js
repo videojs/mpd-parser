@@ -495,7 +495,7 @@ export const removeMediaGroupPlaylists = ({ manifest, playlists }) => {
  * @param {Array} oldManifest the old main manifest object
  * @param {Array} newManifest the new main manifest object
  *
- * @return {ParsedResult} the manifest object and any playlists to exclude
+ * @return {Object} the manifest object
  */
 export const positionManifestOnTimeline = ({ oldManifest, newManifest }) => {
   const oldPlaylists = oldManifest.playlists;
@@ -574,10 +574,9 @@ export const positionManifestOnTimeline = ({ oldManifest, newManifest }) => {
   });
   positionMediaGroupPlaylistsOnTimeline({ oldManifest, newManifest });
 
-  return {
-    playlistsToExclude: removedPlaylists.concat(incompletePlaylists),
-    mediaGroupPlaylistsToExclude:
-      removedMediaGroupPlaylists.concat(incompleteMediaGroupPlaylistIdObjects),
-    manifest: newManifest
-  };
+  newManifest.playlistsToExclude = removedPlaylists.concat(incompletePlaylists);
+  newManifest.mediaGroupPlaylistsToExclude =
+      removedMediaGroupPlaylists.concat(incompleteMediaGroupPlaylistIdObjects);
+
+  return newManifest;
 };

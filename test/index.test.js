@@ -144,7 +144,7 @@ QUnit.test('has parse', function(assert) {
   expected: multiperiodStartnumberManifest
 }].forEach(({ name, input, expected }) => {
   QUnit.test(`${name} test manifest`, function(assert) {
-    const actual = parse(input).manifest;
+    const actual = parse(input);
 
     assert.deepEqual(actual, expected);
   });
@@ -152,8 +152,13 @@ QUnit.test('has parse', function(assert) {
 
 // this test is handled separately as a `lastMpd` needs to be parsed and provided
 QUnit.test('multiperiod_startnumber_removed_periods test manifest', function(assert) {
-  const lastMpd = parse(multiperiodStartnumber).manifest;
-  const actual = parse(multiperiodStartnumberRemovedPeriods, { lastMpd }).manifest;
+  const lastMpd = parse(multiperiodStartnumber);
+  const actual = parse(multiperiodStartnumberRemovedPeriods, { lastMpd });
+
+  // Since these properties are only added if `lastMpd` is provided in the call to parse,
+  // they should be added here, rather than in the parsed manifest file.
+  multiperiodStartnumberRemovedPeriodsManifest.playlistsToExclude = [];
+  multiperiodStartnumberRemovedPeriodsManifest.mediaGroupPlaylistsToExclude = [];
 
   assert.deepEqual(actual, multiperiodStartnumberRemovedPeriodsManifest);
 });

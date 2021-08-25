@@ -48,16 +48,12 @@ If dealing with a live stream, then on subsequent calls to parse, the last parse
 object should be provided as an option to `parse` using the `lastMpd` option:
 
 ```js
-const {
-  manifest: parsedManifest,
-  playlistsToExclude,
-  mediaGroupPlaylistsToExclude
-} = mpdParser.parse(manifest, { manifestUri, lastMpd });
+const parsedManifest = mpdParser.parse(manifest, { manifestUri, lastMpd });
 ```
 
 ### Parsed Output
 
-The parser ouputs an object containing the parsed manifest as a plain javascript object, identified as `manifest`, with the following structure:
+The parser ouputs a parsed manifest as a plain javascript object with the following structure:
 
 ```js
 Manifest {
@@ -72,6 +68,8 @@ Manifest {
       Manifest
     }
   ],
+  playlistToExclude: [],
+  mediaGroupPlaylistsToExclude: []
   mediaGroups: {
     AUDIO: {
       'GROUP-ID': {
@@ -124,11 +122,11 @@ Manifest {
 }
 ```
 
-In addition, for live DASH playlists where a `lastMpd` object was provided, the returned
-object may contain `playlistsToExclude` and `mediaGroupPlaylistsToExclude`. These are
-arrays containing playlists that were found in the `lastMpd` (if provided) but could not
-be matched in the latest MPD. To continue playback uninterrupted, they should be excluded
-by the playback engine.
+For live DASH playlists where a `lastMpd` object was provided, the returned manifest object
+may contain `playlistsToExclude` and `mediaGroupPlaylistsToExclude`. These are arrays
+containing playlists that were found in the `lastMpd` (if provided) but could not be
+matched in the latest MPD. To continue playback uninterrupted, they should be excluded by
+the playback engine.
 
 ## Including the Parser
 
@@ -142,7 +140,7 @@ This is the simplest case. Get the script in whatever way you prefer and include
 <script src="//path/to/mpd-parser.min.js"></script>
 <script>
   const mpdParser = window['mpd-parser'];
-  const { manifest: parsedManifest } = mpdParser.parse(manifest, { manifestUri });
+  const parsedManifest = mpdParser.parse(manifest, { manifestUri });
 </script>
 ```
 
@@ -152,14 +150,14 @@ When using with Browserify, install mpd-parser via npm and `require` the parser 
 
 ```js
 const mpdParser = require('mpd-parser');
-const { manifest: parsedManifest } = mpdParser.parse(manifest, { manifestUri });
+const parsedManifest = mpdParser.parse(manifest, { manifestUri });
 ```
 
 With ES6:
 ```js
 import { parse } from 'mpd-parser';
 
-const { manifest: parsedManifest } = parse(manifest, { manifestUri });
+const parsedManifest = parse(manifest, { manifestUri });
 ```
 
 ### RequireJS/AMD
@@ -168,7 +166,7 @@ When using with RequireJS (or another AMD library), get the script in whatever w
 
 ```js
 require(['mpd-parser'], function(mpdParser) {
-  const { manifest: parsedManifest } = mpdParser.parse(manifest, { manifestUri });
+  const parsedManifest = mpdParser.parse(manifest, { manifestUri });
 });
 ```
 
