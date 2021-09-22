@@ -1,3 +1,10 @@
+<a name="0.19.1"></a>
+## [0.19.1](https://github.com/videojs/mpd-parser/compare/v0.19.0...v0.19.1) (2021-09-22)
+
+### Bug Fixes
+
+* mark global/window/document as external globals ([#148](https://github.com/videojs/mpd-parser/issues/148)) ([2f82ff8](https://github.com/videojs/mpd-parser/commit/2f82ff8))
+
 <a name="0.19.0"></a>
 # [0.19.0](https://github.com/videojs/mpd-parser/compare/v0.18.0...v0.19.0) (2021-08-24)
 
