@@ -1,3 +1,10 @@
+<a name="0.19.2"></a>
+## [0.19.2](https://github.com/videojs/mpd-parser/compare/v0.19.1...v0.19.2) (2021-10-06)
+
+### Bug Fixes
+
+* caption services are allowed not to have a value ([#151](https://github.com/videojs/mpd-parser/issues/151)) ([c9803f1](https://github.com/videojs/mpd-parser/commit/c9803f1))
+
 <a name="0.19.1"></a>
 ## [0.19.1](https://github.com/videojs/mpd-parser/compare/v0.19.0...v0.19.1) (2021-09-22)
 
