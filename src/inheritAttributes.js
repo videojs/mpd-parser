@@ -199,7 +199,7 @@ const generateKeySystemInformation = (contentProtectionNodes) => {
 export const parseCaptionServiceMetadata = (service) => {
   // 608 captions
   if (service.schemeIdUri === 'urn:scte:dash:cc:cea-608:2015') {
-    const values = service.value.split(';');
+    const values = typeof service.value !== 'string' ? [] : service.value.split(';');
 
     return values.map((value) => {
       let channel;
@@ -217,7 +217,7 @@ export const parseCaptionServiceMetadata = (service) => {
       return {channel, language};
     });
   } else if (service.schemeIdUri === 'urn:scte:dash:cc:cea-708:2015') {
-    const values = service.value.split(';');
+    const values = typeof service.value !== 'string' ? [] : service.value.split(';');
 
     return values.map((value) => {
       const flags = {
