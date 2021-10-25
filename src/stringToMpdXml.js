@@ -1,4 +1,4 @@
-import {DOMParser} from 'xmldom';
+import {DOMParser} from '@xmldom/xmldom';
 import errors from './errors';
 
 export const stringToMpdXml = (manifestString) => {

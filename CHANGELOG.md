@@ -1,3 +1,52 @@
+<a name="0.19.2"></a>
+## [0.19.2](https://github.com/videojs/mpd-parser/compare/v0.19.1...v0.19.2) (2021-10-06)
+
+### Bug Fixes
+
+* caption services are allowed not to have a value ([#151](https://github.com/videojs/mpd-parser/issues/151)) ([c9803f1](https://github.com/videojs/mpd-parser/commit/c9803f1))
+
+<a name="0.19.1"></a>
+## [0.19.1](https://github.com/videojs/mpd-parser/compare/v0.19.0...v0.19.1) (2021-09-22)
+
+### Bug Fixes
+
+* mark global/window/document as external globals ([#148](https://github.com/videojs/mpd-parser/issues/148)) ([2f82ff8](https://github.com/videojs/mpd-parser/commit/2f82ff8))
+
+<a name="0.19.0"></a>
+# [0.19.0](https://github.com/videojs/mpd-parser/compare/v0.18.0...v0.19.0) (2021-08-24)
+
+### Features
+
+* add presentationTime as an attribute on each SegmentList segment ([#142](https://github.com/videojs/mpd-parser/issues/142)) ([478abb0](https://github.com/videojs/mpd-parser/commit/478abb0))
+
+### Chores
+
+* change from the xmldom package to [@xmldom](https://github.com/xmldom)/xmldom ([#146](https://github.com/videojs/mpd-parser/issues/146)) ([a2f5cb8](https://github.com/videojs/mpd-parser/commit/a2f5cb8))
+* update release ci and add github-release ([#147](https://github.com/videojs/mpd-parser/issues/147)) ([23ae57e](https://github.com/videojs/mpd-parser/commit/23ae57e))
+
+
+### BREAKING CHANGES
+
+* the presentationTimeOffset attribute has been removed from output
+
+<a name="0.18.0"></a>
+# [0.18.0](https://github.com/videojs/mpd-parser/compare/v0.17.0...v0.18.0) (2021-07-28)
+
+### Features
+
+* add Period[@start](https://github.com/start) attribute when missing ([#137](https://github.com/videojs/mpd-parser/issues/137)) ([f118a8b](https://github.com/videojs/mpd-parser/commit/f118a8b))
+* add presentationTime as an attribute on each SegmentTemplate segment ([#139](https://github.com/videojs/mpd-parser/issues/139)) ([a972b8c](https://github.com/videojs/mpd-parser/commit/a972b8c))
+
+### Bug Fixes
+
+* generate proper number of segments for multiperiod content that uses segment template ([#138](https://github.com/videojs/mpd-parser/issues/138)) ([39109d0](https://github.com/videojs/mpd-parser/commit/39109d0))
+
+### Code Refactoring
+
+* default MPD[@type](https://github.com/type) to static when missing ([#136](https://github.com/videojs/mpd-parser/issues/136)) ([281e035](https://github.com/videojs/mpd-parser/commit/281e035))
+* rename master manifest to main manifest ([#141](https://github.com/videojs/mpd-parser/issues/141)) ([5720fbd](https://github.com/videojs/mpd-parser/commit/5720fbd))
+* rename SegmentInfo property from timeline to segmentTimeline ([#140](https://github.com/videojs/mpd-parser/issues/140)) ([1601467](https://github.com/videojs/mpd-parser/commit/1601467))
+
 <a name="0.17.0"></a>
 # [0.17.0](https://github.com/videojs/mpd-parser/compare/v0.16.0...v0.17.0) (2021-05-28)
 

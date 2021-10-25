@@ -75,7 +75,7 @@ export const formatAudioPlaylist = ({ attributes, segments, sidx }, isAudioOnly)
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: (attributes.type || 'static') === 'static',
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
@@ -125,7 +125,7 @@ export const formatVttPlaylist = ({ attributes, segments }) => {
   return {
     attributes: m3u8Attributes,
     uri: '',
-    endList: (attributes.type || 'static') === 'static',
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: attributes.baseUrl || '',
     targetDuration: attributes.duration,
@@ -249,7 +249,7 @@ export const formatVideoPlaylist = ({ attributes, segments, sidx }) => {
       ['PROGRAM-ID']: 1
     },
     uri: '',
-    endList: (attributes.type || 'static') === 'static',
+    endList: attributes.type === 'static',
     timeline: attributes.periodIndex,
     resolvedUri: '',
     targetDuration: attributes.duration,
@@ -280,10 +280,10 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
     return {};
   }
 
-  // grab all master attributes
+  // grab all main manifest attributes
   const {
     sourceDuration: duration,
-    type = 'static',
+    type,
     suggestedPresentationDelay,
     minimumUpdatePeriod
   } = dashPlaylists[0].attributes;
@@ -293,7 +293,7 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   const vttPlaylists = dashPlaylists.filter(vttOnly);
   const captions = dashPlaylists.map((playlist) => playlist.attributes.captionServices).filter(Boolean);
 
-  const master = {
+  const manifest = {
     allowCache: true,
     discontinuityStarts: [],
     segments: [],
@@ -310,30 +310,31 @@ export const toM3u8 = (dashPlaylists, locations, sidxMapping = {}) => {
   };
 
   if (minimumUpdatePeriod >= 0) {
-    master.minimumUpdatePeriod = minimumUpdatePeriod * 1000;
+    manifest.minimumUpdatePeriod = minimumUpdatePeriod * 1000;
   }
 
   if (locations) {
-    master.locations = locations;
+    manifest.locations = locations;
   }
 
   if (type === 'dynamic') {
-    master.suggestedPresentationDelay = suggestedPresentationDelay;
+    manifest.suggestedPresentationDelay = suggestedPresentationDelay;
   }
 
-  const isAudioOnly = master.playlists.length === 0;
+  const isAudioOnly = manifest.playlists.length === 0;
 
   if (audioPlaylists.length) {
-    master.mediaGroups.AUDIO.audio = organizeAudioPlaylists(audioPlaylists, sidxMapping, isAudioOnly);
+    manifest.mediaGroups.AUDIO.audio =
+      organizeAudioPlaylists(audioPlaylists, sidxMapping, isAudioOnly);
   }
 
   if (vttPlaylists.length) {
-    master.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists, sidxMapping);
+    manifest.mediaGroups.SUBTITLES.subs = organizeVttPlaylists(vttPlaylists, sidxMapping);
   }
 
   if (captions.length) {
-    master.mediaGroups['CLOSED-CAPTIONS'].cc = organizeCaptionServices(captions);
+    manifest.mediaGroups['CLOSED-CAPTIONS'].cc = organizeCaptionServices(captions);
   }
 
-  return master;
+  return manifest;
 };

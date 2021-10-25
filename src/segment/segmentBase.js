@@ -71,7 +71,7 @@ export const segmentsFromBase = (attributes) => {
 export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   // Retain init segment information
   const initSegment = playlist.sidx.map ? playlist.sidx.map : null;
-  // Retain source duration from initial master manifest parsing
+  // Retain source duration from initial main manifest parsing
   const sourceDuration = playlist.sidx.duration;
   // Retain source timeline
   const timeline = playlist.timeline || 0;
@@ -82,6 +82,7 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
   // referenceType 1 refers to other sidx boxes
   const mediaReferences = sidx.references.filter(r => r.referenceType !== 1);
   const segments = [];
+  const type = playlist.endList ? 'static' : 'dynamic';
 
   // firstOffset is the offset from the end of the sidx box
   let startIndex;
@@ -119,7 +120,8 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
       periodIndex: timeline,
       duration,
       sourceDuration,
-      indexRange
+      indexRange,
+      type
     };
 
     const segment = segmentsFromBase(attributes)[0];

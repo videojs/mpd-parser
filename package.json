@@ -1,6 +1,6 @@
 {
   "name": "mpd-parser",
-  "version": "0.17.0",
+  "version": "0.19.2",
   "description": "mpd parser",
   "main": "dist/mpd-parser.cjs.js",
   "module": "dist/mpd-parser.es.js",
@@ -58,8 +58,8 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "@videojs/vhs-utils": "^3.0.2",
-    "global": "^4.4.0",
-    "xmldom": "^0.5.0"
+    "@xmldom/xmldom": "^0.7.2",
+    "global": "^4.4.0"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^2.3.4",
@@ -70,7 +70,7 @@
     "rollup-plugin-string": "^3.0.0",
     "sinon": "^9.2.3",
     "videojs-generate-karma-config": "~7.0.0",
-    "videojs-generate-rollup-config": "~6.1.0",
+    "videojs-generate-rollup-config": "^6.2.2",
     "videojs-generator-verify": "~3.0.2",
     "videojs-standard": "^9.0.1"
   },

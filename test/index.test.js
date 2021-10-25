@@ -14,6 +14,8 @@ import locationTemplate from './manifests/location.mpd';
 import locationsTemplate from './manifests/locations.mpd';
 import multiperiod from './manifests/multiperiod.mpd';
 import webmsegments from './manifests/webmsegments.mpd';
+import multiperiodSegmentTemplate from './manifests/multiperiod-segment-template.mpd';
+import multiperiodSegmentList from './manifests/multiperiod-segment-list.mpd';
 import multiperiodDynamic from './manifests/multiperiod-dynamic.mpd';
 import audioOnly from './manifests/audio-only.mpd';
 import {
@@ -37,6 +39,12 @@ import {
 import {
   parsedManifest as webmsegmentsManifest
 } from './manifests/webmsegments.js';
+import {
+  parsedManifest as multiperiodSegmentTemplateManifest
+} from './manifests/multiperiod-segment-template.js';
+import {
+  parsedManifest as multiperiodSegmentListManifest
+} from './manifests/multiperiod-segment-list.js';
 import {
   parsedManifest as multiperiodDynamicManifest
 } from './manifests/multiperiod-dynamic.js';
@@ -93,6 +101,14 @@ QUnit.test('has parse', function(assert) {
   name: 'webmsegments',
   input: webmsegments,
   expected: webmsegmentsManifest
+}, {
+  name: 'multiperiod_segment_template',
+  input: multiperiodSegmentTemplate,
+  expected: multiperiodSegmentTemplateManifest
+}, {
+  name: 'multiperiod_segment_list',
+  input: multiperiodSegmentList,
+  expected: multiperiodSegmentListManifest
 }, {
   name: 'multiperiod_dynamic',
   input: multiperiodDynamic,

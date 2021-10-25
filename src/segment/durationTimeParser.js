@@ -39,14 +39,21 @@ export const segmentRange = {
     const {
       duration,
       timescale = 1,
-      sourceDuration
+      sourceDuration,
+      periodDuration
     } = attributes;
     const endNumber = parseEndNumber(attributes.endNumber);
+    const segmentDuration = duration / timescale;
 
-    return {
-      start: 0,
-      end: typeof endNumber === 'number' ? endNumber : Math.ceil(sourceDuration / (duration / timescale))
-    };
+    if (typeof endNumber === 'number') {
+      return { start: 0, end: endNumber };
+    }
+
+    if (typeof periodDuration === 'number') {
+      return { start: 0, end: periodDuration / segmentDuration };
+    }
+
+    return { start: 0, end: sourceDuration / segmentDuration };
   },
 
   /**
@@ -136,9 +143,10 @@ export const toSegments = (attributes) => (number, index) => {
  */
 export const parseByDuration = (attributes) => {
   const {
-    type = 'static',
+    type,
     duration,
     timescale = 1,
+    periodDuration,
     sourceDuration
   } = attributes;
 
@@ -147,9 +155,12 @@ export const parseByDuration = (attributes) => {
 
   if (type === 'static') {
     const index = segments.length - 1;
+    // section is either a period or the full source
+    const sectionDuration =
+      typeof periodDuration === 'number' ? periodDuration : sourceDuration;
 
     // final segment may be less than full segment duration
-    segments[index].duration = sourceDuration - (duration / timescale * index);
+    segments[index].duration = sectionDuration - (duration / timescale * index);
   }
 
   return segments;

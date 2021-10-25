@@ -45,7 +45,7 @@ const getLiveRValue = (attributes, time, duration) => {
  */
 export const parseByTimeline = (attributes, segmentTimeline) => {
   const {
-    type = 'static',
+    type,
     minimumUpdatePeriod = 0,
     media = '',
     sourceDuration,

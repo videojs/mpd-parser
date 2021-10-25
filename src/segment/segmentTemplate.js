@@ -157,6 +157,15 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
     templateValues.Time = segment.time;
 
     const uri = constructTemplateUrl(attributes.media || '', templateValues);
+    // See DASH spec section 5.3.9.2.2
+    // - if timescale isn't present on any level, default to 1.
+    const timescale = attributes.timescale || 1;
+    // - if presentationTimeOffset isn't present on any level, default to 0
+    const presentationTimeOffset = attributes.presentationTimeOffset || 0;
+    const presentationTime =
+      // Even if the @t attribute is not specified for the segment, segment.time is
+      // calculated in mpd-parser prior to this, so it's assumed to be available.
+      attributes.periodStart + ((segment.time - presentationTimeOffset) / timescale);
 
     const map = {
       uri,
@@ -164,12 +173,9 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
       duration: segment.duration,
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
       map: mapSegment,
-      number: segment.number
+      number: segment.number,
+      presentationTime
     };
-
-    if (attributes.presentationTimeOffset) {
-      map.presentationTimeOffset = attributes.presentationTimeOffset;
-    }
 
     return map;
   });

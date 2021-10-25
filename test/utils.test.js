@@ -2,7 +2,7 @@ import { merge, values } from '../src/utils/object';
 import { parseDuration } from '../src/utils/time';
 import { flatten, range, from, findIndexes } from '../src/utils/list';
 import { findChildren, getContent } from '../src/utils/xml';
-import {DOMParser} from 'xmldom';
+import {DOMParser} from '@xmldom/xmldom';
 import {JSDOM} from 'jsdom';
 import QUnit from 'qunit';
 

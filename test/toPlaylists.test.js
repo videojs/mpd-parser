@@ -11,7 +11,13 @@ QUnit.test('no representations', function(assert) {
 
 QUnit.test('pretty simple', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      type: 'static',
+      periodStart: 0
+    },
     segmentInfo: {
       template: { }
     }
@@ -21,8 +27,10 @@ QUnit.test('pretty simple', function(assert) {
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 0,
       sourceDuration: 2,
-      duration: 2
+      duration: 2,
+      type: 'static'
     },
     segments: [{
       uri: '',
@@ -33,7 +41,8 @@ QUnit.test('pretty simple', function(assert) {
         uri: '',
         resolvedUri: 'http://example.com/'
       },
-      number: 1
+      number: 1,
+      presentationTime: 0
     }]
   }];
 
@@ -42,7 +51,12 @@ QUnit.test('pretty simple', function(assert) {
 
 QUnit.test('segment base', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      type: 'static'
+    },
     segmentInfo: {
       base: true
     }
@@ -53,7 +67,8 @@ QUnit.test('segment base', function(assert) {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       sourceDuration: 2,
-      duration: 2
+      duration: 2,
+      type: 'static'
     },
     segments: [{
       map: {
@@ -77,7 +92,8 @@ QUnit.test('segment base with sidx', function(assert) {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
       sourceDuration: 2,
-      indexRange: '10-19'
+      indexRange: '10-19',
+      type: 'static'
     },
     segmentInfo: {
       base: true
@@ -90,7 +106,8 @@ QUnit.test('segment base with sidx', function(assert) {
       periodIndex: 0,
       sourceDuration: 2,
       duration: 2,
-      indexRange: '10-19'
+      indexRange: '10-19',
+      type: 'static'
     },
     segments: [],
     sidx: {
@@ -119,7 +136,9 @@ QUnit.test('segment list', function(assert) {
       baseUrl: 'http://example.com/',
       duration: 10,
       sourceDuration: 11,
-      periodIndex: 0
+      periodIndex: 0,
+      periodStart: 0,
+      type: 'static'
     },
     segmentInfo: {
       list: {
@@ -142,7 +161,9 @@ QUnit.test('segment list', function(assert) {
       }, {
         media: '2.fmp4'
       }],
-      periodIndex: 0
+      periodIndex: 0,
+      periodStart: 0,
+      type: 'static'
     },
     segments: [{
       duration: 10,
@@ -152,6 +173,7 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/1.fmp4',
       timeline: 0,
+      presentationTime: 0,
       uri: '1.fmp4',
       number: 1
     }, {
@@ -162,6 +184,7 @@ QUnit.test('segment list', function(assert) {
       },
       resolvedUri: 'http://example.com/2.fmp4',
       timeline: 0,
+      presentationTime: 10,
       uri: '2.fmp4',
       number: 2
     }]
@@ -170,9 +193,15 @@ QUnit.test('segment list', function(assert) {
   assert.deepEqual(toPlaylists(representations), playlists);
 });
 
-QUnit.test('presentationTimeOffset', function(assert) {
+QUnit.test('presentationTime accounts for presentationTimeOffset', function(assert) {
   const representations = [{
-    attributes: { baseUrl: 'http://example.com/', periodIndex: 0, sourceDuration: 2 },
+    attributes: {
+      baseUrl: 'http://example.com/',
+      periodIndex: 0,
+      sourceDuration: 2,
+      type: 'static',
+      periodStart: 25
+    },
     segmentInfo: {
       template: {
         presentationTimeOffset: 100,
@@ -181,23 +210,24 @@ QUnit.test('presentationTimeOffset', function(assert) {
     }
   }];
 
-  // the presentationTimeOffset output should be the value in the template
-  // divided by the timescale in the template.
-  // It should be available on segments
   const playlists = [{
     attributes: {
       baseUrl: 'http://example.com/',
       periodIndex: 0,
+      periodStart: 25,
+      presentationTimeOffset: 100,
       sourceDuration: 2,
       duration: 2,
-      presentationTimeOffset: 25,
-      timescale: 4
+      timescale: 4,
+      type: 'static'
     },
     segments: [{
       uri: '',
       timeline: 0,
       duration: 2,
-      presentationTimeOffset: 25,
+      // The presentationTime value should be adjusted based on the presentationTimeOffset
+      // and its timescale.
+      presentationTime: 0,
       resolvedUri: 'http://example.com/',
       map: {
         uri: '',

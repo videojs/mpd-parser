@@ -10,12 +10,6 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
   if (segmentInfo.template) {
     segmentsFn = segmentsFromTemplate;
     segmentAttributes = merge(attributes, segmentInfo.template);
-
-    if (segmentInfo.template.presentationTimeOffset) {
-      segmentAttributes.presentationTimeOffset =
-        segmentInfo.template.presentationTimeOffset / segmentInfo.template.timescale;
-    }
-
   } else if (segmentInfo.base) {
     segmentsFn = segmentsFromBase;
     segmentAttributes = merge(attributes, segmentInfo.base);
@@ -32,7 +26,7 @@ export const generateSegments = ({ attributes, segmentInfo }) => {
     return segmentsInfo;
   }
 
-  const segments = segmentsFn(segmentAttributes, segmentInfo.timeline);
+  const segments = segmentsFn(segmentAttributes, segmentInfo.segmentTimeline);
 
   // The @duration attribute will be used to determin the playlist's targetDuration which
   // must be in seconds. Since we've generated the segment list, we no longer need
