@@ -51,7 +51,7 @@ export const parseByTimeline = (attributes, segmentTimeline) => {
     sourceDuration,
     timescale = 1,
     startNumber = 1,
-    periodIndex: timeline
+    periodStart: timeline
   } = attributes;
   const segments = [];
   let time = -1;

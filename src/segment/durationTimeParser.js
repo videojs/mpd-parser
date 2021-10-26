@@ -119,14 +119,14 @@ export const toSegments = (attributes) => (number, index) => {
   const {
     duration,
     timescale = 1,
-    periodIndex,
+    periodStart,
     startNumber = 1
   } = attributes;
 
   return {
     number: startNumber + number,
     duration: duration / timescale,
-    timeline: periodIndex,
+    timeline: periodStart,
     time: index * duration
   };
 };
