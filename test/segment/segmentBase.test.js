@@ -259,8 +259,6 @@ if (window.BigInt) {
         offset: (window.BigInt(20) + offset).toString(),
         length: 5
       },
-      duration: 2,
-      timeline: 0,
       number: 0
     }]);
   });
