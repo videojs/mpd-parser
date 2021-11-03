@@ -35,15 +35,18 @@ export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexR
   if (range || indexRange) {
     const rangeStr = range ? range : indexRange;
     const ranges = rangeStr.split('-');
-    let startRange = parseInt(ranges[0], 10);
-    let endRange = parseInt(ranges[1], 10);
 
-    if (startRange > Number.MAX_SAFE_INTEGER && window.BigInt) {
-      startRange = window.BigInt(ranges[0]);
+    // default to parsing this as a BigInt if possible
+    let startRange = window.BigInt ? window.BigInt(ranges[0]) : parseInt(ranges[0], 10);
+    let endRange = window.BigInt ? window.BigInt(ranges[1]) : parseInt(ranges[1], 10);
+
+    // convert back to a number if less than MAX_SAFE_INTEGER
+    if (startRange < Number.MAX_SAFE_INTEGER && typeof startRange === 'bigint') {
+      startRange = Number(startRange);
     }
 
-    if (endRange > Number.MAX_SAFE_INTEGER && window.BigInt) {
-      endRange = window.BigInt(ranges[1]);
+    if (endRange < Number.MAX_SAFE_INTEGER && typeof endRange === 'bigint') {
+      endRange = Number(endRange);
     }
 
     let length;
