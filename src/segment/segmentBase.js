@@ -133,7 +133,6 @@ export const addSidxSegmentsToPlaylist = (playlist, sidx, baseUrl) => {
     segments.push(segment);
     if (typeof startIndex === 'bigint') {
       startIndex += window.BigInt(size);
-
     } else {
       startIndex += size;
     }
