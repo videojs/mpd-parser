@@ -1,3 +1,5 @@
+import { values } from './object';
+
 export const range = (start, end) => {
   const result = [];
 
@@ -75,7 +77,7 @@ export const includes = (list, searchElement) => {
  * @return {Array} the union of the arrays
  */
 export const union = (lists, keyFunction) => {
-  return Object.values(lists.reduce((acc, list) => {
+  return values(lists.reduce((acc, list) => {
     list.forEach((el) => {
       acc[keyFunction(el)] = el;
     });

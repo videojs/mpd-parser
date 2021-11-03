@@ -150,10 +150,10 @@ QUnit.test('has parse', function(assert) {
   });
 });
 
-// this test is handled separately as a `lastMpd` needs to be parsed and provided
+// this test is handled separately as a `previousManifest` needs to be parsed and provided
 QUnit.test('multiperiod_startnumber_removed_periods test manifest', function(assert) {
-  const lastMpd = parse(multiperiodStartnumber);
-  const actual = parse(multiperiodStartnumberRemovedPeriods, { lastMpd });
+  const previousManifest = parse(multiperiodStartnumber);
+  const actual = parse(multiperiodStartnumberRemovedPeriods, { previousManifest });
 
   assert.deepEqual(actual, multiperiodStartnumberRemovedPeriodsManifest);
 });

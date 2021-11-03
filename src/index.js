@@ -9,12 +9,12 @@ import {addSidxSegmentsToPlaylist} from './segment/segmentBase.js';
 const VERSION = version;
 
 /*
- * Given a DASH manifest string and options, parses the DASH manifest into a manifest
- * object.
+ * Given a DASH manifest string and options, parses the DASH manifest into an object in the
+ * form outputed by m3u8-parser and accepted by videojs/http-streaming.
  *
- * For live DASH manifests, if `lastMpd` is provided in options, then the newly parsed
- * DASH manifest will have its media sequence and discontinuity sequence values updated
- * to reflect its position relative to the prior manifest.
+ * For live DASH manifests, if `previousManifest` is provided in options, then the newly
+ * parsed DASH manifest will have its media sequence and discontinuity sequence values
+ * updated to reflect its position relative to the prior manifest.
  *
  * @param {string} manifestString - the DASH manifest as a string
  * @param {options} [options] - any options
@@ -29,7 +29,7 @@ const parse = (manifestString, options = {}) => {
     dashPlaylists: playlists,
     locations: parsedManifestInfo.locations,
     sidxMapping: options.sidxMapping,
-    lastMpd: options.lastMpd
+    previousManifest: options.previousManifest
   });
 };
 

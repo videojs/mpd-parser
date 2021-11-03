@@ -381,7 +381,12 @@ export const flattenMediaGroupPlaylists = (mediaGroupObject) => {
   }, []);
 };
 
-export const toM3u8 = ({ dashPlaylists, locations, sidxMapping = {}, lastMpd }) => {
+export const toM3u8 = ({
+  dashPlaylists,
+  locations,
+  sidxMapping = {},
+  previousManifest
+}) => {
   if (!dashPlaylists.length) {
     return {};
   }
@@ -455,8 +460,11 @@ export const toM3u8 = ({ dashPlaylists, locations, sidxMapping = {}, lastMpd }) 
     manifest.mediaGroups['CLOSED-CAPTIONS'].cc = organizeCaptionServices(captions);
   }
 
-  if (lastMpd) {
-    return positionManifestOnTimeline({ oldManifest: lastMpd, newManifest: manifest });
+  if (previousManifest) {
+    return positionManifestOnTimeline({
+      oldManifest: previousManifest,
+      newManifest: manifest
+    });
   }
 
   return manifest;
