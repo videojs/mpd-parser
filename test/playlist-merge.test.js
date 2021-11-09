@@ -1,5 +1,5 @@
 import {
-  combineAndDedupeTimelineStarts,
+  getUniqueTimelineStarts,
   findPlaylistWithName,
   getMediaGroupPlaylists,
   updateMediaSequenceForPlaylist,
@@ -9,7 +9,7 @@ import {
 import { merge } from '../src/utils/object';
 import QUnit from 'qunit';
 
-QUnit.module('combineAndDedupeTimelineStarts');
+QUnit.module('getUniqueTimelineStarts');
 
 QUnit.test('handles multiple playlists', function(assert) {
   const listOfTimelineStartLists = [
@@ -21,7 +21,7 @@ QUnit.test('handles multiple playlists', function(assert) {
   ];
 
   assert.deepEqual(
-    combineAndDedupeTimelineStarts(listOfTimelineStartLists),
+    getUniqueTimelineStarts(listOfTimelineStartLists),
     [{
       start: 0,
       timeline: 0

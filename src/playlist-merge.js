@@ -2,6 +2,8 @@ import { forEachMediaGroup } from '@videojs/vhs-utils/es/media-groups';
 import { findIndex, union } from './utils/list';
 
 const SUPPORTED_MEDIA_TYPES = ['AUDIO', 'SUBTITLES'];
+// allow one 60fps frame as leniency (arbitrarily chosen)
+const TIME_FUDGE = 1 / 60;
 
 /**
  * Given a list of timelineStarts, combines, dedupes, and sorts them.
@@ -10,7 +12,7 @@ const SUPPORTED_MEDIA_TYPES = ['AUDIO', 'SUBTITLES'];
  *
  * @return {TimelineStart[]} the combined and deduped timeline starts
  */
-export const combineAndDedupeTimelineStarts = (timelineStarts) => {
+export const getUniqueTimelineStarts = (timelineStarts) => {
   return union(timelineStarts, ({ timeline }) => timeline).sort((a, b) =>
     (a.timeline > b.timeline) ? 1 : -1);
 };
@@ -60,11 +62,7 @@ export const getMediaGroupPlaylists = (manifest) => {
 export const updateMediaSequenceForPlaylist = ({ playlist, mediaSequence }) => {
   playlist.mediaSequence = mediaSequence;
   playlist.segments.forEach((segment, index) => {
-    if (index === 0) {
-      segment.number = playlist.mediaSequence;
-      return;
-    }
-    segment.number = playlist.segments[index - 1].number + 1;
+    segment.number = playlist.mediaSequence + index;
   });
 };
 
@@ -105,8 +103,8 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
     // playlists with no segments.
     const firstNewSegment = playlist.segments[0];
     const oldMatchingSegmentIndex = findIndex(oldPlaylist.segments, (oldSegment) =>
-      // allow one 60fps frame as leniency (arbitrarily chosen)
-      Math.abs(oldSegment.presentationTime - firstNewSegment.presentationTime) < (1 / 60));
+      Math.abs(oldSegment.presentationTime - firstNewSegment.presentationTime) <
+        TIME_FUDGE);
 
     // No matching segment from the old playlist means the entire playlist was refreshed.
     // In this case the media sequence should account for this update, and the new segments
@@ -212,7 +210,7 @@ export const positionManifestOnTimeline = ({ oldManifest, newManifest }) => {
   // generate too many Periods, unless the stream is watched for decades. In the future,
   // this can be optimized by mapping to discontinuity sequence numbers for each timeline,
   // but it may not become an issue, and the additional info can be useful for debugging.
-  newManifest.timelineStarts = combineAndDedupeTimelineStarts([oldManifest.timelineStarts,
+  newManifest.timelineStarts = getUniqueTimelineStarts([oldManifest.timelineStarts,
     newManifest.timelineStarts]);
 
   updateSequenceNumbers({

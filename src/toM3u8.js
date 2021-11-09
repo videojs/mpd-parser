@@ -3,7 +3,7 @@ import { findIndex, findIndexes } from './utils/list';
 import { addSidxSegmentsToPlaylist as addSidxSegmentsToPlaylist_ } from './segment/segmentBase';
 import { byteRangeToString } from './segment/urlType';
 import {
-  combineAndDedupeTimelineStarts,
+  getUniqueTimelineStarts,
   positionManifestOnTimeline
 } from './playlist-merge';
 
@@ -17,8 +17,12 @@ const mergeDiscontiguousPlaylists = playlists => {
     // across periods
     const name = playlist.attributes.id + (playlist.attributes.lang || '');
 
-    // Periods after first
-    if (acc[name]) {
+    if (!acc[name]) {
+      // First Period
+      acc[name] = playlist;
+      acc[name].attributes.timelineStarts = [];
+    } else {
+      // Subsequent Periods
       if (playlist.segments) {
         // first segment of subsequent periods signal a discontinuity
         if (playlist.segments[0]) {
@@ -33,10 +37,6 @@ const mergeDiscontiguousPlaylists = playlists => {
         acc[name].attributes.contentProtection =
           playlist.attributes.contentProtection;
       }
-    } else {
-      // first Period
-      acc[name] = playlist;
-      acc[name].attributes.timelineStarts = [];
     }
 
     acc[name].attributes.timelineStarts.push({
@@ -444,7 +444,7 @@ export const toM3u8 = ({
   const playlistTimelineStarts =
     formattedPlaylists.map(({ timelineStarts }) => timelineStarts);
 
-  manifest.timelineStarts = combineAndDedupeTimelineStarts(playlistTimelineStarts);
+  manifest.timelineStarts = getUniqueTimelineStarts(playlistTimelineStarts);
 
   addMediaSequenceValues(formattedPlaylists, manifest.timelineStarts);
 
