@@ -1031,6 +1031,11 @@ QUnit.test('resets media sequence values', function(assert) {
       presentationTime: 21,
       timeline: 21
     }]
+  }, {
+    timeline: 17,
+    mediaSequence: 2,
+    discontinuitySequence: 2,
+    segments: []
   }];
   const timelineStarts = [{
     timeline: 17,
@@ -1070,6 +1075,11 @@ QUnit.test('resets media sequence values', function(assert) {
         presentationTime: 21,
         timeline: 21
       }]
+    }, {
+      timeline: 17,
+      mediaSequence: 0,
+      discontinuitySequence: 0,
+      segments: []
     }],
     'updated media sequence values'
   );
