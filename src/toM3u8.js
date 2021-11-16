@@ -37,7 +37,7 @@ const mergeDiscontiguousPlaylists = playlists => {
 
   return mergedPlaylists.map(playlist => {
     playlist.discontinuityStarts =
-        findIndexes(playlist.segments, 'discontinuity');
+      findIndexes(playlist.segments, 'discontinuity');
 
     return playlist;
   });
@@ -184,11 +184,11 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}, isAudioOnly 
 
 export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
   return playlists.reduce((a, playlist) => {
-    const label = playlist.attributes.lang || 'text';
+    const label = playlist.attributes.label || playlist.attributes.lang;
 
     if (!a[label]) {
       a[label] = {
-        language: label,
+        language: playlist.attributes.lang,
         default: false,
         autoselect: false,
         playlists: [],
