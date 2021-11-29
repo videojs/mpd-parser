@@ -1,3 +1,18 @@
+<a name="0.20.0"></a>
+# [0.20.0](https://github.com/videojs/mpd-parser/compare/v0.19.2...v0.20.0) (2021-11-29)
+
+### Features
+
+* support BigInt values ([#135](https://github.com/videojs/mpd-parser/issues/135)) ([50eb434](https://github.com/videojs/mpd-parser/commit/50eb434))
+
+### Chores
+
+* don't run tests on version ([#154](https://github.com/videojs/mpd-parser/issues/154)) ([bcbe162](https://github.com/videojs/mpd-parser/commit/bcbe162))
+
+### Documentation
+
+* fixed examples of using "parse" ([#149](https://github.com/videojs/mpd-parser/issues/149)) ([bf0421e](https://github.com/videojs/mpd-parser/commit/bf0421e))
+
 <a name="0.19.2"></a>
 ## [0.19.2](https://github.com/videojs/mpd-parser/compare/v0.19.1...v0.19.2) (2021-10-06)
 
