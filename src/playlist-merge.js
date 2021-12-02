@@ -99,6 +99,20 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
       return;
     }
 
+    // TODO better support for live SIDX
+    //
+    // As of this writing, mpd-parser does not support multiperiod SIDX (in live or VOD).
+    // This is evident by a playlist only having a single SIDX reference. In a multiperiod
+    // playlist there would need to be multiple SIDX references. In addition, live SIDX is
+    // not supported when the SIDX properties change on refreshes.
+    //
+    // In the future, if support needs to be added, the merging logic here can be called
+    // after SIDX references are resolved. For now, exit early to prevent exceptions being
+    // thrown due to undefined references.
+    if (playlist.sidx) {
+      return;
+    }
+
     // Since we don't yet support early available timelines, we don't need to support
     // playlists with no segments.
     const firstNewSegment = playlist.segments[0];
