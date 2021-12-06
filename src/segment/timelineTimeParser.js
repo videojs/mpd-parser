@@ -19,11 +19,11 @@ const getLiveRValue = (attributes, time, duration) => {
     clientOffset,
     availabilityStartTime,
     timescale = 1,
-    start = 0,
+    periodStart = 0,
     minimumUpdatePeriod = 0
   } = attributes;
   const now = (NOW + clientOffset) / 1000;
-  const periodStartWC = availabilityStartTime + start;
+  const periodStartWC = availabilityStartTime + periodStart;
   const periodEndWC = now + minimumUpdatePeriod;
   const periodDuration = periodEndWC - periodStartWC;
 

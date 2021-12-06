@@ -952,7 +952,7 @@ QUnit.test('correctly handles duration', function(assert) {
   assert.deepEqual(
     segmentsFromTemplate(Object.assign(
       {}, basicAttributes,
-      { availabilityStartTime: 2, start: 4 }
+      { availabilityStartTime: 2, periodStart: 4 }
     ), []),
     [{
       duration: 2,
@@ -962,9 +962,9 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 1,
       resolvedUri: 'http://www.example.com/n-1.m4s',
-      timeline: 0,
+      timeline: 4,
       uri: 'n-1.m4s',
-      presentationTime: 0
+      presentationTime: 4
     }, {
       duration: 2,
       map: {
@@ -973,9 +973,9 @@ QUnit.test('correctly handles duration', function(assert) {
       },
       number: 2,
       resolvedUri: 'http://www.example.com/n-2.m4s',
-      timeline: 0,
+      timeline: 4,
       uri: 'n-2.m4s',
-      presentationTime: 2
+      presentationTime: 6
     }],
     'segments correct with @availabilityStartTime and @start set'
   );
@@ -995,7 +995,7 @@ QUnit.test('correctly handles duration', function(assert) {
       resolvedUri: 'http://www.example.com/n-4.m4s',
       timeline: 0,
       uri: 'n-4.m4s',
-      presentationTime: 0
+      presentationTime: 6
     }, {
       duration: 2,
       map: {
@@ -1006,7 +1006,7 @@ QUnit.test('correctly handles duration', function(assert) {
       resolvedUri: 'http://www.example.com/n-5.m4s',
       timeline: 0,
       uri: 'n-5.m4s',
-      presentationTime: 2
+      presentationTime: 8
     }],
     'segments correct with @timeShiftBufferDepth set'
   );
