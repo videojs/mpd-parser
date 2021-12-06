@@ -1,6 +1,6 @@
 {
   "name": "mpd-parser",
-  "version": "0.19.2",
+  "version": "0.20.0",
   "description": "mpd parser",
   "main": "dist/mpd-parser.cjs.js",
   "module": "dist/mpd-parser.es.js",
@@ -27,7 +27,6 @@
     "test:browser": "karma start scripts/karma.conf.js",
     "test:node": "qunit test/dist/bundle-node.js",
     "posttest": "shx cat test/dist/coverage/text.txt",
-    "preversion": "npm test",
     "version": "is-prerelease || npm run update-changelog && git add CHANGELOG.md",
     "update-changelog": "conventional-changelog -p videojs -i CHANGELOG.md -s",
     "watch": "npm-run-all -p watch:*",
@@ -72,7 +71,7 @@
     "videojs-generate-karma-config": "~7.0.0",
     "videojs-generate-rollup-config": "^6.2.2",
     "videojs-generator-verify": "~3.0.2",
-    "videojs-standard": "^8.0.4"
+    "videojs-standard": "^9.0.1"
   },
   "generator-videojs-plugin": {
     "version": "7.7.3"
