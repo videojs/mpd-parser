@@ -13,8 +13,8 @@ const TIME_FUDGE = 1 / 60;
  * @return {TimelineStart[]} the combined and deduped timeline starts
  */
 export const getUniqueTimelineStarts = (timelineStarts) => {
-  return union(timelineStarts, ({ timeline }) => timeline).sort((a, b) =>
-    (a.timeline > b.timeline) ? 1 : -1);
+  return union(timelineStarts, ({ timeline }) => timeline)
+    .sort((a, b) => (a.timeline > b.timeline) ? 1 : -1);
 };
 
 /**
