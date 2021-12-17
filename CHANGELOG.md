@@ -1,3 +1,15 @@
+<a name="0.21.0"></a>
+# [0.21.0](https://github.com/videojs/mpd-parser/compare/v0.20.0...v0.21.0) (2021-12-17)
+
+### Features
+
+* support multi-period live DASH with changing periods ([#152](https://github.com/videojs/mpd-parser/issues/152)) ([fe886d0](https://github.com/videojs/mpd-parser/commit/fe886d0))
+
+
+### BREAKING CHANGES
+
+* period start time (periodStart) is now used as the timeline instead of period index (periodIndex)
+
 <a name="0.20.0"></a>
 # [0.20.0](https://github.com/videojs/mpd-parser/compare/v0.19.2...v0.20.0) (2021-11-29)
 
