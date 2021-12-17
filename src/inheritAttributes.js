@@ -1,4 +1,3 @@
-import window from 'global/window';
 import { flatten } from './utils/list';
 import { merge } from './utils/object';
 import { findChildren, getContent } from './utils/xml';
@@ -367,8 +366,8 @@ export const toRepresentations =
  * @function
  * @param {PeriodInformation} period
  *        Period object containing necessary period information
- * @param {number} periodIndex
- *        Index of the Period within the mpd
+ * @param {number} periodStart
+ *        Start time of the Period within the mpd
  * @return {RepresentationInformation[]}
  *         List of objects containing Representaion information
  */
@@ -386,11 +385,7 @@ export const toRepresentations =
  */
 export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period.node, 'BaseURL'));
-  const parsedPeriodId = parseInt(period.attributes.id, 10);
-  // fallback to mapping index if Period@id is not a number
-  const periodIndex = window.isNaN(parsedPeriodId) ? index : parsedPeriodId;
   const periodAttributes = merge(mpdAttributes, {
-    periodIndex,
     periodStart: period.attributes.start
   });
 

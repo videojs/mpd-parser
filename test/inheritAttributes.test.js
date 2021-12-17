@@ -553,7 +553,6 @@ QUnit.test('end to end - basic', function(assert) {
         id: 'test',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -575,7 +574,6 @@ QUnit.test('end to end - basic', function(assert) {
         lang: 'en',
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
-        periodIndex: 0,
         periodStart: 0,
         role: {},
         sourceDuration: 30,
@@ -628,7 +626,6 @@ QUnit.test('end to end - basic dynamic', function(assert) {
         height: 404,
         id: 'test',
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -649,7 +646,6 @@ QUnit.test('end to end - basic dynamic', function(assert) {
         id: 'en',
         lang: 'en',
         mimeType: 'text/vtt',
-        periodIndex: 0,
         periodStart: 0,
         role: {},
         sourceDuration: 0,
@@ -712,7 +708,6 @@ QUnit.test('end to end - basic multiperiod', function(assert) {
         id: 'test',
         mediaPresentationDuration: 60,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodDuration: 30,
         // inferred start
         periodStart: 0,
@@ -737,7 +732,6 @@ QUnit.test('end to end - basic multiperiod', function(assert) {
         id: 'test',
         mediaPresentationDuration: 60,
         mimeType: 'video/mp4',
-        periodIndex: 1,
         // inferred start
         periodStart: 30,
         role: {
@@ -801,7 +795,6 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
         id: 'test',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -822,7 +815,6 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
         lang: 'en',
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
-        periodIndex: 0,
         periodStart: 0,
         role: {},
         sourceDuration: 30,
@@ -878,7 +870,6 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         id: 'test',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -901,7 +892,6 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         id: 'test',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -924,7 +914,6 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         id: 'test',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -947,7 +936,6 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         id: 'test',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -969,7 +957,6 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         lang: 'en',
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
-        periodIndex: 0,
         periodStart: 0,
         role: {},
         sourceDuration: 30,
@@ -986,7 +973,6 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         lang: 'en',
         mediaPresentationDuration: 30,
         mimeType: 'text/vtt',
-        periodIndex: 0,
         periodStart: 0,
         role: {},
         sourceDuration: 30,
@@ -1051,7 +1037,6 @@ QUnit.test(
           id: 'test',
           mediaPresentationDuration: 30,
           mimeType: 'video/mp6',
-          periodIndex: 0,
           periodStart: 0,
           role: {
             value: 'main'
@@ -1076,7 +1061,6 @@ QUnit.test(
           baseUrl: 'https://www.example.com/base/',
           mediaPresentationDuration: 30,
           mimeType: 'video/mp4',
-          periodIndex: 0,
           periodStart: 0,
           height: 545,
           role: {
@@ -1104,7 +1088,6 @@ QUnit.test(
           lang: 'en',
           mediaPresentationDuration: 30,
           mimeType: 'text/vtt',
-          periodIndex: 0,
           periodStart: 0,
           role: {},
           sourceDuration: 30,
@@ -1166,7 +1149,6 @@ QUnit.test(
           id: 'test',
           mediaPresentationDuration: 30,
           mimeType: 'video/mp6',
-          periodIndex: 0,
           periodDuration: 280.414,
           periodStart: 0,
           role: {
@@ -1192,7 +1174,6 @@ QUnit.test(
           baseUrl: 'https://www.example.com/base/',
           mediaPresentationDuration: 30,
           mimeType: 'video/mp4',
-          periodIndex: 0,
           periodDuration: 280.414,
           periodStart: 0,
           height: 545,
@@ -1221,7 +1202,6 @@ QUnit.test(
           lang: 'en',
           mediaPresentationDuration: 30,
           mimeType: 'text/vtt',
-          periodIndex: 0,
           periodDuration: 280.414,
           periodStart: 0,
           role: {},
@@ -1292,7 +1272,6 @@ QUnit.test(
           id: 'test',
           mediaPresentationDuration: 30,
           mimeType: 'video/mp6',
-          periodIndex: 0,
           periodStart: 0,
           role: {
             value: 'main'
@@ -1318,7 +1297,6 @@ QUnit.test(
           baseUrl: 'https://www.example.com/base/',
           mediaPresentationDuration: 30,
           mimeType: 'video/mp4',
-          periodIndex: 0,
           periodStart: 0,
           height: 545,
           role: {
@@ -1346,7 +1324,6 @@ QUnit.test(
           lang: 'en',
           mediaPresentationDuration: 30,
           mimeType: 'text/vtt',
-          periodIndex: 0,
           periodStart: 0,
           role: {},
           sourceDuration: 30,
@@ -1426,7 +1403,6 @@ QUnit.test(
         lang: 'es',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp6',
-        periodIndex: 0,
         periodStart: 0,
         startNumber: 0,
         timescale: 48000,
@@ -1631,7 +1607,6 @@ QUnit.test(
         id: '125000',
         mediaPresentationDuration: 30,
         mimeType: 'video/mp4',
-        periodIndex: 0,
         periodStart: 0,
         role: {
           value: 'main'
@@ -1896,7 +1871,6 @@ QUnit.test('Test to check use of either Segment Template or Segment List when bo
       lang: 'es',
       mediaPresentationDuration: 30,
       mimeType: 'video/mp6',
-      periodIndex: 0,
       periodStart: 0,
       role: {
         value: 'main'

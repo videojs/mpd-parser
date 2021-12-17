@@ -44,6 +44,18 @@ const manifest = await res.text();
 var parsedManifest = mpdParser.parse(manifest, { manifestUri });
 ```
 
+If dealing with a live stream, then on subsequent calls to parse, the previously parsed
+manifest object should be provided as an option to `parse` using the `previousManifest`
+option:
+
+```js
+const newParsedManifest = mpdParser.parse(
+  manifest,
+  // parsedManifest comes from the prior example
+  { manifestUri, previousManifest: parsedManifest }
+);
+```
+
 ### Parsed Output
 
 The parser ouputs a plain javascript object with the following structure:
