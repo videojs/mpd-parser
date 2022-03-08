@@ -9,7 +9,7 @@ import { stringToMpdXml } from '../src/stringToMpdXml';
 import errors from '../src/errors';
 import QUnit from 'qunit';
 import { toPlaylists } from '../src/toPlaylists';
-import decodeB64ToUint8Array from '@videojs/vhs-utils/cjs/decode-b64-to-uint8-array';
+import decodeB64ToUint8Array from '@videojs/vhs-utils/es/decode-b64-to-uint8-array';
 
 QUnit.module('buildBaseUrls');
 
