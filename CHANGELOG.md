@@ -1,3 +1,10 @@
+### TODO add version
+
+### Bug Fixes
+
+* DASH content protection schemeIdUri on input is converted to lowercase for case-insensitivity ([#156](https://github.com/videojs/mpd-parser/issues/156)
+
+
 <a name="0.21.0"></a>
 # [0.21.0](https://github.com/videojs/mpd-parser/compare/v0.20.0...v0.21.0) (2021-12-17)
 

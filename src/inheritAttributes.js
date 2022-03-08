@@ -175,6 +175,11 @@ export const inheritBaseUrls =
 const generateKeySystemInformation = (contentProtectionNodes) => {
   return contentProtectionNodes.reduce((acc, node) => {
     const attributes = parseAttributes(node);
+
+    // case-insensitive schemeIdUris
+    if (attributes.schemeIdUri) {
+      attributes.schemeIdUri = attributes.schemeIdUri.toLowerCase();
+    }
     const keySystem = keySystemsMap[attributes.schemeIdUri];
 
     if (keySystem) {
@@ -184,9 +189,8 @@ const generateKeySystemInformation = (contentProtectionNodes) => {
 
       if (psshNode) {
         const pssh = getContent(psshNode);
-        const psshBuffer = pssh && decodeB64ToUint8Array(pssh);
 
-        acc[keySystem].pssh = psshBuffer;
+        acc[keySystem].pssh = pssh && decodeB64ToUint8Array(pssh);
       }
     }
 
