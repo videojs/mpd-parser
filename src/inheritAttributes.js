@@ -176,7 +176,10 @@ const generateKeySystemInformation = (contentProtectionNodes) => {
   return contentProtectionNodes.reduce((acc, node) => {
     const attributes = parseAttributes(node);
 
-    // case-insensitive schemeIdUris
+    // Although it could be argued that according to the UUID RFC spec the UUID string (a-f chars) should be generated
+    // as a lowercase string it also mentions it should be treated as case-insensitive on input. Since the key system
+    // UUIDs in the keySystemsMap are hardcoded as lowercase in the codebase there isn't any reason not to do
+    // .toLowerCase() on the input UUID string from the manifest (at least I could not think of one).
     if (attributes.schemeIdUri) {
       attributes.schemeIdUri = attributes.schemeIdUri.toLowerCase();
     }
