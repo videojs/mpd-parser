@@ -1,3 +1,11 @@
+<a name="0.21.1"></a>
+## [0.21.1](https://github.com/videojs/mpd-parser/compare/v0.21.0...v0.21.1) (2022-04-05)
+
+### Bug Fixes
+
+* DASH content protection schemeIdUri as lowercase ([#157](https://github.com/videojs/mpd-parser/issues/157)) ([aa02006](https://github.com/videojs/mpd-parser/commit/aa02006)), closes [#156](https://github.com/videojs/mpd-parser/issues/156)
+* update to vhs-utils 3.0.5 for tizen 2.4 support ([#158](https://github.com/videojs/mpd-parser/issues/158)) ([d7003a3](https://github.com/videojs/mpd-parser/commit/d7003a3))
+
 <a name="0.21.0"></a>
 # [0.21.0](https://github.com/videojs/mpd-parser/compare/v0.20.0...v0.21.0) (2021-12-17)
 
