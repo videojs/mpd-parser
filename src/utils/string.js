@@ -1,5 +1,5 @@
 /**
- * Converts the provided string value that may contain the division operation to the number value.
+ * Converts the provided string that may contain a division operation to a number.
  *
  * @param {string} value - the provided string value
  *
