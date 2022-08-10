@@ -78,7 +78,7 @@
   },
   "browserslist": [
     "defaults",
-    "ie 11"
+    "not ie 11"
   ],
   "lint-staged": {
     "*.js": "vjsstandard --fix",

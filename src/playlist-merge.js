@@ -1,5 +1,5 @@
 import { forEachMediaGroup } from '@videojs/vhs-utils/es/media-groups';
-import { findIndex, union } from './utils/list';
+import { union } from './utils/list';
 
 const SUPPORTED_MEDIA_TYPES = ['AUDIO', 'SUBTITLES'];
 // allow one 60fps frame as leniency (arbitrarily chosen)
@@ -82,8 +82,7 @@ export const updateMediaSequenceForPlaylist = ({ playlist, mediaSequence }) => {
  */
 export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStarts }) => {
   newPlaylists.forEach((playlist) => {
-    playlist.discontinuitySequence = findIndex(
-      timelineStarts,
+    playlist.discontinuitySequence = timelineStarts.findIndex(
       ({ timeline }) => timeline === playlist.timeline
     );
 
@@ -116,9 +115,12 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
     // Since we don't yet support early available timelines, we don't need to support
     // playlists with no segments.
     const firstNewSegment = playlist.segments[0];
-    const oldMatchingSegmentIndex = findIndex(oldPlaylist.segments, (oldSegment) =>
-      Math.abs(oldSegment.presentationTime - firstNewSegment.presentationTime) <
-        TIME_FUDGE);
+    const oldMatchingSegmentIndex = oldPlaylist.segments.findIndex(
+      (oldSegment) =>
+        Math.abs(
+          oldSegment.presentationTime - firstNewSegment.presentationTime
+        ) < TIME_FUDGE
+    );
 
     // No matching segment from the old playlist means the entire playlist was refreshed.
     // In this case the media sequence should account for this update, and the new segments
