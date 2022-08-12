@@ -217,7 +217,7 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}, isAudioOnly 
 
 export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
   return playlists.reduce((a, playlist) => {
-    const label = playlist.attributes.lang || 'text';
+    const label = playlist.attributes.label || playlist.attributes.lang || 'text';
 
     if (!a[label]) {
       a[label] = {
