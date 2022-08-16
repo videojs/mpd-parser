@@ -352,9 +352,11 @@ export const addMediaSequenceValues = (playlists, timelineStarts) => {
   // increment all segments sequentially
   playlists.forEach((playlist) => {
     playlist.mediaSequence = 0;
-    playlist.discontinuitySequence = timelineStarts.findIndex(
-      ({ timeline }) => timeline === playlist.timeline
-    );
+    playlist.discontinuitySequence = timelineStarts.findIndex(function({
+      timeline
+    }) {
+      return timeline === playlist.timeline;
+    });
 
     if (!playlist.segments) {
       return;

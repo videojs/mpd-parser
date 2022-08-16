@@ -65,21 +65,17 @@
     "@videojs/generator-helpers": "~2.0.1",
     "jsdom": "^16.4.0",
     "karma": "^5.2.3",
-    "rollup": "^2.36.1",
+    "rollup": "^2.38.0",
     "rollup-plugin-string": "^3.0.0",
     "sinon": "^9.2.3",
     "videojs-generate-karma-config": "~7.0.0",
-    "videojs-generate-rollup-config": "^6.2.2",
+    "videojs-generate-rollup-config": "~7.0.0",
     "videojs-generator-verify": "~3.0.2",
     "videojs-standard": "^9.0.1"
   },
   "generator-videojs-plugin": {
     "version": "7.7.3"
   },
-  "browserslist": [
-    "defaults",
-    "not ie 11"
-  ],
   "lint-staged": {
     "*.js": "vjsstandard --fix",
     "README.md": "doctoc --notitle"
