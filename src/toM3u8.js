@@ -1,5 +1,5 @@
 import { values } from './utils/object';
-import { findIndex, findIndexes } from './utils/list';
+import { findIndexes } from './utils/list';
 import { addSidxSegmentsToPlaylist as addSidxSegmentsToPlaylist_ } from './segment/segmentBase';
 import { byteRangeToString } from './segment/urlType';
 import {
@@ -352,7 +352,11 @@ export const addMediaSequenceValues = (playlists, timelineStarts) => {
   // increment all segments sequentially
   playlists.forEach((playlist) => {
     playlist.mediaSequence = 0;
-    playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
+    playlist.discontinuitySequence = timelineStarts.findIndex(function({
+      timeline
+    }) {
+      return timeline === playlist.timeline;
+    });
 
     if (!playlist.segments) {
       return;
