@@ -1,3 +1,10 @@
+<a name="0.22.0"></a>
+# [0.22.0](https://github.com/videojs/mpd-parser/compare/v0.21.1...v0.22.0) (2022-09-09)
+
+### Features
+
+* add support for a frame-rate attribute ([#159](https://github.com/videojs/mpd-parser/issues/159)) ([cd75be1](https://github.com/videojs/mpd-parser/commit/cd75be1))
+
 <a name="0.21.1"></a>
 ## [0.21.1](https://github.com/videojs/mpd-parser/compare/v0.21.0...v0.21.1) (2022-04-05)
 
