@@ -1,3 +1,21 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/videojs/mpd-parser/compare/v0.21.1...v1.0.1) (2022-10-14)
+
+### Features
+
+* add support for a frame-rate attribute ([#159](https://github.com/videojs/mpd-parser/issues/159)) ([cd75be1](https://github.com/videojs/mpd-parser/commit/cd75be1))
+
+### Chores
+
+* do not run es-check on publish ([#162](https://github.com/videojs/mpd-parser/issues/162)) ([f92659d](https://github.com/videojs/mpd-parser/commit/f92659d))
+* remove IE11 support ([#160](https://github.com/videojs/mpd-parser/issues/160)) ([b528b61](https://github.com/videojs/mpd-parser/commit/b528b61))
+* update xmldom dependency ([cfcb568](https://github.com/videojs/mpd-parser/commit/cfcb568))
+
+
+### BREAKING CHANGES
+
+* Internet Explorer is no longer supported.
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/videojs/mpd-parser/compare/v0.21.1...v1.0.0) (2022-08-19)
 
