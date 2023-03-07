@@ -571,6 +571,6 @@ export const inheritAttributes = (mpd, options = {}) => {
   return {
     locations: mpdAttributes.locations,
     representationInfo: flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls))),
-    eventStreamInfo: flatten(periods.map(toEventStream))
+    eventStream: flatten(periods.map(toEventStream))
   };
 };

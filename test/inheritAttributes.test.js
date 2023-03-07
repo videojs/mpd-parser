@@ -546,7 +546,7 @@ QUnit.test('end to end - basic', function(assert) {
   `), { NOW });
 
   const expected = {
-    eventStreamInfo: [],
+    eventStream: [],
     locations: undefined,
     representationInfo: [{
       attributes: {
@@ -621,7 +621,7 @@ QUnit.test('end to end - basic dynamic', function(assert) {
   `), { NOW });
 
   const expected = {
-    eventStreamInfo: [],
+    eventStream: [],
     locations: undefined,
     representationInfo: [{
       attributes: {
@@ -703,7 +703,7 @@ QUnit.test('end to end - basic multiperiod', function(assert) {
   `), { NOW });
 
   const expected = {
-    eventStreamInfo: [],
+    eventStream: [],
     locations: undefined,
     representationInfo: [{
       attributes: {
@@ -790,7 +790,7 @@ QUnit.test('end to end - inherits BaseURL from all levels', function(assert) {
   `), { NOW });
 
   const expected = {
-    eventStreamInfo: [],
+    eventStream: [],
     locations: undefined,
     representationInfo: [{
       attributes: {
@@ -867,7 +867,7 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
   `), { NOW });
 
   const expected = {
-    eventStreamInfo: [],
+    eventStream: [],
     locations: undefined,
     representationInfo: [{
       attributes: {
@@ -1035,7 +1035,7 @@ QUnit.test(
   `), { NOW });
 
     const expected = {
-      eventStreamInfo: [],
+      eventStream: [],
       locations: undefined,
       representationInfo: [{
         attributes: {
@@ -1148,7 +1148,7 @@ QUnit.test(
   `), { NOW });
 
     const expected = {
-      eventStreamInfo: [],
+      eventStream: [],
       locations: undefined,
       representationInfo: [{
         attributes: {
@@ -1272,7 +1272,7 @@ QUnit.test(
   `), { NOW });
 
     const expected = {
-      eventStreamInfo: [],
+      eventStream: [],
       locations: undefined,
       representationInfo: [{
         attributes: {
@@ -2116,7 +2116,7 @@ QUnit.test('keySystem info for representation - lowercase UUIDs', function(asser
 
   // inconsistent quoting because of quote-props
   const expected = {
-    eventStreamInfo: [],
+    eventStream: [],
     locations: undefined,
     representationInfo: [{
       attributes: {
@@ -2203,7 +2203,7 @@ QUnit.test('keySystem info for representation - uppercase UUIDs', function(asser
 
   // inconsistent quoting because of quote-props
   const expected = {
-    eventStreamInfo: [],
+    eventStream: [],
     locations: undefined,
     representationInfo: [{
       attributes: {
@@ -2294,7 +2294,7 @@ QUnit.test('gets EventStream data from toEventStream', function(assert) {
   const firstPeriod = { node: findChildren(mpd, 'Period')[0], attributes: { start: 2 } };
   const eventStreams = toEventStream(firstPeriod);
 
-  assert.deepEqual(eventStreams, expected, 'getEventStreams returns the expected object');
+  assert.deepEqual(eventStreams, expected, 'toEventStream returns the expected object');
 });
 
 QUnit.test('cannot get EventStream data from toEventStream with no schemeIdUri', function(assert) {
@@ -2314,10 +2314,10 @@ QUnit.test('cannot get EventStream data from toEventStream with no schemeIdUri',
   const firstPeriod = { node: findChildren(mpd, 'Period')[0], attributes: { start: 2} };
   const eventStreams = toEventStream(firstPeriod);
 
-  assert.deepEqual(eventStreams, [undefined], 'getEventStreams returns the expected object');
+  assert.deepEqual(eventStreams, [undefined], 'toEventStream returns the expected object');
 });
 
-QUnit.test('gets EventStreamInfo from inheritAttributes', function(assert) {
+QUnit.test('gets eventStream from inheritAttributes', function(assert) {
   const mpd = stringToMpdXml(`
     <MPD mediaPresentationDuration="PT30S" xmlns:cenc="urn:mpeg:cenc:2013">
       <Period id="dai_pod-0001065804-ad-1" start="PT0H0M14.9S" duration="PT9.977S">
@@ -2331,7 +2331,7 @@ QUnit.test('gets EventStreamInfo from inheritAttributes', function(assert) {
       </Period>
     </MPD>`);
   const expected = {
-    eventStreamInfo: [
+    eventStream: [
       {
         end: 15,
         id: '0',
@@ -2363,5 +2363,5 @@ QUnit.test('gets EventStreamInfo from inheritAttributes', function(assert) {
 
   const eventStreams = inheritAttributes(mpd);
 
-  assert.deepEqual(eventStreams, expected, 'getEventStreams returns the expected object');
+  assert.deepEqual(eventStreams, expected, 'inheritAttributes returns the expected object');
 });
