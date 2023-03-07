@@ -296,8 +296,8 @@ export const parseCaptionServiceMetadata = (service) => {
  * @return a collection of parsed eventstream event objects with
  */
 export const toEventStream = (period) => {
-  // get all EventStreams tags and parse attributes and children
-  return findChildren(period.node, 'EventStream').flatMap((eventStream) => {
+  // get and flatten all EventStreams tags and parse attributes and children
+  return flatten(findChildren(period.node, 'EventStream').map((eventStream) => {
     const eventStreamAttributes = parseAttributes(eventStream);
     const schemeIdUri = eventStreamAttributes.schemeIdUri;
     // schemeIdUri is mandatory for EventStream tags
@@ -323,7 +323,7 @@ export const toEventStream = (period) => {
         messageData: eventAttributes.messageData
       };
     });
-  });
+  }));
 };
 
 /**
