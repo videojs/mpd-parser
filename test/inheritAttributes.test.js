@@ -2323,7 +2323,7 @@ QUnit.test('gets eventStream from inheritAttributes', function(assert) {
       <Period id="dai_pod-0001065804-ad-1" start="PT0H0M14.9S" duration="PT9.977S">
         <BaseURL>https://www.example.com/base/</BaseURL>
         <SegmentTemplate media="$RepresentationID$/$Number$.mp4" initialization="$RepresentationID$/init.mp4"/>
-        <EventStream schemeIdUri="urn:google:dai:2018" timescale="1000">
+        <EventStream schemeIdUri="urn:google:dai:2018" timescale="1000" value="foo">
           <Event presentationTime="100" duration="0" id="0" messageData="foo"/>
           <Event presentationTime="1100" duration="0" id="5" messageData="bar"/>
           <Event presentationTime="2100" duration="0" id="6" messageData="foo_bar"/>
@@ -2338,7 +2338,7 @@ QUnit.test('gets eventStream from inheritAttributes', function(assert) {
         messageData: 'foo',
         schemeIdUri: 'urn:google:dai:2018',
         start: 15,
-        value: undefined
+        value: 'foo'
       },
       {
         end: 16,
@@ -2346,7 +2346,7 @@ QUnit.test('gets eventStream from inheritAttributes', function(assert) {
         messageData: 'bar',
         schemeIdUri: 'urn:google:dai:2018',
         start: 16,
-        value: undefined
+        value: 'foo'
       },
       {
         end: 17,
@@ -2354,7 +2354,7 @@ QUnit.test('gets eventStream from inheritAttributes', function(assert) {
         messageData: 'foo_bar',
         schemeIdUri: 'urn:google:dai:2018',
         start: 17,
-        value: undefined
+        value: 'foo'
       }
     ],
     locations: undefined,

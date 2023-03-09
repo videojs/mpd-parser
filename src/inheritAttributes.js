@@ -293,7 +293,7 @@ export const parseCaptionServiceMetadata = (service) => {
  * https://dashif-documents.azurewebsites.net/Events/master/event.html#mpd-event-timing
  *
  * @param {PeriodInformation} period object containing necessary period information
- * @return a collection of parsed eventstream event objects with
+ * @return a collection of parsed eventstream event objects
  */
 export const toEventStream = (period) => {
   // get and flatten all EventStreams tags and parse attributes and children
