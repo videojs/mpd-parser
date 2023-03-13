@@ -2257,7 +2257,7 @@ QUnit.test('gets EventStream data from toEventStream', function(assert) {
       <Period id="dai_pod-0001065804-ad-1" start="PT17738H17M14.156S" duration="PT9.977S">
         <BaseURL>https://www.example.com/base/</BaseURL>
         <SegmentTemplate media="$RepresentationID$/$Number$.mp4" initialization="$RepresentationID$/init.mp4"/>
-        <EventStream schemeIdUri="urn:google:dai:2018" timescale="1000">
+        <EventStream schemeIdUri="urn:google:dai:2018" timescale="1000" contentEncoding="foo" presentationTimeOffset="1">
           <Event presentationTime="100" duration="0" id="0" messageData="foo"/>
           <Event presentationTime="900" duration="0" id="5" messageData="bar"/>
           <Event presentationTime="1900" duration="0" id="6" messageData="foo_bar"/>
@@ -2271,7 +2271,10 @@ QUnit.test('gets EventStream data from toEventStream', function(assert) {
       messageData: 'foo',
       schemeIdUri: 'urn:google:dai:2018',
       start: 2.1,
-      value: undefined
+      value: undefined,
+      contentEncoding: 'foo',
+      presentationTimeOffset: 1
+
     },
     {
       end: 2.9,
@@ -2279,7 +2282,9 @@ QUnit.test('gets EventStream data from toEventStream', function(assert) {
       messageData: 'bar',
       schemeIdUri: 'urn:google:dai:2018',
       start: 2.9,
-      value: undefined
+      value: undefined,
+      contentEncoding: 'foo',
+      presentationTimeOffset: 1
     },
     {
       end: 3.9,
@@ -2287,7 +2292,9 @@ QUnit.test('gets EventStream data from toEventStream', function(assert) {
       messageData: 'foo_bar',
       schemeIdUri: 'urn:google:dai:2018',
       start: 3.9,
-      value: undefined
+      value: undefined,
+      contentEncoding: 'foo',
+      presentationTimeOffset: 1
     }
   ];
 
@@ -2297,7 +2304,7 @@ QUnit.test('gets EventStream data from toEventStream', function(assert) {
   assert.deepEqual(eventStreams, expected, 'toEventStream returns the expected object');
 });
 
-QUnit.test('cannot get EventStream data from toEventStream with no schemeIdUri', function(assert) {
+QUnit.test('can get EventStream data from toEventStream with no schemeIdUri', function(assert) {
   const mpd = stringToMpdXml(`
     <MPD mediaPresentationDuration="PT30S" xmlns:cenc="urn:mpeg:cenc:2013">
       <Period id="dai_pod-0001065804-ad-1" start="PT17738H17M14.156S" duration="PT9.977S">
@@ -2311,10 +2318,44 @@ QUnit.test('cannot get EventStream data from toEventStream with no schemeIdUri',
       </Period>
     </MPD>`);
 
+  const expected = [
+    {
+      end: 2.1,
+      id: '0',
+      messageData: 'foo',
+      schemeIdUri: undefined,
+      start: 2.1,
+      value: undefined,
+      contentEncoding: undefined,
+      presentationTimeOffset: 0
+
+    },
+    {
+      end: 2.9,
+      id: '5',
+      messageData: 'bar',
+      schemeIdUri: undefined,
+      start: 2.9,
+      value: undefined,
+      contentEncoding: undefined,
+      presentationTimeOffset: 0
+    },
+    {
+      end: 3.9,
+      id: '6',
+      messageData: 'foo_bar',
+      schemeIdUri: undefined,
+      start: 3.9,
+      value: undefined,
+      contentEncoding: undefined,
+      presentationTimeOffset: 0
+    }
+  ];
+
   const firstPeriod = { node: findChildren(mpd, 'Period')[0], attributes: { start: 2} };
   const eventStreams = toEventStream(firstPeriod);
 
-  assert.deepEqual(eventStreams, [undefined], 'toEventStream returns the expected object');
+  assert.deepEqual(eventStreams, expected, 'toEventStream returns the expected object');
 });
 
 QUnit.test('gets eventStream from inheritAttributes', function(assert) {
@@ -2338,7 +2379,9 @@ QUnit.test('gets eventStream from inheritAttributes', function(assert) {
         messageData: 'foo',
         schemeIdUri: 'urn:google:dai:2018',
         start: 15,
-        value: 'foo'
+        value: 'foo',
+        contentEncoding: undefined,
+        presentationTimeOffset: 0
       },
       {
         end: 16,
@@ -2346,7 +2389,9 @@ QUnit.test('gets eventStream from inheritAttributes', function(assert) {
         messageData: 'bar',
         schemeIdUri: 'urn:google:dai:2018',
         start: 16,
-        value: 'foo'
+        value: 'foo',
+        contentEncoding: undefined,
+        presentationTimeOffset: 0
       },
       {
         end: 17,
@@ -2354,7 +2399,9 @@ QUnit.test('gets eventStream from inheritAttributes', function(assert) {
         messageData: 'foo_bar',
         schemeIdUri: 'urn:google:dai:2018',
         start: 17,
-        value: 'foo'
+        value: 'foo',
+        contentEncoding: undefined,
+        presentationTimeOffset: 0
       }
     ],
     locations: undefined,

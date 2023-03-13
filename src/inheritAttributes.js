@@ -300,11 +300,6 @@ export const toEventStream = (period) => {
   return flatten(findChildren(period.node, 'EventStream').map((eventStream) => {
     const eventStreamAttributes = parseAttributes(eventStream);
     const schemeIdUri = eventStreamAttributes.schemeIdUri;
-    // schemeIdUri is mandatory for EventStream tags
-
-    if (!schemeIdUri) {
-      return;
-    }
 
     // find all Events per EventStream tag and map to return objects
     return findChildren(eventStream, 'Event').map((event) => {
@@ -320,7 +315,9 @@ export const toEventStream = (period) => {
         id: eventAttributes.id,
         start,
         end: start + (duration / timescale),
-        messageData: eventAttributes.messageData
+        messageData: eventAttributes.messageData,
+        contentEncoding: eventStreamAttributes.contentEncoding,
+        presentationTimeOffset: eventStreamAttributes.presentationTimeOffset || 0
       };
     });
   }));
