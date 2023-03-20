@@ -1,3 +1,15 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/videojs/mpd-parser/compare/v1.0.0...v1.1.0) (2023-03-20)
+
+### Features
+
+* add EventStream support ([f1a09ca](https://github.com/videojs/mpd-parser/commit/f1a09ca))
+* set label for vttPlaylist from label when available ([#161](https://github.com/videojs/mpd-parser/issues/161)) ([3fc0486](https://github.com/videojs/mpd-parser/commit/3fc0486))
+
+### Chores
+
+* update xmldom dependency ([cfcb568](https://github.com/videojs/mpd-parser/commit/cfcb568))
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/videojs/mpd-parser/compare/v0.21.1...v1.0.0) (2022-08-19)
 
