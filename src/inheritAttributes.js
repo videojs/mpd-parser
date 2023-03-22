@@ -315,7 +315,7 @@ export const toEventStream = (period) => {
         id: eventAttributes.id,
         start,
         end: start + (duration / timescale),
-        messageData: eventAttributes.messageData,
+        messageData: getContent(event) || eventAttributes.messageData,
         contentEncoding: eventStreamAttributes.contentEncoding,
         presentationTimeOffset: eventStreamAttributes.presentationTimeOffset || 0
       };
