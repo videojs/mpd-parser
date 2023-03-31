@@ -1,3 +1,10 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/videojs/mpd-parser/compare/v1.1.0...v1.1.1) (2023-03-31)
+
+### Bug Fixes
+
+* get event tag content ([ed7a1d7](https://github.com/videojs/mpd-parser/commit/ed7a1d7))
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/videojs/mpd-parser/compare/v1.0.0...v1.1.0) (2023-03-20)
 
