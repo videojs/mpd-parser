@@ -9,7 +9,6 @@ QUnit.test('no representations', function(assert) {
   assert.deepEqual(toPlaylists([]), []);
 });
 
-// test this
 QUnit.test('pretty simple', function(assert) {
   const representations = [{
     attributes: {
@@ -81,6 +80,181 @@ QUnit.test('segment base', function(assert) {
       presentationTime: 0,
       number: 0
     }]
+  }];
+
+  assert.deepEqual(toPlaylists(representations), playlists);
+});
+
+QUnit.test('playlist with content steering BaseURLs', function(assert) {
+  const representations = [
+    {
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://cdn1.example.com/',
+        clientOffset: 0,
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mimeType: 'video/mp4',
+        periodStart: 0,
+        role: {
+          value: 'main'
+        },
+        serviceLocation: 'alpha',
+        sourceDuration: 0,
+        type: 'dyanmic',
+        width: 720
+      },
+      segmentInfo: {
+        template: {}
+      }
+    },
+    {
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://cdn2.example.com/',
+        clientOffset: 0,
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mimeType: 'video/mp4',
+        periodStart: 0,
+        role: {
+          value: 'main'
+        },
+        serviceLocation: 'beta',
+        sourceDuration: 0,
+        type: 'dyanmic',
+        width: 720
+      },
+      segmentInfo: {
+        template: {}
+      }
+    },
+    {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        clientOffset: 0,
+        id: 'en',
+        lang: 'en',
+        mimeType: 'text/vtt',
+        periodStart: 0,
+        role: {},
+        sourceDuration: 0,
+        type: 'dyanmic'
+      },
+      segmentInfo: {}
+    },
+    {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://example.com/en.vtt',
+        clientOffset: 0,
+        id: 'en',
+        lang: 'en',
+        mimeType: 'text/vtt',
+        periodStart: 0,
+        role: {},
+        sourceDuration: 0,
+        type: 'dyanmic'
+      },
+      segmentInfo: {}
+    }
+  ];
+
+  const playlists = [{
+    attributes: {
+      bandwidth: 5000000,
+      baseUrl: 'https://cdn1.example.com/',
+      clientOffset: 0,
+      codecs: 'avc1.64001e',
+      duration: 0,
+      height: 404,
+      id: 'test',
+      mimeType: 'video/mp4',
+      periodStart: 0,
+      role: {
+        value: 'main'
+      },
+      serviceLocation: 'alpha',
+      sourceDuration: 0,
+      type: 'dyanmic',
+      width: 720
+    },
+    segments: [
+      {
+        duration: 0,
+        map: {
+          resolvedUri: 'https://cdn1.example.com/',
+          uri: ''
+        },
+        number: 1,
+        presentationTime: 0,
+        resolvedUri: 'https://cdn1.example.com/',
+        timeline: 0,
+        uri: ''
+      }
+    ]
+  }, {
+    attributes: {
+      bandwidth: 5000000,
+      baseUrl: 'https://cdn2.example.com/',
+      clientOffset: 0,
+      codecs: 'avc1.64001e',
+      duration: 0,
+      height: 404,
+      id: 'test',
+      mimeType: 'video/mp4',
+      periodStart: 0,
+      role: {
+        value: 'main'
+      },
+      serviceLocation: 'beta',
+      sourceDuration: 0,
+      type: 'dyanmic',
+      width: 720
+    },
+    segments: [
+      {
+        duration: 0,
+        map: {
+          resolvedUri: 'https://cdn2.example.com/',
+          uri: ''
+        },
+        number: 1,
+        presentationTime: 0,
+        resolvedUri: 'https://cdn2.example.com/',
+        timeline: 0,
+        uri: ''
+      }
+    ]
+  }, {
+    attributes: {
+      bandwidth: 256,
+      baseUrl: 'https://example.com/en.vtt',
+      clientOffset: 0,
+      id: 'en',
+      lang: 'en',
+      mimeType: 'text/vtt',
+      periodStart: 0,
+      role: {},
+      sourceDuration: 0,
+      type: 'dyanmic'
+    }
+  }, {
+    attributes: {
+      bandwidth: 256,
+      baseUrl: 'https://example.com/en.vtt',
+      clientOffset: 0,
+      id: 'en',
+      lang: 'en',
+      mimeType: 'text/vtt',
+      periodStart: 0,
+      role: {},
+      sourceDuration: 0,
+      type: 'dyanmic'
+    }
   }];
 
   assert.deepEqual(toPlaylists(representations), playlists);

@@ -474,10 +474,6 @@ export const generateContentSteeringInformation = (contentSteeringNodes) => {
   // to `false` if it doesn't exist
   infoFromContentSteeringTag.queryBeforeStart = (infoFromContentSteeringTag.queryBeforeStart === 'true');
 
-  // Get CDN info from BaseURLs that have a valid serviceLocation
-  // const contentSteeringBaseUrls = baseURLNodes.filter(({ attributes }) => attributes.serviceLocation);
-  // const cdns = contentSteeringBaseUrls.map(base => merge({ url: getContent(base) }, parseAttributes(base)));
-
   return infoFromContentSteeringTag;
 };
 
@@ -570,8 +566,6 @@ export const inheritAttributes = (mpd, options = {}) => {
 
   const mpdAttributes = parseAttributes(mpd);
   const mpdBaseUrls = buildBaseUrls([ manifestUri ], findChildren(mpd, 'BaseURL'));
-
-  // mpdBaseUrls.map((base, i) => merge({ baseUrl: periodBaseUrls[i] }, parseAttributes(base)));
   const contentSteeringNodes = findChildren(mpd, 'ContentSteering');
 
   // See DASH spec section 5.3.1.2, Semantics of MPD element. Default type to 'static'.
@@ -611,6 +605,13 @@ export const inheritAttributes = (mpd, options = {}) => {
   return {
     locations: mpdAttributes.locations,
     contentSteeringInfo: generateContentSteeringInformation(contentSteeringNodes),
+    // TODO: There are occurences where this `representationInfo` array contains undesired
+    // duplicates. This generally occurs when there are multiple BaseURL nodes that are
+    // direct children of the MPD node. When we attempt to resolve URLs from a combination of the
+    // parent BaseURL and a child BaseURL, and the value does not resolve,
+    // we end up returning the child BaseURL multiple times.
+    // We need to determine a way to remove these duplicates in a safe way.
+    // See: https://github.com/videojs/mpd-parser/pull/17#discussion_r162750527
     representationInfo: flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls))),
     eventStream: flatten(periods.map(toEventStream))
   };
