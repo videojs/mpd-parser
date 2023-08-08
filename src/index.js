@@ -28,6 +28,7 @@ const parse = (manifestString, options = {}) => {
   return toM3u8({
     dashPlaylists: playlists,
     locations: parsedManifestInfo.locations,
+    contentSteering: parsedManifestInfo.contentSteering,
     sidxMapping: options.sidxMapping,
     previousManifest: options.previousManifest,
     eventStream: parsedManifestInfo.eventStream

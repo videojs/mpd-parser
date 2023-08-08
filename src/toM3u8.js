@@ -392,6 +392,7 @@ export const flattenMediaGroupPlaylists = (mediaGroupObject) => {
 export const toM3u8 = ({
   dashPlaylists,
   locations,
+  contentSteering,
   sidxMapping = {},
   previousManifest,
   eventStream
@@ -435,6 +436,10 @@ export const toM3u8 = ({
 
   if (locations) {
     manifest.locations = locations;
+  }
+
+  if (contentSteering) {
+    manifest.contentSteering = contentSteering;
   }
 
   if (type === 'dynamic') {

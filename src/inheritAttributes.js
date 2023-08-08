@@ -16,21 +16,21 @@ const keySystemsMap = {
 /**
  * Builds a list of urls that is the product of the reference urls and BaseURL values
  *
- * @param {string[]} referenceUrls
- *        List of reference urls to resolve to
+ * @param {Object[]} references
+ *        List of objects containing the reference URL as well as its attributes
  * @param {Node[]} baseUrlElements
  *        List of BaseURL nodes from the mpd
- * @return {string[]}
- *         List of resolved urls
+ * @return {Object[]}
+ *         List of objects with resolved urls and attributes
  */
-export const buildBaseUrls = (referenceUrls, baseUrlElements) => {
+export const buildBaseUrls = (references, baseUrlElements) => {
   if (!baseUrlElements.length) {
-    return referenceUrls;
+    return references;
   }
 
-  return flatten(referenceUrls.map(function(reference) {
+  return flatten(references.map(function(reference) {
     return baseUrlElements.map(function(baseUrlElement) {
-      return resolveUrl(reference, getContent(baseUrlElement));
+      return merge(parseAttributes(baseUrlElement), { baseUrl: resolveUrl(reference.baseUrl, getContent(baseUrlElement)) });
     });
   }));
 };
@@ -140,8 +140,9 @@ export const getSegmentInformation = (adaptationSet) => {
  *
  * @param {Object} adaptationSetAttributes
  *        Contains attributes inherited by the AdaptationSet
- * @param {string[]} adaptationSetBaseUrls
- *        Contains list of resolved base urls inherited by the AdaptationSet
+ * @param {Object[]} adaptationSetBaseUrls
+ *        List of objects containing resolved base URLs and attributes
+ *        inherited by the AdaptationSet
  * @param {SegmentInformation} adaptationSetSegmentInfo
  *        Contains Segment information for the AdaptationSet
  * @return {inheritBaseUrlsCallback}
@@ -158,7 +159,7 @@ export const inheritBaseUrls =
     return repBaseUrls.map(baseUrl => {
       return {
         segmentInfo: merge(adaptationSetSegmentInfo, representationSegmentInfo),
-        attributes: merge(attributes, { baseUrl })
+        attributes: merge(attributes, baseUrl)
       };
     });
   };
@@ -340,8 +341,9 @@ export const toEventStream = (period) => {
  *
  * @param {Object} periodAttributes
  *        Contains attributes inherited by the Period
- * @param {string[]} periodBaseUrls
- *        Contains list of resolved base urls inherited by the Period
+ * @param {Object[]} periodBaseUrls
+ *        Contains list of objects with resolved base urls and attributes
+ *        inherited by the Period
  * @param {string[]} periodSegmentInfo
  *        Contains Segment Information at the period level
  * @return {toRepresentationsCallback}
@@ -421,8 +423,9 @@ export const toRepresentations =
  *
  * @param {Object} mpdAttributes
  *        Contains attributes inherited by the mpd
- * @param {string[]} mpdBaseUrls
- *        Contains list of resolved base urls inherited by the mpd
+  * @param {Object[]} mpdBaseUrls
+ *        Contains list of objects with resolved base urls and attributes
+ *        inherited by the mpd
  * @return {toAdaptationSetsCallback}
  *         Callback map function
  */
@@ -439,6 +442,43 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) 
   const periodSegmentInfo = getSegmentInformation(period.node);
 
   return flatten(adaptationSets.map(toRepresentations(periodAttributes, periodBaseUrls, periodSegmentInfo)));
+};
+
+/**
+ * Tranforms an array of content steering nodes into an object
+ * containing CDN content steering information from the MPD manifest.
+ *
+ * For more information on the DASH spec for Content Steering parsing, see:
+ * https://dashif.org/docs/DASH-IF-CTS-00XX-Content-Steering-Community-Review.pdf
+ *
+ * @param {Node[]} contentSteeringNodes
+ *        Content steering nodes
+ * @return {Object}
+ *        Object containing content steering data
+ */
+export const generateContentSteeringInformation = (contentSteeringNodes) => {
+  // If there are more than one ContentSteering tags, throw an error
+  if (contentSteeringNodes.length > 1) {
+    throw new Error(errors.INVALID_NUMBER_OF_CONTENT_STEERING);
+  }
+
+  // Return a null value if there are no ContentSteering tags
+  if (!contentSteeringNodes.length) {
+    return null;
+  }
+
+  const infoFromContentSteeringTag =
+    merge({serverURL: getContent(contentSteeringNodes[0])}, parseAttributes(contentSteeringNodes[0]));
+
+  // Converts `queryBeforeStart` to a boolean, as well as setting the default value
+  // to `false` if it doesn't exist
+  infoFromContentSteeringTag.queryBeforeStart = (infoFromContentSteeringTag.queryBeforeStart === 'true');
+
+  // Get CDN info from BaseURLs that have a valid serviceLocation
+  // const contentSteeringBaseUrls = baseURLNodes.filter(({ attributes }) => attributes.serviceLocation);
+  // const cdns = contentSteeringBaseUrls.map(base => merge({ url: getContent(base) }, parseAttributes(base)));
+
+  return infoFromContentSteeringTag;
 };
 
 /**
@@ -531,6 +571,9 @@ export const inheritAttributes = (mpd, options = {}) => {
   const mpdAttributes = parseAttributes(mpd);
   const mpdBaseUrls = buildBaseUrls([ manifestUri ], findChildren(mpd, 'BaseURL'));
 
+  // mpdBaseUrls.map((base, i) => merge({ baseUrl: periodBaseUrls[i] }, parseAttributes(base)));
+  const contentSteeringNodes = findChildren(mpd, 'ContentSteering');
+
   // See DASH spec section 5.3.1.2, Semantics of MPD element. Default type to 'static'.
   mpdAttributes.type = mpdAttributes.type || 'static';
   mpdAttributes.sourceDuration = mpdAttributes.mediaPresentationDuration || 0;
@@ -567,6 +610,7 @@ export const inheritAttributes = (mpd, options = {}) => {
 
   return {
     locations: mpdAttributes.locations,
+    contentSteeringInfo: generateContentSteeringInformation(contentSteeringNodes),
     representationInfo: flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls))),
     eventStream: flatten(periods.map(toEventStream))
   };
