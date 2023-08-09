@@ -9,6 +9,7 @@ import {
 import { stringToMpdXml } from '../src/stringToMpdXml';
 import errors from '../src/errors';
 import QUnit from 'qunit';
+import { stub } from 'sinon';
 import { toPlaylists } from '../src/toPlaylists';
 import decodeB64ToUint8Array from '@videojs/vhs-utils/es/decode-b64-to-uint8-array';
 import { findChildren } from '../src/utils/xml';
@@ -961,11 +962,11 @@ QUnit.test('end to end - content steering - resolvable base URLs', function(asse
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test('Too many content steering tags throws an error', function(assert) {
+QUnit.test('Too many content steering tags sends a warning to the eventHandler', function(assert) {
+  const handlerStub = stub();
   const NOW = Date.now();
 
-  assert.throws(
-    () => inheritAttributes(stringToMpdXml(`
+  inheritAttributes(stringToMpdXml(`
     <MPD type="dyanmic">
       <ContentSteering defaultServiceLocation="alpha" queryBeforeStart="false" proxyServerURL="http://127.0.0.1:3455/steer">https://example.com/app/url</ContentSteering>
       <ContentSteering defaultServiceLocation="beta" queryBeforeStart="false" proxyServerURL="http://127.0.0.1:3455/steer">https://example.com/app/url</ContentSteering>
@@ -990,9 +991,12 @@ QUnit.test('Too many content steering tags throws an error', function(assert) {
         </AdaptationSet>
       </Period>
     </MPD>
-  `), { NOW, manifestUri: 'https://www.test.com' }),
-    new RegExp(errors.INVALID_NUMBER_OF_CONTENT_STEERING)
-  );
+  `), { NOW, manifestUri: 'https://www.test.com', eventHandler: handlerStub });
+
+  assert.ok(handlerStub.calledWith({
+    type: 'warn',
+    message: 'The MPD manifest should contain no more than one ContentSteering tag'
+  }));
 });
 
 QUnit.test('end to end - basic multiperiod', function(assert) {

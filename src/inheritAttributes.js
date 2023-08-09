@@ -453,13 +453,15 @@ export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) 
  *
  * @param {Node[]} contentSteeringNodes
  *        Content steering nodes
+ * @param {Function} eventHandler
+ *        The event handler passed into the parser options to handle warnings
  * @return {Object}
  *        Object containing content steering data
  */
-export const generateContentSteeringInformation = (contentSteeringNodes) => {
+export const generateContentSteeringInformation = (contentSteeringNodes, eventHandler) => {
   // If there are more than one ContentSteering tags, throw an error
   if (contentSteeringNodes.length > 1) {
-    throw new Error(errors.INVALID_NUMBER_OF_CONTENT_STEERING);
+    eventHandler({ type: 'warn', message: 'The MPD manifest should contain no more than one ContentSteering tag' });
   }
 
   // Return a null value if there are no ContentSteering tags
@@ -554,7 +556,14 @@ export const inheritAttributes = (mpd, options = {}) => {
   const {
     manifestUri = '',
     NOW = Date.now(),
-    clientOffset = 0
+    clientOffset = 0,
+    // TODO: For now, we are expecting an eventHandler callback function
+    // to be passed into the mpd parser as an option.
+    // In the future, we should enable stream parsing by using the Stream class from vhs-utils.
+    // This will support new features including a standardized event handler.
+    // See the m3u8 parser for examples of how stream parsing is currently used for HLS parsing.
+    // https://github.com/videojs/vhs-utils/blob/88d6e10c631e57a5af02c5a62bc7376cd456b4f5/src/stream.js#L9
+    eventHandler = function() {}
   } = options;
   const periodNodes = findChildren(mpd, 'Period');
 
@@ -604,7 +613,7 @@ export const inheritAttributes = (mpd, options = {}) => {
 
   return {
     locations: mpdAttributes.locations,
-    contentSteeringInfo: generateContentSteeringInformation(contentSteeringNodes),
+    contentSteeringInfo: generateContentSteeringInformation(contentSteeringNodes, eventHandler),
     // TODO: There are occurences where this `representationInfo` array contains undesired
     // duplicates. This generally occurs when there are multiple BaseURL nodes that are
     // direct children of the MPD node. When we attempt to resolve URLs from a combination of the
