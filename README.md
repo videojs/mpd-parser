@@ -54,6 +54,7 @@ option:
 ```js
 const newParsedManifest = mpdParser.parse(
   manifest,
+  // parsedManifest comes from the prior example
   { manifestUri, previousManifest: parsedManifest }
 );
 ```
