@@ -63,6 +63,12 @@ The parser ouputs a plain javascript object with the following structure:
 ```js
 Manifest {
   allowCache: boolean,
+  contentSteering: {
+    defaultServiceLocation: string,
+    proxyServerURL: string,
+    queryBeforeStart: boolean,
+    serverURL: string
+  },
   endList: boolean,
   mediaSequence: number,
   discontinuitySequence: number,
