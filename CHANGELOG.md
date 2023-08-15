@@ -1,3 +1,14 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/videojs/mpd-parser/compare/v1.1.1...v1.2.0) (2023-08-15)
+
+### Features
+
+* parse content steering info ([#174](https://github.com/videojs/mpd-parser/issues/174)) ([0156528](https://github.com/videojs/mpd-parser/commit/0156528))
+
+### Chores
+
+* Update CI and release workflows ([#173](https://github.com/videojs/mpd-parser/issues/173)) ([9ece4ae](https://github.com/videojs/mpd-parser/commit/9ece4ae))
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/videojs/mpd-parser/compare/v1.1.0...v1.1.1) (2023-03-31)
 
