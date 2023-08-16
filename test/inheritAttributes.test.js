@@ -631,6 +631,82 @@ QUnit.test('end to end - basic', function(assert) {
   assert.deepEqual(actual, expected);
 });
 
+QUnit.test('end to end - basic using manifest uri', function(assert) {
+  const NOW = Date.now();
+
+  const actual = inheritAttributes(stringToMpdXml(`
+    <MPD mediaPresentationDuration="PT30S" >
+      <BaseURL>base/</BaseURL>
+      <Period>
+        <AdaptationSet mimeType="video/mp4" >
+          <Role value="main"></Role>
+          <SegmentTemplate></SegmentTemplate>
+          <Representation
+            bandwidth="5000000"
+            codecs="avc1.64001e"
+            height="404"
+            id="test"
+            width="720">
+          </Representation>
+        </AdaptationSet>
+        <AdaptationSet mimeType="text/vtt" lang="en">
+          <Representation bandwidth="256" id="en">
+            <BaseURL>en.vtt</BaseURL>
+          </Representation>
+        </AdaptationSet>
+      </Period>
+    </MPD>
+  `), { NOW, manifestUri: 'https://www.test.com' });
+
+  const expected = {
+    contentSteeringInfo: null,
+    eventStream: [],
+    locations: undefined,
+    representationInfo: [{
+      attributes: {
+        bandwidth: 5000000,
+        baseUrl: 'https://www.test.com/base/',
+        codecs: 'avc1.64001e',
+        height: 404,
+        id: 'test',
+        mediaPresentationDuration: 30,
+        mimeType: 'video/mp4',
+        periodStart: 0,
+        role: {
+          value: 'main'
+        },
+        sourceDuration: 30,
+        type: 'static',
+        width: 720,
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {
+        template: {}
+      }
+    }, {
+      attributes: {
+        bandwidth: 256,
+        baseUrl: 'https://www.test.com/base/en.vtt',
+        id: 'en',
+        lang: 'en',
+        mediaPresentationDuration: 30,
+        mimeType: 'text/vtt',
+        periodStart: 0,
+        role: {},
+        sourceDuration: 30,
+        type: 'static',
+        NOW,
+        clientOffset: 0
+      },
+      segmentInfo: {}
+    }]
+  };
+
+  assert.equal(actual.representationInfo.length, 2);
+  assert.deepEqual(actual, expected);
+});
+
 QUnit.test('end to end - basic dynamic', function(assert) {
   const NOW = Date.now();
 
