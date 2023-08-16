@@ -1,3 +1,10 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/videojs/mpd-parser/compare/v1.2.0...v1.2.1) (2023-08-16)
+
+### Bug Fixes
+
+* use manifest uri in base urls ([#176](https://github.com/videojs/mpd-parser/issues/176)) ([5faf232](https://github.com/videojs/mpd-parser/commit/5faf232))
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/videojs/mpd-parser/compare/v1.1.1...v1.2.0) (2023-08-15)
 
