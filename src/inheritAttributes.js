@@ -574,7 +574,7 @@ export const inheritAttributes = (mpd, options = {}) => {
   const locations = findChildren(mpd, 'Location');
 
   const mpdAttributes = parseAttributes(mpd);
-  const mpdBaseUrls = buildBaseUrls([ manifestUri ], findChildren(mpd, 'BaseURL'));
+  const mpdBaseUrls = buildBaseUrls([{ baseUrl: manifestUri }], findChildren(mpd, 'BaseURL'));
   const contentSteeringNodes = findChildren(mpd, 'ContentSteering');
 
   // See DASH spec section 5.3.1.2, Semantics of MPD element. Default type to 'static'.
