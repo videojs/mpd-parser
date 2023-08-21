@@ -23,13 +23,16 @@ import window from 'global/window';
  * @param {string} source - source url for segment
  * @param {string} range - optional range used for range calls,
  *   follows  RFC 2616, Clause 14.35.1
+ * @param {string} serviceLocation - optional serviceLocation provided by <BaseUrl> nodes
+ *   used for content steering
  * @return {SingleUri} full segment information transformed into a format similar
  *   to m3u8-parser
  */
-export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', indexRange = '' }) => {
+export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', serviceLocation = null, indexRange = '' }) => {
   const segment = {
     uri: source,
-    resolvedUri: resolveUrl(baseUrl || '', source)
+    resolvedUri: resolveUrl(baseUrl || '', source),
+    serviceLocation
   };
 
   if (range || indexRange) {

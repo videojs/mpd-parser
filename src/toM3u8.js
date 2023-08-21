@@ -137,6 +137,7 @@ export const formatVttPlaylist = ({
       timeline: attributes.periodStart,
       resolvedUri: attributes.baseUrl || '',
       duration: attributes.sourceDuration,
+      serviceLocation: attributes.serviceLocation,
       number: 0
     }];
     // targetDuration should be the same duration as the only segment
@@ -161,6 +162,7 @@ export const formatVttPlaylist = ({
     targetDuration: attributes.duration,
     timelineStarts: attributes.timelineStarts,
     discontinuityStarts,
+    serviceLocation: attributes.serviceLocation,
     discontinuitySequence,
     mediaSequence,
     segments
