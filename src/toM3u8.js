@@ -140,10 +140,6 @@ export const formatVttPlaylist = ({
       number: 0
     }];
 
-    if (attributes.serviceLocation) {
-      segments[0].serviceLocation = attributes.serviceLocation;
-    }
-
     // targetDuration should be the same duration as the only segment
     attributes.duration = attributes.sourceDuration;
   }
