@@ -31,9 +31,12 @@ import window from 'global/window';
 export const urlTypeToSegment = ({ baseUrl = '', source = '', range = '', serviceLocation = null, indexRange = '' }) => {
   const segment = {
     uri: source,
-    resolvedUri: resolveUrl(baseUrl || '', source),
-    serviceLocation
+    resolvedUri: resolveUrl(baseUrl || '', source)
   };
+
+  if (serviceLocation) {
+    segment.serviceLocation = serviceLocation;
+  }
 
   if (range || indexRange) {
     const rangeStr = range ? range : indexRange;

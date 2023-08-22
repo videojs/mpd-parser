@@ -187,11 +187,13 @@ QUnit.test('playlist with content steering BaseURLs', function(assert) {
         duration: 0,
         map: {
           resolvedUri: 'https://cdn1.example.com/',
+          serviceLocation: 'alpha',
           uri: ''
         },
         number: 1,
         presentationTime: 0,
         resolvedUri: 'https://cdn1.example.com/',
+        serviceLocation: 'alpha',
         timeline: 0,
         uri: ''
       }
@@ -220,11 +222,13 @@ QUnit.test('playlist with content steering BaseURLs', function(assert) {
         duration: 0,
         map: {
           resolvedUri: 'https://cdn2.example.com/',
+          serviceLocation: 'beta',
           uri: ''
         },
         number: 1,
         presentationTime: 0,
         resolvedUri: 'https://cdn2.example.com/',
+        serviceLocation: 'beta',
         timeline: 0,
         uri: ''
       }
@@ -411,7 +415,7 @@ QUnit.test('presentationTime accounts for presentationTimeOffset', function(asse
   assert.deepEqual(toPlaylists(representations), playlists);
 });
 
-QUnit.test('content steering', function(assert) {
+QUnit.test('playlist with content steering and resolvable BaseURLs', function(assert) {
   const representations = [
     {
       attributes: {

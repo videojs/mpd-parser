@@ -213,7 +213,7 @@ QUnit.test('playlists', function(assert) {
   assert.deepEqual(toM3u8({ dashPlaylists }), expected);
 });
 
-QUnit.test('playlists with content steering', function(assert) {
+QUnit.test('playlists with content steering and resolvable URLs', function(assert) {
   const contentSteering = {
     defaultServiceLocation: 'beta',
     proxyServerURL: 'http://127.0.0.1:3455/steer',

@@ -40,8 +40,8 @@ export const buildBaseUrls = (references, baseUrlElements) => {
 
       // If the URL is resolved, we want to get the serviceLocation from the reference
       // assuming there is no serviceLocation on the initialBaseUrl
-      if (resolvedBaseUrl !== initialBaseUrl) {
-        finalBaseUrl.serviceLocation = finalBaseUrl.serviceLocation || reference.serviceLocation;
+      if (resolvedBaseUrl !== initialBaseUrl && !finalBaseUrl.serviceLocation && reference.serviceLocation) {
+        finalBaseUrl.serviceLocation = reference.serviceLocation;
       }
 
       return finalBaseUrl;

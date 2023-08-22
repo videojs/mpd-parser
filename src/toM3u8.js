@@ -137,9 +137,13 @@ export const formatVttPlaylist = ({
       timeline: attributes.periodStart,
       resolvedUri: attributes.baseUrl || '',
       duration: attributes.sourceDuration,
-      serviceLocation: attributes.serviceLocation,
       number: 0
     }];
+
+    if (attributes.serviceLocation) {
+      segments[0].serviceLocation = attributes.serviceLocation;
+    }
+
     // targetDuration should be the same duration as the only segment
     attributes.duration = attributes.sourceDuration;
   }
@@ -153,7 +157,7 @@ export const formatVttPlaylist = ({
   if (attributes.codecs) {
     m3u8Attributes.CODECS = attributes.codecs;
   }
-  return {
+  const vttPlaylist = {
     attributes: m3u8Attributes,
     uri: '',
     endList: attributes.type === 'static',
@@ -162,11 +166,16 @@ export const formatVttPlaylist = ({
     targetDuration: attributes.duration,
     timelineStarts: attributes.timelineStarts,
     discontinuityStarts,
-    serviceLocation: attributes.serviceLocation,
     discontinuitySequence,
     mediaSequence,
     segments
   };
+
+  if (attributes.serviceLocation) {
+    vttPlaylist.serviceLocation = attributes.serviceLocation;
+  }
+
+  return vttPlaylist;
 };
 
 export const organizeAudioPlaylists = (playlists, sidxMapping = {}, isAudioOnly = false) => {

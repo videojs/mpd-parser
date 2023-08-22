@@ -173,11 +173,14 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
       timeline: segment.timeline,
       duration: segment.duration,
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
-      serviceLocation: attributes.serviceLocation,
       map: mapSegment,
       number: segment.number,
       presentationTime
     };
+
+    if (attributes.serviceLocation) {
+      map.serviceLocation = attributes.serviceLocation;
+    }
 
     return map;
   });
