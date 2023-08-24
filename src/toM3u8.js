@@ -11,45 +11,62 @@ export const generateSidxKey = (sidx) => sidx &&
   sidx.uri + '-' + byteRangeToString(sidx.byterange);
 
 const mergeDiscontiguousPlaylists = playlists => {
-  const mergedPlaylists = values(playlists.reduce((acc, playlist) => {
-    // assuming playlist IDs are the same across periods
-    // TODO: handle multiperiod where representation sets are not the same
-    // across periods
-    const name = playlist.attributes.id + (playlist.attributes.lang || '');
-
-    if (!acc[name]) {
-      // First Period
-      acc[name] = playlist;
-      acc[name].attributes.timelineStarts = [];
-    } else {
-      // Subsequent Periods
-      if (playlist.segments) {
-        // first segment of subsequent periods signal a discontinuity
-        if (playlist.segments[0]) {
-          playlist.segments[0].discontinuity = true;
-        }
-        acc[name].segments.push(...playlist.segments);
-      }
-
-      // bubble up contentProtection, this assumes all DRM content
-      // has the same contentProtection
-      if (playlist.attributes.contentProtection) {
-        acc[name].attributes.contentProtection =
-          playlist.attributes.contentProtection;
-      }
+  // Break out playlists into groups based on their baseUrl
+  const playlistsByBaseUrl = playlists.reduce(function(acc, cur) {
+    if (!acc[cur.attributes.baseUrl]) {
+      acc[cur.attributes.baseUrl] = [];
     }
 
-    acc[name].attributes.timelineStarts.push({
-      // Although they represent the same number, it's important to have both to make it
-      // compatible with HLS potentially having a similar attribute.
-      start: playlist.attributes.periodStart,
-      timeline: playlist.attributes.periodStart
-    });
+    acc[cur.attributes.baseUrl].push(cur);
 
     return acc;
-  }, {}));
+  }, {});
 
-  return mergedPlaylists.map(playlist => {
+  let allPlaylists = [];
+
+  Object.values(playlistsByBaseUrl).forEach((playlistGroup) => {
+    const mergedPlaylists = values(playlistGroup.reduce((acc, playlist) => {
+      // assuming playlist IDs are the same across periods
+      // TODO: handle multiperiod where representation sets are not the same
+      // across periods
+      const name = playlist.attributes.id + (playlist.attributes.lang || '');
+
+      if (!acc[name]) {
+        // First Period
+        acc[name] = playlist;
+        acc[name].attributes.timelineStarts = [];
+      } else {
+        // Subsequent Periods
+        if (playlist.segments) {
+          // first segment of subsequent periods signal a discontinuity
+          if (playlist.segments[0]) {
+            playlist.segments[0].discontinuity = true;
+          }
+          acc[name].segments.push(...playlist.segments);
+        }
+
+        // bubble up contentProtection, this assumes all DRM content
+        // has the same contentProtection
+        if (playlist.attributes.contentProtection) {
+          acc[name].attributes.contentProtection =
+            playlist.attributes.contentProtection;
+        }
+      }
+
+      acc[name].attributes.timelineStarts.push({
+        // Although they represent the same number, it's important to have both to make it
+        // compatible with HLS potentially having a similar attribute.
+        start: playlist.attributes.periodStart,
+        timeline: playlist.attributes.periodStart
+      });
+
+      return acc;
+    }, {}));
+
+    allPlaylists = allPlaylists.concat(mergedPlaylists);
+  });
+
+  return allPlaylists.map(playlist => {
     playlist.discontinuityStarts =
         findIndexes(playlist.segments || [], 'discontinuity');
 
@@ -109,6 +126,10 @@ export const formatAudioPlaylist = ({
 
   if (attributes.contentProtection) {
     playlist.contentProtection = attributes.contentProtection;
+  }
+
+  if (attributes.serviceLocation) {
+    playlist.serviceLocation = attributes.serviceLocation;
   }
 
   if (sidx) {
@@ -309,6 +330,10 @@ export const formatVideoPlaylist = ({
 
   if (attributes.contentProtection) {
     playlist.contentProtection = attributes.contentProtection;
+  }
+
+  if (attributes.serviceLocation) {
+    playlist.serviceLocation = attributes.serviceLocation;
   }
 
   if (sidx) {

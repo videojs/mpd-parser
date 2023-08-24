@@ -25,7 +25,7 @@ export const parsedManifest = {
                 'PROGRAM-ID': 1
               },
               endList: false,
-              mediaSequence: 7,
+              mediaSequence: 3,
               discontinuitySequence: 2,
               discontinuityStarts: [0],
               timelineStarts: [
@@ -41,7 +41,7 @@ export const parsedManifest = {
                     uri: 'init.mp4'
                   },
                   presentationTime: 111,
-                  number: 7,
+                  number: 3,
                   resolvedUri: 'http://example.com/audio/v0/862.m4f',
                   timeline: 111,
                   uri: '862.m4f'
@@ -53,7 +53,7 @@ export const parsedManifest = {
                     uri: 'init.mp4'
                   },
                   presentationTime: 112,
-                  number: 8,
+                  number: 4,
                   resolvedUri: 'http://example.com/audio/v0/863.m4f',
                   timeline: 111,
                   uri: '863.m4f'
@@ -65,7 +65,7 @@ export const parsedManifest = {
                     uri: 'init.mp4'
                   },
                   presentationTime: 113,
-                  number: 9,
+                  number: 5,
                   resolvedUri: 'http://example.com/audio/v0/864.m4f',
                   timeline: 111,
                   uri: '864.m4f'
@@ -231,7 +231,7 @@ export const parsedManifest = {
         'SUBTITLES': 'subs'
       },
       endList: false,
-      mediaSequence: 7,
+      mediaSequence: 3,
       discontinuitySequence: 2,
       timelineStarts: [
         { start: 111, timeline: 111}
@@ -247,7 +247,7 @@ export const parsedManifest = {
             uri: 'F_init.mp4'
           },
           presentationTime: 111,
-          number: 7,
+          number: 3,
           resolvedUri: 'http://example.com/video/F/F862.m4f',
           timeline: 111,
           uri: 'F862.m4f'
@@ -259,7 +259,7 @@ export const parsedManifest = {
             uri: 'F_init.mp4'
           },
           presentationTime: 112,
-          number: 8,
+          number: 4,
           resolvedUri: 'http://example.com/video/F/F863.m4f',
           timeline: 111,
           uri: 'F863.m4f'
@@ -271,7 +271,7 @@ export const parsedManifest = {
             uri: 'F_init.mp4'
           },
           presentationTime: 113,
-          number: 9,
+          number: 5,
           resolvedUri: 'http://example.com/video/F/F864.m4f',
           timeline: 111,
           uri: 'F864.m4f'
@@ -426,7 +426,7 @@ export const parsedManifest = {
         'SUBTITLES': 'subs'
       },
       endList: false,
-      mediaSequence: 7,
+      mediaSequence: 3,
       discontinuitySequence: 2,
       timelineStarts: [
         { start: 111, timeline: 111}
@@ -442,7 +442,7 @@ export const parsedManifest = {
             uri: 'C_init.mp4'
           },
           presentationTime: 111,
-          number: 7,
+          number: 3,
           resolvedUri: 'http://example.com/video/C/C862.m4f',
           timeline: 111,
           uri: 'C862.m4f'
@@ -454,7 +454,7 @@ export const parsedManifest = {
             uri: 'C_init.mp4'
           },
           presentationTime: 112,
-          number: 8,
+          number: 4,
           resolvedUri: 'http://example.com/video/C/C863.m4f',
           timeline: 111,
           uri: 'C863.m4f'
@@ -466,7 +466,7 @@ export const parsedManifest = {
             uri: 'C_init.mp4'
           },
           presentationTime: 113,
-          number: 9,
+          number: 5,
           resolvedUri: 'http://example.com/video/C/C864.m4f',
           timeline: 111,
           uri: 'C864.m4f'

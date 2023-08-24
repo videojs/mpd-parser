@@ -398,7 +398,34 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
                   {
                     start: 0,
                     timeline: 0
-                  },
+                  }
+                ],
+                uri: ''
+              },
+              {
+                attributes: {
+                  BANDWIDTH: 256,
+                  NAME: 'en',
+                  ['PROGRAM-ID']: 1
+                },
+                discontinuitySequence: 0,
+                discontinuityStarts: [],
+                endList: false,
+                mediaSequence: 0,
+                resolvedUri: 'https://cdn2.example.com/vtt',
+                segments: [
+                  {
+                    duration: 0,
+                    number: 0,
+                    resolvedUri: 'https://cdn2.example.com/vtt',
+                    timeline: 0,
+                    uri: 'https://cdn2.example.com/vtt'
+                  }
+                ],
+                serviceLocation: 'beta',
+                targetDuration: 0,
+                timeline: 0,
+                timelineStarts: [
                   {
                     start: 0,
                     timeline: 0
@@ -428,9 +455,7 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
           SUBTITLES: 'subs'
         },
         discontinuitySequence: 0,
-        discontinuityStarts: [
-          1
-        ],
+        discontinuityStarts: [],
         endList: false,
         mediaSequence: 0,
         resolvedUri: '',
@@ -448,16 +473,46 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
             serviceLocation: 'alpha',
             timeline: 0,
             uri: ''
-          },
+          }
+        ],
+        serviceLocation: 'alpha',
+        targetDuration: 0,
+        timeline: 0,
+        timelineStarts: [
           {
-            discontinuity: true,
+            start: 0,
+            timeline: 0
+          }
+        ],
+        uri: ''
+      },
+      {
+        attributes: {
+          AUDIO: 'audio',
+          BANDWIDTH: 5000000,
+          CODECS: 'avc1.64001e',
+          NAME: 'test',
+          ['PROGRAM-ID']: 1,
+          RESOLUTION: {
+            height: 404,
+            width: 720
+          },
+          SUBTITLES: 'subs'
+        },
+        discontinuitySequence: 0,
+        discontinuityStarts: [],
+        endList: false,
+        mediaSequence: 0,
+        resolvedUri: '',
+        segments: [
+          {
             duration: 0,
             map: {
               resolvedUri: 'https://cdn2.example.com/video',
               serviceLocation: 'beta',
               uri: ''
             },
-            number: 1,
+            number: 0,
             presentationTime: 0,
             resolvedUri: 'https://cdn2.example.com/video',
             serviceLocation: 'beta',
@@ -465,13 +520,10 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
             uri: ''
           }
         ],
+        serviceLocation: 'beta',
         targetDuration: 0,
         timeline: 0,
         timelineStarts: [
-          {
-            start: 0,
-            timeline: 0
-          },
           {
             start: 0,
             timeline: 0
@@ -672,9 +724,7 @@ QUnit.test('playlists with content steering', function(assert) {
           SUBTITLES: 'subs'
         },
         discontinuitySequence: 0,
-        discontinuityStarts: [
-          1
-        ],
+        discontinuityStarts: [],
         endList: false,
         mediaSequence: 0,
         resolvedUri: '',
@@ -690,28 +740,55 @@ QUnit.test('playlists with content steering', function(assert) {
             resolvedUri: 'https://cdn1.example.com/',
             timeline: 0,
             uri: ''
-          },
-          {
-            discontinuity: true,
-            duration: 0,
-            map: {
-              resolvedUri: 'https://cdn2.example.com/',
-              uri: ''
-            },
-            number: 1,
-            presentationTime: 0,
-            resolvedUri: 'https://cdn2.example.com/',
-            timeline: 0,
-            uri: ''
           }
         ],
+        serviceLocation: 'alpha',
         targetDuration: 0,
         timeline: 0,
         timelineStarts: [
           {
             start: 0,
             timeline: 0
+          }
+        ],
+        uri: ''
+      },
+      {
+        attributes: {
+          AUDIO: 'audio',
+          BANDWIDTH: 5000000,
+          CODECS: 'avc1.64001e',
+          NAME: 'test',
+          ['PROGRAM-ID']: 1,
+          RESOLUTION: {
+            height: 404,
+            width: 720
           },
+          SUBTITLES: 'subs'
+        },
+        discontinuitySequence: 0,
+        discontinuityStarts: [],
+        endList: false,
+        mediaSequence: 0,
+        resolvedUri: '',
+        segments: [
+          {
+            duration: 0,
+            map: {
+              resolvedUri: 'https://cdn2.example.com/',
+              uri: ''
+            },
+            number: 0,
+            presentationTime: 0,
+            resolvedUri: 'https://cdn2.example.com/',
+            timeline: 0,
+            uri: ''
+          }
+        ],
+        serviceLocation: 'beta',
+        targetDuration: 0,
+        timeline: 0,
+        timelineStarts: [
           {
             start: 0,
             timeline: 0
