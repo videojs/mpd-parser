@@ -115,7 +115,7 @@ export const formatAudioPlaylist = ({
     uri: '',
     endList: attributes.type === 'static',
     timeline: attributes.periodStart,
-    resolvedUri: '',
+    resolvedUri: attributes.baseUrl || '',
     targetDuration: attributes.duration,
     discontinuitySequence,
     discontinuityStarts,
@@ -129,7 +129,7 @@ export const formatAudioPlaylist = ({
   }
 
   if (attributes.serviceLocation) {
-    playlist.serviceLocation = attributes.serviceLocation;
+    playlist.attributes.serviceLocation = attributes.serviceLocation;
   }
 
   if (sidx) {
@@ -189,7 +189,7 @@ export const formatVttPlaylist = ({
   };
 
   if (attributes.serviceLocation) {
-    vttPlaylist.serviceLocation = attributes.serviceLocation;
+    vttPlaylist.attributes.serviceLocation = attributes.serviceLocation;
   }
 
   return vttPlaylist;
@@ -317,7 +317,7 @@ export const formatVideoPlaylist = ({
     uri: '',
     endList: attributes.type === 'static',
     timeline: attributes.periodStart,
-    resolvedUri: '',
+    resolvedUri: attributes.baseUrl || '',
     targetDuration: attributes.duration,
     discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
@@ -333,7 +333,7 @@ export const formatVideoPlaylist = ({
   }
 
   if (attributes.serviceLocation) {
-    playlist.serviceLocation = attributes.serviceLocation;
+    playlist.attributes.serviceLocation = attributes.serviceLocation;
   }
 
   if (sidx) {

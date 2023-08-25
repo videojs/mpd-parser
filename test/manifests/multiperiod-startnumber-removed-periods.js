@@ -31,7 +31,7 @@ export const parsedManifest = {
               timelineStarts: [
                 { start: 111, timeline: 111}
               ],
-              resolvedUri: '',
+              resolvedUri: 'http://example.com/audio/v0/',
               segments: [
                 {
                   discontinuity: true,
@@ -107,7 +107,7 @@ export const parsedManifest = {
       timelineStarts: [
         { start: 111, timeline: 111}
       ],
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/D/',
       segments: [
         {
           discontinuity: true,
@@ -172,7 +172,7 @@ export const parsedManifest = {
         { start: 111, timeline: 111}
       ],
       discontinuityStarts: [0],
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/E/',
       segments: [
         {
           discontinuity: true,
@@ -237,7 +237,7 @@ export const parsedManifest = {
         { start: 111, timeline: 111}
       ],
       discontinuityStarts: [0],
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/F/',
       segments: [
         {
           discontinuity: true,
@@ -302,7 +302,7 @@ export const parsedManifest = {
         { start: 111, timeline: 111}
       ],
       discontinuityStarts: [0],
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/A/',
       segments: [
         {
           discontinuity: true,
@@ -367,7 +367,7 @@ export const parsedManifest = {
         { start: 111, timeline: 111}
       ],
       discontinuityStarts: [0],
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/B/',
       segments: [
         {
           discontinuity: true,
@@ -432,7 +432,7 @@ export const parsedManifest = {
         { start: 111, timeline: 111}
       ],
       discontinuityStarts: [0],
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/C/',
       segments: [
         {
           discontinuity: true,

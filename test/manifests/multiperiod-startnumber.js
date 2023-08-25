@@ -28,7 +28,7 @@ export const parsedManifest = {
               mediaSequence: 0,
               discontinuitySequence: 0,
               discontinuityStarts: [],
-              resolvedUri: '',
+              resolvedUri: 'http://example.com/audio/1',
               segments: [
                 {
                   duration: 1,
@@ -85,7 +85,7 @@ export const parsedManifest = {
               discontinuityStarts: [2, 4],
               endList: false,
               mediaSequence: 0,
-              resolvedUri: '',
+              resolvedUri: 'http://example.com/audio/v0/',
               segments: [
                 {
                   duration: 2,
@@ -212,7 +212,7 @@ export const parsedManifest = {
       discontinuityStarts: [3, 5, 7],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/D/',
       segments: [
         {
           duration: 1,
@@ -366,7 +366,7 @@ export const parsedManifest = {
       discontinuityStarts: [3, 5, 7],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/E/',
       segments: [
         {
           duration: 1,
@@ -520,7 +520,7 @@ export const parsedManifest = {
       discontinuityStarts: [],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/E/',
       segments: [
         {
           duration: 1,
@@ -584,7 +584,7 @@ export const parsedManifest = {
       discontinuityStarts: [],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/E/',
       segments: [
         {
           duration: 1,
@@ -648,7 +648,7 @@ export const parsedManifest = {
       discontinuityStarts: [3, 5, 7],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/A/',
       segments: [
         {
           duration: 1,
@@ -802,7 +802,7 @@ export const parsedManifest = {
       discontinuityStarts: [3, 5, 7],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/B/',
       segments: [
         {
           duration: 1,
@@ -956,7 +956,7 @@ export const parsedManifest = {
       discontinuityStarts: [2, 4],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/F/',
       segments: [
         {
           duration: 2,
@@ -1072,7 +1072,7 @@ export const parsedManifest = {
       discontinuityStarts: [2, 4],
       endList: false,
       mediaSequence: 0,
-      resolvedUri: '',
+      resolvedUri: 'http://example.com/video/C/',
       segments: [
         {
           duration: 2,

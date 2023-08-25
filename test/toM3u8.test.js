@@ -246,13 +246,11 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
           duration: 0,
           map: {
             resolvedUri: 'https://cdn1.example.com/video',
-            uri: '',
-            serviceLocation: 'alpha'
+            uri: ''
           },
           number: 1,
           presentationTime: 0,
           resolvedUri: 'https://cdn1.example.com/video',
-          serviceLocation: 'alpha',
           timeline: 0,
           uri: ''
         }
@@ -282,13 +280,11 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
           duration: 0,
           map: {
             resolvedUri: 'https://cdn2.example.com/video',
-            serviceLocation: 'beta',
             uri: ''
           },
           number: 1,
           presentationTime: 0,
           resolvedUri: 'https://cdn2.example.com/video',
-          serviceLocation: 'beta',
           timeline: 0,
           uri: ''
         }
@@ -314,13 +310,11 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
           duration: 0,
           map: {
             resolvedUri: 'https://cdn1.example.com/vtt',
-            serviceLocation: 'alpha',
             uri: ''
           },
           number: 1,
           presentationTime: 0,
           resolvedUri: 'https://cdn1.example.com/vtt',
-          serviceLocation: 'alpha',
           timeline: 0,
           uri: ''
         }
@@ -368,7 +362,8 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
                 attributes: {
                   BANDWIDTH: 256,
                   NAME: 'en',
-                  ['PROGRAM-ID']: 1
+                  ['PROGRAM-ID']: 1,
+                  serviceLocation: 'alpha'
                 },
                 discontinuitySequence: 0,
                 discontinuityStarts: [],
@@ -380,18 +375,15 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
                     duration: 0,
                     map: {
                       resolvedUri: 'https://cdn1.example.com/vtt',
-                      serviceLocation: 'alpha',
                       uri: ''
                     },
                     number: 0,
                     presentationTime: 0,
                     resolvedUri: 'https://cdn1.example.com/vtt',
-                    serviceLocation: 'alpha',
                     timeline: 0,
                     uri: ''
                   }
                 ],
-                serviceLocation: 'alpha',
                 targetDuration: 0,
                 timeline: 0,
                 timelineStarts: [
@@ -406,7 +398,8 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
                 attributes: {
                   BANDWIDTH: 256,
                   NAME: 'en',
-                  ['PROGRAM-ID']: 1
+                  ['PROGRAM-ID']: 1,
+                  serviceLocation: 'beta'
                 },
                 discontinuitySequence: 0,
                 discontinuityStarts: [],
@@ -422,7 +415,6 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
                     uri: 'https://cdn2.example.com/vtt'
                   }
                 ],
-                serviceLocation: 'beta',
                 targetDuration: 0,
                 timeline: 0,
                 timelineStarts: [
@@ -452,30 +444,28 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
             height: 404,
             width: 720
           },
-          SUBTITLES: 'subs'
+          SUBTITLES: 'subs',
+          serviceLocation: 'alpha'
         },
         discontinuitySequence: 0,
         discontinuityStarts: [],
         endList: false,
         mediaSequence: 0,
-        resolvedUri: '',
+        resolvedUri: 'https://cdn1.example.com/video',
         segments: [
           {
             duration: 0,
             map: {
               resolvedUri: 'https://cdn1.example.com/video',
-              serviceLocation: 'alpha',
               uri: ''
             },
             number: 0,
             presentationTime: 0,
             resolvedUri: 'https://cdn1.example.com/video',
-            serviceLocation: 'alpha',
             timeline: 0,
             uri: ''
           }
         ],
-        serviceLocation: 'alpha',
         targetDuration: 0,
         timeline: 0,
         timelineStarts: [
@@ -497,30 +487,28 @@ QUnit.test('playlists with content steering and resolvable URLs', function(asser
             height: 404,
             width: 720
           },
-          SUBTITLES: 'subs'
+          SUBTITLES: 'subs',
+          serviceLocation: 'beta'
         },
         discontinuitySequence: 0,
         discontinuityStarts: [],
         endList: false,
         mediaSequence: 0,
-        resolvedUri: '',
+        resolvedUri: 'https://cdn2.example.com/video',
         segments: [
           {
             duration: 0,
             map: {
               resolvedUri: 'https://cdn2.example.com/video',
-              serviceLocation: 'beta',
               uri: ''
             },
             number: 0,
             presentationTime: 0,
             resolvedUri: 'https://cdn2.example.com/video',
-            serviceLocation: 'beta',
             timeline: 0,
             uri: ''
           }
         ],
-        serviceLocation: 'beta',
         targetDuration: 0,
         timeline: 0,
         timelineStarts: [
@@ -721,13 +709,14 @@ QUnit.test('playlists with content steering', function(assert) {
             height: 404,
             width: 720
           },
-          SUBTITLES: 'subs'
+          SUBTITLES: 'subs',
+          serviceLocation: 'alpha'
         },
         discontinuitySequence: 0,
         discontinuityStarts: [],
         endList: false,
         mediaSequence: 0,
-        resolvedUri: '',
+        resolvedUri: 'https://cdn1.example.com/',
         segments: [
           {
             duration: 0,
@@ -742,7 +731,6 @@ QUnit.test('playlists with content steering', function(assert) {
             uri: ''
           }
         ],
-        serviceLocation: 'alpha',
         targetDuration: 0,
         timeline: 0,
         timelineStarts: [
@@ -764,13 +752,14 @@ QUnit.test('playlists with content steering', function(assert) {
             height: 404,
             width: 720
           },
-          SUBTITLES: 'subs'
+          SUBTITLES: 'subs',
+          serviceLocation: 'beta'
         },
         discontinuitySequence: 0,
         discontinuityStarts: [],
         endList: false,
         mediaSequence: 0,
-        resolvedUri: '',
+        resolvedUri: 'https://cdn2.example.com/',
         segments: [
           {
             duration: 0,
@@ -785,7 +774,6 @@ QUnit.test('playlists with content steering', function(assert) {
             uri: ''
           }
         ],
-        serviceLocation: 'beta',
         targetDuration: 0,
         timeline: 0,
         timelineStarts: [
