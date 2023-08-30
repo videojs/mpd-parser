@@ -1,3 +1,10 @@
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/videojs/mpd-parser/compare/v1.2.1...v1.2.2) (2023-08-30)
+
+### Bug Fixes
+
+* improve serviceLocation for content steering ([#177](https://github.com/videojs/mpd-parser/issues/177)) ([fee1870](https://github.com/videojs/mpd-parser/commit/fee1870))
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/videojs/mpd-parser/compare/v1.2.0...v1.2.1) (2023-08-16)
 
