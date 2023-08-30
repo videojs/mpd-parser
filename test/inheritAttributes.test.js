@@ -927,10 +927,11 @@ QUnit.test('end to end - content steering - resolvable base URLs', function(asse
           id="test"
           width="720">
         </Representation>
+        <BaseURL>/video</BaseURL>
       </AdaptationSet>
       <AdaptationSet mimeType="text/vtt" lang="en">
         <Representation bandwidth="256" id="en">
-        <BaseURL>/video</BaseURL>
+        <BaseURL>/vtt</BaseURL>
         </Representation>
       </AdaptationSet>
     </Period>
@@ -957,7 +958,7 @@ QUnit.test('end to end - content steering - resolvable base URLs', function(asse
         attributes: {
           NOW,
           bandwidth: 5000000,
-          baseUrl: 'https://cdn1.example.com/',
+          baseUrl: 'https://cdn1.example.com/video',
           clientOffset: 0,
           codecs: 'avc1.64001e',
           height: 404,
@@ -980,7 +981,7 @@ QUnit.test('end to end - content steering - resolvable base URLs', function(asse
         attributes: {
           NOW,
           bandwidth: 5000000,
-          baseUrl: 'https://cdn2.example.com/',
+          baseUrl: 'https://cdn2.example.com/video',
           clientOffset: 0,
           codecs: 'avc1.64001e',
           height: 404,
@@ -1003,13 +1004,14 @@ QUnit.test('end to end - content steering - resolvable base URLs', function(asse
         attributes: {
           NOW,
           bandwidth: 256,
-          baseUrl: 'https://cdn1.example.com/video',
+          baseUrl: 'https://cdn1.example.com/vtt',
           clientOffset: 0,
           id: 'en',
           lang: 'en',
           mimeType: 'text/vtt',
           periodStart: 0,
           role: {},
+          serviceLocation: 'alpha',
           sourceDuration: 0,
           type: 'dyanmic'
         },
@@ -1019,13 +1021,14 @@ QUnit.test('end to end - content steering - resolvable base URLs', function(asse
         attributes: {
           NOW,
           bandwidth: 256,
-          baseUrl: 'https://cdn2.example.com/video',
+          baseUrl: 'https://cdn2.example.com/vtt',
           clientOffset: 0,
           id: 'en',
           lang: 'en',
           mimeType: 'text/vtt',
           periodStart: 0,
           role: {},
+          serviceLocation: 'beta',
           sourceDuration: 0,
           type: 'dyanmic'
         },

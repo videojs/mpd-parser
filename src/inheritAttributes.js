@@ -30,7 +30,21 @@ export const buildBaseUrls = (references, baseUrlElements) => {
 
   return flatten(references.map(function(reference) {
     return baseUrlElements.map(function(baseUrlElement) {
-      return merge(parseAttributes(baseUrlElement), { baseUrl: resolveUrl(reference.baseUrl, getContent(baseUrlElement)) });
+      const initialBaseUrl = getContent(baseUrlElement);
+      const resolvedBaseUrl = resolveUrl(reference.baseUrl, initialBaseUrl);
+
+      const finalBaseUrl = merge(
+        parseAttributes(baseUrlElement),
+        { baseUrl: resolvedBaseUrl }
+      );
+
+      // If the URL is resolved, we want to get the serviceLocation from the reference
+      // assuming there is no serviceLocation on the initialBaseUrl
+      if (resolvedBaseUrl !== initialBaseUrl && !finalBaseUrl.serviceLocation && reference.serviceLocation) {
+        finalBaseUrl.serviceLocation = reference.serviceLocation;
+      }
+
+      return finalBaseUrl;
     });
   }));
 };
