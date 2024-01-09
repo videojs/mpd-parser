@@ -450,7 +450,7 @@ export const toM3u8 = ({
     allowCache: true,
     discontinuityStarts: [],
     segments: [],
-    endList: true,
+    endList: type === 'static',
     mediaGroups: {
       AUDIO: {},
       VIDEO: {},
