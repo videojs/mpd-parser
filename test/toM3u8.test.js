@@ -129,7 +129,7 @@ QUnit.test('playlists', function(assert) {
           text: {
             autoselect: false,
             default: false,
-            language: 'en',
+            language: 'und',
             playlists: [{
               attributes: {
                 BANDWIDTH: 20000,
@@ -1115,7 +1115,7 @@ QUnit.test('playlists with segments', function(assert) {
           text: {
             autoselect: false,
             default: false,
-            language: 'en',
+            language: 'und',
             playlists: [{
               attributes: {
                 BANDWIDTH: 20000,
@@ -1948,7 +1948,7 @@ QUnit.test('eventStreams with playlists', function(assert) {
           text: {
             autoselect: false,
             default: false,
-            language: 'en',
+            language: 'und',
             playlists: [{
               attributes: {
                 BANDWIDTH: 20000,
