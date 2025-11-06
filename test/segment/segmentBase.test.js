@@ -4,7 +4,7 @@ import {
   addSidxSegmentsToPlaylist
 } from '../../src/segment/segmentBase';
 import errors from '../../src/errors';
-import window from 'global/window';
+import window from '@videojs/global-compat/window';
 
 QUnit.module('segmentBase - segmentsFromBase');
 

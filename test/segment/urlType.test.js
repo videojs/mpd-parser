@@ -3,7 +3,7 @@ import {
   urlTypeToSegment as urlTypeConverter,
   byteRangeToString
 } from '../../src/segment/urlType';
-import window from 'global/window';
+import window from '@videojs/global-compat/window';
 
 QUnit.module('urlType - urlTypeConverter');
 

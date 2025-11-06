@@ -1,7 +1,7 @@
 import errors from '../errors';
 import urlTypeConverter from './urlType';
 import { parseByDuration } from './durationTimeParser';
-import window from 'global/window';
+import window from '@videojs/global-compat/window';
 
 /**
  * Translates SegmentBase into a set of segments.
