@@ -3,7 +3,7 @@ import urlTypeToSegment from './urlType';
 import { parseByTimeline } from './timelineTimeParser';
 import { parseByDuration } from './durationTimeParser';
 
-const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
+const identifierPattern = /\$([A-Za-z_]*)(?:(%0)([0-9]+)d)?\$/g;
 
 /**
  * Replaces template identifiers with corresponding values. To be used as the callback
