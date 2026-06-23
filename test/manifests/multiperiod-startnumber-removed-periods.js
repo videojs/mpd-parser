@@ -2,7 +2,7 @@ export const parsedManifest = {
   allowCache: true,
   discontinuityStarts: [],
   duration: 0,
-  endList: true,
+  endList: false,
   timelineStarts: [
     { start: 100, timeline: 100},
     { start: 103, timeline: 103},
