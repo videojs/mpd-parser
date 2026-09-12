@@ -81,6 +81,67 @@ QUnit.test('absolute BaseURL overwrites reference', function(assert) {
   );
 });
 
+QUnit.test('absolute BaseURL is not duplicated across multiple references', function(assert) {
+  const reference = [
+    { baseUrl: 'https://cdn1.example.com/' },
+    { baseUrl: 'https://cdn2.example.com/' }
+  ];
+  const node = [{ textContent: 'https://example.com/en.vtt' }];
+  const expected = [{ baseUrl: 'https://example.com/en.vtt' }];
+
+  assert.deepEqual(
+    buildBaseUrls(reference, node), expected,
+    'absolute url is not duplicated'
+  );
+});
+
+QUnit.test('absolute BaseURL does not duplicate when mixed with relative BaseURLs', function(assert) {
+  const reference = [
+    { baseUrl: 'https://cdn1.example.com/' },
+    { baseUrl: 'https://cdn2.example.com/' }
+  ];
+  const nodes = [
+    { textContent: 'bar/' },
+    { textContent: 'https://example.com/en.vtt' }
+  ];
+  const expected = [
+    { baseUrl: 'https://cdn1.example.com/bar/' },
+    { baseUrl: 'https://example.com/en.vtt' },
+    { baseUrl: 'https://cdn2.example.com/bar/' }
+  ];
+
+  assert.deepEqual(
+    buildBaseUrls(reference, nodes), expected,
+    'relative urls still combine with each reference'
+  );
+});
+
+QUnit.test('absolute BaseURLs with different serviceLocation are both kept', function(assert) {
+  const reference = [
+    { baseUrl: 'https://cdn1.example.com/' },
+    { baseUrl: 'https://cdn2.example.com/' }
+  ];
+  const nodes = [
+    {
+      textContent: 'https://example.com/en.vtt',
+      attributes: [{ name: 'serviceLocation', value: 'alpha' }]
+    },
+    {
+      textContent: 'https://example.com/en.vtt',
+      attributes: [{ name: 'serviceLocation', value: 'beta' }]
+    }
+  ];
+  const expected = [
+    { baseUrl: 'https://example.com/en.vtt', serviceLocation: 'alpha' },
+    { baseUrl: 'https://example.com/en.vtt', serviceLocation: 'beta' }
+  ];
+
+  assert.deepEqual(
+    buildBaseUrls(reference, nodes), expected,
+    'distinct serviceLocation values are preserved'
+  );
+});
+
 QUnit.test('reference attributes are ignored when there is a BaseURL node', function(assert) {
   const reference = [{ baseUrl: 'https://example.com', attributes: [{ name: 'test', value: 'wow' }] }];
   const node = [{ textContent: 'https://foo.com/bar/' }];
@@ -884,27 +945,11 @@ QUnit.test('end to end - content steering - non resolvable base URLs', function(
           type: 'dyanmic'
         },
         segmentInfo: {}
-      },
-      {
-        attributes: {
-          NOW,
-          bandwidth: 256,
-          baseUrl: 'https://example.com/en.vtt',
-          clientOffset: 0,
-          id: 'en',
-          lang: 'en',
-          mimeType: 'text/vtt',
-          periodStart: 0,
-          role: {},
-          sourceDuration: 0,
-          type: 'dyanmic'
-        },
-        segmentInfo: {}
       }
     ]
   };
 
-  assert.equal(actual.representationInfo.length, 4);
+  assert.equal(actual.representationInfo.length, 3);
   assert.deepEqual(actual, expected);
 });
 
@@ -1388,26 +1433,10 @@ QUnit.test('end to end - alternate BaseURLs', function(assert) {
         clientOffset: 0
       },
       segmentInfo: {}
-    }, {
-      attributes: {
-        bandwidth: 256,
-        baseUrl: 'https://example.com/en.vtt',
-        id: 'en',
-        lang: 'en',
-        mediaPresentationDuration: 30,
-        mimeType: 'text/vtt',
-        periodStart: 0,
-        role: {},
-        sourceDuration: 30,
-        type: 'static',
-        NOW,
-        clientOffset: 0
-      },
-      segmentInfo: {}
     }]
   };
 
-  assert.equal(actual.representationInfo.length, 6);
+  assert.equal(actual.representationInfo.length, 5);
   assert.deepEqual(actual, expected);
 });
 

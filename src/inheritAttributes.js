@@ -30,7 +30,7 @@ export const buildBaseUrls = (references, baseUrlElements) => {
     return references;
   }
 
-  return flatten(references.map(function(reference) {
+  const resolvedUrls = flatten(references.map(function(reference) {
     return baseUrlElements.map(function(baseUrlElement) {
       const initialBaseUrl = getContent(baseUrlElement);
       const resolvedBaseUrl = resolveUrl(reference.baseUrl, initialBaseUrl);
@@ -49,6 +49,25 @@ export const buildBaseUrls = (references, baseUrlElements) => {
       return finalBaseUrl;
     });
   }));
+
+  // Absolute child BaseURLs do not resolve against the parent, so the product of
+  // N parent BaseURLs repeats that child URL N times. Keep one copy of each unique
+  // resolved BaseURL object so content-steering copies that differ by serviceLocation
+  // (or other attributes) are preserved.
+  // See: https://github.com/videojs/mpd-parser/issues/175
+  const seen = {};
+
+  return resolvedUrls.filter(function(url) {
+    const key = JSON.stringify(url);
+
+    if (seen[key]) {
+      return false;
+    }
+
+    seen[key] = true;
+
+    return true;
+  });
 };
 
 /**
@@ -630,13 +649,6 @@ export const inheritAttributes = (mpd, options = {}) => {
   return {
     locations: mpdAttributes.locations,
     contentSteeringInfo: generateContentSteeringInformation(contentSteeringNodes, eventHandler),
-    // TODO: There are occurences where this `representationInfo` array contains undesired
-    // duplicates. This generally occurs when there are multiple BaseURL nodes that are
-    // direct children of the MPD node. When we attempt to resolve URLs from a combination of the
-    // parent BaseURL and a child BaseURL, and the value does not resolve,
-    // we end up returning the child BaseURL multiple times.
-    // We need to determine a way to remove these duplicates in a safe way.
-    // See: https://github.com/videojs/mpd-parser/pull/17#discussion_r162750527
     representationInfo: flatten(periods.map(toAdaptationSets(mpdAttributes, mpdBaseUrls))),
     eventStream: flatten(periods.map(toEventStream))
   };
