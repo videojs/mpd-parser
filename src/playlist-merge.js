@@ -115,9 +115,15 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
     }
 
     // Since we don't yet support early available timelines, we don't need to support
-    // playlists with no segments.
+    // playlists with no segments. Playlists with an unresolved SIDX will have an empty
+    // segments list until the SIDX is parsed and segment references are generated.
+    if (!playlist.segments || !playlist.segments.length) {
+      return;
+    }
+
     const firstNewSegment = playlist.segments[0];
-    const oldMatchingSegmentIndex = oldPlaylist.segments.findIndex(function(oldSegment) {
+    const oldPlaylistSegments = oldPlaylist.segments || [];
+    const oldMatchingSegmentIndex = oldPlaylistSegments.findIndex(function(oldSegment) {
       return (
         Math.abs(oldSegment.presentationTime - firstNewSegment.presentationTime) < TIME_FUDGE
       );
@@ -130,7 +136,7 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
     if (oldMatchingSegmentIndex === -1) {
       updateMediaSequenceForPlaylist({
         playlist,
-        mediaSequence: oldPlaylist.mediaSequence + oldPlaylist.segments.length
+        mediaSequence: oldPlaylist.mediaSequence + oldPlaylistSegments.length
       });
       playlist.segments[0].discontinuity = true;
       playlist.discontinuityStarts.unshift(0);
@@ -154,9 +160,9 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
       //
       // A period may also have a duration of zero, so the case of no segments is handled
       // here even though we don't yet support early available periods.
-      if ((!oldPlaylist.segments.length && playlist.timeline > oldPlaylist.timeline) ||
-        (oldPlaylist.segments.length && playlist.timeline >
-          oldPlaylist.segments[oldPlaylist.segments.length - 1].timeline)) {
+      if ((!oldPlaylistSegments.length && playlist.timeline > oldPlaylist.timeline) ||
+        (oldPlaylistSegments.length && playlist.timeline >
+          oldPlaylistSegments[oldPlaylistSegments.length - 1].timeline)) {
         playlist.discontinuitySequence--;
       }
       return;
@@ -173,7 +179,7 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
     // Period while the "timeline" exists, HLS keeps track of it via the discontinuity
     // sequence, and that first segment is an indicator, but can be removed before that
     // timeline is gone.
-    const oldMatchingSegment = oldPlaylist.segments[oldMatchingSegmentIndex];
+    const oldMatchingSegment = oldPlaylistSegments[oldMatchingSegmentIndex];
 
     if (oldMatchingSegment.discontinuity && !firstNewSegment.discontinuity) {
       firstNewSegment.discontinuity = true;
@@ -183,7 +189,7 @@ export const updateSequenceNumbers = ({ oldPlaylists, newPlaylists, timelineStar
 
     updateMediaSequenceForPlaylist({
       playlist,
-      mediaSequence: oldPlaylist.segments[oldMatchingSegmentIndex].number
+      mediaSequence: oldPlaylistSegments[oldMatchingSegmentIndex].number
     });
   });
 };

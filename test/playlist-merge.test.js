@@ -333,6 +333,118 @@ QUnit.test('complete refresh of matching playlist', function(assert) {
   );
 });
 
+QUnit.test('new playlists without segments only update discontinuity sequence', function(assert) {
+  const oldPlaylists = [{
+    discontinuitySequence: 1,
+    discontinuityStarts: [],
+    mediaSequence: 5,
+    timeline: 5,
+    attributes: { NAME: 'A' },
+    segments: []
+  }, {
+    discontinuitySequence: 2,
+    discontinuityStarts: [],
+    mediaSequence: 3,
+    timeline: 10,
+    attributes: { NAME: 'B' }
+  }];
+  const newPlaylists = [{
+    discontinuitySequence: 0,
+    discontinuityStarts: [],
+    mediaSequence: 0,
+    timeline: 5,
+    attributes: { NAME: 'A' },
+    segments: []
+  }, {
+    discontinuitySequence: 0,
+    discontinuityStarts: [],
+    mediaSequence: 0,
+    timeline: 10,
+    attributes: { NAME: 'B' }
+  }];
+  const timelineStarts = [
+    { start: 0, timeline: 0 },
+    { start: 5, timeline: 5 },
+    { start: 10, timeline: 10 }
+  ];
+
+  updateSequenceNumbers({ oldPlaylists, newPlaylists, timelineStarts });
+
+  assert.deepEqual(
+    newPlaylists,
+    [{
+      discontinuitySequence: 1,
+      discontinuityStarts: [],
+      mediaSequence: 0,
+      timeline: 5,
+      attributes: { NAME: 'A' },
+      segments: []
+    }, {
+      discontinuitySequence: 2,
+      discontinuityStarts: [],
+      mediaSequence: 0,
+      timeline: 10,
+      attributes: { NAME: 'B' }
+    }],
+    'new playlists unchanged apart from discontinuity sequence'
+  );
+});
+
+QUnit.test('matching old playlist without segments is treated as a refresh', function(assert) {
+  const oldPlaylists = [{
+    discontinuitySequence: 1,
+    discontinuityStarts: [],
+    mediaSequence: 3,
+    timeline: 5,
+    attributes: { NAME: 'A' }
+  }];
+  const newPlaylists = [{
+    discontinuitySequence: 0,
+    discontinuityStarts: [],
+    mediaSequence: 0,
+    timeline: 10,
+    attributes: { NAME: 'A' },
+    segments: [{
+      presentationTime: 10,
+      timeline: 10,
+      number: 0
+    }, {
+      presentationTime: 12,
+      timeline: 10,
+      number: 1
+    }]
+  }];
+  const timelineStarts = [
+    { start: 0, timeline: 0 },
+    { start: 5, timeline: 5 },
+    { start: 10, timeline: 10 }
+  ];
+
+  updateSequenceNumbers({ oldPlaylists, newPlaylists, timelineStarts });
+
+  assert.deepEqual(
+    newPlaylists,
+    [{
+      discontinuitySequence: 1,
+      discontinuityStarts: [0],
+      mediaSequence: 3,
+      timeline: 10,
+      attributes: { NAME: 'A' },
+      segments: [{
+        discontinuity: true,
+        presentationTime: 10,
+        timeline: 10,
+        number: 3
+      }, {
+        presentationTime: 12,
+        timeline: 10,
+        number: 4
+      }]
+    }],
+    'new playlist updated as a complete refresh'
+  );
+});
+
 QUnit.module('positionManifestOnTimeline');
 
 QUnit.test('handles multiple playlists, including added and removed', function(assert) {
