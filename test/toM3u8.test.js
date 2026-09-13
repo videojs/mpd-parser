@@ -1342,6 +1342,97 @@ QUnit.test('playlists with sidx and sidxMapping', function(assert) {
   assert.deepEqual(toM3u8({ dashPlaylists, sidxMapping }).playlists, expected);
 });
 
+QUnit.test('vtt playlists with sidx and sidxMapping', function(assert) {
+  const dashPlaylists = [{
+    attributes: {
+      sourceDuration: 100,
+      id: 'en',
+      lang: 'en',
+      codecs: 'wvtt',
+      duration: 0,
+      bandwidth: 10000,
+      periodStart: 0,
+      mimeType: 'text/vtt',
+      type: 'static'
+    },
+    segments: [],
+    sidx: {
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      uri: 'sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      timeline: 0,
+      duration: 10
+    },
+    uri: 'http://example.com/fmp4.mp4'
+  }];
+
+  const sidxMapping = {
+    'sidx.mp4-10-19': {
+      sidx: {
+        timescale: 1,
+        firstOffset: 0,
+        references: [{
+          referenceType: 0,
+          referencedSize: 5,
+          subsegmentDuration: 2
+        }]
+      }
+    }
+  };
+
+  const expected = [{
+    attributes: {
+      BANDWIDTH: 10000,
+      CODECS: 'wvtt',
+      NAME: 'en',
+      ['PROGRAM-ID']: 1
+    },
+    sidx: {
+      byterange: {
+        offset: 10,
+        length: 10
+      },
+      uri: 'sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      timeline: 0,
+      duration: 10
+    },
+    targetDuration: 0,
+    timeline: 0,
+    timelineStarts: [{ start: 0, timeline: 0 }],
+    uri: '',
+    segments: [{
+      map: {
+        resolvedUri: 'http://example.com/sidx.mp4',
+        uri: ''
+      },
+      byterange: {
+        offset: 20,
+        length: 5
+      },
+      uri: 'http://example.com/sidx.mp4',
+      resolvedUri: 'http://example.com/sidx.mp4',
+      duration: 2,
+      number: 0,
+      presentationTime: 0,
+      timeline: 0
+    }],
+    endList: true,
+    mediaSequence: 0,
+    discontinuitySequence: 0,
+    discontinuityStarts: [],
+    resolvedUri: ''
+  }];
+
+  assert.deepEqual(
+    toM3u8({ dashPlaylists, sidxMapping }).mediaGroups.SUBTITLES.subs.en.playlists,
+    expected
+  );
+});
+
 QUnit.test('playlists without minimumUpdatePeriod dont assign default value', function(assert) {
   const dashPlaylists = [{
     attributes: {

@@ -147,6 +147,7 @@ export const formatAudioPlaylist = ({
 export const formatVttPlaylist = ({
   attributes,
   segments,
+  sidx,
   mediaSequence,
   discontinuityStarts,
   discontinuitySequence
@@ -190,6 +191,10 @@ export const formatVttPlaylist = ({
 
   if (attributes.serviceLocation) {
     vttPlaylist.attributes.serviceLocation = attributes.serviceLocation;
+  }
+
+  if (sidx) {
+    vttPlaylist.sidx = sidx;
   }
 
   return vttPlaylist;
