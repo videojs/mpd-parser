@@ -24,10 +24,9 @@ jobs:
         os: [ubuntu-latest]
         test-type: ['unit', 'coverage']
     env:
-      BROWSER_STACK_USERNAME: ${{secrets.BROWSER_STACK_USERNAME}}
-      BROWSER_STACK_ACCESS_KEY: ${{secrets.BROWSER_STACK_ACCESS_KEY}}
       CI_TEST_TYPE: ${{matrix.test-type}}
     runs-on: ${{matrix.os}}
+    timeout-minutes: 20
     steps:
     - name: checkout code
       uses: actions/checkout@v6
