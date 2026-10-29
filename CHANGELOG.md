@@ -1,3 +1,10 @@
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/videojs/mpd-parser/compare/v1.4.0...v1.4.1) (2026-10-29)
+
+### Bug Fixes
+
+* update node, regenerate the lockfile and run the audit pass ([#194](https://github.com/videojs/mpd-parser/issues/194)) ([a8e7bc6](https://github.com/videojs/mpd-parser/commit/a8e7bc6))
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/videojs/mpd-parser/compare/v1.3.1...v1.4.0) (2026-06-19)
 
