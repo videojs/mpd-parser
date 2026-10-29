@@ -1,6 +1,6 @@
 import errors from '../errors';
 import urlTypeConverter from './urlType';
-import { parseByDuration } from './durationTimeParser';
+import { toSegments, segmentRange } from './durationTimeParser';
 import window from 'global/window';
 
 /**
@@ -15,13 +15,16 @@ import window from 'global/window';
  */
 export const segmentsFromBase = (attributes) => {
   const {
+    type,
     baseUrl,
     initialization = {},
     sourceDuration,
+    periodDuration,
     indexRange = '',
     periodStart,
     presentationTime,
     number = 0,
+    timescale = 1,
     duration
   } = attributes;
 
@@ -43,11 +46,27 @@ export const segmentsFromBase = (attributes) => {
   // If there is a duration, use it, otherwise use the given duration of the source
   // (since SegmentBase is only for one total segment)
   if (duration) {
-    const segmentTimeInfo = parseByDuration(attributes);
+    const { start, end } = segmentRange[type](attributes);
+    let segmentTimeInfo = null;
 
-    if (segmentTimeInfo.length) {
-      segment.duration = segmentTimeInfo[0].duration;
-      segment.timeline = segmentTimeInfo[0].timeline;
+    if ([start, end].every((val) => !isNaN(val))) {
+      segmentTimeInfo = toSegments(attributes)(start);
+
+      if (type === 'static') {
+        const index = Math.ceil(end) - 1;
+
+        if (index === 0) {
+          const sectionDuration =
+            typeof periodDuration === 'number' ? periodDuration : sourceDuration;
+
+          segmentTimeInfo.duration = sectionDuration - (duration / timescale * index);
+        }
+      }
+    }
+
+    if (segmentTimeInfo) {
+      segment.duration = segmentTimeInfo.duration;
+      segment.timeline = segmentTimeInfo.timeline;
     }
   } else if (sourceDuration) {
     segment.duration = sourceDuration;
