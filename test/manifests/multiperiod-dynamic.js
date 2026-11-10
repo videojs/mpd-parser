@@ -18,7 +18,7 @@ export const parsedManifest = {
     start: 27.949347162000002,
     timeline: 27.949347162000002
   }],
-  endList: true,
+  endList: false,
   mediaGroups: {
     'AUDIO': {
       audio: {

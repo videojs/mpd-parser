@@ -8,7 +8,7 @@ export const parsedManifest = {
     { start: 111, timeline: 111}
   ],
   duration: 0,
-  endList: true,
+  endList: false,
   mediaGroups: {
     'AUDIO': {
       audio: {
