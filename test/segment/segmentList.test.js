@@ -597,3 +597,45 @@ QUnit.test('translates ranges in <Initialization> node', function(assert) {
     number: 2
   }]);
 });
+
+QUnit.test('@duration segments start at periodStart with presentationTimeOffset', function(assert) {
+  const inputAttributes = {
+    segmentUrls: [{ media: '1.fmp4' }, { media: '2.fmp4' }],
+    duration: 5,
+    timescale: 1,
+    presentationTimeOffset: 100,
+    periodIndex: 0,
+    periodStart: 20,
+    startNumber: 1,
+    sourceDuration: 10,
+    baseUrl: 'http://example.com/',
+    type: 'static'
+  };
+
+  assert.deepEqual(
+    segmentsFromList(inputAttributes).map((s) => [s.uri, s.presentationTime]),
+    [['1.fmp4', 20], ['2.fmp4', 25]],
+    'presentationTimeOffset is not subtracted from @duration based times'
+  );
+});
+
+QUnit.test('SegmentTimeline segments subtract presentationTimeOffset', function(assert) {
+  const inputAttributes = {
+    segmentUrls: [{ media: '1.fmp4' }, { media: '2.fmp4' }],
+    timescale: 1,
+    presentationTimeOffset: 100,
+    periodIndex: 0,
+    periodStart: 20,
+    startNumber: 1,
+    sourceDuration: 10,
+    baseUrl: 'http://example.com/',
+    type: 'static'
+  };
+
+  assert.deepEqual(
+    segmentsFromList(inputAttributes, [{ t: 100, d: 5, r: 1 }])
+      .map((s) => [s.uri, s.presentationTime]),
+    [['1.fmp4', 20], ['2.fmp4', 25]],
+    'S@t includes presentationTimeOffset'
+  );
+});

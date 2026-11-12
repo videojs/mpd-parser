@@ -366,7 +366,7 @@ QUnit.test('segment list', function(assert) {
   assert.deepEqual(toPlaylists(representations), playlists);
 });
 
-QUnit.test('presentationTime accounts for presentationTimeOffset', function(assert) {
+QUnit.test('single segment presentationTime ignores presentationTimeOffset', function(assert) {
   const representations = [{
     attributes: {
       baseUrl: 'http://example.com/',
@@ -396,9 +396,9 @@ QUnit.test('presentationTime accounts for presentationTimeOffset', function(asse
       uri: '',
       timeline: 25,
       duration: 2,
-      // The presentationTime value should be adjusted based on the presentationTimeOffset
-      // and its timescale.
-      presentationTime: 0,
+      // Without a SegmentTimeline the only segment starts at the Period start.
+      // presentationTimeOffset only applies to SegmentTimeline (S@t) media times.
+      presentationTime: 25,
       resolvedUri: 'http://example.com/',
       map: {
         uri: '',
