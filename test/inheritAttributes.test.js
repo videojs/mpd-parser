@@ -4,6 +4,7 @@ import {
   parseCaptionServiceMetadata,
   getSegmentInformation,
   getPeriodStart,
+  getPeriodDuration,
   toEventStream
 } from '../src/inheritAttributes';
 import { stringToMpdXml } from '../src/stringToMpdXml';
@@ -185,6 +186,75 @@ QUnit.test('null when dynamic, no prior period, and no start attribute', functio
     null,
     'null when no dynamic, no start attribute, and no prior period'
   );
+});
+
+QUnit.module('getPeriodDuration');
+
+QUnit.test('uses Period@duration when available', function(assert) {
+  assert.equal(getPeriodDuration({
+    attributes: { start: 10, duration: 5 },
+    nextPeriodAttributes: { start: 30 },
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), 5, 'Period@duration wins');
+});
+
+QUnit.test('ends at the next Period@start', function(assert) {
+  assert.equal(getPeriodDuration({
+    attributes: { start: 10 },
+    nextPeriodAttributes: { start: 30 },
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), 20, 'static');
+  assert.equal(getPeriodDuration({
+    attributes: { start: 10 },
+    nextPeriodAttributes: { start: 30 },
+    mpdAttributes: { type: 'dynamic' }
+  }), 20, 'dynamic');
+});
+
+QUnit.test('last static Period ends at mediaPresentationDuration', function(assert) {
+  assert.equal(getPeriodDuration({
+    attributes: { start: 10 },
+    nextPeriodAttributes: null,
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), 50, 'start > 0');
+  assert.equal(getPeriodDuration({
+    attributes: { start: 0 },
+    nextPeriodAttributes: null,
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), undefined, 'start 0 is left to sourceDuration');
+});
+
+QUnit.test('undefined when the end is unknown or not after the start', function(assert) {
+  assert.equal(getPeriodDuration({
+    attributes: { start: 10 },
+    nextPeriodAttributes: null,
+    mpdAttributes: { type: 'dynamic', mediaPresentationDuration: 60 }
+  }), undefined, 'last dynamic Period');
+  assert.equal(getPeriodDuration({
+    attributes: { start: 10 },
+    nextPeriodAttributes: null,
+    mpdAttributes: { type: 'static' }
+  }), undefined, 'no mediaPresentationDuration');
+  assert.equal(getPeriodDuration({
+    attributes: { start: 10 },
+    nextPeriodAttributes: { start: null },
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), undefined, 'next Period has no start');
+  assert.equal(getPeriodDuration({
+    attributes: { start: null },
+    nextPeriodAttributes: { start: 30 },
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), undefined, 'Period has no start');
+  assert.equal(getPeriodDuration({
+    attributes: { start: 30 },
+    nextPeriodAttributes: { start: 30 },
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), undefined, 'next Period starts at the same time');
+  assert.equal(getPeriodDuration({
+    attributes: { start: 70 },
+    nextPeriodAttributes: null,
+    mpdAttributes: { type: 'static', mediaPresentationDuration: 60 }
+  }), undefined, 'starts after mediaPresentationDuration');
 });
 
 QUnit.module('getSegmentInformation');
@@ -1151,6 +1221,8 @@ QUnit.test('end to end - basic multiperiod', function(assert) {
         id: 'test',
         mediaPresentationDuration: 60,
         mimeType: 'video/mp4',
+        // inferred from the end of the presentation
+        periodDuration: 30,
         // inferred start
         periodStart: 30,
         role: {
