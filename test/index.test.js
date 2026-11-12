@@ -165,3 +165,29 @@ QUnit.test('multiperiod_startnumber_removed_periods test manifest', function(ass
 
   assert.deepEqual(actual, multiperiodStartnumberRemovedPeriodsManifest);
 });
+
+QUnit.test('Periods without @duration end at the next Period@start', function(assert) {
+  const manifest = `<?xml version="1.0"?>
+    <MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" mediaPresentationDuration="PT20S"
+      profiles="urn:mpeg:dash:profile:isoff-live:2011">
+      <Period id="1" start="PT0S">
+        <AdaptationSet mimeType="video/mp4">
+          <SegmentTemplate timescale="1" duration="5" media="a-$Number$.m4s"/>
+          <Representation id="a" bandwidth="1"/>
+        </AdaptationSet>
+      </Period>
+      <Period id="2" start="PT10S">
+        <AdaptationSet mimeType="video/mp4">
+          <SegmentTemplate timescale="1" duration="5" media="b-$Number$.m4s"/>
+          <Representation id="b" bandwidth="1"/>
+        </AdaptationSet>
+      </Period>
+    </MPD>`;
+  const segments = parse(manifest, { manifestUri: 'https://example.com/m.mpd' }).playlists
+    .map((playlist) => playlist.segments.map((segment) => [segment.uri, segment.presentationTime, segment.duration]));
+
+  assert.deepEqual(segments, [
+    [['a-1.m4s', 0, 5], ['a-2.m4s', 5, 5]],
+    [['b-1.m4s', 10, 5], ['b-2.m4s', 15, 5]]
+  ], 'each Period only has its own segments');
+});

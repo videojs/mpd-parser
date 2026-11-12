@@ -410,6 +410,46 @@ export const toRepresentations =
 };
 
 /**
+ * Gets the duration of a Period, following DASH spec section 5.3.2.1
+ *
+ * @param {Object} options
+ *        Options object
+ * @param {Object} options.attributes
+ *        Period attributes, with the resolved start
+ * @param {Object} [options.nextPeriodAttributes]
+ *        Next period attributes (if a next period is available)
+ * @param {Object} options.mpdAttributes
+ *        MPD attributes
+ * @return {number|undefined}
+ *         The period duration, or undefined if it can't be known, or if the period
+ *         runs from the start to the end of the presentation
+ */
+export const getPeriodDuration = ({ attributes, nextPeriodAttributes, mpdAttributes }) => {
+  if (typeof attributes.duration === 'number') {
+    return attributes.duration;
+  }
+
+  if (typeof attributes.start !== 'number') {
+    return;
+  }
+
+  let end;
+
+  if (nextPeriodAttributes) {
+    // A Period without @duration ends where the next Period starts.
+    end = nextPeriodAttributes.start;
+  } else if (mpdAttributes.type === 'static' && attributes.start > 0) {
+    // The last Period ends at the end of the presentation. A last Period that starts at 0
+    // already gets the whole presentation through sourceDuration.
+    end = mpdAttributes.mediaPresentationDuration;
+  }
+
+  if (typeof end === 'number' && end > attributes.start) {
+    return end - attributes.start;
+  }
+};
+
+/**
  * Contains all period information for mapping nodes onto adaptation sets.
  *
  * @typedef {Object} PeriodInformation
@@ -445,14 +485,19 @@ export const toRepresentations =
  * @return {toAdaptationSetsCallback}
  *         Callback map function
  */
-export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index) => {
+export const toAdaptationSets = (mpdAttributes, mpdBaseUrls) => (period, index, periods = []) => {
   const periodBaseUrls = buildBaseUrls(mpdBaseUrls, findChildren(period.node, 'BaseURL'));
   const periodAttributes = merge(mpdAttributes, {
     periodStart: period.attributes.start
   });
+  const periodDuration = getPeriodDuration({
+    attributes: period.attributes,
+    nextPeriodAttributes: periods[index + 1] ? periods[index + 1].attributes : null,
+    mpdAttributes
+  });
 
-  if (typeof period.attributes.duration === 'number') {
-    periodAttributes.periodDuration = period.attributes.duration;
+  if (typeof periodDuration === 'number') {
+    periodAttributes.periodDuration = periodDuration;
   }
   const adaptationSets = findChildren(period.node, 'AdaptationSet');
   const periodSegmentInfo = getSegmentInformation(period.node);
