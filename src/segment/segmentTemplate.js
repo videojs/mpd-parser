@@ -151,6 +151,10 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
   });
 
   const segments = parseTemplateInfo(attributes, segmentTimeline);
+  // Only SegmentTimeline times (S@t) are in media time and include
+  // @presentationTimeOffset. Times derived from @duration (or the single segment
+  // case) already start at 0 at the Period start.
+  const timesIncludeOffset = !attributes.duration && !!segmentTimeline;
 
   return segments.map(segment => {
     templateValues.Number = segment.number;
@@ -161,7 +165,8 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
     // - if timescale isn't present on any level, default to 1.
     const timescale = attributes.timescale || 1;
     // - if presentationTimeOffset isn't present on any level, default to 0
-    const presentationTimeOffset = attributes.presentationTimeOffset || 0;
+    const presentationTimeOffset =
+      timesIncludeOffset ? (attributes.presentationTimeOffset || 0) : 0;
     const presentationTime =
       // Even if the @t attribute is not specified for the segment, segment.time is
       // calculated in mpd-parser prior to this, so it's assumed to be available.

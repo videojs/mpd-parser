@@ -80,7 +80,10 @@ export const segmentsFromList = (attributes, segmentTimeline) => {
       // - if timescale isn't present on any level, default to 1.
       const timescale = attributes.timescale || 1;
       // - if presentationTimeOffset isn't present on any level, default to 0
-      const presentationTimeOffset = attributes.presentationTimeOffset || 0;
+      // Only SegmentTimeline times (S@t) include @presentationTimeOffset; times
+      // derived from @duration already start at 0 at the Period start.
+      const presentationTimeOffset =
+        segmentTimeline ? (attributes.presentationTimeOffset || 0) : 0;
 
       segment.timeline = segmentTime.timeline;
       segment.duration = segmentTime.duration;

@@ -1598,3 +1598,67 @@ QUnit.test('multiperiod uses periodDuration when available', function(assert) {
     'creates segments from template'
   );
 });
+
+QUnit.test('@duration segments start at periodStart with presentationTimeOffset', function(assert) {
+  const attributes = {
+    startNumber: 1,
+    duration: 5,
+    sourceDuration: 10,
+    timescale: 1,
+    presentationTimeOffset: 100,
+    id: 'f',
+    media: 'f-$Number$.m4s',
+    periodIndex: 0,
+    baseUrl: 'https://example.com/',
+    type: 'static',
+    periodStart: 20
+  };
+
+  assert.deepEqual(
+    segmentsFromTemplate(attributes, void 0).map((s) => [s.uri, s.presentationTime]),
+    [['f-1.m4s', 20], ['f-2.m4s', 25]],
+    'presentationTimeOffset is not subtracted from @duration based times'
+  );
+});
+
+QUnit.test('single segment starts at periodStart with presentationTimeOffset', function(assert) {
+  const attributes = {
+    sourceDuration: 10,
+    timescale: 90000,
+    presentationTimeOffset: 900000,
+    id: 'f',
+    media: 'f.m4s',
+    periodIndex: 0,
+    baseUrl: 'https://example.com/',
+    type: 'static',
+    periodStart: 20
+  };
+
+  assert.deepEqual(
+    segmentsFromTemplate(attributes, void 0).map((s) => [s.uri, s.presentationTime]),
+    [['f.m4s', 20]],
+    'presentationTimeOffset is not subtracted from the single segment time'
+  );
+});
+
+QUnit.test('SegmentTimeline segments subtract presentationTimeOffset', function(assert) {
+  const attributes = {
+    startNumber: 1,
+    sourceDuration: 10,
+    timescale: 1,
+    presentationTimeOffset: 100,
+    id: 'f',
+    media: 'f-$Time$.m4s',
+    periodIndex: 0,
+    baseUrl: 'https://example.com/',
+    type: 'static',
+    periodStart: 20
+  };
+
+  assert.deepEqual(
+    segmentsFromTemplate(attributes, [{ t: 100, d: 5, r: 1 }])
+      .map((s) => [s.uri, s.presentationTime]),
+    [['f-100.m4s', 20], ['f-105.m4s', 25]],
+    'S@t includes presentationTimeOffset'
+  );
+});
